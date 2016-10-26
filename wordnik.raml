@@ -1,0 +1,1399 @@
+#%RAML 1.0
+title: Wordnik
+version: '4.0'
+baseUri: api.wordnik.com/v4
+description: |
+  Wordnik is the world's biggest online English dictionary, by number of words
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api_key:
+    type: Pass Through
+types:
+  ApiTokenStatus:
+    type: object
+    properties:
+      expiresInMillis?:
+        type: integer
+        format: int64
+      remainingCalls?:
+        type: integer
+        format: int64
+      resetsInMillis?:
+        type: integer
+        format: int64
+      token?:
+        type: string
+      totalRequests?:
+        type: integer
+        format: int64
+      valid?:
+        type: boolean
+  AudioFile:
+    type: object
+    properties:
+      attributionText?:
+        type: string
+      attributionUrl?:
+        type: string
+      audioType?:
+        type: string
+      commentCount?:
+        type: integer
+        format: int32
+      createdAt?:
+        type: datetime
+      createdBy?:
+        type: string
+      description?:
+        type: string
+      duration?:
+        type: number
+        format: double
+      fileUrl?:
+        type: string
+      id:
+        type: integer
+        format: int64
+      voteAverage?:
+        type: number
+        format: float
+      voteCount?:
+        type: integer
+        format: int32
+      voteWeightedAverage?:
+        type: number
+        format: float
+      word?:
+        type: string
+  AudioType:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int32
+      name?:
+        type: string
+  AuthenticationToken:
+    type: object
+    properties:
+      token?:
+        type: string
+      userId?:
+        type: integer
+        format: int64
+      userSignature?:
+        type: string
+  Bigram:
+    type: object
+    properties:
+      count?:
+        type: integer
+        format: int64
+      gram1?:
+        type: string
+      gram2?:
+        type: string
+      mi?:
+        type: number
+        format: double
+      wlmi?:
+        type: number
+        format: double
+  Category:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name?:
+        type: string
+  Citation:
+    type: object
+    properties:
+      cite?:
+        type: string
+      source?:
+        type: string
+  ContentProvider:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int32
+      name?:
+        type: string
+  Definition:
+    type: object
+    properties:
+      attributionText?:
+        type: string
+      attributionUrl?:
+        type: string
+      citations?:
+        type: array
+        items:
+          type: Citation
+      exampleUses?:
+        type: array
+        items:
+          type: ExampleUsage
+      extendedText?:
+        type: string
+      labels?:
+        type: array
+        items:
+          type: Label
+      notes?:
+        type: array
+        items:
+          type: Note
+      partOfSpeech?:
+        type: string
+      relatedWords?:
+        type: array
+        items:
+          type: Related
+      score?:
+        type: number
+        format: float
+      seqString?:
+        type: string
+      sequence?:
+        type: string
+      sourceDictionary?:
+        type: string
+      text?:
+        type: string
+      textProns?:
+        type: array
+        items:
+          type: TextPron
+      word?:
+        type: string
+  DefinitionSearchResults:
+    type: object
+    properties:
+      results?:
+        type: array
+        items:
+          type: Definition
+      totalResults?:
+        type: integer
+        format: int32
+  Example:
+    type: object
+    properties:
+      documentId?:
+        type: integer
+        format: int64
+      exampleId?:
+        type: integer
+        format: int64
+      id?:
+        type: integer
+        format: int64
+      provider?:
+        type: ContentProvider
+      rating?:
+        type: number
+        format: float
+      score?:
+        type: ScoredWord
+      sentence?:
+        type: Sentence
+      text?:
+        type: string
+      title?:
+        type: string
+      url?:
+        type: string
+      word?:
+        type: string
+      year?:
+        type: integer
+        format: int32
+  ExampleSearchResults:
+    type: object
+    properties:
+      examples?:
+        type: array
+        items:
+          type: Example
+      facets?:
+        type: array
+        items:
+          type: Facet
+  ExampleUsage:
+    type: object
+    properties:
+      text?:
+        type: string
+  Facet:
+    type: object
+    properties:
+      facetValues?:
+        type: array
+        items:
+          type: FacetValue
+      name?:
+        type: string
+  FacetValue:
+    type: object
+    properties:
+      count?:
+        type: integer
+        format: int64
+      value?:
+        type: string
+  Frequency:
+    type: object
+    properties:
+      count?:
+        type: integer
+        format: int64
+      year?:
+        type: integer
+        format: int32
+  FrequencySummary:
+    type: object
+    properties:
+      frequency?:
+        type: array
+        items:
+          type: Frequency
+      frequencyString?:
+        type: string
+      totalCount?:
+        type: integer
+        format: int64
+      unknownYearCount?:
+        type: integer
+        format: int32
+      word?:
+        type: string
+  Label:
+    type: object
+    properties:
+      text?:
+        type: string
+      type?:
+        type: string
+  Note:
+    type: object
+    properties:
+      appliesTo?:
+        type: array
+        items:
+          type: string
+      noteType?:
+        type: string
+      pos?:
+        type: integer
+        format: int32
+      value?:
+        type: string
+  PartOfSpeech:
+    type: object
+    properties:
+      allCategories?:
+        type: array
+        items:
+          type: Category
+      roots?:
+        type: array
+        items:
+          type: Root
+      storageAbbr?:
+        type: array
+        items:
+          type: string
+  Related:
+    type: object
+    properties:
+      gram?:
+        type: string
+      label1?:
+        type: string
+      label2?:
+        type: string
+      label3?:
+        type: string
+      label4?:
+        type: string
+      relationshipType?:
+        type: string
+      words?:
+        type: array
+        items:
+          type: string
+  Root:
+    type: object
+    properties:
+      categories?:
+        type: array
+        items:
+          type: Category
+      id:
+        type: integer
+        format: int64
+      name?:
+        type: string
+  ScoredWord:
+    type: object
+    properties:
+      baseWordScore?:
+        type: number
+        format: double
+      docTermCount?:
+        type: integer
+        format: int32
+      id?:
+        type: integer
+        format: int64
+      lemma?:
+        type: string
+      partOfSpeech?:
+        type: string
+      position?:
+        type: integer
+        format: int32
+      score?:
+        type: number
+        format: float
+      sentenceId?:
+        type: integer
+        format: int64
+      stopword?:
+        type: boolean
+      word?:
+        type: string
+      wordType?:
+        type: string
+  Sentence:
+    type: object
+    properties:
+      display?:
+        type: string
+      documentMetadataId?:
+        type: integer
+        format: int64
+      hasScoredWords?:
+        type: boolean
+      id?:
+        type: integer
+        format: int64
+      rating?:
+        type: integer
+        format: int32
+      scoredWords?:
+        type: array
+        items:
+          type: ScoredWord
+  SimpleDefinition:
+    type: object
+    properties:
+      note?:
+        type: string
+      partOfSpeech?:
+        type: string
+      source?:
+        type: string
+      text?:
+        type: string
+  SimpleExample:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      text?:
+        type: string
+      title?:
+        type: string
+      url?:
+        type: string
+  StringValue:
+    type: object
+    properties:
+      word?:
+        type: string
+  Syllable:
+    type: object
+    properties:
+      seq?:
+        type: integer
+        format: int32
+      text?:
+        type: string
+      type?:
+        type: string
+  TextPron:
+    type: object
+    properties:
+      raw?:
+        type: string
+      rawType?:
+        type: string
+      seq?:
+        type: integer
+        format: int32
+  User:
+    type: object
+    properties:
+      displayName?:
+        type: string
+      email?:
+        type: string
+      faceBookId?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      password?:
+        type: string
+      status?:
+        type: integer
+        format: int32
+      userName?:
+        type: string
+      username?:
+        type: string
+  WordList:
+    type: object
+    properties:
+      createdAt?:
+        type: datetime
+      description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      lastActivityAt?:
+        type: datetime
+      name?:
+        type: string
+      numberWordsInList?:
+        type: integer
+        format: int64
+      permalink?:
+        type: string
+      type?:
+        type: string
+      updatedAt?:
+        type: datetime
+      userId?:
+        type: integer
+        format: int64
+      username?:
+        type: string
+  WordListWord:
+    type: object
+    properties:
+      createdAt?:
+        type: datetime
+      id:
+        type: integer
+        format: int64
+      numberCommentsOnWord?:
+        type: integer
+        format: int64
+      numberLists?:
+        type: integer
+        format: int64
+      userId?:
+        type: integer
+        format: int64
+      username?:
+        type: string
+      word?:
+        type: string
+  WordObject:
+    type: object
+    properties:
+      canonicalForm?:
+        type: string
+      id:
+        type: integer
+        format: int64
+      originalWord?:
+        type: string
+      suggestions?:
+        type: array
+        items:
+          type: string
+      vulgar?:
+        type: string
+      word?:
+        type: string
+  WordOfTheDay:
+    type: object
+    properties:
+      category?:
+        type: string
+      contentProvider?:
+        type: ContentProvider
+      createdAt?:
+        type: datetime
+      createdBy?:
+        type: string
+      definitions?:
+        type: array
+        items:
+          type: SimpleDefinition
+      examples?:
+        type: array
+        items:
+          type: SimpleExample
+      htmlExtra?:
+        type: string
+      id:
+        type: integer
+        format: int64
+      note?:
+        type: string
+      parentId?:
+        type: string
+      publishDate?:
+        type: datetime
+      word?:
+        type: string
+  WordSearchResult:
+    type: object
+    properties:
+      count?:
+        type: integer
+        format: int64
+      lexicality?:
+        type: number
+        format: double
+      word?:
+        type: string
+  WordSearchResults:
+    type: object
+    properties:
+      searchResults?:
+        type: array
+        items:
+          type: WordSearchResult
+      totalResults?:
+        type: integer
+        format: int32
+/account.json:
+  /apiTokenStatus:
+    get:
+      displayName: Returns usage statistics for the API account.
+      headers:
+        api_key?:
+          type: string
+          description: Wordnik authentication token
+          displayName: api_key
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ApiTokenStatus
+  /authenticate:
+    /{username}:
+      uriParameters:
+        username:
+          type: string
+          description: A confirmed Wordnik username
+          displayName: username
+      get:
+        displayName: Authenticates a User
+        queryParameters:
+          password:
+            type: string
+            description: The user's password
+            displayName: password
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: AuthenticationToken
+      post:
+        displayName: Authenticates a user
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: AuthenticationToken
+  /user:
+    get:
+      description: Requires a valid auth_token to be set.
+      displayName: Returns the logged-in User
+      headers:
+        auth_token:
+          type: string
+          description: The auth token of the logged-in user, obtained by calling /account.{format}/authenticate/{username} (described above)
+          displayName: auth_token
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: User
+  /wordLists:
+    get:
+      displayName: Fetches WordList objects for the logged-in user.
+      queryParameters:
+        skip?:
+          type: integer
+          description: Results to skip
+          displayName: skip
+          default: 0
+          format: int32
+        limit?:
+          type: integer
+          description: Maximum number of results to return
+          displayName: limit
+          default: 50
+          format: int32
+      headers:
+        auth_token:
+          type: string
+          description: auth_token of logged-in user
+          displayName: auth_token
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: array
+              items:
+                type: WordList
+/word.json:
+  /{word}:
+    uriParameters:
+      word:
+        type: string
+        description: String value of WordObject to return
+        displayName: word
+    /audio:
+      get:
+        description: The metadata includes a time-expiring fileUrl which allows reading the audio file directly from the API.  Currently only audio pronunciations from the American Heritage Dictionary in mp3 format are supported.
+        displayName: Fetches audio metadata for a word.
+        queryParameters:
+          useCanonical?:
+            type: string
+            description: Use the canonical form of the word
+            displayName: useCanonical
+            default: 'false'
+          limit?:
+            type: integer
+            description: Maximum number of results to return
+            displayName: limit
+            default: 50
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: AudioFile
+    /definitions:
+      get:
+        displayName: Return definitions for a word
+        queryParameters:
+          limit?:
+            type: integer
+            description: Maximum number of results to return
+            displayName: limit
+            default: 200
+            format: int32
+          partOfSpeech?:
+            type: string
+            description: CSV list of part-of-speech types
+            displayName: partOfSpeech
+          includeRelated?:
+            type: string
+            description: Return related words with definitions
+            displayName: includeRelated
+            default: 'false'
+          sourceDictionaries?:
+            type: array
+            description: 'Source dictionary to return definitions from.  If ''all''
+              is received, results are returned from all sources. If multiple values
+              are received (e.g. ''century,wiktionary''), results are returned from
+              the first specified dictionary that has definitions. If left blank,
+              results are returned from the first dictionary that has definitions.
+              By default, dictionaries are searched in this order: ahd, wiktionary,
+              webster, century, wordnet'
+            displayName: sourceDictionaries
+            items:
+              type: string
+          useCanonical?:
+            type: string
+            description: If true will try to return the correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+            default: 'false'
+          includeTags?:
+            type: string
+            description: Return a closed set of XML tags in response
+            displayName: includeTags
+            default: 'false'
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: Definition
+    /etymologies:
+      get:
+        displayName: Fetches etymology data
+        queryParameters:
+          useCanonical?:
+            type: string
+            description: If true will try to return the correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: string
+    /examples:
+      get:
+        displayName: Returns examples for a word
+        queryParameters:
+          includeDuplicates?:
+            type: string
+            description: Show duplicate examples from different sources
+            displayName: includeDuplicates
+            default: 'false'
+          useCanonical?:
+            type: string
+            description: If true will try to return the correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+            default: 'false'
+          skip?:
+            type: integer
+            description: Results to skip
+            displayName: skip
+            default: 0
+            format: int32
+          limit?:
+            type: integer
+            description: Maximum number of results to return
+            displayName: limit
+            default: 5
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: ExampleSearchResults
+    /frequency:
+      get:
+        displayName: Returns word usage over time
+        queryParameters:
+          useCanonical?:
+            type: string
+            description: If true will try to return the correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+            default: 'false'
+          startYear?:
+            type: integer
+            description: Starting Year
+            displayName: startYear
+            default: 1800
+            format: int32
+          endYear?:
+            type: integer
+            description: Ending Year
+            displayName: endYear
+            default: 2012
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: FrequencySummary
+    /hyphenation:
+      get:
+        displayName: Returns syllable information for a word
+        queryParameters:
+          useCanonical?:
+            type: string
+            description: If true will try to return a correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+            default: 'false'
+          sourceDictionary?:
+            type: string
+            description: 'Get from a single dictionary. Valid options: ahd, century,
+              wiktionary, webster, and wordnet.'
+            displayName: sourceDictionary
+          limit?:
+            type: integer
+            description: Maximum number of results to return
+            displayName: limit
+            default: 50
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: Syllable
+    /phrases:
+      get:
+        displayName: Fetches bi-gram phrases for a word
+        queryParameters:
+          limit?:
+            type: integer
+            description: Maximum number of results to return
+            displayName: limit
+            default: 5
+            format: int32
+          wlmi?:
+            type: integer
+            description: Minimum WLMI for the phrase
+            displayName: wlmi
+            default: 0
+            format: int32
+          useCanonical?:
+            type: string
+            description: If true will try to return the correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+            default: 'false'
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: Bigram
+    /pronunciations:
+      get:
+        displayName: Returns text pronunciations for a given word
+        queryParameters:
+          useCanonical?:
+            type: string
+            description: If true will try to return a correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+            default: 'false'
+          sourceDictionary?:
+            type: string
+            description: Get from a single dictionary
+            displayName: sourceDictionary
+          typeFormat?:
+            type: string
+            description: Text pronunciation type
+            displayName: typeFormat
+          limit?:
+            type: integer
+            description: Maximum number of results to return
+            displayName: limit
+            default: 50
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: TextPron
+    /relatedWords:
+      get:
+        displayName: Given a word as a string, returns relationships from the Word Graph
+        queryParameters:
+          useCanonical?:
+            type: string
+            description: If true will try to return the correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+            default: 'false'
+          relationshipTypes?:
+            type: string
+            description: Limits the total results per type of relationship type
+            displayName: relationshipTypes
+          limitPerRelationshipType?:
+            type: integer
+            description: Restrict to the supplied relationship types
+            displayName: limitPerRelationshipType
+            default: 10
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: Related
+    /topExample:
+      get:
+        displayName: Returns a top example for a word
+        queryParameters:
+          useCanonical?:
+            type: string
+            description: If true will try to return the correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+            displayName: useCanonical
+            default: 'false'
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: Example
+    get:
+      displayName: Given a word as a string, returns the WordObject that represents it
+      queryParameters:
+        useCanonical?:
+          type: string
+          description: If true will try to return the correct word root ('cats' -> 'cat'). If false returns exactly what was requested.
+          displayName: useCanonical
+          default: 'false'
+        includeSuggestions?:
+          type: string
+          description: Return suggestions (for correct spelling, case variants, etc.)
+          displayName: includeSuggestions
+          default: 'true'
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: WordObject
+/wordList.json:
+  /{permalink}:
+    uriParameters:
+      permalink:
+        type: string
+        description: permalink of WordList to fetch
+        displayName: permalink
+    /deleteWords:
+      post:
+        displayName: Removes words from a WordList
+        headers:
+          auth_token:
+            type: string
+            description: The auth token of the logged-in user, obtained by calling /account.{format}/authenticate/{username} (described above)
+            displayName: auth_token
+        responses:
+          200:
+            description: No response was specified
+    /words:
+      get:
+        displayName: Fetches words in a WordList
+        queryParameters:
+          sortBy?:
+            type: string
+            description: Field to sort by
+            displayName: sortBy
+            default: createDate
+          sortOrder?:
+            type: string
+            description: Direction to sort
+            displayName: sortOrder
+            default: desc
+          skip?:
+            type: integer
+            description: Results to skip
+            displayName: skip
+            default: 0
+            format: int32
+          limit?:
+            type: integer
+            description: Maximum number of results to return
+            displayName: limit
+            default: 100
+            format: int32
+        headers:
+          auth_token:
+            type: string
+            description: The auth token of the logged-in user, obtained by calling /account.{format}/authenticate/{username} (described above)
+            displayName: auth_token
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: WordListWord
+      post:
+        displayName: Adds words to a WordList
+        headers:
+          auth_token:
+            type: string
+            description: The auth token of the logged-in user, obtained by calling /account.{format}/authenticate/{username} (described above)
+            displayName: auth_token
+        responses:
+          200:
+            description: No response was specified
+    get:
+      displayName: Fetches a WordList by ID
+      headers:
+        auth_token:
+          type: string
+          description: The auth token of the logged-in user, obtained by calling /account.{format}/authenticate/{username} (described above)
+          displayName: auth_token
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: WordList
+    delete:
+      displayName: Deletes an existing WordList
+      headers:
+        auth_token:
+          type: string
+          description: The auth token of the logged-in user, obtained by calling /account.{format}/authenticate/{username} (described above)
+          displayName: auth_token
+      responses:
+        200:
+          description: No response was specified
+    put:
+      displayName: Updates an existing WordList
+      headers:
+        auth_token:
+          type: string
+          description: The auth token of the logged-in user, obtained by calling /account.{format}/authenticate/{username} (described above)
+          displayName: auth_token
+      responses:
+        200:
+          description: No response was specified
+/wordLists.json:
+  post:
+    displayName: Creates a WordList.
+    headers:
+      auth_token:
+        type: string
+        description: The auth token of the logged-in user, obtained by calling /account.{format}/authenticate/{username} (described above)
+        displayName: auth_token
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: WordList
+/words.json:
+  /randomWord:
+    get:
+      displayName: Returns a single random WordObject
+      queryParameters:
+        hasDictionaryDef?:
+          type: string
+          description: Only return words with dictionary definitions
+          displayName: hasDictionaryDef
+          default: 'true'
+        includePartOfSpeech?:
+          type: string
+          description: CSV part-of-speech values to include
+          displayName: includePartOfSpeech
+        excludePartOfSpeech?:
+          type: string
+          description: CSV part-of-speech values to exclude
+          displayName: excludePartOfSpeech
+        minCorpusCount?:
+          type: integer
+          description: Minimum corpus frequency for terms
+          displayName: minCorpusCount
+          default: 0
+          format: int32
+        maxCorpusCount?:
+          type: integer
+          description: Maximum corpus frequency for terms
+          displayName: maxCorpusCount
+          default: -1
+          format: int32
+        minDictionaryCount?:
+          type: integer
+          description: Minimum dictionary count
+          displayName: minDictionaryCount
+          default: 1
+          format: int32
+        maxDictionaryCount?:
+          type: integer
+          description: Maximum dictionary count
+          displayName: maxDictionaryCount
+          default: -1
+          format: int32
+        minLength?:
+          type: integer
+          description: Minimum word length
+          displayName: minLength
+          default: 5
+          format: int32
+        maxLength?:
+          type: integer
+          description: Maximum word length
+          displayName: maxLength
+          default: -1
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: WordObject
+  /randomWords:
+    get:
+      displayName: Returns an array of random WordObjects
+      queryParameters:
+        hasDictionaryDef?:
+          type: string
+          description: Only return words with dictionary definitions
+          displayName: hasDictionaryDef
+          default: 'true'
+        includePartOfSpeech?:
+          type: string
+          description: CSV part-of-speech values to include
+          displayName: includePartOfSpeech
+        excludePartOfSpeech?:
+          type: string
+          description: CSV part-of-speech values to exclude
+          displayName: excludePartOfSpeech
+        minCorpusCount?:
+          type: integer
+          description: Minimum corpus frequency for terms
+          displayName: minCorpusCount
+          default: 0
+          format: int32
+        maxCorpusCount?:
+          type: integer
+          description: Maximum corpus frequency for terms
+          displayName: maxCorpusCount
+          default: -1
+          format: int32
+        minDictionaryCount?:
+          type: integer
+          description: Minimum dictionary count
+          displayName: minDictionaryCount
+          default: 1
+          format: int32
+        maxDictionaryCount?:
+          type: integer
+          description: Maximum dictionary count
+          displayName: maxDictionaryCount
+          default: -1
+          format: int32
+        minLength?:
+          type: integer
+          description: Minimum word length
+          displayName: minLength
+          default: 5
+          format: int32
+        maxLength?:
+          type: integer
+          description: Maximum word length
+          displayName: maxLength
+          default: -1
+          format: int32
+        sortBy?:
+          type: string
+          description: Attribute to sort by
+          displayName: sortBy
+        sortOrder?:
+          type: string
+          description: Sort direction
+          displayName: sortOrder
+        limit?:
+          type: integer
+          description: Maximum number of results to return
+          displayName: limit
+          default: 10
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: array
+              items:
+                type: WordObject
+  /reverseDictionary:
+    get:
+      displayName: Reverse dictionary search
+      queryParameters:
+        query:
+          type: string
+          description: Search term
+          displayName: query
+        findSenseForWord?:
+          type: string
+          description: Restricts words and finds closest sense
+          displayName: findSenseForWord
+        includeSourceDictionaries?:
+          type: string
+          description: Only include these comma-delimited source dictionaries
+          displayName: includeSourceDictionaries
+        excludeSourceDictionaries?:
+          type: string
+          description: Exclude these comma-delimited source dictionaries
+          displayName: excludeSourceDictionaries
+        includePartOfSpeech?:
+          type: string
+          description: Only include these comma-delimited parts of speech
+          displayName: includePartOfSpeech
+        excludePartOfSpeech?:
+          type: string
+          description: Exclude these comma-delimited parts of speech
+          displayName: excludePartOfSpeech
+        minCorpusCount?:
+          type: integer
+          description: Minimum corpus frequency for terms
+          displayName: minCorpusCount
+          default: 5
+          format: int32
+        maxCorpusCount?:
+          type: integer
+          description: Maximum corpus frequency for terms
+          displayName: maxCorpusCount
+          default: -1
+          format: int32
+        minLength?:
+          type: integer
+          description: Minimum word length
+          displayName: minLength
+          default: 1
+          format: int32
+        maxLength?:
+          type: integer
+          description: Maximum word length
+          displayName: maxLength
+          default: -1
+          format: int32
+        expandTerms?:
+          type: string
+          description: Expand terms
+          displayName: expandTerms
+        includeTags?:
+          type: string
+          description: Return a closed set of XML tags in response
+          displayName: includeTags
+          default: 'false'
+        sortBy?:
+          type: string
+          description: Attribute to sort by
+          displayName: sortBy
+        sortOrder?:
+          type: string
+          description: Sort direction
+          displayName: sortOrder
+        skip?:
+          type: string
+          description: Results to skip
+          displayName: skip
+          default: '0'
+        limit?:
+          type: integer
+          description: Maximum number of results to return
+          displayName: limit
+          default: 10
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: DefinitionSearchResults
+  /search:
+    /{query}:
+      uriParameters:
+        query:
+          type: string
+          description: Search query
+          displayName: query
+      get:
+        displayName: Searches words
+        queryParameters:
+          caseSensitive?:
+            type: string
+            description: Search case sensitive
+            displayName: caseSensitive
+            default: 'true'
+          includePartOfSpeech?:
+            type: string
+            description: Only include these comma-delimited parts of speech
+            displayName: includePartOfSpeech
+          excludePartOfSpeech?:
+            type: string
+            description: Exclude these comma-delimited parts of speech
+            displayName: excludePartOfSpeech
+          minCorpusCount?:
+            type: integer
+            description: Minimum corpus frequency for terms
+            displayName: minCorpusCount
+            default: 5
+            format: int32
+          maxCorpusCount?:
+            type: integer
+            description: Maximum corpus frequency for terms
+            displayName: maxCorpusCount
+            default: -1
+            format: int32
+          minDictionaryCount?:
+            type: integer
+            description: Minimum number of dictionary entries for words returned
+            displayName: minDictionaryCount
+            default: 1
+            format: int32
+          maxDictionaryCount?:
+            type: integer
+            description: Maximum dictionary definition count
+            displayName: maxDictionaryCount
+            default: -1
+            format: int32
+          minLength?:
+            type: integer
+            description: Minimum word length
+            displayName: minLength
+            default: 1
+            format: int32
+          maxLength?:
+            type: integer
+            description: Maximum word length
+            displayName: maxLength
+            default: -1
+            format: int32
+          skip?:
+            type: integer
+            description: Results to skip
+            displayName: skip
+            default: 0
+            format: int32
+          limit?:
+            type: integer
+            description: Maximum number of results to return
+            displayName: limit
+            default: 10
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: WordSearchResults
+  /wordOfTheDay:
+    get:
+      displayName: Returns a specific WordOfTheDay
+      queryParameters:
+        date?:
+          type: string
+          description: Fetches by date in yyyy-MM-dd
+          displayName: date
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: WordOfTheDay

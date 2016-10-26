@@ -1,0 +1,383 @@
+#%RAML 1.0
+title: Cambase.io
+version: '1.0'
+baseUri: api.cambase.io/
+description: Cambase.io is a project by Evercam.io in order to make it easier for software developers to have a reliable, up to date source of model hardware information available via a public API.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/api:
+  /v1:
+    /models.json:
+      get:
+        displayName: Fetches all Models
+        queryParameters:
+          page?:
+            type: integer
+            description: Page number
+            displayName: page
+          order?:
+            type: string
+            description: Sort order
+            displayName: order
+        responses:
+          200:
+            description: No response was specified
+          401:
+            description: Unauthorized
+          406:
+            description: The request you made is not acceptable
+          416:
+            description: Requested Range Not Satisfiable
+      post:
+        displayName: Creates a new Model
+        responses:
+          200:
+            description: No response was specified
+          401:
+            description: Unauthorized
+          406:
+            description: Not Acceptable
+    /models:
+      /search.json:
+        get:
+          displayName: Searches all Models
+          queryParameters:
+            page?:
+              type: integer
+              description: Page number
+              displayName: page
+            q[model_cont]?:
+              type: string
+              description: Model
+              displayName: q[model_cont]
+            q[manufacturer_name_cont]?:
+              type: string
+              description: Vendor
+              displayName: q[manufacturer_name_cont]
+            q[shape_eq]?:
+              type: string
+              description: Shape
+              displayName: q[shape_eq]
+            q[resolution_eq]?:
+              type: string
+              description: Resolution
+              displayName: q[resolution_eq]
+            q[onvif_true]?:
+              type: string
+              description: ONVIF
+              displayName: q[onvif_true]
+            q[psia_true]?:
+              type: string
+              description: PSIA
+              displayName: q[psia_true]
+            q[ptz_true]?:
+              type: string
+              description: PTZ
+              displayName: q[ptz_true]
+            q[infrared_true]?:
+              type: string
+              description: Infrared
+              displayName: q[infrared_true]
+            q[varifocal_true]?:
+              type: string
+              description: Varifocal
+              displayName: q[varifocal_true]
+            q[sd_card_true]?:
+              type: string
+              description: SD Card
+              displayName: q[sd_card_true]
+            q[upnp_true]?:
+              type: string
+              description: UPnP
+              displayName: q[upnp_true]
+            q[audio_in_true]?:
+              type: string
+              description: Audio In
+              displayName: q[audio_in_true]
+            q[audio_out_true]?:
+              type: string
+              description: Audio Out
+              displayName: q[audio_out_true]
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            406:
+              description: The request you made is not acceptable
+            416:
+              description: Requested Range Not Satisfiable
+      /{id}.json:
+        uriParameters:
+          id:
+            type: integer
+            description: Model ID
+            displayName: id
+        get:
+          displayName: Fetches a single Model
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable
+        patch:
+          displayName: Updates an existing Model
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable
+        put:
+          displayName: Updates an existing Model
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable
+    /recorders.json:
+      get:
+        displayName: Fetches all Recorders
+        queryParameters:
+          page?:
+            type: integer
+            description: Page number
+            displayName: page
+          order?:
+            type: string
+            description: Sort order
+            displayName: order
+        responses:
+          200:
+            description: No response was specified
+          401:
+            description: Unauthorized
+          406:
+            description: The request you made is not acceptable
+          416:
+            description: Requested Range Not Satisfiable
+      post:
+        displayName: Creates a new Recorder
+        responses:
+          200:
+            description: No response was specified
+          401:
+            description: Unauthorized
+          406:
+            description: Not Acceptable
+    /recorders:
+      /search.json:
+        get:
+          displayName: Searches all Recorders
+          queryParameters:
+            page?:
+              type: integer
+              description: Page number
+              displayName: page
+            q[model_cont]?:
+              type: string
+              description: Model
+              displayName: q[model_cont]
+            q[vendor_name_cont]?:
+              type: string
+              description: Vendor
+              displayName: q[vendor_name_cont]
+            q[sdhc_eq]?:
+              type: string
+              description: SD Card (GB)
+              displayName: q[sdhc_eq]
+            q[type_eq]?:
+              type: string
+              description: Type
+              displayName: q[type_eq]
+            q[resolution_eq]?:
+              type: string
+              description: Resolution
+              displayName: q[resolution_eq]
+            q[input_channels_eq]?:
+              type: string
+              description: Input Channels
+              displayName: q[input_channels_eq]
+            q[playback_channels_eq]?:
+              type: string
+              description: Playback Channels
+              displayName: q[playback_channels_eq]
+            q[onvif_true]?:
+              type: string
+              description: ONVIF
+              displayName: q[onvif_true]
+            q[psia_true]?:
+              type: string
+              description: PSIA
+              displayName: q[psia_true]
+            q[ptz_true]?:
+              type: string
+              description: PTZ
+              displayName: q[ptz_true]
+            q[sd_card_true]?:
+              type: string
+              description: SD Card
+              displayName: q[sd_card_true]
+            q[upnp_true]?:
+              type: string
+              description: UPnP
+              displayName: q[upnp_true]
+            q[audio_in_true]?:
+              type: string
+              description: Audio In
+              displayName: q[audio_in_true]
+            q[audio_out_true]?:
+              type: string
+              description: Audio Out
+              displayName: q[audio_out_true]
+            q[hdmi_true]?:
+              type: string
+              description: HDMI Support
+              displayName: q[hdmi_true]
+            q[hot_swap_true]?:
+              type: string
+              description: Hot Swap
+              displayName: q[hot_swap_true]
+            q[support_3rdparty_true]?:
+              type: string
+              description: 3rd pparty Camera Support
+              displayName: q[support_3rdparty_true]
+            q[digital_io_true]?:
+              type: string
+              description: Digital I/O
+              displayName: q[digital_io_true]
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            406:
+              description: The request you made is not acceptable
+            416:
+              description: Requested Range Not Satisfiable
+      /{id}.json:
+        uriParameters:
+          id:
+            type: integer
+            description: Recorder ID
+            displayName: id
+        get:
+          displayName: Fetches a single Recorder
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable
+        patch:
+          displayName: Updates an existing Recorder
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable
+        put:
+          displayName: Updates an existing Recorder
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable
+    /vendors.json:
+      get:
+        displayName: Fetches all Vendors
+        queryParameters:
+          page?:
+            type: integer
+            description: Page number
+            displayName: page
+          order?:
+            type: string
+            description: Sort order
+            displayName: order
+        responses:
+          200:
+            description: No response was specified
+          401:
+            description: Unauthorized
+          406:
+            description: The request you made is not acceptable
+          416:
+            description: Requested Range Not Satisfiable
+      post:
+        displayName: Creates a new Vendor
+        responses:
+          200:
+            description: No response was specified
+          401:
+            description: Unauthorized
+          406:
+            description: Not Acceptable
+    /vendors:
+      /{id}.json:
+        uriParameters:
+          id:
+            type: string
+            description: Vendor ID
+            displayName: id
+        get:
+          displayName: Fetches a single Vendor
+          queryParameters:
+            order?:
+              type: string
+              description: Sort order
+              displayName: order
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable
+        patch:
+          displayName: Updates an existing Vendor
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable
+        put:
+          displayName: Updates an existing Vendor
+          responses:
+            200:
+              description: No response was specified
+            401:
+              description: Unauthorized
+            404:
+              description: Not Found
+            406:
+              description: Not Acceptable

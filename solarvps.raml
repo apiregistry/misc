@@ -1,0 +1,278 @@
+#%RAML 1.0
+title: Solar VPS
+version: 1.0.0
+baseUri: api.ss.solarvps.com/
+description: This is the Solar VPS Public API. You can find more at http://www.solarvps.com
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  apiKey:
+    type: Pass Through
+/contacts:
+  get:
+    description: Shows all contacts under the client account.
+    displayName: View all contacts under your account
+    responses:
+      200:
+        description: No response was specified
+/dns:
+  /{domain}:
+    uriParameters:
+      domain:
+        type: string
+        description: Domain name you want to get records for
+        displayName: domain
+    /add:
+      post:
+        description: 'You can try example.com below. Types allowed are: A CNAME NS
+          TXT MX SRV SPF'
+        displayName: Add dns record for given domain
+        queryParameters:
+          name:
+            type: string
+            description: Fully qualified DNS name
+            displayName: name
+          type:
+            type: string
+            description: Type of DNS record
+            displayName: type
+          content:
+            type: string
+            description: Content for DNS record
+            displayName: content
+          ttl:
+            type: string
+            description: Time To Live for DNS record
+            displayName: ttl
+          prio:
+            type: string
+            description: Priority of DNS record
+            displayName: prio
+        responses:
+          200:
+            description: No response was specified
+    /delete:
+      post:
+        description: Shows all your records for a specific domain. You can try example.com below.
+        displayName: Delete dns record for a given domain
+        queryParameters:
+          id:
+            type: string
+            description: Id of the DNS Record
+            displayName: id
+        responses:
+          200:
+            description: No response was specified
+    /update:
+      post:
+        description: You can try example.com below.
+        displayName: Update dns record for a given domain
+        queryParameters:
+          id:
+            type: string
+            description: Id of DNS record
+            displayName: id
+          name?:
+            type: string
+            description: Fully qualified name for the DNS record
+            displayName: name
+          type?:
+            type: string
+            description: Type for DNS record
+            displayName: type
+          content?:
+            type: string
+            description: Content for the DNS Record
+            displayName: content
+          ttl?:
+            type: string
+            description: Time To Live for DNS record
+            displayName: ttl
+          prio?:
+            type: string
+            description: Priority of the DNS record
+            displayName: prio
+        responses:
+          200:
+            description: No response was specified
+    get:
+      description: Shows all your records for a specific domain. You can try example.com below.
+      displayName: View all your records for a given domain
+      responses:
+        200:
+          description: No response was specified
+/domains:
+  /add:
+    post:
+      description: Adds domain to SolarVPS Distributed DNS
+      displayName: Add domain to be managed by SolarVPS Distributed DNS
+      queryParameters:
+        domain:
+          type: string
+          description: Domain to add to SolarVPS Distributed DNS
+          displayName: domain
+      responses:
+        200:
+          description: No response was specified
+  /delete:
+    post:
+      description: Deletes domain from SolarVPS Distributed DNS
+      displayName: Delete domain from SolarVPS Distributed DNS
+      queryParameters:
+        domain:
+          type: string
+          description: Domain to delete from SolarVPS Distributed DNS
+          displayName: domain
+      responses:
+        200:
+          description: No response was specified
+  get:
+    description: Shows all your domains
+    displayName: View all your domains managed by SolarVPS Distributed DNS
+    responses:
+      200:
+        description: No response was specified
+/key:
+  /generate:
+    get:
+      description: API Key is regenerated if it already exists
+      displayName: Generate API Key
+      queryParameters:
+        username:
+          type: string
+          description: Email address used to login to SolarSystem
+          displayName: username
+        password:
+          type: string
+          description: Password used to login to SolarSystem
+          displayName: password
+      responses:
+        200:
+          description: No response was specified
+  /get:
+    get:
+      description: Gets the API Key for user
+      displayName: Get API Key
+      queryParameters:
+        username:
+          type: string
+          description: Email address used to login to SolarSystem
+          displayName: username
+        password:
+          type: string
+          description: Password used to login to SolarSystem
+          displayName: password
+      responses:
+        200:
+          description: No response was specified
+/pods:
+  /{podId}:
+    uriParameters:
+      podId:
+        type: number
+        description: Id of the pod you want to perform actions on
+        displayName: podId
+    /ping:
+      get:
+        description: Returns the ping response from your server.
+        displayName: Ping your specified pod
+        responses:
+          200:
+            description: No response was specified
+    /{action}:
+      uriParameters:
+        action:
+          type: string
+          description: Action to perform on selected pod
+          displayName: action
+      get:
+        description: Allowed actions are reboot, shutdown, boot
+        displayName: Perform action on a specific pod
+        responses:
+          200:
+            description: No response was specified
+    get:
+      description: Shows details of a specific pod. Enter 1 below to see an example
+      displayName: View information on a specific pod
+      responses:
+        200:
+          description: No response was specified
+  get:
+    description: Shows all your pods
+    displayName: View all your pods
+    responses:
+      200:
+        description: No response was specified
+/solarray:
+  /critical:
+    get:
+      description: Shows all your critical notifications
+      displayName: View all your critical notifications
+      responses:
+        200:
+          description: No response was specified
+  get:
+    description: Shows all your monitors
+    displayName: View all your monitors
+    responses:
+      200:
+        description: No response was specified
+/tickets:
+  /{department}:
+    uriParameters:
+      department:
+        type: string
+        description: Department you want to open a ticket with
+        displayName: department
+    /add:
+      post:
+        description: Available departments are support, billing, sales
+        displayName: Open ticket with desired department
+        queryParameters:
+          subject:
+            type: string
+            description: Subject of the ticket you are opening
+            displayName: subject
+          contents:
+            type: string
+            description: Message reply being sent
+            displayName: contents
+        responses:
+          200:
+            description: No response was specified
+  /{ticketId}:
+    uriParameters:
+      ticketId:
+        type: number
+        description: TicketId you want to see
+        displayName: ticketId
+    get:
+      description: Shows all information of a specific ticketId
+      displayName: View details on a specific ticket
+      responses:
+        200:
+          description: No response was specified
+  /{ticketid}:
+    uriParameters:
+      ticketid:
+        type: number
+        description: TicketId of the ticket you want to post an update to
+        displayName: ticketid
+    /update:
+      post:
+        displayName: Post a reply to a ticket
+        queryParameters:
+          contents:
+            type: string
+            description: Message reply being sent
+            displayName: contents
+        responses:
+          200:
+            description: No response was specified
+  get:
+    description: Shows all your tickets
+    displayName: View all your tickets
+    responses:
+      200:
+        description: No response was specified

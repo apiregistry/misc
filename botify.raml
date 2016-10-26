@@ -1,0 +1,1147 @@
+#%RAML 1.0
+title: Botify
+version: 1.0.0
+baseUri: api.botify.com/v1
+description: Botify Saas API
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  DjangoRestToken:
+    type: Pass Through
+types:
+  UrlsAggsQueries:
+    type: array
+    items:
+      type: UrlsAggsQuery
+  Analysis:
+    type: object
+    properties:
+      config?:
+        type: string
+      date_created?:
+        type: datetime
+      date_finished?:
+        type: datetime
+      date_last_modified?:
+        type: datetime
+        description: Date of last modified analysis
+      date_launched?:
+        type: datetime
+      features?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      slug?:
+        type: string
+      status?:
+        type: string
+      url?:
+        type: string
+      urls_done?:
+        type: string
+      urls_in_queue?:
+        type: string
+      user:
+        type: User
+  AnalysisDetail:
+    type: object
+    properties:
+      config?:
+        type: string
+      date_finished?:
+        type: datetime
+      date_last_modified?:
+        type: datetime
+        description: Date of last modified analysis
+      date_launched?:
+        type: datetime
+      failures?:
+        type: string
+      features?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      red_button_domain?:
+        type: string
+      slug?:
+        type: string
+      url?:
+        type: string
+      urls_done?:
+        type: string
+      urls_in_queue?:
+        type: string
+      user:
+        type: User
+  CrawlStatistics:
+    type: object
+    properties:
+      depth_current:
+        type: integer
+        format: int64
+      last_upd_dt:
+        type: datetime
+      pages_dones:
+        type: integer
+        format: int64
+      pages_dones_2xx:
+        type: integer
+        format: int64
+      pages_dones_3xx:
+        type: integer
+        format: int64
+      pages_dones_4xx:
+        type: integer
+        format: int64
+      pages_dones_5xx:
+        type: integer
+        format: int64
+      pages_dones_networkerror:
+        type: integer
+        format: int64
+      pages_dones_xxx:
+        type: integer
+        format: int64
+      pages_known:
+        type: integer
+        format: int64
+  CsvExportStatus:
+    type: object
+    properties:
+      area?:
+        type: integer
+        format: int64
+      date_created?:
+        type: datetime
+      job_id?:
+        type: string
+      job_status?:
+        type: string
+      job_url?:
+        type: string
+      nb_results?:
+        type: integer
+        format: int64
+      query:
+        type: UrlsQuery
+      results?:
+        type: string
+  Default:
+    type: object
+  DefaultPayload:
+    type: object
+    properties:
+      error?:
+        type: object
+        properties:
+          error_detail?:
+            type: object
+            description: If available, detailed error
+          error_code?:
+            type: string
+            description: Error Code
+          message?:
+            type: string
+            description: Error Message
+    description: default payload for object for all HTTP codes that are not covered individually
+  FieldValues:
+    type: object
+    properties:
+      count:
+        type: integer
+        format: int64
+      results:
+        type: array
+        items:
+          type: FieldValuesResult
+  FieldValuesResult:
+    type: object
+    properties:
+      nb_urls:
+        type: integer
+        format: int64
+      value:
+        type: string
+  Project:
+    type: object
+    properties:
+      active?:
+        type: boolean
+      current_settings:
+        type: ProjectSettingsSerializer
+      date_created?:
+        type: string
+      name:
+        type: string
+      slug:
+        type: string
+      user:
+        type: User
+  ProjectSavedFilter:
+    type: object
+    properties:
+      filters:
+        type: object
+      identifier?:
+        type: string
+      name:
+        type: string
+  ProjectSettingsSerializer:
+    type: object
+    properties:
+      allowed_domains:
+        type: array
+        items:
+          type: string
+      blacklisted_domains:
+        type: array
+        items:
+          type: string
+      compare_crawl?:
+        type: boolean
+      crawl_gzip?:
+        type: boolean
+      extra_headers?:
+        type: string
+      google_analytics_account_email?:
+        type: string
+        description: Keep email in case user delete his social auth connection
+      google_analytics_nb_days?:
+        type: integer
+        format: int64
+      google_analytics_site_id?:
+        type: integer
+        format: int64
+      google_social_auth_id?:
+        type: integer
+        format: int64
+      has_robots_txt?:
+        type: string
+      header_settings:
+        type: array
+        items:
+          type: string
+      max_depth?:
+        type: integer
+        format: int64
+      max_nb_pages:
+        type: integer
+        format: int64
+      max_pages_per_sec?:
+        type: integer
+        format: int64
+      respect_nofollow?:
+        type: boolean
+      sitemaps:
+        type: array
+        items:
+          type: string
+      start_urls:
+        type: array
+        items:
+          type: string
+      user_agent?:
+        type: string
+  RewritingRuleSerializer:
+    type: object
+    properties:
+      ignore_case:
+        type: boolean
+      regex:
+        type: string
+      replace:
+        type: string
+  URLRewritingRulesSerializer:
+    type: object
+    properties:
+      rules:
+        type: array
+        items:
+          type: RewritingRuleSerializer
+      urls:
+        type: array
+        items:
+          type: string
+  UrlsAggsQuery:
+    type: object
+    properties:
+      aggs?:
+        type: array
+        items:
+          type: object
+      filters?:
+        type: object
+  UrlsQuery:
+    type: object
+    properties:
+      fields?:
+        type: array
+        items:
+          type: string
+      filters?:
+        type: object
+      sort?:
+        type: array
+        items:
+          type: object
+  User:
+    type: object
+    properties:
+      company_name?:
+        type: string
+      date_joined?:
+        type: datetime
+      email?:
+        type: string
+      first_name?:
+        type: string
+      is_organization?:
+        type: string
+      last_name?:
+        type: string
+      login?:
+        type: string
+      status?:
+        type: string
+      url?:
+        type: string
+/analyses:
+  /{username}:
+    uriParameters:
+      username:
+        type: string
+        description: User's identifier
+        displayName: username
+    /{project_slug}:
+      uriParameters:
+        project_slug:
+          type: string
+          description: Project's identifier
+          displayName: project_slug
+      /{analysis_slug}:
+        uriParameters:
+          analysis_slug:
+            type: string
+            description: Analysis' identifier
+            displayName: analysis_slug
+        /crawl_statistics:
+          /time:
+            get:
+              description: Return crawl statistics grouped by time frequency (1 min, 5 mins or 60 min) for an analysis
+              displayName: Return crawl statistics grouped by time frequency (1 min, 5 mins or 60 min)
+              queryParameters:
+                limit?:
+                  type: integer
+                  description: max number of elements to retrieve
+                  displayName: limit
+                  format: int32
+                frequency:
+                  type: string
+                  description: Aggregation frequency
+                  displayName: frequency
+                  enum:
+                  - 1mn
+                  - 5mn
+                  - 60mn
+              responses:
+                200:
+                  description: Successful operation
+                  body:
+                    application/json:
+                      type: Default
+                500:
+                  description: error payload
+                  body:
+                    application/json:
+                      type: DefaultPayload
+          /urls:
+            /{list_type}:
+              uriParameters:
+                list_type:
+                  type: string
+                  description: URLs list type (crawled URLs or error URLs)
+                  displayName: list_type
+                  enum:
+                  - crawled
+                  - errors
+              get:
+                description: Return a list of 1000 latest URLs crawled (all crawled URLs or only URLS with HTTP errors)
+                displayName: Return a list of 1000 latest URLs crawled (all crawled URLs or only URLS with HTTP errors)
+                responses:
+                  200:
+                    description: Successful operation
+                    body:
+                      application/json:
+                        type: Default
+                  500:
+                    description: error payload
+                    body:
+                      application/json:
+                        type: DefaultPayload
+          get:
+            description: Return global statistics for an analysis
+            displayName: Return global statistics for an analysis
+            responses:
+              200:
+                description: Successful operation
+                body:
+                  application/json:
+                    type: CrawlStatistics
+              500:
+                description: error payload
+                body:
+                  application/json:
+                    type: DefaultPayload
+        /features:
+          /ganalytics:
+            /orphan_urls:
+              /{medium}:
+                uriParameters:
+                  medium:
+                    type: string
+                    description: 'Type of traffic, value: ''organic'' (from search
+                      engine)or ''social'' (from a social network)'
+                    displayName: medium
+                    enum:
+                    - organic
+                    - social
+                /{source}:
+                  uriParameters:
+                    source:
+                      type: string
+                      description: 'Traffic source, value: name of the search engine
+                        or social network'
+                      displayName: source
+                      enum:
+                      - all
+                      - aol
+                      - ask
+                      - baidu
+                      - bing
+                      - facebook
+                      - google
+                      - google+
+                      - linkedin
+                      - naver
+                      - pinterest
+                      - reddit
+                      - tumblr
+                      - twitter
+                      - yahoo
+                      - yandex
+                  get:
+                    description: 'List of Orphan URLs. URLs which generated visits
+                      from the selected source according to Google Analytics data,
+                      but were not crawled with by the Botify crawler (either because
+                      no links to them were found on the website, or because the crawler
+                      was not allowed to follow these links according to the project
+                      settings).   For a search engine (medium: origanic; sources:
+                      all, aol, ask, baidu, bing, google, naver, yahoo, yandex) or
+                      a social network (medium: social; sources: all, facebook, google+,
+                      linkedin, pinterest, reddit, tumblr, twitter)'
+                    displayName: List of Orphan URLs
+                    queryParameters:
+                      page?:
+                        type: integer
+                        description: Page Number
+                        displayName: page
+                      size?:
+                        type: integer
+                        description: Page Size
+                        displayName: size
+                    responses:
+                      200:
+                        description: Successful operation
+                        body:
+                          application/json:
+                            type: object
+                            properties:
+                              next?:
+                                type: string
+                              previous?:
+                                type: string
+                              size?:
+                                type: integer
+                              count?:
+                                type: integer
+                              page?:
+                                type: integer
+                              results?:
+                                type: array
+                                items:
+                                  type: Default
+                      500:
+                        description: error payload
+                        body:
+                          application/json:
+                            type: DefaultPayload
+          /links:
+            /percentiles:
+              get:
+                description: Get inlinks percentiles
+                displayName: Get inlinks percentiles
+                responses:
+                  200:
+                    description: Successful operation
+                    body:
+                      application/json:
+                        type: Default
+                  500:
+                    description: error payload
+                    body:
+                      application/json:
+                        type: DefaultPayload
+          /pagerank:
+            /lost:
+              get:
+                description: Lost pagerank
+                displayName: Lost pagerank
+                responses:
+                  200:
+                    description: Successful operation
+                    body:
+                      application/json:
+                        type: Default
+                  500:
+                    description: error payload
+                    body:
+                      application/json:
+                        type: DefaultPayload
+          /sitemaps:
+            /report:
+              get:
+                description: Get global information of the sitemaps found (sitemaps indexes, invalid sitemaps urls, etc.)
+                displayName: Get global information of the sitemaps found (sitemaps indexes, invalid sitemaps urls, etc
+                responses:
+                  200:
+                    description: Successful operation
+                    body:
+                      application/json:
+                        type: Default
+                  500:
+                    description: error payload
+                    body:
+                      application/json:
+                        type: DefaultPayload
+            /samples:
+              /out_of_config:
+                get:
+                  description: Sample list of URLs which were found in your sitemaps but outside of the crawl perimeter defined for the project, for instance domain/subdomain or protocol (HTTP/HTTPS) not allowed in the crawl settings.
+                  displayName: Sample list of URLs which were found in your sitemaps but outside of the
+                  queryParameters:
+                    page?:
+                      type: integer
+                      description: Page Number
+                      displayName: page
+                    size?:
+                      type: integer
+                      description: Page Size
+                      displayName: size
+                  responses:
+                    200:
+                      description: Successful operation
+                      body:
+                        application/json:
+                          type: object
+                          properties:
+                            next?:
+                              type: string
+                            previous?:
+                              type: string
+                            size?:
+                              type: integer
+                            count?:
+                              type: integer
+                            page?:
+                              type: integer
+                            results?:
+                              type: array
+                              items:
+                                type: Default
+                    500:
+                      description: error payload
+                      body:
+                        application/json:
+                          type: DefaultPayload
+              /sitemap_only:
+                get:
+                  description: Sample list of URLs which were found in your sitemaps, within the project allowed scope (allowed domains/subdomains/protocols), but not found by the Botify crawler.
+                  displayName: Sample list of URLs which were found in your sitemaps, within the project
+                  queryParameters:
+                    page?:
+                      type: integer
+                      description: Page Number
+                      displayName: page
+                    size?:
+                      type: integer
+                      description: Page Size
+                      displayName: size
+                  responses:
+                    200:
+                      description: Successful operation
+                      body:
+                        application/json:
+                          type: object
+                          properties:
+                            next?:
+                              type: string
+                            previous?:
+                              type: string
+                            size?:
+                              type: integer
+                            count?:
+                              type: integer
+                            page?:
+                              type: integer
+                            results?:
+                              type: array
+                              items:
+                                type: Default
+                    500:
+                      description: error payload
+                      body:
+                        application/json:
+                          type: DefaultPayload
+          /top_domains:
+            /domains:
+              get:
+                description: Top domains
+                displayName: Top domains
+                queryParameters:
+                  page?:
+                    type: integer
+                    description: Page Number
+                    displayName: page
+                  size?:
+                    type: integer
+                    description: Page Size
+                    displayName: size
+                responses:
+                  200:
+                    description: Successful operation
+                    body:
+                      application/json:
+                        type: object
+                        properties:
+                          next?:
+                            type: string
+                          previous?:
+                            type: string
+                          size?:
+                            type: integer
+                          count?:
+                            type: integer
+                          page?:
+                            type: integer
+                          results?:
+                            type: array
+                            items:
+                              type: Default
+                  500:
+                    description: error payload
+                    body:
+                      application/json:
+                        type: DefaultPayload
+            /subdomains:
+              get:
+                description: Top subddomains
+                displayName: Top subddomains
+                queryParameters:
+                  page?:
+                    type: integer
+                    description: Page Number
+                    displayName: page
+                  size?:
+                    type: integer
+                    description: Page Size
+                    displayName: size
+                responses:
+                  200:
+                    description: Successful operation
+                    body:
+                      application/json:
+                        type: object
+                        properties:
+                          next?:
+                            type: string
+                          previous?:
+                            type: string
+                          size?:
+                            type: integer
+                          count?:
+                            type: integer
+                          page?:
+                            type: integer
+                          results?:
+                            type: array
+                            items:
+                              type: Default
+                  500:
+                    description: error payload
+                    body:
+                      application/json:
+                        type: DefaultPayload
+        /urls:
+          /aggs:
+            post:
+              description: Query aggregator. It accepts multiple queries
+              displayName: Query aggregator
+              queryParameters:
+                area?:
+                  type: string
+                  displayName: area
+                  default: current
+                  enum:
+                  - current
+                  - disappeared
+                  - new
+                  - search_engines_orphans
+              responses:
+                201:
+                  description: Successful operation
+                  body:
+                    application/json:
+                      type: Default
+                500:
+                  description: error payload
+                  body:
+                    application/json:
+                      type: DefaultPayload
+          /datamodel:
+            get:
+              description: Gets an Analysis datamodel
+              displayName: Gets an Analysis datamodel
+              queryParameters:
+                area?:
+                  type: string
+                  displayName: area
+                  default: current
+                  enum:
+                  - current
+                  - disappeared
+                  - new
+                  - search_engines_orphans
+              responses:
+                200:
+                  description: Successful operation
+                  body:
+                    application/json:
+                      type: Default
+                500:
+                  description: error payload
+                  body:
+                    application/json:
+                      type: DefaultPayload
+          /export:
+            /{url_export_id}:
+              uriParameters:
+                url_export_id:
+                  type: string
+                  description: Url Export ID
+                  displayName: url_export_id
+              get:
+                description: Checks the status of an CSVUrlExportJob object. Returns json object with the status.
+                displayName: Checks the status of an CSVUrlExportJob object
+                responses:
+                  200:
+                    description: Successful operation
+                    body:
+                      application/json:
+                        type: CsvExportStatus
+                  500:
+                    description: error payload
+                    body:
+                      application/json:
+                        type: DefaultPayload
+            get:
+              description: A list of the CSV Exports requests and their current status
+              displayName: A list of the CSV Exports requests and their current status
+              queryParameters:
+                page?:
+                  type: integer
+                  description: Page Number
+                  displayName: page
+                size?:
+                  type: integer
+                  description: Page Size
+                  displayName: size
+              responses:
+                200:
+                  description: Successful operation
+                  body:
+                    application/json:
+                      type: object
+                      properties:
+                        next?:
+                          type: string
+                        previous?:
+                          type: string
+                        size?:
+                          type: integer
+                        count?:
+                          type: integer
+                        page?:
+                          type: integer
+                        results?:
+                          type: array
+                          items:
+                            type: CsvExportStatus
+                500:
+                  description: error payload
+                  body:
+                    application/json:
+                      type: DefaultPayload
+            post:
+              description: Creates a new UrlExport object and starts a task that will export the results into a csv. Returns the model id that manages the task
+              displayName: Creates a new UrlExport object and starts a task that will export the results into a csv
+              queryParameters:
+                area?:
+                  type: string
+                  displayName: area
+                  default: current
+                  enum:
+                  - current
+                  - disappeared
+                  - new
+                  - search_engines_orphans
+              responses:
+                201:
+                  description: Successful operation
+                  body:
+                    application/json:
+                      type: CsvExportStatus
+                500:
+                  description: error payload
+                  body:
+                    application/json:
+                      type: DefaultPayload
+          /suggested_filters:
+            post:
+              description: Return most frequent segments (= suggested patterns in the previous version) for a Botify Query.
+              displayName: Return most frequent segments (= suggested patterns in the previous version)
+              queryParameters:
+                area?:
+                  type: string
+                  displayName: area
+                  default: current
+                  enum:
+                  - current
+                  - new
+              responses:
+                201:
+                  description: Successful operation
+                  body:
+                    application/json:
+                      type: UrlsAggsQuery
+                500:
+                  description: error payload
+                  body:
+                    application/json:
+                      type: DefaultPayload
+          /{url}:
+            uriParameters:
+              url:
+                type: string
+                description: (Urlencoded) Searched URL
+                displayName: url
+            get:
+              description: Gets the detail of an URL for an analysis
+              displayName: Gets the detail of an URL for an analysis
+              queryParameters:
+                area?:
+                  type: string
+                  description: Analysis lookup context
+                  displayName: area
+                  default: current
+                  enum:
+                  - current
+                  - disappeared
+                fields?:
+                  type: array
+                  description: comma separated list of fields to return (c.f. URLs Datamodel)
+                  displayName: fields
+                  items:
+                    type: string
+              responses:
+                200:
+                  description: Successful operation
+                  body:
+                    application/json:
+                      type: Default
+                500:
+                  description: error payload
+                  body:
+                    application/json:
+                      type: DefaultPayload
+          post:
+            description: Executes a query and returns a paginated response
+            displayName: Executes a query and returns a paginated response
+            queryParameters:
+              area?:
+                type: string
+                description: Analysis context to execute the query
+                displayName: area
+                default: current
+                enum:
+                - current
+                - disappeared
+                - new
+                - search_engines_orphans
+              page?:
+                type: integer
+                description: Page Number
+                displayName: page
+                format: int32
+              size?:
+                type: integer
+                description: Page Size
+                displayName: size
+                format: int32
+            responses:
+              201:
+                description: Successful operation
+                body:
+                  application/json:
+                    type: object
+                    properties:
+                      next?:
+                        type: string
+                      previous?:
+                        type: string
+                      size?:
+                        type: integer
+                      count?:
+                        type: integer
+                      page?:
+                        type: integer
+                      results?:
+                        type: array
+                        items:
+                          type: Default
+              500:
+                description: error payload
+                body:
+                  application/json:
+                    type: DefaultPayload
+        get:
+          description: Get an Analysis detail
+          displayName: Get an Analysis detail
+          responses:
+            200:
+              description: Successful operation
+              body:
+                application/json:
+                  type: AnalysisDetail
+            500:
+              description: error payload
+              body:
+                application/json:
+                  type: DefaultPayload
+      get:
+        description: List all analyses for a project
+        displayName: List all analyses for a project
+        queryParameters:
+          page?:
+            type: integer
+            description: Page Number
+            displayName: page
+          size?:
+            type: integer
+            description: Page Size
+            displayName: size
+        responses:
+          200:
+            description: Successful operation
+            body:
+              application/json:
+                type: object
+                properties:
+                  next?:
+                    type: string
+                  previous?:
+                    type: string
+                  size?:
+                    type: integer
+                  count?:
+                    type: integer
+                  page?:
+                    type: integer
+                  results?:
+                    type: array
+                    items:
+                      type: Analysis
+          500:
+            description: error payload
+            body:
+              application/json:
+                type: DefaultPayload
+/projects:
+  /{username}:
+    uriParameters:
+      username:
+        type: string
+        description: User's identifier
+        displayName: username
+    /{project_slug}:
+      uriParameters:
+        project_slug:
+          type: string
+          description: Project's identifier
+          displayName: project_slug
+      /features:
+        /url_rewriting:
+          /rules_validator:
+            post:
+              description: Match and replace parts of a URL based on rules passed in POST data.
+              displayName: Match and replace parts of a URL based on rules passed in POST data
+              responses:
+                201:
+                  description: Successful operation
+                  body:
+                    application/json:
+                      type: URLRewritingRulesSerializer
+                500:
+                  description: error payload
+                  body:
+                    application/json:
+                      type: DefaultPayload
+      /filters:
+        /{identifier}:
+          uriParameters:
+            identifier:
+              type: string
+              description: Saved Filter's identifier
+              displayName: identifier
+          get:
+            description: Retrieves a specific saved filter's name, ID and filter value
+            displayName: Retrieves a specific saved filter's name, ID and filter value
+            responses:
+              200:
+                description: Successful operation
+                body:
+                  application/json:
+                    type: ProjectSavedFilter
+              500:
+                description: error payload
+                body:
+                  application/json:
+                    type: DefaultPayload
+        get:
+          description: List all the project's saved filters (each filter's name, ID and filter value)
+          displayName: List all the project's saved filters (each filter's name, ID and filter value)
+          queryParameters:
+            page?:
+              type: integer
+              description: Page Number
+              displayName: page
+            size?:
+              type: integer
+              description: Page Size
+              displayName: size
+          responses:
+            200:
+              description: Successful operation
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    next?:
+                      type: string
+                    previous?:
+                      type: string
+                    size?:
+                      type: integer
+                    count?:
+                      type: integer
+                    page?:
+                      type: integer
+                    results?:
+                      type: array
+                      items:
+                        type: ProjectSavedFilter
+            500:
+              description: error payload
+              body:
+                application/json:
+                  type: DefaultPayload
+      /urls:
+        /aggs:
+          post:
+            description: Project Query aggregator. It accepts multiple queries that will be executed on all completed analyses in the project
+            displayName: Project Query aggregator
+            queryParameters:
+              area?:
+                type: string
+                description: Analysis context to execute the queries
+                displayName: area
+                default: current
+                enum:
+                - current
+                - disappeared
+                - new
+              last_analysis_slug?:
+                type: string
+                description: Last analysis on the trend
+                displayName: last_analysis_slug
+              nb_analyses?:
+                type: integer
+                description: Max number of analysis to return
+                displayName: nb_analyses
+                default: 20
+                format: int32
+            responses:
+              201:
+                description: Successful operation
+                body:
+                  application/json:
+                    type: Default
+              500:
+                description: error payload
+                body:
+                  application/json:
+                    type: DefaultPayload
+    get:
+      description: List all active projects for the user
+      displayName: List all active projects for the user
+      queryParameters:
+        page?:
+          type: integer
+          description: Page Number
+          displayName: page
+        size?:
+          type: integer
+          description: Page Size
+          displayName: size
+      responses:
+        200:
+          description: Successful operation
+          body:
+            application/json:
+              type: object
+              properties:
+                next?:
+                  type: string
+                previous?:
+                  type: string
+                size?:
+                  type: integer
+                count?:
+                  type: integer
+                page?:
+                  type: integer
+                results?:
+                  type: array
+                  items:
+                    type: Project
+        500:
+          description: error payload
+          body:
+            application/json:
+              type: DefaultPayload

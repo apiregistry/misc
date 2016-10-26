@@ -1,0 +1,107 @@
+#%RAML 1.0
+title: DatumBox
+version: '1.0'
+baseUri: api.datumbox.com/
+description: Datumbox offers a Machine Learning platform composed of 14 classifiers and Natural Language processing functions. Functions include sentiment analysis, topic classification, readability assessment, language detection, and much more.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/1.0:
+  /AdultContentDetection.json:
+    post:
+      description: The Adult Content Detection function classifies the documents as adult or noadult based on their context. It can be used to detect whether a document contains content unsuitable for minors.
+      displayName: Classifies the Document as adult or noadult
+      responses:
+        200:
+          description: No response was specified
+  /CommercialDetection.json:
+    post:
+      description: The Commercial Detection function labels the documents as commercial or non-commercial based on their keywords and expressions. It can be used to detect whether a website is commercial or not.
+      displayName: Classifies the Document as commercial or nocommercial
+      responses:
+        200:
+          description: No response was specified
+  /DocumentSimilarity.json:
+    post:
+      description: The Document Similarity function estimates the degree of similarity between two documents. It can be used to detect duplicate webpages or detect plagiarism.
+      displayName: Estimates the similarity between 2 Documents
+      responses:
+        200:
+          description: No response was specified
+  /EducationalDetection.json:
+    post:
+      description: The Educational Detection function classifies the documents as educational or non-educational based on their context. It can be used to detect whether a website is educational or not.
+      displayName: Classifies the Document as educational or noeducational
+      responses:
+        200:
+          description: No response was specified
+  /GenderDetection.json:
+    post:
+      description: The Gender Detection function identifies if a particular document is written-by or targets-to a man or a woman based on the context, the words and the idioms found in the text.
+      displayName: Gender Detection Service
+      responses:
+        200:
+          description: No response was specified
+  /KeywordExtraction.json:
+    post:
+      description: The Keyword Extraction function enables you to extract from an arbitrary document all the keywords and word-combinations along with their occurrences in the text.
+      displayName: Extracts the Keywords of the Document
+      responses:
+        200:
+          description: No response was specified
+  /LanguageDetection.json:
+    post:
+      description: The Language Detection function identifies the natural language of the given document based on its words and context. This classifier is able to detect 96 different languages.
+      displayName: Identifies the Language of the Document
+      responses:
+        200:
+          description: No response was specified
+  /ReadabilityAssessment.json:
+    post:
+      description: The Readability Assessment function determines the degree of readability of a document based on its terms and idioms. The texts are classified as basic, intermediate and advanced depending their difficulty.
+      displayName: Evaluates the Readability of the Document
+      responses:
+        200:
+          description: No response was specified
+  /SentimentAnalysis.json:
+    post:
+      description: The Sentiment Analysis function classifies documents as positive, negative or neutral (lack of sentiment) depending on whether they express a positive, negative or neutral opinion.
+      displayName: Identifies the Sentiment of the Document
+      responses:
+        200:
+          description: No response was specified
+  /SpamDetection.json:
+    post:
+      description: The Spam Detection function labels documents as spam or nospam by taking into account their context. It can be used to filter out spam emails and comments.
+      displayName: Classifies the Document as spam or nospam
+      responses:
+        200:
+          description: No response was specified
+  /SubjectivityAnalysis.json:
+    post:
+      description: The Subjectivity Analysis function categorizes documents as subjective or objective based on their writing style. Texts that express personal opinions are labeled as subjective and the others as objective.
+      displayName: Classifies Document as Subjective or Objective
+      responses:
+        200:
+          description: No response was specified
+  /TextExtraction.json:
+    post:
+      description: The Text Extraction function enables you to extract the important information from a given webpage. Extracting the clear text of the documents is an important step before any other analysis.
+      displayName: Extracts the clear text from Webpage
+      responses:
+        200:
+          description: No response was specified
+  /TopicClassification.json:
+    post:
+      description: The Topic Classification function assigns documents in 12 thematic categories based on their keywords, idioms and jargon. It can be used to identify the topic of the texts.
+      displayName: Identifies the Topic of the Document
+      responses:
+        200:
+          description: No response was specified
+  /TwitterSentimentAnalysis.json:
+    post:
+      description: The Twitter Sentiment Analysis function allows you to perform Sentiment Analysis on Twitter. It classifies the tweets as positive, negative or neutral depending on their context.
+      displayName: Identifies the Sentiment of Twitter Messages
+      responses:
+        200:
+          description: No response was specified

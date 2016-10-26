@@ -1,0 +1,2108 @@
+#%RAML 1.0
+title: hetras Hotel API Version 0
+version: v0
+baseUri: api.hetras-certification.net/
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  AccessControlInfo:
+    type: object
+    properties:
+      channel_codes?:
+        type: array
+        description: List of codes of distribution channels
+        items:
+          type: string
+      channel_group?:
+        type: string
+        description: Code of the distribution channel group
+  DatePeriod:
+    type: object
+    properties:
+      from?:
+        type: datetime
+        description: Start Date for this time period
+      to?:
+        type: datetime
+        description: End Date for this time period
+  Derivation:
+    type: object
+    properties:
+      adjustment?:
+        type: string
+        description: Mode for the calculation of the daily rates adjustment
+        enum:
+        - Amount
+        - Percentage
+      base_rateplan?:
+        type: RelatedRateplan
+        description: Details about the base rateplan
+  EmbeddedReservation:
+    type: object
+    properties:
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      arrival_date:
+        type: datetime
+        description: The arrival date of the guests
+      confirmation_id:
+        type: string
+        description: "he confirmation id for the booking which the guest can use to\
+          \ check in on the kiosk, add the \r\n            booking to the mobile app\
+          \ etc. It is used as identifier for all reservations done with the \r\n\
+          \            same booking request"
+      departure_date:
+        type: datetime
+        description: The departure date of the guests
+      reservation_number:
+        type: integer
+        description: The reservation number of the reservation
+        format: int32
+      reservation_status:
+        type: string
+        description: The current status of this reservation
+        enum:
+        - Tentative
+        - Waitlisted
+        - OnRequest
+        - NonGuaranteed
+        - Guaranteed
+        - InHouse
+        - CheckedOut
+        - NoShow
+        - Denied
+        - Cancelled
+        - Released
+        - Walked
+        - Expired
+        - WalkIn
+        - Registered
+    description: Basic data about a reservation
+  EmbeddedRoomType:
+    type: object
+    properties:
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      code?:
+        type: string
+        description: Code of the room type
+      description?:
+        type: string
+        description: Description of the room type
+      name?:
+        type: string
+        description: Name of the room type
+    description: "Basic data for a room type. To get the full details please follow\
+      \ the self link\r\n            from the links collection"
+  EmbeddedRoomTypeSimple:
+    type: object
+    properties:
+      code?:
+        type: string
+        description: Code of the room type
+      description?:
+        type: string
+        description: Description of the room type
+      name?:
+        type: string
+        description: Name of the room type
+    description: Contains only a basic information about a room type. No cross-links available as well.
+  EmbeddedRoomWithStatus:
+    type: object
+    properties:
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      description?:
+        type: string
+        description: Description of the room
+      name?:
+        type: string
+        description: Name of the room
+      number?:
+        type: string
+        description: Number of the room
+      room_type?:
+        type: EmbeddedRoomType
+        description: Room type of the room. Contains only the basic properties of the room type
+      status?:
+        type: RoomStatus
+        description: Contains information about room status.
+  ExtendedRateplanEntry:
+    type: object
+    properties:
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      access_control?:
+        type: array
+        description: List of distribution channel groups and channels the rateplan is sold through
+        items:
+          type: AccessControlInfo
+      active?:
+        type: boolean
+        description: Defines if the rateplan has been ended and is expired
+      active_periods?:
+        type: array
+        description: "List of active periods. Arrival and departure day for reservations\
+          \ based on this rateplan need to\r\n            fit into one of these time\
+          \ periods"
+        items:
+          type: DatePeriod
+      booking_periods?:
+        type: array
+        description: List of booking periods. During these time periods the rateplan is sold
+        items:
+          type: DatePeriod
+      code?:
+        type: string
+        description: Code of the rateplan
+      commissionable?:
+        type: boolean
+        description: Defines if this rateplan is setup with a commission
+      day_use?:
+        type: boolean
+        description: Defines if this rateplan is used for day use reservations
+      derivation?:
+        type: Derivation
+        description: "If this rateplan is derived from a base rateplan you will see\
+          \ some details about\r\n            the base rateplan and the mode for the\
+          \ adjustment of the daily rates"
+      derived_rateplans?:
+        type: array
+        description: Details about all the derived rateplans if any
+        items:
+          type: RelatedRateplan
+      description?:
+        type: string
+        description: Description of the rateplan
+      folio_name?:
+        type: string
+        description: "Text defining how the room charges for this rateplan are shown\
+          \ on the folio and\r\n            invoice for the guest"
+      group?:
+        type: RateplanGroup
+        description: Details about the rateplan group
+      included_services?:
+        type: array
+        description: List of codes for the included services sold with this rateplan
+        items:
+          type: string
+      market_code?:
+        type: string
+        description: The code of the market segment the rate plan is linked to
+      name?:
+        type: string
+        description: Name of the rateplan
+      noshow_policy?:
+        type: string
+        description: The code of the noshow policy for this rateplan
+      restrictions?:
+        type: Restrictions
+        description: Generic rateplan restrictions valid on all booking periods
+      room_types?:
+        type: array
+        description: List of all room types sold through this rateplan
+        items:
+          type: EmbeddedRoomType
+      suspended?:
+        type: boolean
+        description: "Defines if a rateplan is suspended and no new reservations can\
+          \ be created for this\r\n            rateplan at the moment"
+      taxes_included?:
+        type: boolean
+        description: Defines if the daily rates include VAT or not
+      visibility?:
+        type: string
+        description: Defines if this rateplan is visible to the public or only for specific customers
+        enum:
+        - Public
+        - Negotiated
+  GetAvailableRoomsRequest:
+    type: object
+    properties:
+      adults?:
+        type: string
+        description: Specifies number of adults the returned rooms will have to be able to house. The default value is 1.
+      amenities?:
+        type: array
+        description: "Return result only for rooms having all of the given amenities.\
+          \ You can provide a comma seperated list of \r\n            amenity codes."
+        items:
+          type: string
+      from:
+        type: datetime
+        description: "Rooms returned will not be assigned to a reservation or be under\
+          \ maintenance between this date\r\n            and the specified to date.\
+          \ Still there could be departing reservations or ending maintenances\r\n\
+          \            for this date."
+      includeOutOfService?:
+        type: boolean
+        description: "Should rooms that are set OutOfService in the defined time period\
+          \ be returned as available. By default\r\n            they are not."
+      locations?:
+        type: array
+        description: "Return result only for rooms having at least one of the specified\
+          \ locations. You can provide a comma seperated list of \r\n            location\
+          \ codes."
+        items:
+          type: string
+      roomTypes?:
+        type: array
+        description: Return result only for rooms for the given room types. Allows to pass a comma-separated list of room types.
+        items:
+          type: string
+      to:
+        type: datetime
+        description: "Rooms returned will not be assigned to a reservation or be under\
+          \ maintenance between the specified\r\n            from date and this date.\
+          \ Still there could be arriving reservations or beginning maintenances\r\
+          \n            for this date."
+      views?:
+        type: array
+        description: "Return result only for rooms having at least one of the specified\
+          \ views. You can provide a comma seperated list of \r\n            view\
+          \ codes."
+        items:
+          type: string
+  GetRatesRequest:
+    type: object
+    properties:
+      Expand?:
+        type: string
+        description: You can expand the supplements per room type on demand. By default they are not shown.
+        enum:
+        - RoomTypeSupplements
+      From:
+        type: datetime
+        description: "Defines the last business day you would like to get rates for.\
+          \ The maximum time span between <i>from</i>Â´and <i>to</i>\r\n         \
+          \   is limited to 365 days."
+      To:
+        type: datetime
+        description: Defines the first business day you would like to get rates for.
+  GetRoomListRequest:
+    type: object
+    properties:
+      amenities?:
+        type: array
+        description: "Return result only for rooms having all of the given amenities.\
+          \ You can provide a comma seperated list of \r\n            amenity codes."
+        items:
+          type: string
+      conditions?:
+        type: array
+        description: Return results only for rooms that have the given room condition status.
+        items:
+          type: string
+          enum:
+          - CleanNotInspected
+          - Clean
+          - Dirty
+      locations?:
+        type: array
+        description: "Return result only for rooms having at least one of the specified\
+          \ locations. You can provide a comma seperated list of \r\n            location\
+          \ codes."
+        items:
+          type: string
+      maintenances?:
+        type: array
+        description: Return results only for rooms that have the given maintenance status.
+        items:
+          type: string
+          enum:
+          - NotSet
+          - None
+          - OutOfInventory
+          - OutOfOrder
+          - OutOfService
+      occupancy?:
+        type: string
+        description: Return results only for rooms that have the given frontdesk ocuppancy status.
+        enum:
+        - Occupied
+        - Vacant
+      roomTypes?:
+        type: array
+        description: Return result only for rooms for the given room types. Allows to pass a comma-separated list of room types.
+        items:
+          type: string
+      views?:
+        type: array
+        description: "Return result only for rooms having at least one of the specified\
+          \ views. You can provide a comma seperated list of \r\n            view\
+          \ codes."
+        items:
+          type: string
+  Hotel:
+    type: object
+    properties:
+      city?:
+        type: string
+        description: The city the hotel is located in
+      code?:
+        type: string
+        description: The code of the hotel
+      country?:
+        type: string
+        description: "The country the hotel is located. The country code is in ISO\
+          \ 3166-1 alpha-2 format\r\n            (see: <a href=\"http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm\"\
+          \ onfocus=\"this.blur()\" target=\"_blank\">http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm</a>)"
+      current_business_day?:
+        type: datetime
+        description: Return the current business day of the hotel in the ISO-8601 format "YYYY-MM-DD"
+      desc?:
+        type: string
+        description: The descriptive text for the the hotel
+      email?:
+        type: string
+        description: The email address of the hotel
+      fax?:
+        type: string
+        description: The fax number of the hotel
+      hotel_id?:
+        type: integer
+        description: The id of the hotel
+        format: int32
+      latitude?:
+        type: number
+        description: The latitude for the geolocation of the hotel. This allows you to show the hotel on a map
+        format: double
+      longitude?:
+        type: number
+        description: The longitude for the geolocation of the hotel. This allows you to show the hotel on a map
+        format: double
+      name?:
+        type: string
+        description: The name of the hotel
+      phone?:
+        type: string
+        description: The main phone number to call the hotel
+      postal_code?:
+        type: string
+        description: The postal code of the hotel
+      state?:
+        type: string
+        description: The state the hotel is located in
+      street?:
+        type: string
+        description: The street address of the hotel
+      url?:
+        type: string
+        description: The homepage URL of the hotel
+      utc_offset?:
+        type: string
+        description: "The current time offset of the hotel to UTC. This is taking\
+          \ into account daylight saving times and shows the offset for the time the\
+          \ request is handled. The response\r\n            will be in the format\
+          \ of \"UTCÂ±hh:mm\". If there is no offset to UTC it will be shown as \"\
+          UTC+00:00\""
+  JsonPatchDocument_RatePatchRequest_:
+    type: object
+    properties:
+      Operations?:
+        type: array
+        items:
+          type: Operation_RatePatchRequest_
+    description: A set of JSON Patch operations.
+  JsonPatchDocument_RoomPatchRequest_:
+    type: object
+    properties:
+      Operations?:
+        type: array
+        items:
+          type: Operation_RoomPatchRequest_
+    description: A set of JSON Patch operations.
+  LinkObject:
+    type: object
+    properties:
+      deprecation?:
+        type: string
+        description: "<para>The \"deprecation\" property is OPTIONAL.</para>\r\n<para>Â\
+          \_</para>\r\n<para>Its presence indicates that the link is to be deprecated\
+          \ (i.e.\r\n            removed) at a future date.  Its value is a URL that\
+          \ SHOULD provide\r\n            further information about the deprecation.\r\
+          \n            A client SHOULD provide some notification (for example, by\
+          \ logging a\r\n            warning message) whenever it traverses over a\
+          \ link that has this\r\n            property.  The notification SHOULD include\
+          \ the deprecation property's\r\n            value so that a client maintainer\
+          \ can easily find information about\r\n            the deprecation.</para>"
+      href:
+        type: string
+        description: "<para>The \"href\" property is REQUIRED.</para>\r\n<para>Â\_\
+          </para>\r\n<para>Its value is either a URI [RFC3986] or a URI Template [RFC6570].\r\
+          \n            If the value is a URI Template then the Link Object SHOULD\
+          \ have a\r\n            \"templated\" attribute whose value is true.</para>"
+      hreflang?:
+        type: string
+        description: "<para>The \"hreflang\" property is OPTIONAL.</para>\r\n<para>Â\
+          \_</para>\r\n<para>Its value is a string and is intended for indicating\
+          \ the language of\r\n            the target resource (as defined by [RFC5988]).</para>"
+      name?:
+        type: string
+        description: "<para>The \"name\" property is OPTIONAL.</para>\r\n<para>Â\_\
+          </para>\r\n<para>Its value MAY be used as a secondary key for selecting\
+          \ Link Objects\r\n            which share the same relation type.</para>"
+      profile?:
+        type: string
+        description: "<para>The \"profile\" property is OPTIONAL.</para>\r\n<para>Â\
+          \_</para>\r\n<para>Its value is a string which is a URI that hints about\
+          \ the profile.</para>"
+      templated?:
+        type: boolean
+        description: "<para>The \"templated\" property is OPTIONAL.</para>\r\n<para>Â\
+          \_</para>\r\n<para>Its value is boolean and SHOULD be true when the Link\
+          \ Object's \"href\"\r\n            property is a URI Template.\r\n     \
+          \       Its value SHOULD be considered false if it is undefined or any other\r\
+          \n            value than true.</para>"
+      title?:
+        type: string
+        description: "<para>The \"title\" property is OPTIONAL.</para>\r\n<para>Â\_\
+          </para>\r\n<para>Its value is a string and is intended for labelling the\
+          \ link with a\r\n            human-readable identifier (as defined by [RFC5988]).</para>"
+      type?:
+        type: string
+        description: "<para>The \"type\" property is OPTIONAL.</para>\r\n<para>Â\_\
+          </para>\r\n<para>Its value is a string used as a hint to indicate the media\
+          \ type\r\n            expected when dereferencing the target resource.</para>"
+    description: A Link Object represents a hyperlink from the containing resource to a URI.
+  ListRateplanEntry:
+    type: object
+    properties:
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      access_control?:
+        type: array
+        description: List of distribution channel groups and channels the rateplan is sold through
+        items:
+          type: AccessControlInfo
+      active?:
+        type: boolean
+        description: Defines if the rateplan has been ended and is expired
+      active_periods?:
+        type: array
+        description: "List of active periods. Arrival and departure day for reservations\
+          \ based on this rateplan need to\r\n            fit into one of these time\
+          \ periods"
+        items:
+          type: DatePeriod
+      base_rateplan?:
+        type: string
+        description: Code of the base rateplan if this rateplan is derived
+      booking_periods?:
+        type: array
+        description: List of booking periods. During these time periods the rateplan is sold
+        items:
+          type: DatePeriod
+      code?:
+        type: string
+        description: Code of the rateplan
+      commissionable?:
+        type: boolean
+        description: Defines if this rateplan is setup with a commission
+      day_use?:
+        type: boolean
+        description: Defines if this rateplan is used for day use reservations
+      derived_rateplans?:
+        type: array
+        description: List of codes for all derived rateplans if any
+        items:
+          type: string
+      description?:
+        type: string
+        description: Description of the rateplan
+      group?:
+        type: string
+        description: Code of the rateplan group
+      included_services?:
+        type: array
+        description: List of codes for the included services sold with this rateplan
+        items:
+          type: string
+      market_code?:
+        type: string
+        description: The code of the market segment the rate plan is linked to
+      name?:
+        type: string
+        description: Name of the rateplan
+      room_types?:
+        type: array
+        description: List of all room types sold through this rateplan
+        items:
+          type: EmbeddedRoomTypeSimple
+      suspended?:
+        type: boolean
+        description: "Defines if a rateplan is suspended and no new reservations can\
+          \ be created for this\r\n            rateplan at the moment"
+      visibility?:
+        type: string
+        description: Defines if this rateplan is visible to the public or only for specific customers
+        enum:
+        - Public
+        - Negotiated
+  Object:
+    type: object
+  Operation_RatePatchRequest_:
+    type: object
+    properties:
+      from?:
+        type: string
+      op?:
+        type: string
+      path?:
+        type: string
+      value?:
+        type: Object
+  Operation_RoomPatchRequest_:
+    type: object
+    properties:
+      from?:
+        type: string
+      op?:
+        type: string
+      path?:
+        type: string
+      value?:
+        type: Object
+  PagedDataRequest:
+    type: object
+    properties:
+      inlinecount?:
+        type: string
+        description: Return total amount of items for a given filter criteria.
+        enum:
+        - None
+        - AllPages
+      skip?:
+        type: integer
+        description: Amount of items to skip.
+        format: int32
+      top?:
+        type: integer
+        description: Amount of items to select.
+        format: int32
+  Policy:
+    type: object
+    properties:
+      description?:
+        type: string
+        description: The description of the policy
+      name?:
+        type: string
+        description: The name of the policy
+  PriceDerivation:
+    type: object
+    properties:
+      adjustment?:
+        type: string
+        description: Mode for the calculation of the daily rates adjustment
+        enum:
+        - Amount
+        - Percentage
+      value?:
+        type: number
+        description: The value the rate of the base rateplan is adjusted by based on the calculation mode
+        format: double
+  RateResponse:
+    type: object
+    properties:
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      base_price?:
+        type: number
+        description: "The price for this business day for the default room type and\
+          \ occupancy of one adult. The price is\r\n            only available for\
+          \ base rateplans. Please be aware that it might be the case that the default\
+          \ room\r\n            type is not sold by the rateplan. Nevertheless the\
+          \ supplements will always be added to the price for \r\n            the\
+          \ default room type and one adult"
+        format: double
+      business_day?:
+        type: datetime
+        description: The business day
+      cancellation_policy?:
+        type: Policy
+        description: The cancellation policy
+      derivation?:
+        type: PriceDerivation
+        description: Information on how the rate is derived from its base rateplan
+      minimum_guarantee_type?:
+        type: string
+        description: The minimum guarantee
+        enum:
+        - PM4Hold
+        - PM6Hold
+        - GuaranteeToCreditCard
+        - GuaranteeToGuestAccount
+        - GuaranteeByTravelAgent
+        - GuaranteeByCompany
+        - Deposit
+        - Voucher
+        - Prepayment
+        - NonGuaranteed
+        - Tentative
+        - Waitlist
+      per_person_surcharge?:
+        type: number
+        description: The surcharge per additional adult staying in the room. It is only available on base rateplans
+        format: double
+      room_type_supplements?:
+        type: array
+        description: List of supplements added to the price per room type
+        items:
+          type: RoomTypeSupplement
+  RateplanGroup:
+    type: object
+    properties:
+      code?:
+        type: string
+        description: Code of the rateplan group
+      name?:
+        type: string
+        description: Name of the rateplan group
+  RateplansListRequest:
+    type: object
+    properties:
+      baseRateplan?:
+        type: string
+        description: Return all rateplans having the specified rateplan as base rateplan
+      channelCode?:
+        type: string
+        description: Return all rateplans sold through the specified channel
+      channelGroup?:
+        type: string
+        description: Return all rateplans that are sold through at least one channel out of the specified channel group
+      commissionable?:
+        type: boolean
+        description: Return all rateplans having commisionable status
+      group?:
+        type: string
+        description: Return all rateplans belonging to the specified rateplan group
+      includedServices?:
+        type: array
+        description: Return all rateplans having at least one of the specified services included
+        items:
+          type: string
+      marketCodes?:
+        type: array
+        description: Return all rateplans having one of the specified values as a market code
+        items:
+          type: string
+      roomTypes?:
+        type: array
+        description: Return all rateplans by which at least one of the specified room types are sold
+        items:
+          type: string
+      sellingStatus?:
+        type: string
+        description: "Specify which rateplans to return. If you do not specify a value\
+          \ you will by default get active\r\n            rateplans."
+        enum:
+        - Active
+        - Inactive
+        - All
+  RateplansListResponse:
+    type: object
+    properties:
+      _count?:
+        type: integer
+        description: The number of items matching your request in total for all pages.
+        format: int32
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      rateplans?:
+        type: array
+        description: List of rateplans
+        items:
+          type: ListRateplanEntry
+  RatesRequest:
+    type: object
+    properties:
+      From:
+        type: datetime
+        description: "Defines the last business day you would like to get rates for.\
+          \ The maximum time span between <i>from</i>Â´and <i>to</i>\r\n         \
+          \   is limited to 365 days."
+      To:
+        type: datetime
+        description: Defines the first business day you would like to get rates for.
+  RatesResponse:
+    type: object
+    properties:
+      _count?:
+        type: integer
+        description: The number of items matching your request in total for all pages.
+        format: int32
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      rates?:
+        type: array
+        description: The list of rates, cancellation policy and minimum guarantee per business day.
+        items:
+          type: RateResponse
+  RelatedRateplan:
+    type: object
+    properties:
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      code?:
+        type: string
+        description: Code of the rateplan
+      name?:
+        type: string
+        description: Name of the rateplan
+  Restrictions:
+    type: object
+    properties:
+      leadtime_to_book?:
+        type: integer
+        description: "Days this rateplan needs to be booked in advance. This value\
+          \ is mutual exclusive to the\r\n            <i>max_advance_booking</i> and\
+          \ if no limit is set it is omitted"
+        format: int32
+      max_advance_booking?:
+        type: integer
+        description: "Days this rateplan can be booked in advance. This value is mutual\
+          \ exclusive to the\r\n            <i>leadtime_to_book</i> and if no limit\
+          \ is set it is omitted"
+        format: int32
+  Room:
+    type: object
+    properties:
+      amenities?:
+        type: array
+        description: List of amenities for the room
+        items:
+          type: SimpleAttribute
+      beddings?:
+        type: array
+        description: Provides information about available beds in the room
+        items:
+          type: RoomBedding
+      description?:
+        type: string
+        description: Description of the room
+      expected_occupancy:
+        type: integer
+        description: The common amount of persons for the room
+        format: int32
+      extra_bed_allowed?:
+        type: boolean
+        description: Is there an extra bed allowed in the room
+      floor:
+        type: integer
+        description: Floor of the room
+        format: int32
+      locations?:
+        type: array
+        description: List of locations for the room
+        items:
+          type: SimpleAttribute
+      max_persons:
+        type: integer
+        description: Maximum number of allowed persons in the room
+        format: int32
+      min_persons:
+        type: integer
+        description: Minimum number of allowed persons in the room
+        format: int32
+      name?:
+        type: string
+        description: Name of the room
+      number:
+        type: string
+        description: Number of the room
+      reservations?:
+        type: array
+        description: "Current reservation(s) for the room. It shows reservations due\
+          \ to arrive today and the one still inhouse.\r\n            If there is\
+          \ a day-use reservation assigned for today it can show you up to 3 reservations.\
+          \ One that will\r\n            depart today, the day-use reservqation for\
+          \ today and the one due to arrive"
+        items:
+          type: EmbeddedReservation
+      room_type:
+        type: EmbeddedRoomType
+        description: Room type of the room. Contains only the basic properties of the room type
+      status:
+        type: RoomStatus
+        description: Contains information about room status
+      views?:
+        type: array
+        description: List of views for the room
+        items:
+          type: SimpleAttribute
+    description: Represents a room for a property.
+  RoomBedding:
+    type: object
+    properties:
+      count?:
+        type: integer
+        description: Number of available beds of the specified type
+        format: int32
+      type?:
+        type: string
+        description: The type of bed
+        enum:
+        - NotDefined
+        - Double
+        - Futon
+        - King
+        - MurphyBed
+        - Queen
+        - SofaBed
+        - TatamiMats
+        - Twin
+        - Single
+    description: Information about room bedding
+  RoomListResponse:
+    type: object
+    properties:
+      _count?:
+        type: integer
+        description: The number of items matching your request in total for all pages.
+        format: int32
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      rooms?:
+        type: array
+        description: List of rooms
+        items:
+          type: EmbeddedRoomWithStatus
+  RoomMaintenance:
+    type: object
+    properties:
+      from?:
+        type: string
+        description: Start date of the current maintenance work
+      reason?:
+        type: string
+        description: A description about the reason for the ongoing maintenance work
+      to?:
+        type: string
+        description: End date of the current maintenance work
+      value?:
+        type: string
+        description: Maintenance Status
+        enum:
+        - NotSet
+        - None
+        - OutOfInventory
+        - OutOfOrder
+        - OutOfService
+  RoomStatus:
+    type: object
+    properties:
+      condition?:
+        type: string
+        description: Room Condition status
+        enum:
+        - CleanNotInspected
+        - Clean
+        - Dirty
+      frontdesk_occupancy?:
+        type: string
+        description: "The frontdesk occupancy is set by reservation checkin and checkout.\
+          \ It can differ from the\r\n            housekeeping occupancy"
+        enum:
+        - Occupied
+        - Vacant
+      housekeeping_occupancy?:
+        type: string
+        description: "The housekeeping occupancy status is defined by the housekeeping\
+          \ staff. Usually it matches the\r\n            frontdesk occupancy, but\
+          \ sometimes the reservation is still inhouse, but it looks like there is\
+          \ no\r\n            guest in the room anymore. Then the statuses can differ."
+        enum:
+        - Occupied
+        - Vacant
+      maintenance?:
+        type: RoomMaintenance
+        description: Information about current ongoing room maintenance
+    description: Represents current room status data.
+  RoomType:
+    type: object
+    properties:
+      amenities?:
+        type: array
+        description: List of amenities for the room type
+        items:
+          type: SimpleAttribute
+      bedding_type?:
+        type: string
+        description: The type of bed for the room type
+        enum:
+        - NotDefined
+        - Double
+        - Futon
+        - King
+        - MurphyBed
+        - Queen
+        - SofaBed
+        - TatamiMats
+        - Twin
+        - Single
+      code?:
+        type: string
+        description: Code of the room type
+      default?:
+        type: boolean
+        description: Specifies if the room type is the default room type of the hotel
+      description?:
+        type: string
+        description: Description of the room type
+      expected_occupancy?:
+        type: integer
+        description: The common amount of persons for the room
+        format: int32
+      facilities?:
+        type: array
+        description: List of facilities for the room type
+        items:
+          type: SimpleAttribute
+      max_persons?:
+        type: integer
+        description: Maximum number of allowed persons for that room type
+        format: int32
+      min_persons?:
+        type: integer
+        description: Minimum number of allowed persons for that room type
+        format: int32
+      name?:
+        type: string
+        description: Name of the room type
+      views?:
+        type: array
+        description: List of views for the room type
+        items:
+          type: SimpleAttribute
+    description: Represent a room type for a property
+  RoomTypeSupplement:
+    type: object
+    properties:
+      _links?:
+        type: object
+        properties:
+          //:
+            type: LinkObject
+        description: Collection of links to related resources
+      code?:
+        type: string
+        description: The code of the room type
+      default?:
+        type: boolean
+        description: Specifies if the room type is the default room type of the hotel
+      supplements?:
+        type: array
+        description: The supplements per adults in the room. The per person surcharge will be added on top
+        items:
+          type: Supplement
+  SimpleAttribute:
+    type: object
+    properties:
+      code?:
+        type: string
+        description: The code of the attribute
+      name?:
+        type: string
+        description: The name of the attribute
+    description: Represents a simple attribute
+  Supplement:
+    type: object
+    properties:
+      adjustment?:
+        type: string
+        description: Mode for the calculation of the supplement value
+        enum:
+        - Amount
+        - Percentage
+      adults?:
+        type: integer
+        description: The number of adults per room
+        format: int32
+      supplement?:
+        type: number
+        description: The amount or percentage that will be added for this room type and number of adults per room
+        format: double
+  TotalCountResponse:
+    type: object
+    properties:
+      _count:
+        type: integer
+        description: Returns the total count for all items matching the query parameters. If none is matching it will return 0.
+        format: int64
+/api:
+  /hotel:
+    /v0:
+      /hotels:
+        /{hotelId}:
+          uriParameters:
+            hotelId:
+              type: integer
+              displayName: hotelId
+              format: int32
+          /rateplans:
+            /$count:
+              get:
+                displayName: Get the count of all rateplans in the hotel matching the given filter criteria.
+                queryParameters:
+                  sellingStatus?:
+                    type: string
+                    description: "Specify which rateplans to return. If you do not\
+                      \ specify a value you will by default get active\r\n       \
+                      \     rateplans."
+                    displayName: sellingStatus
+                    enum:
+                    - Active
+                    - Inactive
+                    - All
+                  commissionable?:
+                    type: boolean
+                    description: Return all rateplans having commisionable status
+                    displayName: commissionable
+                  group?:
+                    type: string
+                    description: Return all rateplans belonging to the specified rateplan group
+                    displayName: group
+                  baseRateplan?:
+                    type: string
+                    description: Return all rateplans having the specified rateplan as base rateplan
+                    displayName: baseRateplan
+                  channelGroup?:
+                    type: string
+                    description: Return all rateplans that are sold through at least one channel out of the specified channel group
+                    displayName: channelGroup
+                  channelCode?:
+                    type: string
+                    description: Return all rateplans sold through the specified channel
+                    displayName: channelCode
+                  marketCodes?:
+                    type: array
+                    description: Return all rateplans having one of the specified values as a market code
+                    displayName: marketCodes
+                    items:
+                      type: string
+                  roomTypes?:
+                    type: array
+                    description: Return all rateplans by which at least one of the specified room types are sold
+                    displayName: roomTypes
+                    items:
+                      type: string
+                  includedServices?:
+                    type: array
+                    description: Return all rateplans having at least one of the specified services included
+                    displayName: includedServices
+                    items:
+                      type: string
+                headers:
+                  App-Id:
+                    type: string
+                    description: Application identifier
+                    displayName: App-Id
+                  App-Key:
+                    type: string
+                    description: Application key.
+                    displayName: App-Key
+                responses:
+                  200:
+                    description: The rateplans count in the hotel matching the given filter criteria.
+                    body:
+                      application/json:
+                        type: TotalCountResponse
+                      text/json:
+                        type: TotalCountResponse
+                  401:
+                    description: You provided wrong credentials, or you reached your API limit.
+                  403:
+                    description: The application does not have access to the requested resource.
+                  404:
+                    description: Not Found. The server has not found anything matching the Request-URI.
+                  422:
+                    description: The request failed to validate.
+                  500:
+                    description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                  503:
+                    description: The server is currently unavailable. Please try later.
+            /{rateplanCode}:
+              uriParameters:
+                rateplanCode:
+                  type: string
+                  description: The code of the rateplan you want to see details for.
+                  displayName: rateplanCode
+              /rates:
+                /$count:
+                  get:
+                    displayName: Get the count of all active and loaded daily rates for the defined rateplan in a specified time period.
+                    queryParameters:
+                      from:
+                        type: datetime
+                        description: "Defines the last business day you would like\
+                          \ to get rates for. The maximum time span between <i>from</i>Â\
+                          ´and <i>to</i>\r\n            is limited to 365 days."
+                        displayName: from
+                      to:
+                        type: datetime
+                        description: Defines the first business day you would like to get rates for.
+                        displayName: to
+                    headers:
+                      App-Id:
+                        type: string
+                        description: Application identifier
+                        displayName: App-Id
+                      App-Key:
+                        type: string
+                        description: Application key.
+                        displayName: App-Key
+                    responses:
+                      200:
+                        description: The count of daily rates for the specified time period.
+                        body:
+                          application/json:
+                            type: TotalCountResponse
+                          text/json:
+                            type: TotalCountResponse
+                      401:
+                        description: You provided wrong credentials, or you reached your API limit.
+                      403:
+                        description: The application does not have access to the requested resource.
+                      404:
+                        description: Not Found. The server has not found anything matching the Request-URI or the requested room could not be found.
+                      422:
+                        description: The request failed to validate.
+                      500:
+                        description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                      503:
+                        description: The server is currently unavailable. Please try later.
+                /{businessDay}:
+                  uriParameters:
+                    businessDay:
+                      type: datetime
+                      description: The business day you want to get the rate setup for.
+                      displayName: businessDay
+                  get:
+                    description: Read the setup of the daily rate for the defined rateplan for that specific business day.
+                    displayName: Get the setup of a daily rate for a specific business day and rateplan.
+                    headers:
+                      App-Id:
+                        type: string
+                        description: Application identifier
+                        displayName: App-Id
+                      App-Key:
+                        type: string
+                        description: Application key.
+                        displayName: App-Key
+                    responses:
+                      200:
+                        description: Daily rate with room type supplements for the specified rateplan and business day.
+                        body:
+                          application/json:
+                            type: RateResponse
+                          text/json:
+                            type: RateResponse
+                      401:
+                        description: You provided wrong credentials, or you reached your API limit.
+                      403:
+                        description: The application does not have access to the requested resource.
+                      404:
+                        description: "Not Found. The server has not found anything\
+                          \ matching the Request-URI or the requested\r\n        \
+                          \    rateplan could not be found or the rate is inactive\
+                          \ on this business day."
+                      422:
+                        description: The request failed to validate.
+                      500:
+                        description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                      503:
+                        description: The server is currently unavailable. Please try later.
+                  patch:
+                    description: "The hetras API is using <a href=\"https://tools.ietf.org/html/rfc6902\"\
+                      \ onfocus=\"this.blur()\" target=\"_blank\">IETF JSON Patch\
+                      \ RFC 6902</a>\r\n            to partially update an existing\
+                      \ resource. Currently this call only allows to set the base\
+                      \ price for non-derived rateplans if the rateplan\r\n      \
+                      \      is active and already loaded for the specified business\
+                      \ day.\r\n            <br /><br />\r\n            A request\
+                      \ example:<br /><pre>\r\n            [\r\n              {\r\n\
+                      \                \"op\": \"replace\", \"path\": \"/base_price\"\
+                      , \"value\": 120.00\r\n              }\r\n            ]\r\n\
+                      \            </pre><br />\r\n            For more details on\
+                      \ how the API responds to errors please check our documentation\
+                      \ on \r\n            <a href=\"https://developer.hetras.com/docs/errors/\"\
+                      \ onfocus=\"this.blur()\">Error Handling</a>.<br />"
+                    displayName: Partially update a rate of the specified rateplan for a defined business day.
+                    headers:
+                      App-Id:
+                        type: string
+                        description: Application identifier
+                        displayName: App-Id
+                      App-Key:
+                        type: string
+                        description: Application key.
+                        displayName: App-Key
+                    body:
+                      application/json: JsonPatchDocument_RatePatchRequest_
+                      text/json: JsonPatchDocument_RatePatchRequest_
+                    responses:
+                      200:
+                        description: The update was successful
+                        body:
+                          application/json:
+                            type: Object
+                          text/json:
+                            type: Object
+                      400:
+                        description: Bad request. Request body erroneous.
+                      401:
+                        description: You provided wrong credentials, or you reached your API limit.
+                      403:
+                        description: The application does not have access to the requested resource.
+                      404:
+                        description: Not Found. The server has not found anything matching the Request-URI.
+                      422:
+                        description: The request failed to validate.
+                      500:
+                        description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                      503:
+                        description: The server is currently unavailable. Please try later.
+                get:
+                  description: "With this call you can read the daily rates setup\
+                    \ including the cancellation policy and minimum guarantee per\
+                    \ day for the\r\n            specified rateplan. You can specify\
+                    \ a timeperiod to read the daily rates for. The rateplan needs\
+                    \ to be active for at least\r\n            one business day in\
+                    \ the defined time period and have rates loaded."
+                  displayName: Get the setup of the daily rates for a specific rateplan and a defined timeperiod.
+                  queryParameters:
+                    expand?:
+                      type: string
+                      description: You can expand the supplements per room type on demand. By default they are not shown.
+                      displayName: expand
+                      enum:
+                      - RoomTypeSupplements
+                    from:
+                      type: datetime
+                      description: "Defines the last business day you would like to\
+                        \ get rates for. The maximum time span between <i>from</i>Â\
+                        ´and <i>to</i>\r\n            is limited to 365 days."
+                      displayName: from
+                    to:
+                      type: datetime
+                      description: Defines the first business day you would like to get rates for.
+                      displayName: to
+                    skip?:
+                      type: integer
+                      description: Amount of items to skip.
+                      displayName: skip
+                      format: int32
+                    top?:
+                      type: integer
+                      description: Amount of items to select.
+                      displayName: top
+                      format: int32
+                    inlinecount?:
+                      type: string
+                      description: Return total amount of items for a given filter criteria.
+                      displayName: inlinecount
+                      enum:
+                      - None
+                      - AllPages
+                  headers:
+                    App-Id:
+                      type: string
+                      description: Application identifier
+                      displayName: App-Id
+                    App-Key:
+                      type: string
+                      description: Application key.
+                      displayName: App-Key
+                  responses:
+                    200:
+                      description: List of daily rates within the specified time preiod.
+                      body:
+                        application/json:
+                          type: RatesResponse
+                        text/json:
+                          type: RatesResponse
+                    204:
+                      description: The rateplan does not have any active date or is not loaded within the defined time period.
+                    401:
+                      description: You provided wrong credentials, or you reached your API limit.
+                    403:
+                      description: The application does not have access to the requested resource.
+                    404:
+                      description: Not Found. The server has not found anything matching the Request-URI or the requested rateplan could not be found.
+                    422:
+                      description: The request failed to validate.
+                    500:
+                      description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                    503:
+                      description: The server is currently unavailable. Please try later.
+                patch:
+                  description: "The hetras API is using <a href=\"https://tools.ietf.org/html/rfc6902\"\
+                    \ onfocus=\"this.blur()\" target=\"_blank\">IETF JSON Patch RFC\
+                    \ 6902</a>\r\n            to partially update an existing resource.\
+                    \ Currently this call only allows to set the base price for non-derived\
+                    \ rateplans if the rateplan\r\n            is active and already\
+                    \ loaded for the specified time period.\r\n            <br /><br\
+                    \ />\r\n            A request example:<br /><pre>\r\n        \
+                    \    [\r\n              {\r\n                \"op\": \"replace\"\
+                    , \"path\": \"/base_price\", \"value\": 120.00\r\n           \
+                    \   }\r\n            ]\r\n            </pre><br />\r\n       \
+                    \     For more details on how the API responds to errors please\
+                    \ check our documentation on \r\n            <a href=\"https://developer.hetras.com/docs/errors/\"\
+                    \ onfocus=\"this.blur()\">Error Handling</a>.<br />"
+                  displayName: Partially update a rate of the specified rateplan for the defined time period.
+                  queryParameters:
+                    from:
+                      type: datetime
+                      description: "Defines the last business day you would like to\
+                        \ get rates for. The maximum time span between <i>from</i>Â\
+                        ´and <i>to</i>\r\n            is limited to 365 days."
+                      displayName: from
+                    to:
+                      type: datetime
+                      description: Defines the first business day you would like to get rates for.
+                      displayName: to
+                  headers:
+                    App-Id:
+                      type: string
+                      description: Application identifier
+                      displayName: App-Id
+                    App-Key:
+                      type: string
+                      description: Application key.
+                      displayName: App-Key
+                  body:
+                    application/json: JsonPatchDocument_RatePatchRequest_
+                    text/json: JsonPatchDocument_RatePatchRequest_
+                  responses:
+                    200:
+                      description: The update was successful
+                      body:
+                        application/json:
+                          type: Object
+                        text/json:
+                          type: Object
+                    400:
+                      description: Bad request. Request body erroneous.
+                    401:
+                      description: You provided wrong credentials, or you reached your API limit.
+                    403:
+                      description: The application does not have access to the requested resource.
+                    404:
+                      description: Not Found. The server has not found anything matching the Request-URI.
+                    422:
+                      description: The request failed to validate.
+                    500:
+                      description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                    503:
+                      description: The server is currently unavailable. Please try later.
+              get:
+                description: Read the details about a specific rateplan for the defined hotel.
+                displayName: Get all the details for a specific rateplan in the hotel.
+                headers:
+                  App-Id:
+                    type: string
+                    description: Application identifier
+                    displayName: App-Id
+                  App-Key:
+                    type: string
+                    description: Application key.
+                    displayName: App-Key
+                responses:
+                  200:
+                    description: Rateplan details for the given rateplan and hotel.
+                    body:
+                      application/json:
+                        type: ExtendedRateplanEntry
+                      text/json:
+                        type: ExtendedRateplanEntry
+                  401:
+                    description: You provided wrong credentials, or you reached your API limit.
+                  403:
+                    description: The application does not have access to the requested resource.
+                  404:
+                    description: Not Found. The server has not found anything matching the Request-URI or the requested rateplan could not be found.
+                  422:
+                    description: The request failed to validate.
+                  500:
+                    description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                  503:
+                    description: The server is currently unavailable. Please try later.
+            get:
+              description: "With this call you can find rateplans for a hotel by different\
+                \ filters. By default and without any filter criteria\r\n        \
+                \    defined it will return you all active rateplans."
+              displayName: Get a list of rateplans for for the specified hotel id matching the filter criteria.
+              queryParameters:
+                sellingStatus?:
+                  type: string
+                  description: "Specify which rateplans to return. If you do not specify\
+                    \ a value you will by default get active\r\n            rateplans."
+                  displayName: sellingStatus
+                  enum:
+                  - Active
+                  - Inactive
+                  - All
+                commissionable?:
+                  type: boolean
+                  description: Return all rateplans having commisionable status
+                  displayName: commissionable
+                group?:
+                  type: string
+                  description: Return all rateplans belonging to the specified rateplan group
+                  displayName: group
+                baseRateplan?:
+                  type: string
+                  description: Return all rateplans having the specified rateplan as base rateplan
+                  displayName: baseRateplan
+                channelGroup?:
+                  type: string
+                  description: Return all rateplans that are sold through at least one channel out of the specified channel group
+                  displayName: channelGroup
+                channelCode?:
+                  type: string
+                  description: Return all rateplans sold through the specified channel
+                  displayName: channelCode
+                marketCodes?:
+                  type: array
+                  description: Return all rateplans having one of the specified values as a market code
+                  displayName: marketCodes
+                  items:
+                    type: string
+                roomTypes?:
+                  type: array
+                  description: Return all rateplans by which at least one of the specified room types are sold
+                  displayName: roomTypes
+                  items:
+                    type: string
+                includedServices?:
+                  type: array
+                  description: Return all rateplans having at least one of the specified services included
+                  displayName: includedServices
+                  items:
+                    type: string
+                skip?:
+                  type: integer
+                  description: Amount of items to skip.
+                  displayName: skip
+                  format: int32
+                top?:
+                  type: integer
+                  description: Amount of items to select.
+                  displayName: top
+                  format: int32
+                inlinecount?:
+                  type: string
+                  description: Return total amount of items for a given filter criteria.
+                  displayName: inlinecount
+                  enum:
+                  - None
+                  - AllPages
+              headers:
+                App-Id:
+                  type: string
+                  description: Application identifier
+                  displayName: App-Id
+                App-Key:
+                  type: string
+                  description: Application key.
+                  displayName: App-Key
+              responses:
+                200:
+                  description: A list of rateplans for a requested hotel matching the filter criteria.
+                  body:
+                    application/json:
+                      type: RateplansListResponse
+                    text/json:
+                      type: RateplansListResponse
+                204:
+                  description: There are no rateplans found for the given filtering and pagination criteria.
+                401:
+                  description: You provided wrong credentials, or you reached your API limit.
+                403:
+                  description: The application does not have access to the requested resource.
+                404:
+                  description: Not Found. The server has not found anything matching the Request-URI.
+                422:
+                  description: The request failed to validate.
+                500:
+                  description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                503:
+                  description: The server is currently unavailable. Please try later.
+          /room_types:
+            /{code}:
+              uriParameters:
+                code:
+                  type: string
+                  description: The code of the room type you want to see details for.
+                  displayName: code
+              get:
+                description: With this call you can load the details about a specific room type in the hotel.
+                displayName: Get all the details for a specific room type in the hotel.
+                headers:
+                  App-Id:
+                    type: string
+                    description: Application identifier
+                    displayName: App-Id
+                  App-Key:
+                    type: string
+                    description: Application key.
+                    displayName: App-Key
+                responses:
+                  200:
+                    description: Room type details for the given room and hotel.
+                    body:
+                      application/json:
+                        type: RoomType
+                      text/json:
+                        type: RoomType
+                  401:
+                    description: You provided wrong credentials, or you reached your API limit.
+                  403:
+                    description: The application does not have access to the requested resource.
+                  404:
+                    description: Not Found. The server has not found anything matching the Request-URI or the requested room could not be found.
+                  500:
+                    description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                  503:
+                    description: The server is currently unavailable. Please try later.
+            get:
+              description: With this call you can load the details about a all available room types for the specified hotel.
+              displayName: Get a list with the details of all room types for for the specified hotel id.
+              headers:
+                App-Id:
+                  type: string
+                  description: Application identifier
+                  displayName: App-Id
+                App-Key:
+                  type: string
+                  description: Application key.
+                  displayName: App-Key
+              responses:
+                200:
+                  description: A list of room types for the given hotel.
+                  body:
+                    application/json:
+                      type: array
+                      items:
+                        type: RoomType
+                    text/json:
+                      type: array
+                      items:
+                        type: RoomType
+                401:
+                  description: You provided wrong credentials, or you reached your API limit.
+                403:
+                  description: The application does not have access to the requested resource.
+                404:
+                  description: Not Found. The server has not found anything matching the Request-URI or the requested room could not be found.
+                500:
+                  description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                503:
+                  description: The server is currently unavailable. Please try later.
+          /rooms:
+            /$count:
+              get:
+                displayName: Get the count of all rooms in the hotel matching the given filter criteria.
+                queryParameters:
+                  occupancy?:
+                    type: string
+                    description: Return results only for rooms that have the given frontdesk ocuppancy status.
+                    displayName: occupancy
+                    enum:
+                    - Occupied
+                    - Vacant
+                  conditions?:
+                    type: array
+                    description: Return results only for rooms that have the given room condition status.
+                    displayName: conditions
+                    items:
+                      type: string
+                      enum:
+                      - CleanNotInspected
+                      - Clean
+                      - Dirty
+                  maintenances?:
+                    type: array
+                    description: Return results only for rooms that have the given maintenance status.
+                    displayName: maintenances
+                    items:
+                      type: string
+                      enum:
+                      - NotSet
+                      - None
+                      - OutOfInventory
+                      - OutOfOrder
+                      - OutOfService
+                  roomTypes?:
+                    type: array
+                    description: Return result only for rooms for the given room types. Allows to pass a comma-separated list of room types.
+                    displayName: roomTypes
+                    items:
+                      type: string
+                  amenities?:
+                    type: array
+                    description: "Return result only for rooms having all of the given\
+                      \ amenities. You can provide a comma seperated list of \r\n\
+                      \            amenity codes."
+                    displayName: amenities
+                    items:
+                      type: string
+                  views?:
+                    type: array
+                    description: "Return result only for rooms having at least one\
+                      \ of the specified views. You can provide a comma seperated\
+                      \ list of \r\n            view codes."
+                    displayName: views
+                    items:
+                      type: string
+                  locations?:
+                    type: array
+                    description: "Return result only for rooms having at least one\
+                      \ of the specified locations. You can provide a comma seperated\
+                      \ list of \r\n            location codes."
+                    displayName: locations
+                    items:
+                      type: string
+                headers:
+                  App-Id:
+                    type: string
+                    description: Application identifier
+                    displayName: App-Id
+                  App-Key:
+                    type: string
+                    description: Application key.
+                    displayName: App-Key
+                responses:
+                  200:
+                    description: The room count in the hotel matching the given filter criteria.
+                    body:
+                      application/json:
+                        type: TotalCountResponse
+                      text/json:
+                        type: TotalCountResponse
+                  401:
+                    description: You provided wrong credentials, or you reached your API limit.
+                  403:
+                    description: The application does not have access to the requested resource.
+                  404:
+                    description: Not Found. The server has not found anything matching the Request-URI or the requested room could not be found.
+                  422:
+                    description: The request failed to validate.
+                  500:
+                    description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                  503:
+                    description: The server is currently unavailable. Please try later.
+            /available:
+              get:
+                displayName: Request available rooms using a given criteria.
+                queryParameters:
+                  from:
+                    type: datetime
+                    description: "Rooms returned will not be assigned to a reservation\
+                      \ or be under maintenance between this date\r\n            and\
+                      \ the specified to date. Still there could be departing reservations\
+                      \ or ending maintenances\r\n            for this date."
+                    displayName: from
+                  to:
+                    type: datetime
+                    description: "Rooms returned will not be assigned to a reservation\
+                      \ or be under maintenance between the specified\r\n        \
+                      \    from date and this date. Still there could be arriving\
+                      \ reservations or beginning maintenances\r\n            for\
+                      \ this date."
+                    displayName: to
+                  adults?:
+                    type: string
+                    description: Specifies number of adults the returned rooms will have to be able to house. The default value is 1.
+                    displayName: adults
+                  includeOutOfService?:
+                    type: boolean
+                    description: "Should rooms that are set OutOfService in the defined\
+                      \ time period be returned as available. By default\r\n     \
+                      \       they are not."
+                    displayName: includeOutOfService
+                  roomTypes?:
+                    type: array
+                    description: Return result only for rooms for the given room types. Allows to pass a comma-separated list of room types.
+                    displayName: roomTypes
+                    items:
+                      type: string
+                  amenities?:
+                    type: array
+                    description: "Return result only for rooms having all of the given\
+                      \ amenities. You can provide a comma seperated list of \r\n\
+                      \            amenity codes."
+                    displayName: amenities
+                    items:
+                      type: string
+                  views?:
+                    type: array
+                    description: "Return result only for rooms having at least one\
+                      \ of the specified views. You can provide a comma seperated\
+                      \ list of \r\n            view codes."
+                    displayName: views
+                    items:
+                      type: string
+                  locations?:
+                    type: array
+                    description: "Return result only for rooms having at least one\
+                      \ of the specified locations. You can provide a comma seperated\
+                      \ list of \r\n            location codes."
+                    displayName: locations
+                    items:
+                      type: string
+                  skip?:
+                    type: integer
+                    description: Amount of items to skip.
+                    displayName: skip
+                    format: int32
+                  top?:
+                    type: integer
+                    description: Amount of items to select.
+                    displayName: top
+                    format: int32
+                  inlinecount?:
+                    type: string
+                    description: Return total amount of items for a given filter criteria.
+                    displayName: inlinecount
+                    enum:
+                    - None
+                    - AllPages
+                headers:
+                  App-Id:
+                    type: string
+                    description: Application identifier
+                    displayName: App-Id
+                  App-Key:
+                    type: string
+                    description: Application key.
+                    displayName: App-Key
+                responses:
+                  200:
+                    description: A list of available rooms in the specified time period.
+                    body:
+                      application/json:
+                        type: RoomListResponse
+                      text/json:
+                        type: RoomListResponse
+                  204:
+                    description: There are no available rooms found for the given criteria.
+                  401:
+                    description: You provided wrong credentials, or you reached your API limit.
+                  403:
+                    description: The application does not have access to the requested resource.
+                  404:
+                    description: Not Found. The server has not found anything matching the Request-URI or the requested room could not be found.
+                  422:
+                    description: The request failed to validate.
+                  500:
+                    description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                  503:
+                    description: The server is currently unavailable. Please try later.
+            /{roomNumber}:
+              uriParameters:
+                roomNumber:
+                  type: string
+                  description: The room number you want to see details for.
+                  displayName: roomNumber
+              get:
+                description: With this call you can load the details about a specific room in the hotel. It will show you the current status of the room.
+                displayName: Get all the details for a specific room in the hotel.
+                headers:
+                  App-Id:
+                    type: string
+                    description: Application identifier
+                    displayName: App-Id
+                  App-Key:
+                    type: string
+                    description: Application key.
+                    displayName: App-Key
+                responses:
+                  200:
+                    description: Room details for the given room and hotel.
+                    body:
+                      application/json:
+                        type: Room
+                      text/json:
+                        type: Room
+                  401:
+                    description: You provided wrong credentials, or you reached your API limit.
+                  403:
+                    description: The application does not have access to the requested resource.
+                  404:
+                    description: Not Found. The server has not found anything matching the Request-URI or the requested room could not be found.
+                  500:
+                    description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                  503:
+                    description: The server is currently unavailable. Please try later.
+              patch:
+                description: "The hetras API is using <a href=\"https://tools.ietf.org/html/rfc6902\"\
+                  \ onfocus=\"this.blur()\" target=\"_blank\">IETF JSON Patch RFC\
+                  \ 6902</a>\r\n            to partially update an existing resource.\
+                  \ Currently this call only allows to modify condition and housekeeping\
+                  \ occupancy status of the room.\r\n            <br /><br />\r\n\
+                  \            A request example:<br /><pre>\r\n            [\r\n\
+                  \              {\r\n                \"op\": \"replace\", \"path\"\
+                  : \"/status/condition\", \"value\": \"CleanNotInspected\"\r\n  \
+                  \            }, {\r\n                \"op\": \"replace\", \"path\"\
+                  : \"/status/housekeeping_occupancy\", \"value\": \"Vacant\"\r\n\
+                  \              }\r\n            ]\r\n            </pre><br />\r\n\
+                  \            For more details on how the API responds to errors\
+                  \ please check our documentation on \r\n            <a href=\"https://developer.hetras.com/docs/errors/\"\
+                  \ onfocus=\"this.blur()\">Error Handling</a>.<br />"
+                displayName: Partially updates a room.
+                headers:
+                  App-Id:
+                    type: string
+                    description: Application identifier
+                    displayName: App-Id
+                  App-Key:
+                    type: string
+                    description: Application key.
+                    displayName: App-Key
+                body:
+                  application/json: JsonPatchDocument_RoomPatchRequest_
+                  text/json: JsonPatchDocument_RoomPatchRequest_
+                responses:
+                  200:
+                    description: The update was successful
+                    body:
+                      application/json:
+                        type: Object
+                      text/json:
+                        type: Object
+                  400:
+                    description: Bad request. Request body erroneous.
+                  401:
+                    description: You provided wrong credentials, or you reached your API limit.
+                  403:
+                    description: The application does not have access to the requested resource.
+                  404:
+                    description: Not Found. The server has not found anything matching the Request-URI.
+                  422:
+                    description: The request failed to validate.
+                  500:
+                    description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                  503:
+                    description: The server is currently unavailable. Please try later.
+            get:
+              description: "Find all rooms for the hotel that match the specified\
+                \ filter criteria. The filtering will be done based on the current\
+                \ state of\r\n            the rooms."
+              displayName: Get a list of rooms using the provided filtering and pagination criteria.
+              queryParameters:
+                occupancy?:
+                  type: string
+                  description: Return results only for rooms that have the given frontdesk ocuppancy status.
+                  displayName: occupancy
+                  enum:
+                  - Occupied
+                  - Vacant
+                conditions?:
+                  type: array
+                  description: Return results only for rooms that have the given room condition status.
+                  displayName: conditions
+                  items:
+                    type: string
+                    enum:
+                    - CleanNotInspected
+                    - Clean
+                    - Dirty
+                maintenances?:
+                  type: array
+                  description: Return results only for rooms that have the given maintenance status.
+                  displayName: maintenances
+                  items:
+                    type: string
+                    enum:
+                    - NotSet
+                    - None
+                    - OutOfInventory
+                    - OutOfOrder
+                    - OutOfService
+                roomTypes?:
+                  type: array
+                  description: Return result only for rooms for the given room types. Allows to pass a comma-separated list of room types.
+                  displayName: roomTypes
+                  items:
+                    type: string
+                amenities?:
+                  type: array
+                  description: "Return result only for rooms having all of the given\
+                    \ amenities. You can provide a comma seperated list of \r\n  \
+                    \          amenity codes."
+                  displayName: amenities
+                  items:
+                    type: string
+                views?:
+                  type: array
+                  description: "Return result only for rooms having at least one of\
+                    \ the specified views. You can provide a comma seperated list\
+                    \ of \r\n            view codes."
+                  displayName: views
+                  items:
+                    type: string
+                locations?:
+                  type: array
+                  description: "Return result only for rooms having at least one of\
+                    \ the specified locations. You can provide a comma seperated list\
+                    \ of \r\n            location codes."
+                  displayName: locations
+                  items:
+                    type: string
+                skip?:
+                  type: integer
+                  description: Amount of items to skip.
+                  displayName: skip
+                  format: int32
+                top?:
+                  type: integer
+                  description: Amount of items to select.
+                  displayName: top
+                  format: int32
+                inlinecount?:
+                  type: string
+                  description: Return total amount of items for a given filter criteria.
+                  displayName: inlinecount
+                  enum:
+                  - None
+                  - AllPages
+              headers:
+                App-Id:
+                  type: string
+                  description: Application identifier
+                  displayName: App-Id
+                App-Key:
+                  type: string
+                  description: Application key.
+                  displayName: App-Key
+              responses:
+                200:
+                  description: A list of rooms for the hotel based on the set filter criteria.
+                  body:
+                    application/json:
+                      type: RoomListResponse
+                    text/json:
+                      type: RoomListResponse
+                204:
+                  description: There are no rooms found for the given filtering and pagination criteria.
+                401:
+                  description: You provided wrong credentials, or you reached your API limit.
+                403:
+                  description: The application does not have access to the requested resource.
+                404:
+                  description: Not Found. The server has not found anything matching the Request-URI or the requested room could not be found.
+                422:
+                  description: The request failed to validate.
+                500:
+                  description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+                503:
+                  description: The server is currently unavailable. Please try later.
+          get:
+            description: Load the details about the specified hotel.
+            displayName: Get the details of the hotel with the speccified hotel id.
+            headers:
+              App-Id:
+                type: string
+                description: Application identifier
+                displayName: App-Id
+              App-Key:
+                type: string
+                description: Application key.
+                displayName: App-Key
+            responses:
+              200:
+                description: The details about the hotel.
+                body:
+                  application/json:
+                    type: Hotel
+                  text/json:
+                    type: Hotel
+              401:
+                description: You provided wrong credentials, or you reached your API limit.
+              403:
+                description: The application does not have access to the requested resource.
+              404:
+                description: Not Found. The server has not found anything matching the Request-URI.
+              500:
+                description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+              503:
+                description: The server is currently unavailable. Please try later.
+        get:
+          description: Load the details about all the hotels your application has access to.
+          displayName: Get a list of all the hotels of a chain your application has access to.
+          headers:
+            App-Id:
+              type: string
+              description: Application identifier
+              displayName: App-Id
+            App-Key:
+              type: string
+              description: Application key.
+              displayName: App-Key
+          responses:
+            200:
+              description: A list of hotels.
+              body:
+                application/json:
+                  type: array
+                  items:
+                    type: Hotel
+                text/json:
+                  type: array
+                  items:
+                    type: Hotel
+            204:
+              description: You donÂ´t have access to any hotels.
+            401:
+              description: You provided wrong credentials, or you reached your API limit.
+            403:
+              description: The application does not have access to the requested resource.
+            404:
+              description: Not Found. The server has not found anything matching the Request-URI.
+            500:
+              description: We caught an unexpected error on our side. Please report with providing the Hetras-Tracking-Id from the response headers and we will check the logfiles.
+            503:
+              description: The server is currently unavailable. Please try later.

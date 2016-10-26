@@ -1,0 +1,643 @@
+#%RAML 1.0
+title: Queen
+version: 2.15.0
+baseUri: queen.mondiamedia.com/v2/api
+description: <p>This is the API for building Mondia-Media-Products, like Tops.</p><p>Every call need a valid client or user-token.</p><p><ol><li>Client-Token can be get at our Police-API</li><li>User-Token can be get through a login on a customer specific Life-Cycle-Service</li><li>UseCases regarding Login, Register, Subscribe (incl. Payment) will be done by the Life-Cycle-Service</li></ol></p>
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  ArticleIdModel:
+    type: object
+    properties:
+      articleId:
+        type: number
+    description: DownloadResponse
+  ArticleIdPreviewModel:
+    type: object
+    properties:
+      articleId:
+        type: number
+      preview?:
+        type: boolean
+    description: StreamingResponse
+  ArticleReport:
+    type: object
+    properties:
+      date:
+        type: string
+        description: Date when the event was happen (Use the format "yyyy-MM-ddTHH:mm:ss.SSSZ"
+      maxUsageDuration?:
+        type: number
+        description: Maximal onblock duration in seconds (for usage-Event)
+      offline?:
+        type: boolean
+        description: Information if the Track was listend offline (for usage-event)
+      realm?:
+        type: string
+        description: Realm/Client of the event
+        enum:
+        - app
+        - web
+      source?:
+        type: string
+        description: 'Key of the playlist, where this event occurs - Special: MyTracks
+          for personal Playlist'
+      trigger?:
+        type: string
+        description: Did the user trigger the play of this item (Play, Skip) (for usage-Event)
+        enum:
+        - user
+        - playlist
+      type:
+        type: string
+        description: Type of the status event (downloaded, removed, listened)
+        enum:
+        - downloaded
+        - removed
+        - listened
+      usageDuration?:
+        type: number
+        description: Total duration in seconds (for usage-Event)
+    description: ArticleReport
+  ArticleReport_2:
+    type: object
+    properties:
+      date:
+        type: string
+      maxUsageDuration?:
+        type: number
+      offline?:
+        type: boolean
+      realm?:
+        type: string
+        enum:
+        - app
+        - web
+      source?:
+        type: string
+      trigger?:
+        type: string
+        enum:
+        - user
+        - playlist
+      type:
+        type: string
+        enum:
+        - downloaded
+        - removed
+        - listened
+      usageDuration?:
+        type: number
+    description: ArticleReport
+  Config_keyClient_template_keyLifecycleAPIPagesModel:
+    type: object
+    properties:
+      client_template_key?:
+        type: string
+        description: Corresponding Client Template Key
+      config_key?:
+        type: string
+      lifecycleAPI?:
+        type: string
+        description: Endpoint for the Lifecycle Service
+      pages?:
+        type: array
+        items:
+          type: KeyPageTypeTitlesContentModel
+  IdModel:
+    type: object
+    properties:
+      id?:
+        type: string
+  IdModel_2:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Id of the item
+    description: Article
+  IdsModel:
+    type: object
+    properties:
+      ids:
+        type: array
+        description: Ids of the items
+        items:
+          type: number
+    description: Articles
+  ItemsModel:
+    type: object
+    properties:
+      items?:
+        type: array
+        items:
+          type: IdModel_2
+    description: PersonalPlaylistIds
+  KeyPageTypeTitlesContentModel:
+    type: object
+    properties:
+      content?:
+        type: object
+      key:
+        type: string
+      pageType:
+        type: string
+      titles?:
+        type: object
+  PlaylistKeyPlaylistNamePlaylistDescriptionCoverUrlEntitiesModel:
+    type: object
+    properties:
+      coverUrl?:
+        type: string
+      entities?:
+        type: array
+        items:
+          type: TypeSongModel
+      playlistDescription?:
+        type: string
+      playlistKey:
+        type: string
+      playlistName:
+        type: string
+  TypeSongModel:
+    type: object
+    properties:
+      song?:
+        type: object
+      type?:
+        type: string
+  UrlTicketPreviewEncryptionModel:
+    type: object
+    properties:
+      encryption?:
+        type: string
+        description: used encryption for this song
+      preview?:
+        type: boolean
+      ticket?:
+        type: string
+      url?:
+        type: string
+  UrlTicketPreviewModel:
+    type: object
+    properties:
+      preview?:
+        type: boolean
+      ticket?:
+        type: string
+      url?:
+        type: string
+/api:
+  /v3:
+    /mmplaylist:
+      /article:
+        /download:
+          post:
+            description: This call retrieve a download URL for a Article (Preview/Full).<p> Please note, that a Full-Binary is only available with a User-Token.</p>
+            displayName: (Client/User-Token) Get a download URL for a article.
+            body:
+              application/json: ArticleIdModel
+            responses:
+              200:
+                description: Binary
+                body:
+                  application/json:
+                    type: UrlTicketPreviewEncryptionModel
+        /report:
+          /{ticket}:
+            uriParameters:
+              ticket:
+                type: string
+                description: Ticket of the corresponding download
+                displayName: ticket
+            post:
+              description: This call store a event for a article, that was downloaded, removed or listened.
+              displayName: (Client/User-Token) Provide a event for a article.
+              body:
+                application/json: ArticleReport
+              responses:
+                200:
+                  description: CreatedEntityResponse
+                  body:
+                    application/json:
+                      type: IdModel
+        /search:
+          get:
+            description: This call search the complete catalogue for this client. Please note, that you need a special client-configuration to use the results of this call for a Preview/Download or a personal playlist.
+            displayName: (Client/User-Token) Search complete catalogue.
+            queryParameters:
+              query?:
+                type: string
+                description: query
+                displayName: query
+              title?:
+                type: string
+                description: title
+                displayName: title
+              albumTitle?:
+                type: string
+                description: title of album
+                displayName: albumTitle
+              artist?:
+                type: string
+                description: artist
+                displayName: artist
+              genre?:
+                type: string
+                description: genre
+                displayName: genre
+              upc?:
+                type: string
+                description: Universal Product Code
+                displayName: upc
+              ean?:
+                type: number
+                description: European Article Number
+                displayName: ean
+              grid?:
+                type: string
+                description: Global Release Identifier
+                displayName: grid
+              rovi?:
+                type: string
+                description: Rovi Ids (Artist, Song or Release)
+                displayName: rovi
+              musicbrainz?:
+                type: string
+                description: MusicBrainz
+                displayName: musicbrainz
+              sony?:
+                type: string
+                description: Sony Reporting Code
+                displayName: sony
+              isrc?:
+                type: string
+                description: International Standard Recording Code
+                displayName: isrc
+              excludeCompilations?:
+                type: boolean
+                description: Exclude Songs from Compilations
+                displayName: excludeCompilations
+              excludeKaraoke?:
+                type: boolean
+                description: Exclude Karaoke Songs
+                displayName: excludeKaraoke
+              excludeNonStreamable?:
+                type: boolean
+                description: Exclude Songs that are not streamable
+                displayName: excludeNonStreamable
+              offset?:
+                type: number
+                description: zero-based offset the request
+                displayName: offset
+                default: 0.0
+              limit?:
+                type: number
+                description: Number of items to be returned
+                displayName: limit
+                default: 10.0
+            responses:
+              200:
+                description: ''
+        /streaming:
+          post:
+            description: This call retrieve a streaming URL for a Article (Preview/Full).<p> Please note, that a Full-Binary is only available with a User-Token.</p>
+            displayName: (Client/User-Token) Get a streaming URL for a article.
+            body:
+              application/json: ArticleIdPreviewModel
+            responses:
+              200:
+                description: StreamingLink
+                body:
+                  application/json:
+                    type: UrlTicketPreviewModel
+      /config:
+        get:
+          description: This call retrieve the config for a MMPlaylist product.
+          displayName: (Client-Token) Get MMPlaylist Config
+          responses:
+            200:
+              description: Config
+              body:
+                application/json:
+                  type: Config_keyClient_template_keyLifecycleAPIPagesModel
+      /playlist:
+        /{playlistKey}:
+          uriParameters:
+            playlistKey:
+              type: string
+              displayName: playlistKey
+          /entities:
+            get:
+              description: This call retrieve all a playlist for a given key client.
+              displayName: (Client-Token) Get a playlist for a given key
+              queryParameters:
+                includeSubEntities?:
+                  type: boolean
+                  description: Include Items of the Playlist (Chapters, Tracks of a Collection
+                  displayName: includeSubEntities
+                keepUnavailableItems?:
+                  type: boolean
+                  description: 'Keep Items of the Playlist that are not available.
+                    Items will be marked as "notAvailable": true'
+                  displayName: keepUnavailableItems
+              responses:
+                200:
+                  description: Entries
+                  body:
+                    application/json:
+                      type: array
+                      description: Entries
+                      items:
+                        type: TypeSongModel
+          get:
+            description: This call retrieve a playlist for a playlistKey.
+            displayName: (Client-Token) Get a playlist for a given key
+            queryParameters:
+              includeSubEntities?:
+                type: boolean
+                description: Include Sub-Items of the Playlist (Chapters, Tracks of a Collection
+                displayName: includeSubEntities
+              keepUnavailableItems?:
+                type: boolean
+                description: 'Keep Items of the Playlist that are not available. Items
+                  will be marked as "notAvailable": true'
+                displayName: keepUnavailableItems
+            responses:
+              200:
+                description: PlaylistModel
+                body:
+                  application/json:
+                    type: PlaylistKeyPlaylistNamePlaylistDescriptionCoverUrlEntitiesModel
+        get:
+          description: This call retrieve all available playlists for this client.
+          displayName: (Client-Token) Get all available playlists of a MMPlaylist config.
+          queryParameters:
+            includeEntities?:
+              type: boolean
+              description: Include Items of the Playlist (Tracks, Collections, AudioBooks)
+              displayName: includeEntities
+            includeSubEntities?:
+              type: boolean
+              description: Include Items of the Playlist (Chapters, Tracks of a Collection
+              displayName: includeSubEntities
+            keepUnavailableItems?:
+              type: boolean
+              description: 'Keep Items of the Playlist that are not available. Items
+                will be marked as "notAvailable": true'
+              displayName: keepUnavailableItems
+            includeRestricted?:
+              type: boolean
+              description: 'Include restricted playlists. '
+              displayName: includeRestricted
+            subscriptionTypeId?:
+              type: number
+              description: Return only playlist available for given subscriptiontypeid. include restricted must be false
+              displayName: subscriptionTypeId
+          responses:
+            200:
+              description: Playlists
+              body:
+                application/json:
+                  type: array
+                  description: Playlists
+                  items:
+                    type: PlaylistKeyPlaylistNamePlaylistDescriptionCoverUrlEntitiesModel
+      /user:
+        /playlist:
+          /article:
+            /{id}:
+              uriParameters:
+                id:
+                  type: number
+                  description: Id of the item
+                  displayName: id
+              delete:
+                description: This call remove a new article to the personal playlist for the current user.
+                displayName: (User-Token) Remove a article to the personal playlist
+                responses:
+                  200:
+                    description: ''
+            post:
+              description: This call post a new article to the personal playlist for the current user.
+              displayName: (User-Token) Add a article to the personal playlist
+              body:
+                application/json: IdModel_2
+              responses:
+                200:
+                  description: ''
+          /articles:
+            post:
+              description: This call post a new articles to the personal playlist for the current user.
+              displayName: (User-Token) Add articles to the personal playlist
+              body:
+                application/json: IdsModel
+              responses:
+                200:
+                  description: ''
+          /{playlistKey}:
+            uriParameters:
+              playlistKey:
+                type: string
+                displayName: playlistKey
+            post:
+              description: This call post a complete playlist to the personal playlist for the current user.
+              displayName: (User-Token) Add a complete playlist to the personal playlist
+              responses:
+                200:
+                  description: ''
+          get:
+            description: This call retrieve the personal playlist for the current user.
+            displayName: (User-Token) Get the personal playlist for the curren user.
+            queryParameters:
+              includeSubEntities?:
+                type: boolean
+                description: Include Sub-Items of the Playlist (Chapters, Tracks of a Collection
+                displayName: includeSubEntities
+            responses:
+              200:
+                description: ''
+          put:
+            description: This call put changes of the content (remove, position-change) for a personal playlist for the current user.
+            displayName: (User-Token) Put new personal playlist.
+            body:
+              application/json: ItemsModel
+            responses:
+              200:
+                description: ''
+/mmplaylist:
+  /article:
+    /download:
+      post:
+        body:
+          application/json: ArticleIdModel
+        responses:
+          200:
+            description: ''
+    /report:
+      /{ticket}:
+        uriParameters:
+          ticket:
+            type: string
+            displayName: ticket
+        post:
+          body:
+            application/json: ArticleReport_2
+          responses:
+            200:
+              description: ''
+    /search:
+      get:
+        queryParameters:
+          query?:
+            type: string
+            description: query
+            displayName: query
+          title?:
+            type: string
+            description: title
+            displayName: title
+          albumTitle?:
+            type: string
+            description: title of album
+            displayName: albumTitle
+          artist?:
+            type: string
+            description: artist
+            displayName: artist
+          genre?:
+            type: string
+            description: genre
+            displayName: genre
+          upc?:
+            type: string
+            description: Universal Product Code
+            displayName: upc
+          ean?:
+            type: number
+            description: European Article Number
+            displayName: ean
+          grid?:
+            type: string
+            description: Global Release Identifier
+            displayName: grid
+          rovi?:
+            type: string
+            description: Rovi Ids (Artist, Song or Release)
+            displayName: rovi
+          musicbrainz?:
+            type: string
+            description: MusicBrainz
+            displayName: musicbrainz
+          sony?:
+            type: string
+            description: Sony Reporting Code
+            displayName: sony
+          isrc?:
+            type: string
+            description: International Standard Recording Code
+            displayName: isrc
+          excludeCompilations?:
+            type: boolean
+            description: Exclude Songs from Compilations
+            displayName: excludeCompilations
+          excludeKaraoke?:
+            type: boolean
+            description: Exclude Karaoke Songs
+            displayName: excludeKaraoke
+          excludeNonStreamable?:
+            type: boolean
+            description: Exclude Songs that are not streamable
+            displayName: excludeNonStreamable
+          offset?:
+            type: number
+            description: zero-based offset the request
+            displayName: offset
+            default: 0.0
+          limit?:
+            type: number
+            description: Number of items to be returned
+            displayName: limit
+            default: 10.0
+        responses:
+          200:
+            description: ''
+    /streaming:
+      post:
+        body:
+          application/json: ArticleIdPreviewModel
+        responses:
+          200:
+            description: ''
+  /config:
+    get:
+      responses:
+        200:
+          description: ''
+  /playlist:
+    /{playlistKey}:
+      uriParameters:
+        playlistKey:
+          type: string
+          displayName: playlistKey
+      get:
+        queryParameters:
+          keepUnavailableItems?:
+            type: boolean
+            displayName: keepUnavailableItems
+        responses:
+          200:
+            description: ''
+    get:
+      queryParameters:
+        includeSongs?:
+          type: boolean
+          displayName: includeSongs
+        includeRestricted?:
+          type: boolean
+          displayName: includeRestricted
+        subscriptionTypeId?:
+          type: number
+          displayName: subscriptionTypeId
+      responses:
+        200:
+          description: ''
+  /user:
+    /playlist:
+      /article:
+        /{id}:
+          uriParameters:
+            id:
+              type: number
+              description: Id of the item
+              displayName: id
+          delete:
+            responses:
+              200:
+                description: ''
+        post:
+          body:
+            application/json: IdModel_2
+          responses:
+            200:
+              description: ''
+      /{playlistKey}:
+        uriParameters:
+          playlistKey:
+            type: string
+            displayName: playlistKey
+        post:
+          responses:
+            200:
+              description: ''
+      get:
+        responses:
+          200:
+            description: ''
+      put:
+        body:
+          application/json: ItemsModel
+        responses:
+          200:
+            description: ''

@@ -1,0 +1,2024 @@
+#%RAML 1.0
+title: HHS Media Services
+version: '2'
+baseUri: api.digitalmedia.hhs.gov/api/v2
+description: |2
+
+  <div class="swagger-ui-wrap extraFooter"><h3>Common Features / Behaviors</h3>
+      <div class="features">
+          <ul>
+              <li><strong>* "sort" param:</strong> supports multi column sorting through the use of commas as delimiters, and a hyphen to denote descending order.
+                  <br/>
+                  <strong><span>Examples:</span></strong>
+                  <ul>
+                      <li><span class="example">name</span><span class="description">sort results by name ascending</span></li>
+                      <li><span class="example">-name</span><span class="description">sort results by name descending</span></li>
+                      <li><span class="example">-name,id</span><span class="description">sort results by name descending and then by id ascending</span></li>
+                      <li><span class="example">id,-dateContentAuthored</span><span class="description">sort results by id ascending and then date descending</span></li>
+                  </ul>
+              </li>
+              <li><strong>Date formats:</strong> Date input format is expected to be based on <a href="http://www.ietf.org/rfc/rfc3339.txt">RFC 3339</a>. <br/>
+                  <span><strong>Example:</strong></span>
+                  <ul><li>2013-11-18T18:43:01Z</li></ul>
+              </li>
+          </ul>
+      </div>
+  </div>
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  AlternateImage:
+    type: object
+    properties:
+      height?:
+        type: integer
+        format: int32
+      id:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      url:
+        type: string
+      width?:
+        type: integer
+        format: int32
+  ApiResponse:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: MediaItem
+  Campaign:
+    type: object
+    properties:
+      contactEmail?:
+        type: string
+      description?:
+        type: string
+      endDate?:
+        type: datetime
+      id:
+        type: integer
+        format: int64
+      mediaItems?:
+        type: array
+        items:
+          type: MediaItem
+      name:
+        type: string
+      source?:
+        type: Source
+      startDate:
+        type: datetime
+  Campaigns:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: Campaign
+  Collection:
+    type: object
+    properties:
+      campaigns?:
+        type: array
+        items:
+          type: Campaign
+      dateContentAuthored?:
+        type: datetime
+      dateContentPublished?:
+        type: datetime
+      dateContentReviewed?:
+        type: datetime
+      dateContentUpdated?:
+        type: datetime
+      dateSyndicationCaptured?:
+        type: datetime
+      dateSyndicationUpdated?:
+        type: datetime
+      dateSyndicationVisible?:
+        type: datetime
+      description?:
+        type: string
+      externalGuid?:
+        type: string
+      hash?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      language?:
+        type: Language
+      mediaItems?:
+        type: array
+        items:
+          type: MediaItem
+      name?:
+        type: string
+      source?:
+        type: Source
+      sourceUrl?:
+        type: string
+  EmbedCode:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: Snippet
+  Html:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      customPreviewUrl?:
+        type: string
+      customThumbnailUrl?:
+        type: string
+      dateContentAuthored?:
+        type: datetime
+      dateContentPublished?:
+        type: datetime
+      dateContentReviewed?:
+        type: datetime
+      dateContentUpdated?:
+        type: datetime
+      dateSyndicationCaptured:
+        type: datetime
+      dateSyndicationUpdated:
+        type: datetime
+      dateSyndicationVisible:
+        type: datetime
+      description?:
+        type: string
+      extendedAttributes?:
+        type: object
+      externalGuid?:
+        type: string
+      foreignSyndicationAPIUrl:
+        type: string
+      hash?:
+        type: string
+      id:
+        type: integer
+        format: int64
+      language:
+        type: Language
+      mediaType:
+        type: string
+      name:
+        type: string
+      source:
+        type: Source
+      sourceUrl:
+        type: string
+      targetUrl?:
+        type: string
+  Image:
+    type: object
+    properties:
+      altText:
+        type: string
+      createdBy:
+        type: string
+      customPreviewUrl?:
+        type: string
+      customThumbnailUrl?:
+        type: string
+      dateContentAuthored?:
+        type: datetime
+      dateContentPublished?:
+        type: datetime
+      dateContentReviewed?:
+        type: datetime
+      dateContentUpdated?:
+        type: datetime
+      dateSyndicationCaptured:
+        type: datetime
+      dateSyndicationUpdated:
+        type: datetime
+      dateSyndicationVisible:
+        type: datetime
+      description?:
+        type: string
+      extendedAttributes?:
+        type: object
+      externalGuid?:
+        type: string
+      foreignSyndicationAPIUrl:
+        type: string
+      hash?:
+        type: string
+      height:
+        type: integer
+        format: int32
+      id:
+        type: integer
+        format: int64
+      imageFormat:
+        type: string
+      language:
+        type: Language
+      mediaType:
+        type: string
+      name:
+        type: string
+      source:
+        type: Source
+      sourceUrl:
+        type: string
+      targetUrl?:
+        type: string
+      width:
+        type: integer
+        format: int32
+  Infographic:
+    type: object
+    properties:
+      altText:
+        type: string
+      createdBy:
+        type: string
+      customPreviewUrl?:
+        type: string
+      customThumbnailUrl?:
+        type: string
+      dateContentAuthored?:
+        type: datetime
+      dateContentPublished?:
+        type: datetime
+      dateContentReviewed?:
+        type: datetime
+      dateContentUpdated?:
+        type: datetime
+      dateSyndicationCaptured:
+        type: datetime
+      dateSyndicationUpdated:
+        type: datetime
+      dateSyndicationVisible:
+        type: datetime
+      description?:
+        type: string
+      extendedAttributes?:
+        type: object
+      externalGuid?:
+        type: string
+      foreignSyndicationAPIUrl:
+        type: string
+      hash?:
+        type: string
+      height:
+        type: integer
+        format: int32
+      id:
+        type: integer
+        format: int64
+      imageFormat:
+        type: string
+      language:
+        type: Language
+      mediaType:
+        type: string
+      name:
+        type: string
+      source:
+        type: Source
+      sourceUrl:
+        type: string
+      targetUrl?:
+        type: string
+      width:
+        type: integer
+        format: int32
+  Language:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      isActive:
+        type: boolean
+      isoCode:
+        type: string
+      name:
+        type: string
+  Languages:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: Language
+  Likes:
+    type: object
+    properties:
+      likes:
+        type: integer
+        format: int32
+  MediaItem:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      customPreviewUrl?:
+        type: string
+      customThumbnailUrl?:
+        type: string
+      dateContentAuthored?:
+        type: datetime
+      dateContentPublished?:
+        type: datetime
+      dateContentReviewed?:
+        type: datetime
+      dateContentUpdated?:
+        type: datetime
+      dateSyndicationCaptured:
+        type: datetime
+      dateSyndicationUpdated:
+        type: datetime
+      dateSyndicationVisible:
+        type: datetime
+      description?:
+        type: string
+      extendedAttributes?:
+        type: object
+      externalGuid?:
+        type: string
+      foreignSyndicationAPIUrl:
+        type: string
+      hash?:
+        type: string
+      id:
+        type: integer
+        format: int64
+      language:
+        type: Language
+      mediaType:
+        type: string
+      name:
+        type: string
+      source:
+        type: Source
+      sourceUrl:
+        type: string
+      targetUrl?:
+        type: string
+  MediaItems:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: MediaItem
+  MediaType:
+    type: object
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+  MediaTypes:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: MediaType
+  Message:
+    type: object
+    properties:
+      errorCode?:
+        type: string
+      errorDetail?:
+        type: string
+      errorMessage?:
+        type: string
+      userMessage:
+        type: string
+  Meta:
+    type: object
+    properties:
+      messages:
+        type: array
+        items:
+          type: Message
+      pagination:
+        type: Pagination
+      status:
+        type: integer
+        format: int64
+  PDF:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      customPreviewUrl?:
+        type: string
+      customThumbnailUrl?:
+        type: string
+      dateContentAuthored?:
+        type: datetime
+      dateContentPublished?:
+        type: datetime
+      dateContentReviewed?:
+        type: datetime
+      dateContentUpdated?:
+        type: datetime
+      dateSyndicationCaptured:
+        type: datetime
+      dateSyndicationUpdated:
+        type: datetime
+      dateSyndicationVisible:
+        type: datetime
+      description?:
+        type: string
+      extendedAttributes?:
+        type: object
+      externalGuid?:
+        type: string
+      foreignSyndicationAPIUrl:
+        type: string
+      hash?:
+        type: string
+      id:
+        type: integer
+        format: int64
+      language:
+        type: Language
+      mediaType:
+        type: string
+      name:
+        type: string
+      source:
+        type: Source
+      sourceUrl:
+        type: string
+      targetUrl?:
+        type: string
+  Pagination:
+    type: object
+    properties:
+      count:
+        type: integer
+        format: int32
+      currentUrl:
+        type: string
+      max:
+        type: integer
+        format: int32
+      nextUrl?:
+        type: string
+      offset:
+        type: integer
+        format: int32
+      pageNum:
+        type: integer
+        format: int32
+      previousUrl?:
+        type: string
+      sort:
+        type: string
+      total:
+        type: integer
+        format: int32
+      totalPages:
+        type: integer
+        format: int32
+  Ratings:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: Likes
+  Resource:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      name:
+        type: string
+  ResourceList:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: Resource
+      mediaType:
+        type: string
+  ResourceLists:
+    type: object
+    properties:
+      alternateImages?:
+        type: ResourceList
+      campaigns?:
+        type: ResourceList
+      collections?:
+        type: ResourceList
+      htmls?:
+        type: ResourceList
+      images?:
+        type: ResourceList
+      infographics?:
+        type: ResourceList
+      languages?:
+        type: ResourceList
+      socialMedias?:
+        type: ResourceList
+      sources?:
+        type: ResourceList
+      tagTypes?:
+        type: ResourceList
+      tags?:
+        type: ResourceList
+      videos?:
+        type: ResourceList
+  Resources:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: ResourceLists
+  Snippet:
+    type: object
+    properties:
+      snippet:
+        type: string
+  Source:
+    type: object
+    properties:
+      acronym:
+        type: string
+      contactEmail?:
+        type: string
+      id:
+        type: integer
+        format: int64
+      largeLogoUrl?:
+        type: string
+      name:
+        type: string
+      smallLogoUrl?:
+        type: string
+      websiteUrl:
+        type: string
+  Sources:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: Source
+  SyndicatedMediaItem:
+    type: object
+    properties:
+      content?:
+        type: string
+      contentEncoding?:
+        type: string
+      contentType?:
+        type: string
+      description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      mediaType?:
+        type: string
+      name?:
+        type: string
+      text?:
+        type: string
+  SyndicatedMediaItems:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: SyndicatedMediaItem
+  Tag:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      language:
+        type: Language
+      name:
+        type: string
+      type:
+        type: TagType
+  TagLanguage:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      isoCode:
+        type: string
+      name:
+        type: string
+  TagLanguages:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: TagLanguage
+  TagType:
+    type: object
+    properties:
+      description?:
+        type: string
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+  TagTypes:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: TagType
+  Tags:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: Tag
+  Video:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      customPreviewUrl?:
+        type: string
+      customThumbnailUrl?:
+        type: string
+      dateContentAuthored?:
+        type: datetime
+      dateContentPublished?:
+        type: datetime
+      dateContentReviewed?:
+        type: datetime
+      dateContentUpdated?:
+        type: datetime
+      dateSyndicationCaptured:
+        type: datetime
+      dateSyndicationUpdated:
+        type: datetime
+      dateSyndicationVisible:
+        type: datetime
+      description?:
+        type: string
+      duration:
+        type: integer
+        format: int32
+      extendedAttributes?:
+        type: object
+      externalGuid?:
+        type: string
+      foreignSyndicationAPIUrl:
+        type: string
+      hash?:
+        type: string
+      height?:
+        type: integer
+        format: int32
+      id:
+        type: integer
+        format: int64
+      language:
+        type: Language
+      mediaType:
+        type: string
+      name:
+        type: string
+      source:
+        type: Source
+      sourceUrl:
+        type: string
+      targetUrl?:
+        type: string
+      width?:
+        type: integer
+        format: int32
+  YoutubeMetadata:
+    type: object
+    properties:
+      callback:
+        type: string
+      meta:
+        type: Meta
+      results:
+        type: array
+        items:
+          type: object
+/resources.json:
+  get:
+    description: Returns the list of Resources matching the search query 'q'.<p>The search query 'q' is a Lucene query.<br>The syntax for a Lucene query can be found <a href="http://lucene.apache.org/core/2_9_4/queryparsersyntax.html">here</a>.
+    displayName: Get Resources by search query
+    queryParameters:
+      q:
+        type: string
+        description: The search query supplied by the user
+        displayName: q
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Resources
+      400:
+        description: Invalid search query
+        body:
+          application/json:
+            type: string
+      500:
+        description: Internal Server Error
+        body:
+          application/json:
+            type: string
+/resources:
+  /campaigns.json:
+    get:
+      description: Returns the list of Campaigns.
+      displayName: Get Campaigns
+      queryParameters:
+        max?:
+          type: integer
+          description: The maximum number of records to return
+          displayName: max
+          format: int32
+        offset?:
+          type: integer
+          description: The offset of the records set to return for pagination
+          displayName: offset
+          format: int32
+        sort?:
+          type: string
+          description: '* Set of fields to sort the records by.'
+          displayName: sort
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Campaigns
+        400:
+          description: Bad Request
+          body:
+            application/json:
+              type: string
+        500:
+          description: Internal Server Error
+          body:
+            application/json:
+              type: string
+  /campaigns:
+    /{id}.json:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the record to look up
+          displayName: id
+          format: int64
+      get:
+        description: Returns the Campaign identified by the 'id'.
+        displayName: Get Campaign by ID
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: Campaigns
+          400:
+            description: Invalid ID
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /{id}:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the campaign to find media items for
+          displayName: id
+          format: int64
+      /media.json:
+        get:
+          description: Returns the list of MediaItems for the Campaign identified by the 'id'.
+          displayName: Get MediaItems by Campaign ID
+          queryParameters:
+            max?:
+              type: integer
+              description: The maximum number of records to return
+              displayName: max
+              format: int32
+            offset?:
+              type: integer
+              description: The offset of the records set to return for pagination
+              displayName: offset
+              format: int32
+            sort?:
+              type: string
+              description: The name of the property to which sorting will be applied
+              displayName: sort
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: MediaItems
+            400:
+              description: Bad Request
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+      /syndicate.json:
+        get:
+          description: Renders the list of MediaItems associated with the Campaign identified by the 'id'.
+          displayName: Get MediaItems for Campaign
+          queryParameters:
+            displayMethod?:
+              type: string
+              description: 'Method used to render an html request. Accepts one: [mv,
+                list, feed]'
+              displayName: displayMethod
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: MediaItems
+            400:
+              description: Bad Request
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+  /languages.json:
+    get:
+      description: Returns the list Languages.
+      displayName: Get Languages
+      queryParameters:
+        max?:
+          type: integer
+          description: The maximum number of records to return
+          displayName: max
+          format: int32
+        offset?:
+          type: integer
+          description: The offset of the records set to return for pagination
+          displayName: offset
+          format: int32
+        sort?:
+          type: string
+          description: '* Set of fields to sort the records by.'
+          displayName: sort
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Languages
+        400:
+          description: Bad Request
+          body:
+            application/json:
+              type: string
+        500:
+          description: Internal Server Error
+          body:
+            application/json:
+              type: string
+  /languages:
+    /{id}.json:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the language to look up
+          displayName: id
+          format: int64
+      get:
+        description: Returns the Language identified by the 'id'.
+        displayName: Get Language by ID
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: Languages
+          400:
+            description: Invalid ID
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+  /media.json:
+    get:
+      description: Returns the list of MediaItems matching the specified query parameters.
+      displayName: Get MediaItems
+      queryParameters:
+        max?:
+          type: integer
+          description: The maximum number of records to return
+          displayName: max
+          format: int32
+        offset?:
+          type: integer
+          description: The offset of the records set to return for pagination.
+          displayName: offset
+          format: int32
+        sort?:
+          type: string
+          description: '* Set of fields to sort the records by.'
+          displayName: sort
+        order?:
+          type: string
+          description: '* The ascending or descending order.'
+          displayName: order
+        mediaTypes?:
+          type: string
+          description: Find all media items belonging to the specified media type[s].
+          displayName: mediaTypes
+        name?:
+          type: string
+          description: Find all media items containing the provided name, case insensitive.
+          displayName: name
+        collectionId?:
+          type: integer
+          description: Restrict filtering to media items in a specific collection.
+          displayName: collectionId
+          format: int32
+        nameContains?:
+          type: string
+          description: Find all media items containing the partial name, case insensitive.
+          displayName: nameContains
+        descriptionContains?:
+          type: string
+          description: Find all media items containing the provided partial description, case insensitive.
+          displayName: descriptionContains
+        sourceUrl?:
+          type: string
+          description: Find all media items which have the provided sourceUrl, case insensitive.
+          displayName: sourceUrl
+        sourceUrlContains?:
+          type: string
+          description: Find all media items which contain the provided partial sourceUrl, case insensitive.
+          displayName: sourceUrlContains
+        customThumbnailUrl?:
+          type: string
+          description: Find all media items which have the provided customThumbnailUrl, case insensitive.
+          displayName: customThumbnailUrl
+        customThumbnailUrlContains?:
+          type: string
+          description: Find all media items which contain the provided partial customThumbnailUrl, case insensitive.
+          displayName: customThumbnailUrlContains
+        dateContentAuthored?:
+          type: datetime
+          description: Find all media items authored on the provided day (RFC 3339, time ignored).
+          displayName: dateContentAuthored
+        dateContentUpdated?:
+          type: datetime
+          description: Find all media items updated on the provided day (RFC 3339, time ignored).
+          displayName: dateContentUpdated
+        dateContentPublished?:
+          type: datetime
+          description: Find all media items published on the provided day (RFC 3339, time ignored).
+          displayName: dateContentPublished
+        dateContentReviewed?:
+          type: datetime
+          description: Find all media items reviewed on the provided day (RFC 3339, time ignored).
+          displayName: dateContentReviewed
+        dateSyndicationCaptured?:
+          type: datetime
+          description: Find all media items authored on the provided day (RFC 3339, time ignored).
+          displayName: dateSyndicationCaptured
+        dateSyndicationUpdated?:
+          type: datetime
+          description: Find all media items updated on the provided day, (RFC 3339, time ignored).
+          displayName: dateSyndicationUpdated
+        contentAuthoredSinceDate?:
+          type: datetime
+          description: Find all media items authored since the provided day (RFC 3339, time ignored).
+          displayName: contentAuthoredSinceDate
+        contentAuthoredBeforeDate?:
+          type: datetime
+          description: Find all media items authored before the provided day (RFC 3339, time ignored).
+          displayName: contentAuthoredBeforeDate
+        contentAuthoredInRange?:
+          type: string
+          description: Find all media items authored between the provided start and end days (RFC 3339, comma separated, time ignored).
+          displayName: contentAuthoredInRange
+        contentUpdatedSinceDate?:
+          type: datetime
+          description: Find all media items updated since the provided day (RFC 3339, time ignored).
+          displayName: contentUpdatedSinceDate
+        contentUpdatedBeforeDate?:
+          type: datetime
+          description: Find all media items updated before the provided day (RFC 3339, time ignored).
+          displayName: contentUpdatedBeforeDate
+        contentUpdatedInRange?:
+          type: string
+          description: Find all media items updated between the provided start and end days (RFC 3339, comma separated, time ignored).
+          displayName: contentUpdatedInRange
+        contentPublishedSinceDate?:
+          type: datetime
+          description: Find all media items published since the provided day (RFC 3339, time ignored).
+          displayName: contentPublishedSinceDate
+        contentPublishedBeforeDate?:
+          type: datetime
+          description: Find all media items published before the provided day (RFC 3339, time ignored).
+          displayName: contentPublishedBeforeDate
+        contentPublishedInRange?:
+          type: string
+          description: Find all media items published between the provided start and end days (RFC 3339, comma separated, time ignored).
+          displayName: contentPublishedInRange
+        contentReviewedSinceDate?:
+          type: datetime
+          description: Find all media items reviewed since the provided day (RFC 3339, time ignored).
+          displayName: contentReviewedSinceDate
+        contentReviewedBeforeDate?:
+          type: datetime
+          description: Find all media items reviewed before the provided day (RFC 3339, time ignored).
+          displayName: contentReviewedBeforeDate
+        contentReviewedInRange?:
+          type: string
+          description: Find all media items reviewed between the provided start and end days (RFC 3339, comma separated, time ignored).
+          displayName: contentReviewedInRange
+        syndicationCapturedSinceDate?:
+          type: datetime
+          description: Find all media items authored since the provided day (RFC 3339, time ignored).
+          displayName: syndicationCapturedSinceDate
+        syndicationCapturedBeforeDate?:
+          type: datetime
+          description: Find all media items authored before the provided day (RFC 3339, time ignored).
+          displayName: syndicationCapturedBeforeDate
+        syndicationCapturedInRange?:
+          type: string
+          description: Find all media items authored between the provided start and end days (RFC 3339, comma separated, time ignored).
+          displayName: syndicationCapturedInRange
+        syndicationUpdatedSinceDate?:
+          type: datetime
+          description: Find all media items updated since the provided day, (RFC 3339, time ignored).
+          displayName: syndicationUpdatedSinceDate
+        syndicationUpdatedBeforeDate?:
+          type: datetime
+          description: Find all media items updated before the provided day, (RFC 3339, time ignored).
+          displayName: syndicationUpdatedBeforeDate
+        syndicationUpdatedInRange?:
+          type: string
+          description: Find all media items updated between the provided start and end days, (RFC 3339, comma separated, time ignored).
+          displayName: syndicationUpdatedInRange
+        syndicationVisibleSinceDate?:
+          type: datetime
+          description: Find all media items visible since the provided day, (RFC 3339, time ignored).
+          displayName: syndicationVisibleSinceDate
+        syndicationVisibleBeforeDate?:
+          type: datetime
+          description: Find all media items visible before the provided day, (RFC 3339, time ignored).
+          displayName: syndicationVisibleBeforeDate
+        syndicationVisibleInRange?:
+          type: string
+          description: Find all media items visible between the provided start and end days, (RFC 3339, comma separated, time ignored).
+          displayName: syndicationVisibleInRange
+        languageId?:
+          type: integer
+          description: Find all media items written in the language specified by Id.
+          displayName: languageId
+          format: int64
+        languageName?:
+          type: string
+          description: Find all media items written in the language specified by name, case insensitive.
+          displayName: languageName
+        languageIsoCode?:
+          type: string
+          description: Find all media items written in the language specified by 639-2 isoCode , case insensitive.
+          displayName: languageIsoCode
+        hash?:
+          type: string
+          description: Find all media items which match the provided hash, case insensitive.
+          displayName: hash
+        hashContains?:
+          type: string
+          description: Find all media items which match the provided partial hash, case insensitive.
+          displayName: hashContains
+        sourceId?:
+          type: integer
+          description: Find all media items that belong to the source specified by Id.
+          displayName: sourceId
+          format: int64
+        sourceName?:
+          type: string
+          description: Find all media items that belong to the source specified by name, case insensitive.
+          displayName: sourceName
+        sourceNameContains?:
+          type: string
+          description: Find all media items that belong to the source specified by partial name, case insensitive.
+          displayName: sourceNameContains
+        sourceAcronym?:
+          type: string
+          description: Find all media items that belong to the source specified by acronym, case insensitive.
+          displayName: sourceAcronym
+        sourceAcronymContains?:
+          type: string
+          description: Find all media items that belong to the source specified by partial acronym, case insensitive.
+          displayName: sourceAcronymContains
+        tagIds?:
+          type: string
+          description: Find only media items tagged with the specified tag Ids.
+          displayName: tagIds
+        restrictToSet?:
+          type: string
+          description: Find only media from within the supplied list of Ids.
+          displayName: restrictToSet
+        createdBy?:
+          type: string
+          description: Find all media items containing the createdBy value.
+          displayName: createdBy
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: MediaItems
+        400:
+          description: Bad Request
+          body:
+            application/json:
+              type: string
+        500:
+          description: Internal Server Error
+          body:
+            application/json:
+              type: string
+  /media:
+    /featured.json:
+      get:
+        description: Get the list of featured content in the syndication system
+        displayName: Get the list of featured content in the syndication system
+        queryParameters:
+          sort?:
+            type: string
+            description: '* Set of fields to sort the records by.'
+            displayName: sort
+          max?:
+            type: integer
+            description: The maximum number of records to return.
+            displayName: max
+            format: int64
+          offset?:
+            type: integer
+            description: How many records to offset the query by.
+            displayName: offset
+            format: int64
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: string
+          400:
+            description: Bad Request
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /mostPopularMedia.json:
+      get:
+        description: Returns the list of MediaItems with the highest ratings.
+        displayName: Get MediaItems by popularity
+        queryParameters:
+          max?:
+            type: integer
+            description: The maximum number of records to return
+            displayName: max
+            format: int32
+          offset?:
+            type: integer
+            description: The offset of the records set to return for pagination.
+            displayName: offset
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: MediaItems
+          400:
+            description: Bad Request
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /searchResults.json:
+      get:
+        description: Returns the list of MediaItems matching the search query 'q'.<p>The search query 'q' is a Lucene query.<br>The syntax for a Lucene query can be found <a href="http://lucene.apache.org/core/2_9_4/queryparsersyntax.html">here</a>
+        displayName: Get MediaItems by search query
+        queryParameters:
+          q:
+            type: string
+            description: The search query supplied by the user
+            displayName: q
+          max?:
+            type: integer
+            description: The maximum number of records to return
+            displayName: max
+            format: int32
+          offset?:
+            type: integer
+            description: The offset of the records set to return for pagination.
+            displayName: offset
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: MediaItems
+          400:
+            description: Bad Request
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /{id}.json:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the record to look up
+          displayName: id
+          format: int64
+      get:
+        description: Returns the MediaItem identified by the 'id'.
+        displayName: Get MediaItem by ID
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: MediaItems
+          400:
+            description: Invalid ID
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /{id}:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the media to show content for.
+          displayName: id
+          format: int64
+      /content:
+        get:
+          description: Returns the raw content (html, image, etc...) for the MediaItem identified by the 'id'.
+          displayName: Get content for MediaItem
+          queryParameters:
+            calledByBuild?:
+              type: boolean
+              description: The method that called this method
+              displayName: calledByBuild
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: string
+                text/html:
+                  type: string
+                image/jpeg:
+                  type: string
+                image/png:
+                  type: string
+            400:
+              description: Invalid ID
+              body:
+                application/json:
+                  type: string
+                text/html:
+                  type: string
+                image/jpeg:
+                  type: string
+                image/png:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+                text/html:
+                  type: string
+                image/jpeg:
+                  type: string
+                image/png:
+                  type: string
+      /embed.json:
+        get:
+          description: Returns the javascript or iframe embed code for the MediaItem identified by 'id'.
+          displayName: Get embed code for MediaItem
+          queryParameters:
+            flavor?:
+              type: string
+              description: Currently supports 'iframe', defaults to 'javascript'.
+              displayName: flavor
+            width?:
+              type: integer
+              description: The width of the generated iframe.
+              displayName: width
+              format: int32
+            height?:
+              type: integer
+              description: The height of the generated iframe.
+              displayName: height
+              format: int32
+            iframeName?:
+              type: string
+              description: The name of the iframe element
+              displayName: iframeName
+            excludeJquery?:
+              type: boolean
+              description: Should a reference to the JQuery Library be omitted?
+              displayName: excludeJquery
+              default: false
+            excludeDiv?:
+              type: boolean
+              description: Should the div to insert content into be omitted?
+              displayName: excludeDiv
+              default: false
+            divId?:
+              type: string
+              description: Should the div to insert content into have a specific name?
+              displayName: divId
+            displayMethod?:
+              type: string
+              description: 'Method used to render an html request. Accepts one: [mv,
+                list, feed]'
+              displayName: displayMethod
+          responses:
+            200:
+              description: No response was specified
+              body:
+                text/html:
+                  type: EmbedCode
+            400:
+              description: Bad Request
+              body:
+                text/html:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                text/html:
+                  type: string
+      /preview.jpg:
+        get:
+          description: Returns the JPG preview, where applicable, for the MediaItem identified by the 'id'.
+          displayName: Get JPG preview for MediaItem
+          responses:
+            200:
+              description: No response was specified
+              body:
+                image/jpeg:
+                  type: MediaItems
+            400:
+              description: Bad Request
+              body:
+                image/jpeg:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                image/jpeg:
+                  type: string
+      /ratings.json:
+        get:
+          description: Get the Ratings (number of 'likes') for the MediaItem identified by the 'id'.
+          displayName: Get Ratings for MediaItem
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: Ratings
+            400:
+              description: Invalid ID
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+      /relatedMedia.json:
+        get:
+          description: Returns the list of MediaItems related to the MediaItem identified by the 'id'.
+          displayName: Get related MediaItems by ID
+          queryParameters:
+            max?:
+              type: integer
+              description: The maximum number of records to return
+              displayName: max
+              format: int32
+            offset?:
+              type: integer
+              description: The offset of the records set to return for pagination.
+              displayName: offset
+              format: int32
+            sort?:
+              type: string
+              description: Which field to sort the records by.
+              displayName: sort
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: MediaItems
+            400:
+              description: Bad Request
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+      /syndicate.json:
+        get:
+          description: Returns the syndicated content for a given MediaItem in the specified 'format' (HTML or JSON).
+          displayName: Get syndicated content for MediaItem
+          queryParameters:
+            cssClass?:
+              type: string
+              description: The css class to target for extraction.
+              displayName: cssClass
+              default: syndicate
+            stripStyles?:
+              type: boolean
+              description: Remove in-line styles from content.
+              displayName: stripStyles
+              default: false
+            stripScripts?:
+              type: boolean
+              description: Remove script tags from content.
+              displayName: stripScripts
+              default: false
+            stripImages?:
+              type: boolean
+              description: Remove image tags from content.
+              displayName: stripImages
+              default: false
+            stripBreaks?:
+              type: boolean
+              description: Remove break tags from content.
+              displayName: stripBreaks
+              default: false
+            stripClasses?:
+              type: boolean
+              description: Remove class attributes from content (except 'syndicate').
+              displayName: stripClasses
+              default: false
+            font-size?:
+              type: integer
+              description: Set font size (in points) of p, div, and span tags.
+              displayName: font-size
+              format: int32
+            imageFloat?:
+              type: string
+              description: Accepts valid CSS float options, such as 'left' or 'right'. Will inject a style into the content before rendering.
+              displayName: imageFloat
+            imageMargin?:
+              type: string
+              description: Accepts 4 CSV values representing pixel sizes of margin similar to CSS. Default format is 'north,east,south,west' - for example '0,10,10,0' would put a 10 pixel margin on the right and bottom sides of an image. Will inject a style into the content before rendering.
+              displayName: imageMargin
+            autoplay?:
+              type: boolean
+              description: If content is a video, the embeded video will auto play when loaded.
+              displayName: autoplay
+              default: true
+            rel?:
+              type: boolean
+              description: If content is a video, related items will be shown at the end of playback.
+              displayName: rel
+              default: false
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: SyndicatedMediaItems
+                text/html:
+                  type: SyndicatedMediaItems
+            400:
+              description: Bad Request
+              body:
+                application/json:
+                  type: string
+                text/html:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+                text/html:
+                  type: string
+      /thumbnail.jpg:
+        get:
+          description: Returns the JPG thumbnail, where applicable, for the MediaItem identified by the 'id'.
+          displayName: Get JPG thumbnail for MediaItem
+          responses:
+            200:
+              description: No response was specified
+              body:
+                image/jpeg:
+                  type: string
+            400:
+              description: Invalid ID
+              body:
+                image/jpeg:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                image/jpeg:
+                  type: string
+      /youtubeMetaData.json:
+        get:
+          description: Returns the Youtube metadata, where applicable, for the MediaItem identified by the 'id'.
+          displayName: Get Youtube metadata for MediaItem
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: YoutubeMetadata
+            400:
+              description: Invalid ID or Invalid media type
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+  /mediaTypes.json:
+    get:
+      description: Returns the list of available MediaTypes.
+      displayName: Get MediaTypes
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: MediaTypes
+        500:
+          description: Internal Server Error
+          body:
+            application/json:
+              type: string
+  /sources.json:
+    get:
+      description: Returns the list of Sources.
+      displayName: Get Sources
+      queryParameters:
+        max?:
+          type: integer
+          description: The maximum number of records to return
+          displayName: max
+          format: int32
+        offset?:
+          type: integer
+          description: The offset of the records set to return for pagination
+          displayName: offset
+          format: int32
+        sort?:
+          type: string
+          description: '* Set of fields to sort the records by.'
+          displayName: sort
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Sources
+        400:
+          description: Bad Request
+          body:
+            application/json:
+              type: string
+        500:
+          description: Internal Server Error
+          body:
+            application/json:
+              type: string
+  /sources:
+    /{id}.json:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the source to look up
+          displayName: id
+          format: int64
+      get:
+        description: Returns the Source identified by the 'id'.
+        displayName: Get Source by ID
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: Sources
+          400:
+            description: Invalid ID
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /{id}:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the record to look up
+          displayName: id
+          format: int64
+      /syndicate.json:
+        get:
+          description: Renders the list of MediaItems associated with the Source identified by the 'id'.
+          displayName: Get MediaItems for Source
+          queryParameters:
+            displayMethod?:
+              type: string
+              description: 'Method used to render an html request. Accepts one: [mv,
+                list, feed]'
+              displayName: displayMethod
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: MediaItems
+            400:
+              description: Bad Request
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+  /tags.json:
+    get:
+      description: Returns the list of Tags matching the specified query parameters in the specified 'format'.
+      displayName: Get Tags
+      queryParameters:
+        sort?:
+          type: string
+          description: The name of the property to which sorting will be applied
+          displayName: sort
+        max?:
+          type: integer
+          description: The maximum number of records to return
+          displayName: max
+          format: int32
+        offset?:
+          type: integer
+          description: Return records starting at the offset index.
+          displayName: offset
+          format: int32
+        name?:
+          type: string
+          description: Return tags[s] matching the supplied name
+          displayName: name
+        nameContains?:
+          type: string
+          description: Return tags which contain the supplied partial name.
+          displayName: nameContains
+        mediaId?:
+          type: integer
+          description: Return tags associated with the supplied media id.
+          displayName: mediaId
+          format: int64
+        typeId?:
+          type: integer
+          description: Return tags belonging to the supplied tag type id.
+          displayName: typeId
+          format: int64
+        typeName?:
+          type: string
+          description: Return tags belonging to the supplied tag type name.
+          displayName: typeName
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Tags
+        400:
+          description: Bad Request
+          body:
+            application/json:
+              type: string
+        500:
+          description: Internal Server Error
+          body:
+            application/json:
+              type: string
+  /tags:
+    /tagLanguages.json:
+      get:
+        description: Returns the list of TagLanguages
+        displayName: Get TagLanguages
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: TagLanguages
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /tagTypes.json:
+      get:
+        description: Returns the list of TagTypes
+        displayName: Get TagTypes
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: TagTypes
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /{id}.json:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the record to look up
+          displayName: id
+          format: int64
+      get:
+        description: Returns the Tag identified by the 'id' in the specified 'format'.
+        displayName: Get Tag by ID
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: Tags
+          400:
+            description: Invalid ID
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string
+    /{id}:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the record to look up
+          displayName: id
+          format: int64
+      /media.json:
+        get:
+          description: Returns the list of MediaItems associated with the Tag identified by the 'id'.
+          displayName: Get MediaItems for Tag
+          queryParameters:
+            max?:
+              type: integer
+              description: The maximum number of records to return
+              displayName: max
+              format: int32
+            offset?:
+              type: integer
+              description: The offset of the records set to return for pagination
+              displayName: offset
+              format: int32
+            sort?:
+              type: string
+              description: The name of the property to which sorting will be applied
+              displayName: sort
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: MediaItems
+            400:
+              description: Bad Request
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+      /related.json:
+        get:
+          description: Returns the list of Tags related to the Tag identified by the 'id' in the specified format.
+          displayName: Get related Tags by ID
+          queryParameters:
+            max?:
+              type: integer
+              description: The maximum number of records to return
+              displayName: max
+              format: int32
+            offset?:
+              type: integer
+              description: The offset of the records set to return for pagination
+              displayName: offset
+              format: int32
+            sort?:
+              type: string
+              description: The name of the property to which sorting will be applied
+              displayName: sort
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: Tags
+            400:
+              description: Bad Request
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+      /syndicate.json:
+        get:
+          description: Renders the list of MediaItems associated with the Tag identified by the 'id'.
+          displayName: Get MediaItems for Tag
+          queryParameters:
+            displayMethod?:
+              type: string
+              description: 'Method used to render an html request. Accepts one: [mv,
+                list, feed]'
+              displayName: displayMethod
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: MediaItems
+            400:
+              description: Bad Request
+              body:
+                application/json:
+                  type: string
+            500:
+              description: Internal Server Error
+              body:
+                application/json:
+                  type: string
+  /userMediaLists:
+    /{id}.json:
+      uriParameters:
+        id:
+          type: integer
+          description: The id of the record to look up
+          displayName: id
+          format: int64
+      get:
+        description: Get a specific user media list by 'id'.
+        displayName: Get UserMediaList by ID
+        queryParameters:
+          displayMethod?:
+            type: string
+            description: 'Method used to render an html request. Accepts one: [mv,
+              list, feed]'
+            displayName: displayMethod
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: MediaItems
+          400:
+            description: Invalid ID
+            body:
+              application/json:
+                type: string
+          500:
+            description: Internal Server Error
+            body:
+              application/json:
+                type: string

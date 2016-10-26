@@ -1,0 +1,250 @@
+#%RAML 1.0
+title: The Noun Project
+version: 1.0.0
+baseUri: api.thenounproject.com/api.thenounproject.com
+description: Icons for Everything
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/collection:
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: Collection id
+        displayName: id
+        format: int32
+    /icons:
+      get:
+        description: Returns a list of icons associated with a collection
+        displayName: Get collection icons by id
+        queryParameters:
+          limit?:
+            type: integer
+            description: Maximum number of results
+            displayName: limit
+            format: int32
+          offset?:
+            type: integer
+            description: Number of results to displace or skip over
+            displayName: offset
+            format: int32
+          page?:
+            type: integer
+            description: Number of results of limit length to displace or skip over
+            displayName: page
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+    get:
+      description: Returns a single collection
+      displayName: Get collection by id
+      responses:
+        200:
+          description: No response was specified
+  /{slug}:
+    uriParameters:
+      slug:
+        type: string
+        description: Collection slug
+        displayName: slug
+    /icons:
+      get:
+        description: Returns a list of icons associated with a collection
+        displayName: Get collection icons by slug
+        queryParameters:
+          limit?:
+            type: integer
+            description: Maximum number of results
+            displayName: limit
+            format: int32
+          offset?:
+            type: integer
+            description: Number of results to displace or skip over
+            displayName: offset
+            format: int32
+          page?:
+            type: integer
+            description: Number of results of limit length to displace or skip over
+            displayName: page
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+    get:
+      description: Returns a single collection
+      displayName: Get collection by slug
+      responses:
+        200:
+          description: No response was specified
+/collections:
+  get:
+    description: Return's a list of all collections
+    displayName: Get all collections
+    queryParameters:
+      limit?:
+        type: integer
+        description: Maximum number of results
+        displayName: limit
+        format: int32
+      offset?:
+        type: integer
+        description: Number of results to displace or skip over
+        displayName: offset
+        format: int32
+      page?:
+        type: integer
+        description: Number of results of limit length to displace or skip over
+        displayName: page
+        format: int32
+    responses:
+      200:
+        description: No response was specified
+/icon:
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: Icon id
+        displayName: id
+        format: int32
+    get:
+      description: Returns a single icon
+      displayName: Get icon by id
+      responses:
+        200:
+          description: No response was specified
+  /{term}:
+    uriParameters:
+      term:
+        type: string
+        description: Icon term
+        displayName: term
+    get:
+      description: Returns a single icon
+      displayName: Get icon by term
+      responses:
+        200:
+          description: No response was specified
+/icons:
+  /recent_uploads:
+    get:
+      description: Returns list of most recently uploaded icons
+      displayName: Get recent icons
+      queryParameters:
+        limit?:
+          type: integer
+          description: Maximum number of results
+          displayName: limit
+          format: int32
+        offset?:
+          type: integer
+          description: Number of results to displace or skip over
+          displayName: offset
+          format: int32
+        page?:
+          type: integer
+          description: Number of results of limit length to displace or skip over
+          displayName: page
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+  /{term}:
+    uriParameters:
+      term:
+        type: string
+        description: Icon term
+        displayName: term
+    get:
+      description: Returns a list of icons
+      displayName: Get icons by term
+      queryParameters:
+        limit_to_public_domain?:
+          type: integer
+          description: Limit results to public domain icons only
+          displayName: limit_to_public_domain
+          format: int32
+        limit?:
+          type: integer
+          description: Maximum number of results
+          displayName: limit
+          format: int32
+        offset?:
+          type: integer
+          description: Number of results to displace or skip over
+          displayName: offset
+          format: int32
+        page?:
+          type: integer
+          description: Number of results of limit length to displace or skip over
+          displayName: page
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+/oauth:
+  /usage:
+    get:
+      description: Returns current oauth usage and limits
+      displayName: Get api quota status
+      responses:
+        200:
+          description: No response was specified
+/user:
+  /{user_id}:
+    uriParameters:
+      user_id:
+        type: integer
+        description: User id
+        displayName: user_id
+        format: int32
+    /collections:
+      /{slug}:
+        uriParameters:
+          slug:
+            type: string
+            description: Collection slug
+            displayName: slug
+        get:
+          description: Returns a single collection associated with a user
+          displayName: Get user collection
+          responses:
+            200:
+              description: No response was specified
+      get:
+        description: Returns a list of collections associated with a user
+        displayName: Get user collections
+        responses:
+          200:
+            description: No response was specified
+  /{username}:
+    uriParameters:
+      username:
+        type: string
+        description: Username
+        displayName: username
+    /uploads:
+      get:
+        description: Returns a list of uploads associated with a user
+        displayName: Get user uploads with user
+        queryParameters:
+          limit?:
+            type: integer
+            description: Maximum number of results
+            displayName: limit
+            format: int32
+          offset?:
+            type: integer
+            description: Number of results to displace or skip over
+            displayName: offset
+            format: int32
+          page?:
+            type: integer
+            description: Number of results of limit length to displace or skip over
+            displayName: page
+            format: int32
+        responses:
+          200:
+            description: No response was specified

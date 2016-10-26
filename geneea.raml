@@ -1,0 +1,580 @@
+#%RAML 1.0
+title: Geneea Natural Language Processing
+version: '1.0'
+baseUri: api.geneea.com/
+description: |
+  <div class="api-description">
+      <h2>Authentication</h2>
+      <p>For all calls, supply your API key. <a href="https://www.geneea.com/pricing">Sign up to <em>obtain the key</em></a>.</p>
+      <p>
+          Our API supports both <em>unencrypted (HTTP)</em> and <em>encrypted (HTTPS)</em> protocols.
+          However, for security reasons, we strongly encourage using only the encrypted version.
+      </p>
+      <p>The API key should be supplied as either a request parameter <code>user_key</code> or in <code>Authorization</code> header.</p>
+      <pre><code>Authorization: user_key &lt;YOUR_API_KEY&gt;</code></pre>
+
+      <h2>API operations</h2>
+      <p>
+          All API operations can perform analysis on supplied raw text or on text extracted from a given URL.
+          Optionally, one can supply additional information which can make the result more precise. An example
+          of such information would be the language of text or a particular text extractor for URL resources.
+      </p>
+      <p>The supported types of analyses are:</p>
+      <ul>
+          <li><strong>lemmatization</strong> &longrightarrow;
+              Finds out lemmata (basic forms) of all the words in the document.
+          </li>
+          <li><strong>correction</strong> &longrightarrow;
+              Performs correction (diacritization) on all the words in the document.
+          </li>
+          <li><strong>topic detection</strong> &longrightarrow;
+              Determines a topic of the document, e.g. finance or sports.
+          </li>
+          <li><strong>sentiment analysis</strong> &longrightarrow;
+              Determines a sentiment of the document, i.e. how positive or negative the document is.
+          </li>
+          <li><strong>named entity recognition</strong> &longrightarrow;
+              Finds named entities (like person, location, date etc.) mentioned the the document.
+          </li>
+      </ul>
+
+      <h2>Encoding</h2>
+      <p>The supplied text is expected to be in UTF-8 encoding, this is especially important for non-english texts.</p>
+
+      <h2>Returned values</h2>
+      <p>The API calls always return objects in serialized JSON format in UTF-8 encoding.</p>
+      <p>
+          If any error occurs, the HTTP response code will be in the range <code>4xx</code> (client-side error) or
+          <code>5xx</code> (server-side error). In this situation, the body of the response will contain information
+          about the error in JSON format, with <code>exception</code> and <code>message</code> values.
+      </p>
+
+      <h2>URL limitations</h2>
+      <p>
+          All the requests are semantically <code>GET</code>. However, for longer texts, you may run into issues
+          with URL length limit. Therefore, it's possible to always issue a <code>POST</code> request with all
+          the parameters encoded as a JSON in the request body.
+      </p>
+      <p>Example:</p>
+      <pre><code>
+          POST /s1/sentiment
+          Content-Type: application/json
+
+          {"text":"There is no harm in being sometimes wrong - especially if one is promptly found out."}
+      </code></pre>
+      <p>This is equivalent to <code>GET /s1/sentiment?text=There%20is%20no%20harm...</code></p>
+
+      <h2>Request limitations</h2>
+      <p>
+          The API has other limitations concerning the size of the HTTP requests. The maximal allowed size of any
+          POST request body is <em>512 KiB</em>. For request with a URL resource, the maximal allowed number of
+          extracted characters from each such resource is <em>100,000</em>.
+      </p>
+
+      <h2>More information</h2>
+      <p>
+          <a href="https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation" target="_blank">
+          The Interpretor Public Documentation
+          </a>
+      </p>
+  </div>
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  user_key:
+    type: Pass Through
+types:
+  EntitiesResponse:
+    type: object
+    properties:
+      entities:
+        type: array
+        description: Found named entities in the document
+        items:
+          type: Entity
+      language:
+        type: string
+        description: The used language of the document
+      text?:
+        type: string
+        description: The raw text of the document which has been analysed
+    description: Response for the named-entity recognition
+  Entity:
+    type: object
+    properties:
+      entity:
+        type: string
+        description: Disambiguated and standardized form of the entity
+      links:
+        type: object
+        description: Disambiguation links for the entity, e.g. its DBpedia page
+      sentiment?:
+        type: number
+        description: Detected sentiment of the entity (value from -1.0 to 1.0)
+        format: double
+      textOffset:
+        type: integer
+        description: Character offset in the text (starting from 0)
+        format: int32
+      type:
+        type: string
+        description: Detected type of the entity
+    description: The named entity
+  EntryÂ«string_longÂ»:
+    type: object
+    properties:
+      key?:
+        type: integer
+        format: int64
+  Information_about_a_user_account_:
+    type: object
+    properties:
+      remainingQuotas?:
+        type: array
+        description: Remaining quotas for the user account.
+        items:
+          type: EntryÂ«string_longÂ»
+      type?:
+        type: string
+        description: Type (plan) of the user account.
+  Label:
+    type: object
+    properties:
+      confidence:
+        type: number
+        description: Confidence (probability) of this label
+        format: double
+      label:
+        type: string
+        description: The value of this label
+    description: The topic label
+  LemmatizeResponse:
+    type: object
+    properties:
+      language:
+        type: string
+        description: The used language of the document
+      lemmatizedText:
+        type: string
+        description: Lemmatized text of the document, individual tokens are separated by a space and sentences are separated by a new-line character
+      text?:
+        type: string
+        description: The raw text of the document which has been analysed
+    description: Response for the lemmatization
+  Request:
+    type: object
+    properties:
+      extractor?:
+        type: string
+        description: '[optional] Text extractor to be used when analyzing HTML document'
+        enum:
+        - default
+        - article
+        - keep-everything
+      language?:
+        type: string
+        description: '[optional] The language of the document, auto-detection will
+          be used if omitted'
+      options?:
+        type: object
+        description: '[optional] Additional options for the internal modules (key-value
+          pairs)'
+      returnTextInfo?:
+        type: boolean
+        description: '[optional] Indicates whether to return the source text within
+          the response object'
+      text?:
+        type: string
+        description: The raw text to be analyzed, mutually exclusive with the 'url' parameter
+      url?:
+        type: string
+        description: URL of a document to be analysed, mutually exclusive with the 'text' parameter
+    description: request
+  Response_for_the_text_correction:
+    type: object
+    properties:
+      corrected?:
+        type: boolean
+      correctedText:
+        type: string
+        description: Corrected text of the document
+      diacritized?:
+        type: boolean
+      language:
+        type: string
+        description: The used language of the document
+      text?:
+        type: string
+        description: The raw text of the document which has been analysed
+  SentimentResponse:
+    type: object
+    properties:
+      language:
+        type: string
+        description: The used language of the document
+      sentiment:
+        type: number
+        description: Detected sentiment of the document (value from -1.0 to 1.0)
+        format: double
+      text?:
+        type: string
+        description: The raw text of the document which has been analysed
+    description: Response for the sentiment analysis
+  TopicResponse:
+    type: object
+    properties:
+      confidence:
+        type: number
+        description: Confidence for the detected topic
+        format: double
+      labels:
+        type: array
+        description: Probabilistic distribution over possible topic labels
+        items:
+          type: Label
+      language:
+        type: string
+        description: The used language of the document
+      text?:
+        type: string
+        description: The raw text of the document which has been analysed
+      topic:
+        type: string
+        description: Detected topic of the document
+    description: Response for the topic detection
+/account:
+  get:
+    description: getInfo
+    displayName: Information about current user account
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            type: Information_about_a_user_account_
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden
+      404:
+        description: Not Found
+/s1:
+  /correction:
+    get:
+      description: <br/><strong>Possible options:</strong><p class="markdown">An optional parameter <code>diacritize</code> with values <code>yes</code>, <code>no</code> or <code>auto</code> indicate whether the text diacritization will be performed. The default value is <code>auto</code>.</p>
+      displayName: Performs text correction (diacritization) on the given document
+      queryParameters:
+        text?:
+          type: string
+          description: raw document text
+          displayName: text
+        url?:
+          type: string
+          description: document URL
+          displayName: url
+        extractor?:
+          type: string
+          description: document extractor
+          displayName: extractor
+          enum:
+          - default
+          - article
+          - keep-everything
+        language?:
+          type: string
+          description: document language
+          displayName: language
+        returnTextInfo?:
+          type: boolean
+          displayName: returnTextInfo
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: Response_for_the_text_correction
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+    post:
+      description: '<strong>Notes:</strong><br/>Valid JSON cannot contain newline
+        characters. These have to be escaped. (See also <a href="https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation"
+        target="_blank">Interpretor documentation</a>)<br/>Fields <code>text</code>
+        and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{"text":
+        "Hello world!"}</code></pre><pre><code>{"url": "https://en.wikipedia.org/wiki/Pyrrhuloxia"}</code></pre><br/><strong>Possible
+        options:</strong><p class="markdown">An optional parameter <code>diacritize</code>
+        with values <code>yes</code>, <code>no</code> or <code>auto</code> indicate
+        whether the text diacritization will be performed. The default value is <code>auto</code>.</p>'
+      displayName: Performs text correction (diacritization) on the given document
+      body:
+        application/json: Request
+      responses:
+        200:
+          description: Description was not specified
+          body:
+            application/json:
+              type: Response_for_the_text_correction
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /entities:
+    get:
+      description: entitiesGet
+      displayName: Performs named-entity recognition on the given document
+      queryParameters:
+        text?:
+          type: string
+          description: raw document text
+          displayName: text
+        url?:
+          type: string
+          description: document URL
+          displayName: url
+        extractor?:
+          type: string
+          description: document extractor
+          displayName: extractor
+          enum:
+          - default
+          - article
+          - keep-everything
+        language?:
+          type: string
+          description: document language
+          displayName: language
+        returnTextInfo?:
+          type: boolean
+          displayName: returnTextInfo
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: EntitiesResponse
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+    post:
+      description: '<strong>Notes:</strong><br/>Valid JSON cannot contain newline
+        characters. These have to be escaped. (See also <a href="https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation"
+        target="_blank">Interpretor documentation</a>)<br/>Fields <code>text</code>
+        and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{"text":
+        "Hello world!"}</code></pre><pre><code>{"url": "https://en.wikipedia.org/wiki/Pyrrhuloxia"}</code></pre>'
+      displayName: Performs named-entity recognition on the given document
+      body:
+        application/json: Request
+      responses:
+        200:
+          description: Description was not specified
+          body:
+            application/json:
+              type: EntitiesResponse
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /lemmatize:
+    get:
+      description: lemmatizeGet
+      displayName: Performs lemmatization on the given document
+      queryParameters:
+        text?:
+          type: string
+          description: raw document text
+          displayName: text
+        url?:
+          type: string
+          description: document URL
+          displayName: url
+        extractor?:
+          type: string
+          description: document extractor
+          displayName: extractor
+          enum:
+          - default
+          - article
+          - keep-everything
+        language?:
+          type: string
+          description: document language
+          displayName: language
+        returnTextInfo?:
+          type: boolean
+          displayName: returnTextInfo
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: LemmatizeResponse
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+    post:
+      description: '<strong>Notes:</strong><br/>Valid JSON cannot contain newline
+        characters. These have to be escaped. (See also <a href="https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation"
+        target="_blank">Interpretor documentation</a>)<br/>Fields <code>text</code>
+        and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{"text":
+        "Hello world!"}</code></pre><pre><code>{"url": "https://en.wikipedia.org/wiki/Pyrrhuloxia"}</code></pre>'
+      displayName: Performs lemmatization on the given document
+      body:
+        application/json: Request
+      responses:
+        200:
+          description: Description was not specified
+          body:
+            application/json:
+              type: LemmatizeResponse
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /sentiment:
+    get:
+      description: sentimentGet
+      displayName: Performs sentiment analysis on the given document
+      queryParameters:
+        text?:
+          type: string
+          description: raw document text
+          displayName: text
+        url?:
+          type: string
+          description: document URL
+          displayName: url
+        extractor?:
+          type: string
+          description: document extractor
+          displayName: extractor
+          enum:
+          - default
+          - article
+          - keep-everything
+        language?:
+          type: string
+          description: document language
+          displayName: language
+        returnTextInfo?:
+          type: boolean
+          displayName: returnTextInfo
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: SentimentResponse
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+    post:
+      description: '<strong>Notes:</strong><br/>Valid JSON cannot contain newline
+        characters. These have to be escaped. (See also <a href="https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation"
+        target="_blank">Interpretor documentation</a>)<br/>Fields <code>text</code>
+        and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{"text":
+        "Hello world!"}</code></pre><pre><code>{"url": "https://en.wikipedia.org/wiki/Pyrrhuloxia"}</code></pre>'
+      displayName: Performs sentiment analysis on the given document
+      body:
+        application/json: Request
+      responses:
+        200:
+          description: Description was not specified
+          body:
+            application/json:
+              type: SentimentResponse
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /topic:
+    get:
+      description: topicGet
+      displayName: Performs topic detection on the given document
+      queryParameters:
+        text?:
+          type: string
+          description: raw document text
+          displayName: text
+        url?:
+          type: string
+          description: document URL
+          displayName: url
+        extractor?:
+          type: string
+          description: document extractor
+          displayName: extractor
+          enum:
+          - default
+          - article
+          - keep-everything
+        language?:
+          type: string
+          description: document language
+          displayName: language
+        returnTextInfo?:
+          type: boolean
+          displayName: returnTextInfo
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: TopicResponse
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+    post:
+      description: '<strong>Notes:</strong><br/>Valid JSON cannot contain newline
+        characters. These have to be escaped. (See also <a href="https://geneea.atlassian.net/wiki/display/IPD/The+Interpretor+API+Public+Documentation#TheInterpretorAPIPublicDocumentation-Interactiveonlinedocumentation"
+        target="_blank">Interpretor documentation</a>)<br/>Fields <code>text</code>
+        and <code>url</code> are mutually exclusive.<br/><strong>Examples:</strong><pre><code>{"text":
+        "Hello world!"}</code></pre><pre><code>{"url": "https://en.wikipedia.org/wiki/Pyrrhuloxia"}</code></pre>'
+      displayName: Performs topic detection on the given document
+      body:
+        application/json: Request
+      responses:
+        200:
+          description: Description was not specified
+          body:
+            application/json:
+              type: TopicResponse
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found

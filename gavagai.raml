@@ -1,0 +1,421 @@
+#%RAML 1.0
+title: Gavagai
+version: 1.0.0
+baseUri: api.gavagai.se/v3
+description: Let us do the job and read your documents for you. We will bring you executive summaries and tonality scoring.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  apiKey:
+    type: Pass Through
+types:
+  Synonymlist:
+    type: array
+    description: List of terms that will be considered as synonyms when generating topics.
+    items:
+      type: string
+  AdditionalInformation:
+    type: object
+    properties:
+      link?:
+        type: string
+  Filament:
+    type: object
+    properties:
+      labels:
+        type: array
+        items:
+          type: Label
+      words:
+        type: array
+        items:
+          type: Word
+  KeywordRef:
+    type: object
+    properties:
+      occurrences:
+        type: number
+        description: The number of occurences of the keyword in the texts.
+      term:
+        type: string
+        description: The keyword term.
+  Label:
+    type: object
+    properties:
+      label:
+        type: string
+      type:
+        type: string
+        enum:
+        - RIGHT
+        - LEFT
+  LexiconResponse:
+    type: object
+    properties:
+      associations:
+        type: array
+        items:
+          type: Word
+      endsWithWords:
+        type: array
+        items:
+          type: Word
+      leftSideNeighbours:
+        type: array
+        items:
+          type: Word
+      nGrams:
+        type: array
+        items:
+          type: Word
+      rightSideNeighbours:
+        type: array
+        items:
+          type: Word
+      semanticallySimilarWordFilaments:
+        type: Filament
+      semanticallySimilarWords:
+        type: array
+        items:
+          type: Word
+      startsWithWords:
+        type: array
+        items:
+          type: Word
+      stringSimilarWords:
+        type: array
+        items:
+          type: Word
+      wordInformation:
+        type: WordInformation
+  Score:
+    type: object
+    properties:
+      normalizedScore:
+        type: number
+        description: The normalized score given for this tone. A number within the range 0-1.
+      score:
+        type: number
+        description: The score given for this tone, based on lexical analysis. A positive number.
+      tone:
+        type: string
+        description: The name of the tone.
+  ScoredText:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The unique identifier of the text
+      tonality:
+        type: array
+        description: A list of tones and their scores.
+        items:
+          type: Score
+  StoriesRequest:
+    type: object
+    properties:
+      language:
+        type: string
+        description: The language of the text set, two letter language code (ISO 639-1)
+      texts:
+        type: array
+        description: An array of text objects.
+        items:
+          type: Text
+    description: The JSON payload should contain an array of texts from which the stories will be created. The model description contains the details of the required structure.
+  StoriesResponse:
+    type: object
+    properties:
+      stories:
+        type: array
+        items:
+          type: Story
+    description: An array of stories.
+  Story:
+    type: object
+    properties:
+      headline:
+        type: string
+        description: The headline of the story
+      summary:
+        type: array
+        description: An array of sentences that are most significant for the story, sorted by how well the sentence describe the overall story
+        items:
+          type: string
+      texts:
+        type: array
+        description: An array of texts that contributes to the story
+        items:
+          type: TextRef
+  Text:
+    type: object
+    properties:
+      body:
+        type: string
+        description: The text content of the text.
+      id:
+        type: string
+        description: A unique identifier of the text, e.g. URI or hash.
+  TextRef:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The unique identifier of the text.
+      title:
+        type: string
+        description: The title of the text.
+  TonalityRequest:
+    type: object
+    properties:
+      language:
+        type: string
+        description: The language of the text set, two letter language code (ISO 639-1)
+      texts:
+        type: array
+        description: An array of text objects.
+        items:
+          type: Text
+    description: The JSON payload contains an array of texts on which to calculate the tonality. The model description contains the details of the required structure.
+  TonalityResponse:
+    type: object
+    properties:
+      texts:
+        type: array
+        description: An array of texts scored by tonality
+        items:
+          type: ScoredText
+  Topic:
+    type: object
+    properties:
+      headline:
+        type: string
+        description: The headline of the topic
+      keywords:
+        type: array
+        description: An array of significant words representing the topic
+        items:
+          type: string
+      summary:
+        type: array
+        description: An array of sentences that are most significant for the topic, sorted by how well the sentence describe the overall topic
+        items:
+          type: string
+      texts:
+        type: array
+        description: An array of texts that contributes to the topic
+        items:
+          type: TopicText
+  TopicText:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The unique identifier of the text.
+      title:
+        type: string
+        description: The title of the text.
+      utterances:
+        type: array
+        description: The utterances from the text that build the topic.
+        items:
+          type: string
+  TopicsRequest:
+    type: object
+    properties:
+      ignore?:
+        type: array
+        description: List that will be disregarded when generating topics.
+        items:
+          type: string
+      language:
+        type: string
+        description: The language of the text set, two letter language code (ISO 639-1)
+      synonyms?:
+        type: array
+        description: List of lists, where each is a list of terms that will be considered as synonyms when generating topics.
+        items:
+          type: Synonymlist
+      terms?:
+        type: array
+        description: List of terms.
+        items:
+          type: string
+      texts:
+        type: array
+        description: An array of text objects.
+        items:
+          type: Text
+    description: The JSON payload should contain an array of texts from which the topics will be created. The model description contains the details of the required structure.
+  TopicsResponse:
+    type: object
+    properties:
+      topics:
+        type: array
+        items:
+          type: Topic
+    description: An array of topics.
+  Word:
+    type: object
+    properties:
+      forWord:
+        type: string
+      strength:
+        type: number
+      word:
+        type: string
+  WordInformation:
+    type: object
+    properties:
+      additionalInformation?:
+        type: AdditionalInformation
+      documentFrequency:
+        type: integer
+      frequency:
+        type: integer
+      ranksHigherThanPercentage:
+        type: number
+      word:
+        type: string
+  keywordsRequest:
+    type: object
+    properties:
+      language:
+        type: string
+        description: The language of the text set, two letter language code (ISO 639-1)
+      texts:
+        type: array
+        description: An array of text objects.
+        items:
+          type: Text
+    description: The JSON payload should contain an array of texts from which the keywords will be created. The model description contains the details of the required structure.
+  keywordsResponse:
+    type: object
+    properties:
+      keywords:
+        type: array
+        description: An array of texts that contributes to the story
+        items:
+          type: KeywordRef
+      numberOfKeywords:
+        type: number
+        description: The total number of keywords in the texts
+    description: An array of keywords.
+/keywords:
+  post:
+    description: '<p>Given a set of texts, return the top 10 keywords.</p> <p>''Keywords''
+      in this context means single words or short phrases of words (like ''ebola outbreak'')
+      that are significant in the collection. The top 10 keywords will be displayed.
+      Some words that carry little significance are filtered out before compiling
+      the result list. These include the most common words in the language of the
+      texts.</p> <p>Language is specified for the whole submitted batch of texts.
+      If you have texts in more than one language you should make separate calls for
+      each language.</p> <p>Max upload size, per request: 5&nbsp;MB.</p>'
+    displayName: Extract 'keywords' from a set of texts.
+    body:
+      application/json: keywordsRequest
+    responses:
+      200:
+        description: Successful response, returns json body.
+        body:
+          application/json;charset=UTF-8:
+            type: keywordsResponse
+      400:
+        description: Can't parse input JSON body.
+      401:
+        description: The apiKey is wrong or missing.
+      405:
+        description: Faulty request method. I.e. use POST for this method.
+/lexicon:
+  /{language}:
+    uriParameters:
+      language:
+        type: string
+        description: The language of the text set, two letter language code (ISO 639-1)
+        displayName: language
+    /{word}:
+      uriParameters:
+        word:
+          type: string
+          description: The word to be looked up in the lexicon
+          displayName: word
+      get:
+        displayName: Lookup a word in Gavagai living lexicon.
+        responses:
+          200:
+            description: Successful response, returns json body.
+            body:
+              application/json;charset=UTF-8:
+                type: LexiconResponse
+          401:
+            description: The apiKey is wrong or missing.
+/stories:
+  post:
+    description: '<p>Given a set of texts, return summaries as a set of stories.</p><p>Language
+      is specified for the whole submitted batch of texts. If you have texts in more
+      than one language you should make separate calls for each language.</p> <p>Max
+      upload size, per request: 5&nbsp;MB.</p>'
+    displayName: Extract stories from a set of texts.
+    body:
+      application/json: StoriesRequest
+    responses:
+      200:
+        description: Successful response, returns json body.
+        body:
+          application/json;charset=UTF-8:
+            type: StoriesResponse
+      400:
+        description: Can't parse input JSON body.
+      401:
+        description: The apiKey is wrong or missing.
+      405:
+        description: Faulty request method. I.e. use POST for this method.
+/tonality:
+  post:
+    description: '<p>Given a set of texts, return their tonality based on lexical
+      analysis in multiple dimensions. The tonality is calculated on a text level,
+      that is, the response will return the tonality of each text.</p><p>Language
+      is specified for the whole submitted batch of texts. If you have texts in more
+      than one language you should make separate calls for each language.</p> <p>Max
+      upload size, per request: 1&nbsp;MB.</p>'
+    displayName: Given a set of texts, return their tonality.
+    body:
+      application/json: TonalityRequest
+    responses:
+      200:
+        description: Successful response, returns json body.
+        body:
+          application/json; charset=UTF-8:
+            type: TonalityResponse
+      400:
+        description: Can't parse input JSON body.
+      401:
+        description: The apiKey is wrong or missing
+      405:
+        description: Faulty request method. I.e. use POST for this method.
+/topics:
+  post:
+    description: '<p>Given a set of texts, return summaries as a set of topics.</p>
+      <p>If you are only interested in texts matching specific keywords, you may provide
+      a list of comma-separated <code>terms</code> that are used to match the relevant
+      texts. Texts that do not contain at least one exact token match of at least
+      one of your provided terms will not be taken into account.</p> <p>Language is
+      specified for the whole submitted batch of texts. If you have texts in more
+      than one language you should make separate calls for each language.</p> <p>Max
+      upload size, per request: 5&nbsp;MB.</p>'
+    displayName: Extract topics from a set of texts.
+    body:
+      application/json: TopicsRequest
+    responses:
+      200:
+        description: Successful response, returns json body.
+        body:
+          application/json;charset=UTF-8:
+            type: TopicsResponse
+      400:
+        description: Can't parse input JSON body.
+      401:
+        description: The apiKey is wrong or missing.
+      405:
+        description: Faulty request method. I.e. use POST for this method.

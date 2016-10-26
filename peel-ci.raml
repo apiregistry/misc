@@ -1,0 +1,79 @@
+#%RAML 1.0
+title: Peel Tune-in API
+version: 1.0.0
+baseUri: hashtag.peel-ci.com/
+description: The machine learning service APIs utilize hashtags from Twitter to find related, trending shows, related Twitter hashtags in real time and to generate direct tune-in URLs.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/hashtag:
+  /related:
+    get:
+      description: Returns any official hashtag and any hashtags which were learned within the most recent time window for the show.
+      displayName: Gets related hashtags for a show.
+      queryParameters:
+        showID:
+          type: string
+          description: Unique ID for a show
+          displayName: showID
+        timeWindow?:
+          type: string
+          description: Time window in seconds (default is 2 hours)
+          displayName: timeWindow
+      responses:
+        200:
+          description: No response was specified
+  /trendingShows:
+    get:
+      displayName: Gets trending shows.
+      queryParameters:
+        limit?:
+          type: string
+          description: Number of trending shows (default is 20)
+          displayName: limit
+        timeWindow?:
+          type: string
+          description: Time window in seconds (default is 2 hours)
+          displayName: timeWindow
+      responses:
+        200:
+          description: No response was specified
+  /tuneinlinks:
+    get:
+      description: Either use <b>tweet</b>, <b>hashtags</b>, or <b>showID</b> as the parameter. The tunein URLs that match best are returned in order of best match.<br/><br/>A <b>tweet</b> in this context is shorthand for text from a social networking conversation, e.g., it could be from Facebook, Twitter, LinkedIn, etc., and be greater than 140 characters.
+      displayName: Gets tunein URLs (links) from either a tweet, hashtags, @mentions, or show ID.
+      queryParameters:
+        tweet?:
+          type: string
+          description: Text from a social networking conversation
+          displayName: tweet
+        hashtags?:
+          type: string
+          description: Comma separated list of hashtags and @mentions
+          displayName: hashtags
+        showID?:
+          type: string
+          description: Unique ID for a show
+          displayName: showID
+      responses:
+        200:
+          description: No response was specified
+/health:
+  get:
+    displayName: Get health of Tune-in service (which includes its uptime).
+    responses:
+      200:
+        description: No response was specified
+/status:
+  /{showID}:
+    uriParameters:
+      showID:
+        type: string
+        description: Unique ID for a show
+        displayName: showID
+    get:
+      description: For Twitter, statuses are synonymous with tweets.
+      displayName: Gets the last 100 statuses for this show.
+      responses:
+        200:
+          description: No response was specified

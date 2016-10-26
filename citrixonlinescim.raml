@@ -1,0 +1,805 @@
+#%RAML 1.0
+title: SCIM
+version: N/A
+baseUri: api.citrixonline.com/identity/v1
+description: The SCIM API lets you manage users in your Citrix organization. You can then automate the provisioning of product licenses for these users, and they can use your company's Single Sign-On solution through an Identity Provider.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  AuthenticationSchemes:
+    type: object
+    properties:
+      description:
+        type: string
+        description: The description of the Authentication Scheme
+      documentationUrl:
+        type: string
+        description: A HTTP addressable URL pointing to the Authentication Scheme's usage documentation
+      name:
+        type: string
+        description: The common authentication scheme name, e.g. HTTP Basic
+      specUrl:
+        type: string
+        description: A HTTP addressable URL pointing to the Authentication Scheme's specification
+    description: Specifies supported Authentication Scheme properties
+  Bulk:
+    type: object
+    properties:
+      supported:
+        type: boolean
+        description: Specifies whether the operation is supported
+    description: Specifies BULK configuration options
+  ChangePassword:
+    type: object
+    properties:
+      supported:
+        type: boolean
+        description: Specifies whether the operation is supported
+    description: Specifies Change Password configuration options
+  Etag:
+    type: object
+    properties:
+      supported:
+        type: boolean
+        description: Specifies whether the operation is supported
+    description: Specifies Etag configuration options
+  Filter:
+    type: object
+    properties:
+      supported:
+        type: boolean
+        description: Specifies whether the operation is supported
+    description: Specifies FILTER options
+  Group:
+    type: object
+    properties:
+      displayName:
+        type: string
+        description: The group's display name
+      id:
+        type: string
+        description: The group's unique key
+      members?:
+        type: array
+        description: An array of members
+        items:
+          type: Member
+      meta:
+        type: GroupMetadata
+        description: Group metadata
+    description: Describes a group belonging to an organization
+  GroupCollection:
+    type: object
+    properties:
+      resources:
+        type: array
+        description: An array of groups
+        items:
+          type: Group
+      totalResults:
+        type: integer
+        description: The number of groups in the collection
+        format: int64
+    description: Class describing a collection of groups
+  GroupDefinition:
+    type: object
+    properties:
+      displayName:
+        type: string
+        description: The group's display name
+      members?:
+        type: array
+        description: An array of members
+        items:
+          type: Member
+    description: The new group definition
+  GroupMetadata:
+    type: object
+    properties:
+      created:
+        type: datetime
+        description: The date and time the group was created
+      location:
+        type: string
+        description: The URL where the group can be accessed
+    description: Group metadata
+  Member:
+    type: object
+    properties:
+      type:
+        type: string
+        description: The type of member
+        enum:
+        - group
+        - user
+      value:
+        type: string
+        description: Depending on the member type this is a groupKey or an userKey
+    description: A member of a group. This can be a group or an user
+  Patch:
+    type: object
+    properties:
+      supported:
+        type: boolean
+        description: Specifies whether the operation is supported
+    description: Specifies PATCH configuration options
+  ResourceSchema:
+    type: object
+    properties:
+      attributes:
+        type: array
+        description: The resource's attributes
+        items:
+          type: SchemaAttribute
+      description:
+        type: string
+        description: The resource's description
+      endpoint:
+        type: string
+        description: The resource's HTTP addressable endpoint relative to the base URL, e.g. /Users.
+      id:
+        type: string
+        description: The resource's id, e.g. urn:scim:schemas:core:1.0:User
+      name:
+        type: string
+        description: The resource's name, e.g. "User"
+      schema:
+        type: string
+        description: The resource's associated schema, e.g. urn:scim:schemas:core:1.0
+    description: Describes the attributes and metadata constituting a resource such as a user.
+  SchemaAttribute:
+    type: object
+    properties:
+      caseExact:
+        type: boolean
+        description: Indicates whether the attribute is case sensitive
+      description:
+        type: string
+        description: The attribute's description
+      multiValued:
+        type: boolean
+        description: Indicates whether the attribute can have multiple values
+      name:
+        type: string
+        description: The attribute's name
+      readOnly:
+        type: boolean
+        description: Indicates whether the attribute is mutable
+      required:
+        type: boolean
+        description: Indicates whether the attribute is required
+      schema:
+        type: string
+        description: The attribute's associated scheme, e.g. urn:scim:schemas:core:1.0
+      subAttributes?:
+        type: array
+        description: The attribute's potential sub-attributes
+        items:
+          type: SchemaSubAttribute
+      type:
+        type: string
+        description: The attribute's data type, e.g. String
+    description: Describes a resource attribute
+  SchemaSubAttribute:
+    type: object
+    properties:
+      caseExact:
+        type: boolean
+        description: Indicates whether the attribute is case sensitive
+      description:
+        type: string
+        description: The attribute's description
+      name:
+        type: string
+        description: The attribute's name
+      readOnly:
+        type: boolean
+        description: Indicates whether the attribute is mutable
+      required:
+        type: boolean
+        description: Indicates whether the attribute is required
+      type:
+        type: string
+        description: The attribute's data type, e.g. String
+    description: Describes the sub-attribute of a resource attribute
+  ServiceProviderConfigs:
+    type: object
+    properties:
+      authenticationSchemes:
+        type: AuthenticationSchemes
+        description: Specifies whether the XML data format is supported
+      bulk:
+        type: Bulk
+        description: Specifies BULK configuration options
+      changePassword:
+        type: ChangePassword
+        description: Specifies Change Password configuration options
+      documentationUrl:
+        type: string
+        description: An HTTP addressable URL pointing to the Service Provider's help documentation
+      etag:
+        type: Etag
+        description: Specifies Etag configuration options
+      filter:
+        type: Filter
+        description: Specifies FILTER options
+      patch:
+        type: Patch
+        description: Specifies PATCH configuration options
+      sort:
+        type: Sort
+        description: Specifies Sort configuration options
+      xmlDataFormat:
+        type: XmlDataFormat
+        description: Specifies supported Authentication Scheme properties
+    description: Represents the Service Provider's configuration
+  Sort:
+    type: object
+    properties:
+      supported:
+        type: boolean
+        description: Specifies whether the operation is supported
+    description: Specifies Sort configuration options
+  User:
+    type: object
+    properties:
+      displayName:
+        type: string
+        description: The user's display name
+      id:
+        type: string
+        description: The user's unique key
+      locale:
+        type: string
+        description: The user's language settings
+      meta:
+        type: UserMetadata
+        description: User metadata
+      name:
+        type: UserFullName
+        description: The user's full name
+      timezone:
+        type: string
+        description: The user's time zone
+      userName:
+        type: string
+        description: The user's username, usually their email address
+    description: Describes a user belonging to an organization
+  UserCollection:
+    type: object
+    properties:
+      resources:
+        type: array
+        description: The list of users
+        items:
+          type: User
+      totalResults:
+        type: integer
+        description: The number of users in the collection
+        format: int64
+    description: Class describing a collection of users
+  UserDefinition:
+    type: object
+    properties:
+      displayName?:
+        type: string
+        description: The user's display name
+      locale?:
+        type: string
+        description: The user's language settings
+      name?:
+        type: UserFullName
+        description: The user's full name
+      password?:
+        type: string
+        description: The user's password
+      timezone?:
+        type: string
+        description: The user's time zone
+      userName?:
+        type: string
+        description: The user's username, usually their email address
+    description: The new user data
+  UserFullName:
+    type: object
+    properties:
+      familyName:
+        type: string
+        description: The user's surname
+      givenName:
+        type: string
+        description: The user's first name
+    description: The full name of the user
+  UserMetadata:
+    type: object
+    properties:
+      created:
+        type: datetime
+        description: The date and time the user was created
+      location:
+        type: string
+        description: The URL where the user can be accessed
+    description: User metadata
+  XmlDataFormat:
+    type: object
+    properties:
+      supported:
+        type: boolean
+        description: Specifies whether the operation is supported
+    description: Specifies whether the XML data format is supported
+/Groups:
+  /{groupKey}:
+    uriParameters:
+      groupKey:
+        type: integer
+        description: The key of the group to query. The group must be in the organization domain
+        displayName: groupKey
+        format: int64
+    get:
+      description: Queries group details in the organization domain. This call requires the role ROLE_ORG_READ.
+      displayName: Get Group
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      responses:
+        200:
+          description: The request has succeeded
+          body:
+            application/json:
+              type: Group
+        401:
+          description: Client is not sufficiently authorized or group does not exist in organization
+        403:
+          description: Invalid token passed
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+    delete:
+      description: Deletes a group from the organization (but not from the account). The group must be in the organization. This call requires the role ROLE_ORG_WRITE.
+      displayName: Delete Group
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      responses:
+        200:
+          description: The request has succeeded
+        401:
+          description: Client is not sufficiently authorized or group does not exist in organization
+        403:
+          description: Invalid token passed
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+    patch:
+      description: Updates one or more values of an existing group without sending the full definition. Member groups and member users must be in the organization. This call requires the role ROLE_ORG_WRITE.
+      displayName: Update Group
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      body:
+        application/json: GroupDefinition
+      responses:
+        200:
+          description: The group has been updated
+          body:
+            application/json:
+              type: Group
+        400:
+          description: Possible reasons are:<br />The displayName field is not set<br />The displayName field is malformed<br />The displayName field exceeds 128 characters<br />The members array exceeds 100 elements<br />
+        401:
+          description: Client is not sufficiently authorized or group does not exist in organization
+        403:
+          description: Invalid token passed
+        409:
+          description: The displayName is already in use within the organization
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+    put:
+      description: Updates an existing group. The request must include the full group definition. To modify one or more values without sending the full definition, see "Update Group". Member groups and member users must be in the organization. This call requires the role ROLE_ORG_WRITE.
+      displayName: Replace Group
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      body:
+        application/json: GroupDefinition
+      responses:
+        200:
+          description: The group has been replaced.
+          body:
+            application/json:
+              type: Group
+        400:
+          description: Possible reasons are:<br />The displayName field is not set<br />The displayName field is malformed<br />The displayName field exceeds 128 characters<br />The members array exceeds 100 elements<br />
+        401:
+          description: Client is not sufficiently authorized or group does not exist in organization
+        403:
+          description: Invalid token passed
+        409:
+          description: The displayName is already in use within the organization
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+  get:
+    description: Queries multiple group identities in the organization domain. Filtering, sorting and pagination are available. This call requires the role ROLE_ORG_READ.
+    displayName: Get Groups
+    queryParameters:
+      filter?:
+        type: string
+        description: ' Without a filter, all groups are returned. The filter parameter
+          must be a properly formed SCIM filter using the operator "eq" (equals),
+          "sw" (starts with), or "co" (contains). The filter works for the displayName
+          attribute. Sorting and pagination are supported. For example, GET /Groups?filter=displayName%20eq%20%22Engineering%22&sortBy=displayName&sortOrder=ascending&count=50&startIndex=51'
+        displayName: filter
+    headers:
+      Authorization:
+        type: string
+        description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+        displayName: Authorization
+    responses:
+      200:
+        description: The request has succeeded
+        body:
+          application/json:
+            type: GroupCollection
+      400:
+        description: Invalid filter syntax
+      401:
+        description: Client is not sufficiently authorized
+      403:
+        description: Invalid token passed
+      502:
+        description: Authentication or account gateway error occurred
+      504:
+        description: Authentication or account gateway timeout occurred
+  post:
+    description: Creates a new organization group and adds it to the user domain. Member groups and member users must be in the organization. This call requires the role ROLE_ORG_WRITE.
+    displayName: Create Group
+    headers:
+      Authorization:
+        type: string
+        description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+        displayName: Authorization
+    body:
+      application/json: GroupDefinition
+    responses:
+      201:
+        description: The group has been created
+        body:
+          application/json:
+            type: Group
+      400:
+        description: Possible reasons are:<br />The displayName field is not set<br />The displayName field is malformed<br />The displayName field exceeds 128 characters<br />The members array exceeds 100 elements<br />
+      401:
+        description: Client is not sufficiently authorized
+      403:
+        description: Invalid token passed
+      409:
+        description: The displayName is already in use within the organization
+      502:
+        description: An authentication or account gateway error occurred
+      504:
+        description: An authentication or account, or gateway timeout occurred.
+/Schemas:
+  /Users:
+    get:
+      description: Queries the user schema. The user schema is defined in SCIM Core Schema (http://www.simplecloud.info/specs/draft-scim-core-schema-01.html#resource-schema).
+      displayName: Get User Schema
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      responses:
+        200:
+          description: The request has succeeded.
+          body:
+            application/json:
+              type: ResourceSchema
+        403:
+          description: Invalid token passed
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+/ServiceProviderConfigs:
+  get:
+    description: Queries service provider configurations. The service provider configurations are defined in SCIM Core Schema (http://www.simplecloud.info/specs/draft-scim-core-schema-01.html#anchor6). This call returns a description, a documentationURL, name, and specURL.
+    displayName: Get Service Provider Configurations
+    headers:
+      Authorization:
+        type: string
+        description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+        displayName: Authorization
+    responses:
+      200:
+        description: The request has succeeded.
+        body:
+          application/json:
+            type: ServiceProviderConfigs
+      403:
+        description: Invalid token passed
+      502:
+        description: Authentication or account gateway error occurred
+      504:
+        description: Authentication or account gateway timeout occurred
+/Users:
+  /me:
+    get:
+      description: Queries the identity of the current authenticated user.
+      displayName: Get Current User
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      responses:
+        200:
+          description: The request has succeeded.
+          body:
+            application/json:
+              type: User
+        401:
+          description: Client is not sufficiently authorized
+        403:
+          description: Invalid token passed
+        404:
+          description: User not found
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+    patch:
+      description: 'Changes a limited set (or all if you choose) of the current authenticated
+        user''s data. The updated user email domain must be an existing organization
+        email domain. '
+      displayName: Update Current User
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      body:
+        application/json: UserDefinition
+      responses:
+        200:
+          description: The current user has been updated.
+          body:
+            application/json:
+              type: User
+        400:
+          description: One of the following requirements is not met:<br />The userName field is required.<br />The userName field must be non-empty.<br />The userName field cannot exceed 128 characters.<br />The locale field must be composed of 1 or 2 parts.<br />The locale language sub-field must be ISO-639.<br />The locale country sub-field must be ISO-3166.<br />The timezone field must be a valid timezone.<br />The givenName field must not exceed 60 characters.<br />The familyName field must not exceed 60 characters.
+        401:
+          description: Client is not sufficiently authorized
+        403:
+          description: Invalid token passed
+        404:
+          description: User not found
+        409:
+          description: Email address conflict
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+    put:
+      description: 'Changes the current authenticated user''s displayName, locale,
+        timezone, username and password. The request must include the full user definition
+        (to modify one or more values without sending the full definition, see Update
+        User). The replaced user email domain must be an existing organization email
+        domain. '
+      displayName: Replace Current User
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      body:
+        application/json: UserDefinition
+      responses:
+        200:
+          description: The current user has been replaced.
+          body:
+            application/json:
+              type: User
+        400:
+          description: One of the following requirements is not met:<br />The userName field is required.<br />The userName field must be non-empty.<br />The userName field cannot exceed 128 characters.<br />The locale field must be composed of 1 or 2 parts.<br />The locale language sub-field must be ISO-639.<br />The locale country sub-field must be ISO-3166.<br />The timezone field must be a valid timezone.<br />The givenName field must not exceed 60 characters.<br />The familyName field must not exceed 60 characters.
+        401:
+          description: Client is not sufficiently authorized
+        403:
+          description: Invalid token passed
+        404:
+          description: User not found
+        409:
+          description: Email address conflict
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+  /{userKey}:
+    uriParameters:
+      userKey:
+        type: integer
+        description: The key of the user to query. The user must be in the organization domain
+        displayName: userKey
+        format: int64
+    get:
+      description: Queries user identity in the organization domain.
+      displayName: Get User
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      responses:
+        200:
+          description: The request has succeeded.
+          body:
+            application/json:
+              type: User
+        401:
+          description: Client is not sufficiently authorized
+        403:
+          description: Invalid token passed
+        404:
+          description: User not found
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+    delete:
+      description: Deletes a user from the organization (but not from the account).
+      displayName: Delete User
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      responses:
+        200:
+          description: The request has succeeded.
+        401:
+          description: Client is not sufficiently authorized
+        403:
+          description: Invalid token passed
+        404:
+          description: User not found
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+    patch:
+      description: Changes a limited set (or all if you choose) of the user's data. The updated user email domain must be an existing organization email domain.
+      displayName: Update User
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      body:
+        application/json: UserDefinition
+      responses:
+        200:
+          description: The user has been updated.
+          body:
+            application/json:
+              type: User
+        400:
+          description: One of the following requirements is not met:<br />The userName field is required.<br />The userName field must be non-empty.<br />The userName field cannot exceed 128 characters.<br />The locale field must be composed of 1 or 2 parts.<br />The locale language sub-field must be ISO-639.<br />The locale country sub-field must be ISO-3166.<br />The timezone field must be a valid timezone.<br />The givenName field must not exceed 60 characters.<br />The familyName field must not exceed 60 characters.
+        401:
+          description: Client is not sufficiently authorized
+        403:
+          description: Invalid token passed
+        404:
+          description: User not found
+        409:
+          description: Email address conflict
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+    put:
+      description: Changes an existing user's displayName, locale, timezone, username and password. The request must include the full user definition (to modify one or more values without sending the full definition, see Update User). The replaced user email domain must be an existing organization email domain.
+      displayName: Replace User
+      headers:
+        Authorization:
+          type: string
+          description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+          displayName: Authorization
+      body:
+        application/json: UserDefinition
+      responses:
+        200:
+          description: The user has been replaced.
+          body:
+            application/json:
+              type: User
+        400:
+          description: One of the following requirements is not met:<br />The userName field is required.<br />The userName field must be non-empty.<br />The userName field cannot exceed 128 characters.<br />The locale field must be composed of 1 or 2 parts.<br />The locale language sub-field must be ISO-639.<br />The locale country sub-field must be ISO-3166.<br />The timezone field must be a valid timezone.<br />The givenName field must not exceed 60 characters.<br />The familyName field must not exceed 60 characters.
+        401:
+          description: Client is not sufficiently authorized
+        403:
+          description: Invalid token passed
+        404:
+          description: User not found
+        409:
+          description: Email address conflict
+        502:
+          description: Authentication or account gateway error occurred
+        504:
+          description: Authentication or account gateway timeout occurred
+  get:
+    description: Queries multiple user identities in the organization domain. Filtering is available.
+    displayName: Get Users
+    queryParameters:
+      filter?:
+        type: string
+        description: ' Without a filter, all users in a user domain are returned.
+          The filter parameter must be a properly formed SCIM filter using either
+          the operator eq (equals) or the operator sw (starts with). The filter works
+          for userName, displayName, name.givenName, and name.familyName attributes.
+          For example, /Users?filter=name.familyName%20eq%20%%22Smith%22'
+        displayName: filter
+    headers:
+      Authorization:
+        type: string
+        description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+        displayName: Authorization
+    responses:
+      200:
+        description: The request has succeeded.
+        body:
+          application/json:
+            type: UserCollection
+      400:
+        description: Invalid filter syntax
+      401:
+        description: Client is not sufficiently authorized
+      403:
+        description: Invalid token passed
+      502:
+        description: Authentication or account gateway error occurred
+      504:
+        description: Authentication or account gateway timeout occurred
+  post:
+    description: Creates a new organization user and adds them to the user domain. The user email domain must match an existing organization email domain.
+    displayName: Create User
+    headers:
+      Authorization:
+        type: string
+        description: Access token prefixed with 'Bearer ', e.g. 'Bearer 123456abcdef'
+        displayName: Authorization
+    body:
+      application/json: UserDefinition
+    responses:
+      201:
+        description: The user has been created.
+        body:
+          application/json:
+            type: User
+      400:
+        description: One of the following requirements is not met:<br />The userName field is required.<br />The userName field must be non-empty.<br />The userName field cannot exceed 128 characters.<br />The locale field must be composed of 1 or 2 parts.<br />The locale language sub-field must be ISO-639.<br />The locale country sub-field must be ISO-3166.<br />The timezone field must be a valid timezone.<br />The givenName field must not exceed 60 characters.<br />The familyName field must not exceed 60 characters.
+      401:
+        description: Client is not sufficiently authorized.
+      403:
+        description: Invalid token passed
+      409:
+        description: Username is already in use.
+      502:
+        description: Authentication, account, or email verification gateway error occurred.
+      504:
+        description: Authentication, account, or email verification gateway timeout occurred.

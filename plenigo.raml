@@ -1,0 +1,1629 @@
+#%RAML 1.0
+title: Plenigo
+version: 2.0.0
+baseUri: api.plenigo.com/api/v2
+description: This is the API Documentation for the public plenigo server interfaces
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  AppAccessData:
+    type: object
+    properties:
+      customerAppId?:
+        type: string
+        description: App id to check if user is allowed to access product
+      customerId?:
+        type: string
+        description: Customer Id.
+      description?:
+        type: string
+        description: Customer's description for this app
+      productId?:
+        type: string
+        description: Id of the product represented by this app id
+  AppAccessList:
+    type: object
+    properties:
+      apps?:
+        type: array
+        description: Array of app access data details
+        items:
+          type: AppAccessData
+  AppAccessRequest:
+    type: object
+    properties:
+      accessToken?:
+        type: string
+        description: Access token requested before
+      testMode?:
+        type: boolean
+        description: Flag indicating if test mode should be used
+    description: App access request data
+  AppAccessToken:
+    type: object
+    properties:
+      customerId?:
+        type: string
+        description: Customer Id.
+      token?:
+        type: string
+        description: Token needed to request the customer's app id
+  AppAccessTokenRequest:
+    type: object
+    properties:
+      description?:
+        type: string
+        description: Description for the user to identify app later
+      productId?:
+        type: string
+        description: Product access should be granted to
+      testMode?:
+        type: boolean
+        description: Flag indicating if test mode should be used
+    description: App access token request data
+  Category:
+    type: object
+    properties:
+      currency?:
+        type: string
+        description: Currency as ISO 4217, e.g. EUR
+      id?:
+        type: string
+        description: Id of the category
+      price?:
+        type: number
+        description: 'Price of the product in format ##.##'
+        format: double
+      title?:
+        type: string
+        description: Title of the category
+      type?:
+        type: string
+        description: Type of the products represented by this category
+  CategoryItem:
+    type: object
+    properties:
+      categoryId?:
+        type: string
+        description: Category Id
+      title?:
+        type: string
+        description: Category title
+  CategoryList:
+    type: object
+    properties:
+      elements?:
+        type: array
+        description: Array of category items
+        items:
+          type: CategoryItem
+      pageNumber?:
+        type: integer
+        description: Page number
+        format: int32
+      size?:
+        type: integer
+        description: Page size
+        format: int32
+      totalElements?:
+        type: integer
+        description: Amount of total elements
+        format: int32
+  CompanyUserBillingAddressItem:
+    type: object
+    properties:
+      additionalAddressInfo?:
+        type: string
+        description: the user's additional address info
+      city?:
+        type: string
+        description: the user's city
+      company?:
+        type: string
+        description: the company name
+      country?:
+        type: string
+        description: the user's country
+      firstName?:
+        type: string
+        description: the user's first name
+      gender?:
+        type: string
+        description: the user's gender
+      name?:
+        type: string
+        description: the user's last name
+      postCode?:
+        type: string
+        description: the user's postal code address
+      state?:
+        type: string
+        description: the user's state address
+      street?:
+        type: string
+        description: the user's street address
+      vatNumber?:
+        type: string
+        description: the user's vat number
+  CompanyUserItem:
+    type: object
+    properties:
+      additionalAddressInfo?:
+        type: string
+        description: the user's additional address info
+      agreementState?:
+        type: string
+        description: the user's newsletter agreement state
+      billingAddress?:
+        type: CompanyUserBillingAddressItem
+        description: the user's billing address
+      birthday?:
+        type: string
+        description: the user's birth date
+      city?:
+        type: string
+        description: the user's city
+      country?:
+        type: string
+        description: the user's country in ISO 3166-1 Alpha 2 format (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+      customerId?:
+        type: string
+        description: The user id
+      email?:
+        type: string
+        description: the email address
+      firstName?:
+        type: string
+        description: the user's first name
+      gender?:
+        type: string
+        description: the user's gender
+      language?:
+        type: string
+        description: the user's language
+      mobileNumber?:
+        type: string
+        description: the user's mobile phone number
+      name?:
+        type: string
+        description: the user's last name
+      postCode?:
+        type: string
+        description: the user's postal code address
+      state?:
+        type: string
+        description: the user's state address
+      street?:
+        type: string
+        description: the user's street address
+      userState?:
+        type: string
+        description: the user's account status
+      username?:
+        type: string
+        description: the user login
+  CompanyUserList:
+    type: object
+    properties:
+      elements?:
+        type: array
+        description: Array of company user items
+        items:
+          type: CompanyUserItem
+      pageNumber?:
+        type: integer
+        description: Page number
+        format: int32
+      size?:
+        type: integer
+        description: Page size
+        format: int32
+      totalElements?:
+        type: integer
+        description: Total amount of elements available
+        format: int64
+  CreateMobileSecretRequest:
+    type: object
+    properties:
+      size?:
+        type: integer
+        description: Size of the company secret to generate
+        format: int32
+    description: App access request data
+  CustomerId:
+    type: object
+    properties:
+      customerId?:
+        type: string
+        description: Id of the created customer.
+  CustomerProduct:
+    type: object
+    properties:
+      buyDate?:
+        type: string
+        description: Date the product was bought
+      cancellationTransactionId?:
+        type: string
+        description: Id of the transaction that cancelled this transaction
+      currency?:
+        type: string
+        description: Currency of the amounts
+      paymentMethod?:
+        type: string
+        description: The payment method
+      price?:
+        type: number
+        description: Price of the transaction
+        format: double
+      productId?:
+        type: string
+        description: Id of the product
+      shippingCosts?:
+        type: number
+        description: Amount of the shipping costs
+        format: double
+      shippingCostsTaxesAmount?:
+        type: number
+        description: Amount of the shipping costs taxes amount
+        format: double
+      shippingCostsTaxesPercentage?:
+        type: number
+        description: Amount of the shipping costs taxes percentage
+        format: double
+      status?:
+        type: string
+        description: The transaction status
+      taxesAmount?:
+        type: number
+        description: Amount of the tax
+        format: double
+      taxesCountry?:
+        type: string
+        description: The country of the tax in ISO 3166-1 Alpha 2 format (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+      taxesPercentage?:
+        type: number
+        description: Tax percentage of the transaction
+        format: double
+      title?:
+        type: string
+        description: Title of the product
+      transactionId?:
+        type: string
+        description: Transaction Id
+  CustomerProductsList:
+    type: object
+    properties:
+      singleProducts?:
+        type: array
+        description: Array of customer products
+        items:
+          type: CustomerProduct
+      subscription?:
+        type: array
+        description: Array of customer subscriptions
+        items:
+          type: CustomerSubscription
+  CustomerSubscription:
+    type: object
+    properties:
+      cancellationDate?:
+        type: string
+        description: Date the subscription was cancelled
+      currency?:
+        type: string
+        description: Currency of the amounts
+      endDate?:
+        type: string
+        description: Date the subscription will end
+      paymentMethod?:
+        type: string
+        description: The payment method
+      price?:
+        type: number
+        description: Price of the transaction
+        format: double
+      productId?:
+        type: string
+        description: Product Id
+      productType?:
+        type: string
+        description: Type of the product
+      shippingCosts?:
+        type: number
+        description: Amount of the shipping costs
+        format: double
+      shippingCostsTaxesPercentage?:
+        type: number
+        description: Amount of the shipping costs taxes percentage
+        format: double
+      startDate?:
+        type: string
+        description: Date the subscription starts
+      taxesCountry?:
+        type: string
+        description: The country of the tax in ISO 3166-1 Alpha 2 format (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+      taxesPercentage?:
+        type: number
+        description: Tax percentage of the transaction
+        format: double
+      title?:
+        type: string
+        description: Title
+  EmailData:
+    type: object
+    properties:
+      email?:
+        type: string
+        description: New email address of user
+    description: New User email data
+  ExternalCustomerAccessControlRequest:
+    type: object
+    properties:
+      customerId?:
+        type: string
+        description: Customer id to check access for
+      yourFirstIdentifier?:
+        type: string
+        description: Your identifier for the customer
+      yourForthIdentifier?:
+        type: string
+        description: Your identifier for the customer
+      yourSecondIdentifier?:
+        type: string
+        description: Your identifier for the customer
+      yourThirdIdentifier?:
+        type: string
+        description: Your identifier for the customer
+    description: Customer identification data
+  ExternalLoginToken:
+    type: object
+    properties:
+      loginToken?:
+        type: string
+        description: One time token used to create a valid user session
+  ExternalUserRegistration:
+    type: object
+    properties:
+      email?:
+        type: string
+        description: Email address of the user to register
+      language?:
+        type: string
+        description: Language of the user as two digit ISO code
+    description: User registration data
+  FailedPaymentItem:
+    type: object
+    properties:
+      customerId?:
+        type: string
+        description: Customer Id
+      date?:
+        type: string
+        description: Failed Payment Date
+      productId?:
+        type: string
+        description: Product Id
+      status?:
+        type: string
+        description: Failed Payment Status
+      title?:
+        type: string
+        description: Title
+  FailedPaymentList:
+    type: object
+    properties:
+      elements?:
+        type: array
+        description: Array of failed payment items
+        items:
+          type: FailedPaymentItem
+      pageNumber?:
+        type: integer
+        description: Page number
+        format: int32
+      size?:
+        type: integer
+        description: Page size
+        format: int32
+      totalElements?:
+        type: integer
+        description: Total amount of elements available
+        format: int64
+  Image:
+    type: object
+    properties:
+      altText?:
+        type: string
+        description: Alternative text for this image to be shown to the user if image is not available
+      description?:
+        type: string
+        description: Image description text
+      url?:
+        type: string
+        description: Url to get this image
+  MobileSecretData:
+    type: object
+    properties:
+      email?:
+        type: string
+        description: Email address of the user
+      mobileAppSecret?:
+        type: string
+        description: Mobile app secret for the user
+  MobileSecretVerificationResult:
+    type: object
+    properties:
+      customerId?:
+        type: string
+        description: Id of the customer
+  PaywallState:
+    type: object
+    properties:
+      enabled?:
+        type: boolean
+        description: Indicates if the paywall is enabled or not
+  Product:
+    type: object
+    properties:
+      accountingPeriod?:
+        type: string
+        description: Counting period selected for subscription in month
+      actionPeriodName?:
+        type: string
+        description: Name of the action period if one is defined
+      actionPeriodPrice?:
+        type: number
+        description: Price of the action period if one is defined
+        format: double
+      actionPeriodTerm?:
+        type: string
+        description: Term in months of the action period if one is defined
+      autoRenewal?:
+        type: boolean
+        description: Flag indicating if the subscription is auto renewed
+      cancellationPeriod?:
+        type: string
+        description: Cancellation period for the subscription in days
+      categoryId?:
+        type: string
+        description: Category Id product belongs to
+      choosePrice?:
+        type: boolean
+        description: Flag indicating if the product price can be freely selected by the user
+      companyId?:
+        type: string
+        description: Unique Id of the company can be retrieved from the company dashboard
+      costCenter?:
+        type: string
+        description: Cost center
+      currency?:
+        type: string
+        description: Currency as ISO 4217, e.g. EUR
+      customInfo?:
+        type: string
+        description: Custom information
+      description?:
+        type: string
+        description: Description of the product
+      id?:
+        type: string
+        description: Id of the product
+      images?:
+        type: array
+        description: Image information related to the product
+        items:
+          type: Image
+      maxParallelAppAccess?:
+        type: integer
+        description: Max parallel app access
+        format: int32
+      price?:
+        type: number
+        description: 'Price of the product in format ##.##'
+        format: double
+      revenueAccount?:
+        type: string
+        description: Revenue account
+      secret?:
+        type: string
+        description: Company secret can be retrieved from the company administration area
+      shippingCosts?:
+        type: number
+        description: Shipping costs of the product
+        format: double
+      subscription?:
+        type: boolean
+        description: Flag indicating if product represents a subscription
+      term?:
+        type: string
+        description: Subscription term in month
+      title?:
+        type: string
+        description: Title of the product
+      type?:
+        type: string
+        description: Type of the products represented by this category
+      url?:
+        type: string
+        description: Product url
+      videoPrequelTime?:
+        type: integer
+        description: Video prequel time if one is defined
+        format: int32
+  ProductItem:
+    type: object
+    properties:
+      description?:
+        type: string
+        description: Product description
+      productId?:
+        type: string
+        description: Product Id
+      title?:
+        type: string
+        description: Product title
+  ProductList:
+    type: object
+    properties:
+      elements?:
+        type: array
+        description: Array of product items
+        items:
+          type: ProductItem
+      pageNumber?:
+        type: integer
+        description: Page number
+        format: int32
+      size?:
+        type: integer
+        description: Page size
+        format: int32
+      totalElements?:
+        type: integer
+        description: Amount of total elements
+        format: int32
+  SubscriptionItem:
+    type: object
+    properties:
+      currency?:
+        type: string
+        description: Currency of the amounts
+      customerId?:
+        type: string
+        description: Customer Id
+      paymentMethod?:
+        type: string
+        description: The payment method
+      price?:
+        type: number
+        description: Price of the subscription
+        format: double
+      productId?:
+        type: string
+        description: Product Id
+      startDate?:
+        type: string
+        description: The subscription start date
+      term?:
+        type: integer
+        description: The subscription term
+        format: int32
+      title?:
+        type: string
+        description: Title
+  SubscriptionList:
+    type: object
+    properties:
+      elements?:
+        type: array
+        description: Array of subscription items
+        items:
+          type: SubscriptionItem
+      pageNumber?:
+        type: integer
+        description: Page number
+        format: int32
+      size?:
+        type: integer
+        description: Page size
+        format: int32
+      totalElements?:
+        type: integer
+        description: Total amount of elements available
+        format: int64
+  TransactionItem:
+    type: object
+    properties:
+      billingId?:
+        type: number
+        description: The billing id of this transaction
+        format: double
+      cancellationTransactionId?:
+        type: string
+        description: Id of the transaction that cancelled this transaction
+      cancelledTransactionId?:
+        type: string
+        description: Id of the transaction that is cancelled by transaction
+      currency?:
+        type: string
+        description: Currency of the amounts
+      customerId?:
+        type: string
+        description: Customer Id
+      paymentMethod?:
+        type: string
+        description: The payment method
+      price?:
+        type: number
+        description: Price of the transaction
+        format: double
+      productId?:
+        type: string
+        description: Product Id
+      status?:
+        type: string
+        description: The transaction status
+      taxesAmount?:
+        type: number
+        description: Amount of the tax
+        format: double
+      taxesCountry?:
+        type: string
+        description: The country of the tax in ISO 3166-1 Alpha 2 format (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+      taxesPercentage?:
+        type: number
+        description: Tax percentage of the transaction
+        format: double
+      title?:
+        type: string
+        description: Title
+      transactionDate?:
+        type: string
+        description: The transaction date
+      transactionId?:
+        type: string
+        description: Transaction Id
+  TransactionList:
+    type: object
+    properties:
+      elements?:
+        type: array
+        description: Array of transaction items
+        items:
+          type: TransactionItem
+      pageNumber?:
+        type: integer
+        description: Page number
+        format: int32
+      size?:
+        type: integer
+        description: Page size
+        format: int32
+      totalElements?:
+        type: integer
+        description: Total amount of elements available
+        format: int64
+  User:
+    type: object
+    properties:
+      additionalAddressInfo?:
+        type: string
+        description: Additional address information of the user
+      city?:
+        type: string
+        description: City of the user
+      country?:
+        type: string
+        description: Country of the user in ISO 3166-1 Alpha 2 format (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+      email?:
+        type: string
+        description: Email of the user
+      firstName?:
+        type: string
+        description: First name of the user
+      gender?:
+        type: string
+        description: Gender of the user
+      name?:
+        type: string
+        description: Surname of the user
+      postCode?:
+        type: string
+        description: Postcode of the user
+      street?:
+        type: string
+        description: Street of the user
+      userId?:
+        type: string
+        description: Id of the user
+      username?:
+        type: string
+        description: Username/nickname of the user
+/access:
+  /app:
+    /token:
+      /{customerId}:
+        uriParameters:
+          customerId:
+            type: string
+            description: Unique Id of the customer to get products for
+            displayName: customerId
+        post:
+          description: Returns the app access token and the customer id necessary for requesting an customer app id
+          displayName: Request an app access token
+          headers:
+            plenigoToken:
+              type: string
+              description: Plenigo authentication token
+              displayName: plenigoToken
+              enum:
+              - JWT
+          body:
+            application/json: AppAccessTokenRequest
+          responses:
+            200:
+              description: Correct parameters
+              body:
+                application/json:
+                  type: AppAccessToken
+            400:
+              description: If the given parameters were incorrect
+            401:
+              description: If the provided company secret and/or company Id is incorrect
+            412:
+              description: If product is not owned by the user
+            423:
+              description: If the user has reached the limit of parallel app accesses
+            500:
+              description: Server error
+    /{customerId}:
+      uriParameters:
+        customerId:
+          type: string
+          description: Unique Id of the customer to get products for
+          displayName: customerId
+      /{customerAppId}:
+        uriParameters:
+          customerAppId:
+            type: string
+            description: Customer app id that shall grant access
+            displayName: customerAppId
+        delete:
+          description: Deletes a customer app id to allow access with another app
+          displayName: Deletes a customer app id
+          queryParameters:
+            testMode:
+              type: boolean
+              description: Flag indicating if test mode should be used
+              displayName: testMode
+          headers:
+            plenigoToken:
+              type: string
+              description: Plenigo authentication token
+              displayName: plenigoToken
+              enum:
+              - JWT
+          responses:
+            204:
+              description: App id successfully deleted
+            400:
+              description: If the given parameters were incorrect
+            401:
+              description: If the provided company secret and/or company Id is incorrect
+            500:
+              description: Server error
+      /{productId}:
+        uriParameters:
+          productId:
+            type: string
+            description: Product id user access should be tested for
+            displayName: productId
+        /{customerAppId}:
+          uriParameters:
+            customerAppId:
+              type: string
+              description: Customer app id that shall grant access
+              displayName: customerAppId
+          get:
+            description: Verify if customer app is having access to a specific product
+            displayName: Verify customer app access
+            queryParameters:
+              testMode:
+                type: boolean
+                description: Flag indicating if test mode should be used
+                displayName: testMode
+            headers:
+              plenigoToken:
+                type: string
+                description: Plenigo authentication token
+                displayName: plenigoToken
+                enum:
+                - JWT
+            responses:
+              204:
+                description: Access is granted
+              400:
+                description: If the given parameters were incorrect
+              401:
+                description: If the provided company secret and/or company Id is incorrect
+              403:
+                description: Access is not allowed
+              500:
+                description: Server error
+      get:
+        description: Returns all customer apps
+        displayName: Get all customer apps
+        queryParameters:
+          testMode:
+            type: boolean
+            description: Flag indicating if test mode should be used
+            displayName: testMode
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        responses:
+          200:
+            description: List with all customer apps
+            body:
+              application/json:
+                type: AppAccessList
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          500:
+            description: Server error
+      post:
+        description: Returns the customer app id
+        displayName: Request a customer app id
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        body:
+          application/json: AppAccessRequest
+        responses:
+          200:
+            description: App access data
+            body:
+              application/json:
+                type: AppAccessData
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          403:
+            description: If access token is not valid
+          423:
+            description: If the user has reached the limit of parallel app accesses
+          500:
+            description: Server error
+  /mobileSecret:
+    /verify:
+      get:
+        description: ''
+        displayName: Test if user mobile secret is correct.
+        queryParameters:
+          email:
+            type: string
+            description: Email of the user
+            displayName: email
+          mobileSecret:
+            type: string
+            description: Mobile secret entered by user
+            displayName: mobileSecret
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        responses:
+          200:
+            description: Mobile secret is correct
+            body:
+              application/json:
+                type: MobileSecretVerificationResult
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          403:
+            description: Mobile secret is not correct
+          500:
+            description: Server error
+    /{customerId}:
+      uriParameters:
+        customerId:
+          type: string
+          description: Unique Id of the customer to get mobile secret for
+          displayName: customerId
+      get:
+        description: Returns customer mobile secret
+        displayName: Get customer mobile secret
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        responses:
+          200:
+            description: Mobile secret
+            body:
+              application/json:
+                type: MobileSecretData
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          404:
+            description: No mobile secret created yet
+          500:
+            description: Server error
+      delete:
+        description: Deletes a mobile secret from the customer
+        displayName: Deletes the mobile secret for a customer
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        responses:
+          204:
+            description: Mobile secret successfully deleted
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          500:
+            description: Server error
+      post:
+        description: Returns the mobile secret
+        displayName: Create or recreate mobile secret
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        body:
+          application/json: CreateMobileSecretRequest
+        responses:
+          200:
+            description: Mobile secret
+            body:
+              application/json:
+                type: MobileSecretData
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          500:
+            description: Server error
+/categories:
+  /search:
+    get:
+      description: Returns a list of categories of the specified company
+      displayName: Query categories
+      queryParameters:
+        size?:
+          type: integer
+          description: Size of the page - must be between 10 and 100
+          displayName: size
+          default: 10
+          format: int32
+        page?:
+          type: integer
+          description: Number of the page
+          displayName: page
+          default: 0
+          format: int32
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Categories queried
+          body:
+            application/json:
+              type: CategoryList
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+/category:
+  /{categoryId}:
+    uriParameters:
+      categoryId:
+        type: string
+        description: Id of category that needs to be fetched
+        displayName: categoryId
+    get:
+      description: Returns general category information
+      displayName: Find category by Id
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Category found
+          body:
+            application/json:
+              type: Category
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+        404:
+          description: If category Id is not valid
+/company:
+  /users:
+    /failed:
+      /payments:
+        get:
+          description: Returns a list of failed payments of the specified company
+          displayName: Query failed payments
+          queryParameters:
+            startDate?:
+              type: datetime
+              description: 'Start date range of the transaction, must be in the following
+                format: YYYY-MM-DD (Date range must not exceed 6 months).'
+              displayName: startDate
+            endDate?:
+              type: datetime
+              description: 'End date range of the transaction, must be in the following
+                format: YYYY-MM-DD (Date range must not exceed 6 months).'
+              displayName: endDate
+            failedPaymentStatus?:
+              type: string
+              description: Payment status where the failed payment is.
+              displayName: failedPaymentStatus
+              enum:
+              - FAILED
+              - FIXED
+              - FIXED_MANUALLY
+            size?:
+              type: integer
+              description: Size of the page - must be between 10 and 100
+              displayName: size
+              default: 10
+              format: int32
+            page?:
+              type: integer
+              description: Number of the page
+              displayName: page
+              default: 0
+              format: int32
+          headers:
+            plenigoToken:
+              type: string
+              description: Plenigo authentication token
+              displayName: plenigoToken
+              enum:
+              - JWT
+          responses:
+            200:
+              description: Failed Payments queried
+              body:
+                application/json:
+                  type: FailedPaymentList
+            400:
+              description: If the given parameters were incorrect
+            401:
+              description: If the provided company secret and/or company Id is incorrect
+            500:
+              description: Server error
+    /select:
+      get:
+        description: Returns a list of users of the specified company
+        displayName: Query company users by user ids
+        queryParameters:
+          userIds:
+            type: string
+            description: List of ids, a comma separated value list expected e.g. 1,2,3,5,10,11
+            displayName: userIds
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        responses:
+          200:
+            description: Company Users queried
+            body:
+              application/json:
+                type: array
+                items:
+                  type: CompanyUserItem
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          500:
+            description: Server error
+    get:
+      description: Returns a list of users of the specified company
+      displayName: Query company users
+      queryParameters:
+        size?:
+          type: integer
+          description: Size of the page - must be between 10 and 100
+          displayName: size
+          default: 10
+          format: int32
+        page?:
+          type: integer
+          description: Number of the page
+          displayName: page
+          default: 0
+          format: int32
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Company Users queried
+          body:
+            application/json:
+              type: CompanyUserList
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+        500:
+          description: Server error
+/externalUser:
+  /register:
+    post:
+      description: Registers a new user bound to the company that registers the user. This functionality is only available for companies with closed user groups.
+      displayName: Registers a new user
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      body:
+        application/json: ExternalUserRegistration
+      responses:
+        201:
+          description: Id of the customer created
+          body:
+            application/json:
+              type: CustomerId
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+        403:
+          description: If company is not qualified for a closed user group
+        500:
+          description: Server error
+  /{customerId}:
+    uriParameters:
+      customerId:
+        type: string
+        description: Customer id of the user to change email address for
+        displayName: customerId
+    /changeEmail:
+      put:
+        description: Change email address of an existing user. This functionality is only available for companies with closed user groups.
+        displayName: Change email address of a user
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        body:
+          application/json: EmailData
+        responses:
+          204:
+            description: Email address changed
+          400:
+            description: If the given parameters were incorrect or email address already exists
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          403:
+            description: If company is not qualified for a closed user group
+          404:
+            description: If a user for the provided customer id does not exist
+          500:
+            description: Server error
+    /createLoginToken:
+      post:
+        description: Create a login token for an existing user. This functionality is only available for companies with closed user groups.
+        displayName: Create a login token for a user
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        responses:
+          200:
+            description: Login token successful created
+            body:
+              application/json:
+                type: ExternalLoginToken
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          403:
+            description: If company is not qualified for a closed user group
+          404:
+            description: If a user for the provided customer id does not exist
+          500:
+            description: Server error
+/import:
+  /customerAccess:
+    post:
+      description: Import an external customer access data. With this data your entered web service will be asked if the customer has access to the content
+      displayName: Import external customer access
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      body:
+        application/json: ExternalCustomerAccessControlRequest
+      responses:
+        200:
+          description: Customer access data added.
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+        404:
+          description: If customer does not exist
+        500:
+          description: Server error
+/paywall:
+  /state:
+    get:
+      description: Check if the paywall has been enabled
+      displayName: Check Paywall Status
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: If request could be handled
+          body:
+            application/json:
+              type: PaywallState
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+/product:
+  /{productId}:
+    uriParameters:
+      productId:
+        type: string
+        description: Id of product that needs to be fetched
+        displayName: productId
+    get:
+      description: Returns general product information for a plenigo managed product
+      displayName: Find product by Id
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Product found
+          body:
+            application/json:
+              type: Product
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+        404:
+          description: If product Id is not valid
+/products:
+  /search:
+    get:
+      description: Returns a list of products of the specified company
+      displayName: Query products
+      queryParameters:
+        size?:
+          type: integer
+          description: Size of the page - must be between 10 and 100
+          displayName: size
+          default: 10
+          format: int32
+        page?:
+          type: integer
+          description: Number of the page
+          displayName: page
+          default: 0
+          format: int32
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Products queried
+          body:
+            application/json:
+              type: ProductList
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+/subscriptions:
+  /search:
+    get:
+      description: Returns a list of subscriptions of the specified company
+      displayName: Query Subscriptions
+      queryParameters:
+        startDate?:
+          type: datetime
+          description: 'Start date range of the subscription, must be in the following
+            format: YYYY-MM-DD (Date range must not exceed 6 months).'
+          displayName: startDate
+        endDate?:
+          type: datetime
+          description: 'End date range of the subscription, must be in the following
+            format: YYYY-MM-DD (Date range must not exceed 6 months).'
+          displayName: endDate
+        paymentMethod?:
+          type: string
+          description: Payment method used to pay the subscription.
+          displayName: paymentMethod
+          enum:
+          - BANK_ACCOUNT
+          - CREDIT_CARD
+          - PAYPAL
+          - BILLING
+          - ZERO
+          - SOFORT
+          - POST_FINANCE
+        size?:
+          type: integer
+          description: Size of the page - must be between 10 and 100
+          displayName: size
+          default: 10
+          format: int32
+        page?:
+          type: integer
+          description: Number of the page
+          displayName: page
+          default: 0
+          format: int32
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Subscriptions queried
+          body:
+            application/json:
+              type: SubscriptionList
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+        500:
+          description: Server error
+/transactions:
+  /search:
+    get:
+      description: Returns a list of transactions of the specified company
+      displayName: Query transactions
+      queryParameters:
+        startDate?:
+          type: datetime
+          description: 'Start date range of the transaction, must be in the following
+            format: YYYY-MM-DD (Date range must not exceed 6 months).'
+          displayName: startDate
+        endDate?:
+          type: datetime
+          description: 'End date range of the transaction, must be in the following
+            format: YYYY-MM-DD (Date range must not exceed 6 months).'
+          displayName: endDate
+        paymentMethod?:
+          type: string
+          description: Payment method used to pay the transaction.
+          displayName: paymentMethod
+          enum:
+          - BANK_ACCOUNT
+          - CREDIT_CARD
+          - PAYPAL
+          - BILLING
+          - ZERO
+          - SOFORT
+          - POST_FINANCE
+        transactionStatus?:
+          type: string
+          description: Status of the transaction.
+          displayName: transactionStatus
+          enum:
+          - BOOKED
+          - DONE
+          - CANCELED
+          - CHARGEBACK
+        testMode?:
+          type: boolean
+          description: Flag indicating if the transactions to search were in test mode
+          displayName: testMode
+          default: false
+        size?:
+          type: integer
+          description: Size of the page - must be between 10 and 100
+          displayName: size
+          default: 10
+          format: int32
+        page?:
+          type: integer
+          description: Number of the page
+          displayName: page
+          default: 0
+          format: int32
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Transactions queried
+          body:
+            application/json:
+              type: TransactionList
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+        500:
+          description: Server error
+/user:
+  /product:
+    get:
+      description: ''
+      displayName: Find out if a product is accessible for a specified customer
+      queryParameters:
+        customerId:
+          type: string
+          description: Id of the customer to test if product is currently paid
+          displayName: customerId
+        productId:
+          type: string
+          description: Id of the product that wants to be queried
+          displayName: productId
+        testMode:
+          type: boolean
+          description: Flag indicating if this product was bought in test mode
+          displayName: testMode
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Access is allowed
+        400:
+          description: If the given parameters were incorrect
+        401:
+          description: If the provided company secret and/or company Id is incorrect
+        403:
+          description: Customer is not allowed to access the product
+  /profile:
+    get:
+      description: Returns the user profile information that belongs to the token
+      displayName: Get user profile information
+      queryParameters:
+        token:
+          type: string
+          description: OAuth2 access token
+          displayName: token
+      headers:
+        plenigoToken:
+          type: string
+          description: Plenigo authentication token
+          displayName: plenigoToken
+          enum:
+          - JWT
+      responses:
+        200:
+          description: Correct parameters
+          body:
+            application/json:
+              type: User
+        400:
+          description: If the given parameters were incorrect
+          body:
+            application/json:
+              type: object
+        500:
+          description: Server error
+  /{customerId}:
+    uriParameters:
+      customerId:
+        type: string
+        description: Unique Id of the customer to get products for
+        displayName: customerId
+    /products:
+      get:
+        description: Returns the products the user has bought only including active subscriptions
+        displayName: Get products a user has bought
+        queryParameters:
+          testMode:
+            type: boolean
+            description: Flag indicating if products from test mode should be returned
+            displayName: testMode
+        headers:
+          plenigoToken:
+            type: string
+            description: Plenigo authentication token
+            displayName: plenigoToken
+            enum:
+            - JWT
+        responses:
+          200:
+            description: Correct parameters
+            body:
+              application/json:
+                type: CustomerProductsList
+          400:
+            description: If the given parameters were incorrect
+          401:
+            description: If the provided company secret and/or company Id is incorrect
+          500:
+            description: Server error

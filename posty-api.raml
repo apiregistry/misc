@@ -1,0 +1,204 @@
+#%RAML 1.0
+title: posty_API
+version: v1
+baseUri: posty-api.herokuapp.com/
+description: The posty_API is the core element of the posty softwarestack. It is developed to administrate a mailserver based on Postfix and Dovecot. It offers an easy REST interface which can be used in own applications or with the posty client applications, posty_CLI and posty_webUI.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/api:
+  /v1:
+    /domains.json:
+      get:
+        displayName: Returns all available domains
+        responses:
+          200:
+            description: No response was specified
+      post:
+        displayName: Create new domain
+        responses:
+          200:
+            description: No response was specified
+    /domains:
+      /{domain_name}.json:
+        uriParameters:
+          domain_name:
+            type: string
+            displayName: domain_name
+        get:
+          displayName: Returns the information to the specified domain
+          responses:
+            200:
+              description: No response was specified
+        delete:
+          displayName: Delete the specified domain
+          responses:
+            200:
+              description: No response was specified
+        put:
+          displayName: Update the specified domain
+          responses:
+            200:
+              description: No response was specified
+      /{domain_name}:
+        uriParameters:
+          domain_name:
+            type: string
+            displayName: domain_name
+        /aliases.json:
+          get:
+            displayName: Returns all aliases for the specified domain
+            responses:
+              200:
+                description: No response was specified
+          post:
+            displayName: Create new domain alias
+            responses:
+              200:
+                description: No response was specified
+        /aliases:
+          /{alias_name}.json:
+            uriParameters:
+              alias_name:
+                type: string
+                displayName: alias_name
+            get:
+              displayName: Returns the information to the specified domain alias
+              responses:
+                200:
+                  description: No response was specified
+            delete:
+              displayName: Delete the specified domain alias
+              responses:
+                200:
+                  description: No response was specified
+            put:
+              displayName: Update the specified domain alias
+              responses:
+                200:
+                  description: No response was specified
+        /users.json:
+          get:
+            displayName: Returns all users for the specified domain
+            responses:
+              200:
+                description: No response was specified
+          post:
+            displayName: Create new user
+            responses:
+              200:
+                description: No response was specified
+        /users:
+          /{user_name}.json:
+            uriParameters:
+              user_name:
+                type: string
+                displayName: user_name
+            get:
+              displayName: Returns the information to the specified user
+              responses:
+                200:
+                  description: No response was specified
+            delete:
+              displayName: Delete the specified user
+              responses:
+                200:
+                  description: No response was specified
+            put:
+              displayName: Update the specified user
+              responses:
+                200:
+                  description: No response was specified
+          /{user_name}:
+            uriParameters:
+              user_name:
+                type: string
+                displayName: user_name
+            /aliases.json:
+              get:
+                displayName: Returns all aliases for the specified user
+                responses:
+                  200:
+                    description: No response was specified
+              post:
+                displayName: Create new user alias
+                responses:
+                  200:
+                    description: No response was specified
+            /aliases:
+              /{alias_name}.json:
+                uriParameters:
+                  alias_name:
+                    type: string
+                    displayName: alias_name
+                get:
+                  displayName: Returns the information to the specified user alias
+                  responses:
+                    200:
+                      description: No response was specified
+                delete:
+                  displayName: Delete the specified user alias
+                  responses:
+                    200:
+                      description: No response was specified
+                put:
+                  displayName: Update the specified user alias
+                  responses:
+                    200:
+                      description: No response was specified
+    /summary.json:
+      get:
+        displayName: Returns a summary of all Resources
+        responses:
+          200:
+            description: No response was specified
+    /swagger_doc.json:
+      get:
+        displayName: Swagger compatible API description
+        responses:
+          200:
+            description: No response was specified
+    /swagger_doc:
+      /{name}.json:
+        uriParameters:
+          name:
+            type: string
+            description: Resource name of mounted API
+            displayName: name
+        get:
+          displayName: Swagger compatible API description for specific API
+          responses:
+            200:
+              description: No response was specified
+    /transports.json:
+      get:
+        displayName: Returns all available transports
+        responses:
+          200:
+            description: No response was specified
+      post:
+        displayName: Create new transport
+        responses:
+          200:
+            description: No response was specified
+    /transports:
+      /{transport_name}.json:
+        uriParameters:
+          transport_name:
+            type: string
+            displayName: transport_name
+        get:
+          displayName: Returns the information to the specified transport
+          responses:
+            200:
+              description: No response was specified
+        delete:
+          displayName: Delete the specified transport
+          responses:
+            200:
+              description: No response was specified
+        put:
+          displayName: Update the specified transport
+          responses:
+            200:
+              description: No response was specified

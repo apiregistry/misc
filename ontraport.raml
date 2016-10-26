@@ -1,0 +1,1013 @@
+#%RAML 1.0
+title: ONTRAPORT
+version: 1.2.1
+baseUri: api.ontraport.com/1
+description: <p>Enter your App ID and API Key above. If you do not have an App ID or API Key login to your ONTRAPORT account and navigate <a href="https://app.ontraport.com/#!/api_settings/listAll">here</a>. Authentication parameters must be sent in the request header as <strong>Api-Appid</strong> and <strong>Api-Key</strong>. Each ONTRAPORT account is allowed up to 180 requests per minute.</p>
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Address:
+    type: object
+    properties:
+      address:
+        type: string
+      address2?:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      state:
+        type: string
+      zip:
+        type: string
+  Criteria:
+    type: object
+    properties:
+      condition?:
+        type: string
+        description: Apply this condition to the collection query. This is essentially like a SQL WHERE clause, e.g. firstname='Ben'
+      date_range?:
+        type: array
+        description: Start and End dates to search, in seconds since Jan 1, 1970, as a comma-separated list. Start (index 0 in the array) is inclusive, End (index 1) is exclusive. Either or both can be empty.
+        items:
+          type: integer
+          format: int32
+      externs?:
+        type: string
+        description: External fields to include in results
+      group_ids?:
+        type: array
+        description: Array of Group ID for Object type as comma-delimited list
+        items:
+          type: integer
+          format: int32
+      ids?:
+        type: array
+        items:
+          type: integer
+          format: int32
+      listFields?:
+        type: array
+        description: Return only these fields in the response
+        items:
+          type: string
+      objectID:
+        type: integer
+        format: int32
+      performAll?:
+        type: boolean
+        description: Perform request on all Objects that match criteria.
+      range?:
+        type: integer
+        description: Number of results to return (maximum=50)
+        format: int32
+      search?:
+        type: string
+        description: Search Objects for this string
+      searchNotes?:
+        type: string
+        description: Boolean flag to additionally search Object Notes for the Search term given in Search parameter
+      sort?:
+        type: string
+        description: Field used to sort results
+      sortDir?:
+        type: string
+        description: Sort direction, must be used in conjunction with <b>sort</b> parameter.
+        enum:
+        - asc
+        - desc
+      start?:
+        type: integer
+        description: Return results starting at this offset
+        format: int32
+    description: Criteria of Transactions to void.
+  Notification:
+    type: object
+    properties:
+      data:
+        type: string
+      id:
+        type: integer
+        format: int32
+      notification_type:
+        type: string
+        enum:
+        - notification
+      type:
+        type: string
+        enum:
+        - plaintext
+  Offer:
+    type: object
+    properties:
+      ccExpirationDate?:
+        type: string
+        description: Credit card expiration date.
+      delay?:
+        type: integer
+        description: Days to delay start of offer.
+        format: int32
+      grandTotal?:
+        type: number
+        description: Total amount of sale.
+      hasShipping?:
+        type: boolean
+        description: Are there shipping charges?
+      hasTaxes?:
+        type: boolean
+        description: Are there applicable taxes?
+      offer_id:
+        type: integer
+        description: This must be a valid Offer ID.
+        format: int32
+      order_id:
+        type: integer
+        description: This must be a valid Order ID.
+        format: int32
+      products:
+        type: array
+        items:
+          type: Product
+      shipping?:
+        type: number
+        description: Shipping amount.
+      shipping_charge_reoccurring_orders?:
+        type: boolean
+        description: Add shipping charge to reoccurring orders?
+      subTotal?:
+        type: number
+        description: Subtotal.
+      taxes?:
+        type: array
+        items:
+          type: Tax
+  Order:
+    type: object
+    properties:
+      affiliate_id?:
+        type: integer
+        description: Affiliate ID.
+        format: int32
+      billing_address?:
+        type: Address
+      chargeNow?:
+        type: string
+        enum:
+        - chargeNow
+      contact_id:
+        type: integer
+        format: int32
+      gateway_id?:
+        type: integer
+        description: Gateway ID.
+        format: int32
+      invoice_template?:
+        type: integer
+        description: Invoice template ID.
+        format: int32
+      objectID:
+        type: integer
+        format: int32
+      offer?:
+        type: Offer
+      payer?:
+        type: Payer
+    description: Order Object.
+  Payer:
+    type: object
+    properties:
+      ccnumber:
+        type: string
+      code:
+        type: string
+        description: CVV code.
+      expire_month?:
+        type: integer
+        description: Expiration month (1-12).
+      expire_year?:
+        type: integer
+        description: Expiration year (four-digit year, e.g. 2018).
+  Price:
+    type: object
+    properties:
+      id:
+        type: integer
+      payment_count:
+        type: integer
+        format: int32
+      price:
+        type: number
+      unit:
+        type: string
+        enum:
+        - day
+        - week
+        - month
+        - quarter
+        - year
+  Product:
+    type: object
+    properties:
+      delay_start?:
+        type: integer
+        description: Days to delay start.
+        format: int32
+      id?:
+        type: integer
+        description: This must be an existing Product ID.
+        format: int32
+      level1?:
+        type: number
+        description: Partner Level 1 commission percentage.
+      level2?:
+        type: number
+        description: Partner Level 2 commission percentage.
+      offer_to_affiliates?:
+        type: boolean
+        description: Is this offered to Partners (affiliates)?
+      owner?:
+        type: integer
+        description: Product owner (Staff ID).
+        format: int32
+      price:
+        type: array
+        items:
+          type: Price
+      quantity:
+        type: integer
+        description: How many of this product are being purchased?
+        format: int32
+      setup_fee?:
+        type: number
+        description: One-time setup fee.
+      setup_fee_date?:
+        type: string
+        description: Date to charge setup fee (when setup_fee_when is "on_date").
+      setup_fee_when?:
+        type: string
+        description: When should setup fee be applied?
+        enum:
+        - immediately
+        - after_trial
+        - on_date
+      shipping?:
+        type: boolean
+        description: Does this product have an associated shipping cost?
+      subscription_count?:
+        type: integer
+        format: int32
+      subscription_fee?:
+        type: number
+      subscription_unit?:
+        type: string
+        enum:
+        - day
+        - week
+        - month
+        - quarter
+        - year
+      tax?:
+        type: boolean
+        description: Is this product taxable?
+      taxable?:
+        type: boolean
+        description: Is this item taxable?
+      total:
+        type: number
+        description: What is the total amount of this sale?
+      trial_period_count?:
+        type: integer
+        description: Length of trial period (also set trial_period_units).
+        format: int32
+      trial_period_unit?:
+        type: string
+        description: Units describing length of trial period.
+        enum:
+        - day
+        - week
+        - month
+        - quarter
+        - year
+      trial_price?:
+        type: number
+        description: Price during trial period.
+      type?:
+        type: string
+        enum:
+        - single
+        - subscription
+        - one_time
+        - payment_plan
+  Response:
+    type: object
+    properties:
+      account_id:
+        type: integer
+        format: int32
+      code:
+        type: integer
+      data:
+        type: object
+      notifications:
+        type: Notification
+      updates:
+        type: Update
+  Shipping:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: ID of the Shipping Method to apply. This must be an existing Shipping Method.
+        format: int32
+  TaskCompleteParams:
+    type: object
+    properties:
+      criteria:
+        type: Criteria
+      data:
+        type: TaskData
+    description: Criteria and data of the Tasks to complete.
+  TaskData:
+    type: object
+    properties:
+      followup?:
+        type: TaskFollowup
+      outcome?:
+        type: string
+        description: Task outcome name. This must start with ":=" For example, <strong>":=signed"</strong>.
+      task_form_data?:
+        type: string
+        description: These fields can be used to update associated Object data when completing a task. For example, set <strong>task_form_title</strong> to "New title" to change the Contact's title.
+  TaskFollowup:
+    type: object
+    properties:
+      due_date:
+        type: integer
+        description: Due date of new Task, given as number of days from current date.
+        format: int32
+      message_id:
+        type: integer
+        description: Message ID of new Task to be created for further followup. This Task must currently exist. New tasks can be created using the <a href="http://api.ontraport.com/doc/#!/objects/createObject">Objects Create endpoint</a> with objectID=1.
+        format: int32
+      task_owner:
+        type: integer
+        description: New Task assignee.
+        format: int32
+  Tax:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: ID of the Tax to apply. This must be an existing Tax type.
+        format: int32
+  Transaction:
+    type: object
+    properties:
+      billing_address?:
+        type: Address
+      chargeNow:
+        type: string
+        description: Charge Transaction now or or just log a Transaction.
+        enum:
+        - chargeNow
+        - chargeLog
+      contact_id:
+        type: integer
+        description: Create new Transaction for this Object instance (Contact ID).
+      gateway_id:
+        type: integer
+        description: Gateway ID to use for this Transaction.
+      invoice_template:
+        type: integer
+        description: Invoice ID to use for this Transaction.
+      offer:
+        type: Offer
+      payer?:
+        type: Payer
+      trans_date?:
+        type: integer
+        description: Timestamp (in milliseconds since midnight 1/1/1970) of the Transaction.
+    description: Definition of the Transaction.
+  Update:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int32
+/form:
+  get:
+    description: 'This will fetch a Form''s HTML for a given ID.<br/><b>Note</b>:
+      HTML is returned in the <code>data</code> member of the JSON response. As a
+      result, the HTML is escaped and you will have to unescape the HTML before using
+      it.'
+    displayName: This will get an existing Form
+    queryParameters:
+      id:
+        type: integer
+        description: ID of Object.
+        displayName: id
+        format: int32
+    responses:
+      200:
+        description: Successful object query
+        body:
+          application/json:
+            type: Response
+      404:
+        description: Form not found
+/landingPage:
+  /getHostedURL:
+    get:
+      description: This will grab the permanent URL for a given Landing Page.
+      displayName: Grab the hosted URL
+      queryParameters:
+        id:
+          type: integer
+          description: ID of Object.
+          displayName: id
+          format: int32
+      responses:
+        200:
+          description: Successfully got URL
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error processing transaction
+/message:
+  get:
+    description: This will fetch data from an existing Message.
+    displayName: This will get an existing Message
+    queryParameters:
+      id:
+        type: integer
+        description: ID of Object.
+        displayName: id
+        format: int32
+    responses:
+      200:
+        description: Successful object query
+        body:
+          application/json:
+            type: Response
+      404:
+        description: Message not found
+  post:
+    description: ''
+    displayName: This will create a new Message
+    responses:
+      200:
+        description: Message successfully created
+        body:
+          application/json:
+            type: Response
+  put:
+    description: ''
+    displayName: This will update an existing Message
+    responses:
+      200:
+        description: Message successfully updated
+        body:
+          application/json:
+            type: Response
+/object:
+  get:
+    description: This will fetch data for a given Object type and ID.
+    displayName: This will get an Object's data
+    queryParameters:
+      objectID:
+        type: integer
+        description: Object Type ID.
+        displayName: objectID
+        format: int32
+      id:
+        type: integer
+        description: ID of Object.
+        displayName: id
+        format: int32
+    responses:
+      200:
+        description: Successful object query
+        body:
+          application/json:
+            type: Response
+      400:
+        description: Invalid objectID
+      404:
+        description: Object not found
+  delete:
+    description: This will delete an Object with the given Object type and ID.
+    displayName: This will delete an Object
+    queryParameters:
+      objectID:
+        type: integer
+        description: Object Type ID.
+        displayName: objectID
+        format: int32
+      id:
+        type: integer
+        description: ID of Object.
+        displayName: id
+        format: int32
+    responses:
+      200:
+        description: Successful object query
+        body:
+          application/json:
+            type: Response
+      400:
+        description: Invalid objectID
+      404:
+        description: Object not found
+/objects:
+  /getInfo:
+    get:
+      description: Get information about an Objects Collection, such as the number of Objects that match the given criteria.
+      displayName: Get information about an Objects Collection
+      queryParameters:
+        objectID:
+          type: integer
+          description: Object Type ID.
+          displayName: objectID
+          format: int32
+        condition?:
+          type: string
+          description: Apply this condition to the collection query. This is essentially like a SQL WHERE clause, e.g. firstname='Ben'
+          displayName: condition
+        search?:
+          type: string
+          description: Search Objects for this string
+          displayName: search
+        searchNotes?:
+          type: boolean
+          description: Boolean flag to additionally search Object Notes for the Search term given in Search parameter
+          displayName: searchNotes
+        date_range?:
+          type: array
+          description: Start and End dates to search, in seconds since Jan 1, 1970, as a comma-separated list. Start (index 0 in the array) is inclusive, End (index 1) is exclusive. Either or both can be empty.
+          displayName: date_range
+          items:
+            type: integer
+            format: int32
+        group_ids?:
+          type: array
+          description: Array of Group ID for Object type as comma-delimited list
+          displayName: group_ids
+          items:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Successful object query
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Invalid objectID
+  /meta:
+    get:
+      description: This will get a list of existing Object types and their corresponding field names. Use the <b>objectID</b> parameter to This will get a single Object type.
+      displayName: This will get a list of existing Object types
+      queryParameters:
+        format?:
+          type: string
+          description: Choose to get the list indexed by Object class name or integer ID.
+          displayName: format
+          default: byId
+          enum:
+          - byId
+          - byName
+        objectID?:
+          type: integer
+          description: Object Type ID.
+          displayName: objectID
+          default: 0
+          format: int32
+      responses:
+        200:
+          description: Successful object query
+          body:
+            application/json:
+              type: Response
+  /saveorupdate:
+    post:
+      description: !!binary |-
+        VGhpcyB3aWxsIGNyZWF0ZSBhbiBPYmplY3Qgd2l0aCB0aGUgZ2l2ZW4gZGF0YSBvciB3aWxsIG1lcmdlIHdpdGggYW4gT2JqZWN0IGluIHRoZSBkYXRhYmFzZSBpZiB0aGUgdW5pcXVlIGZpZWxkIG1hdGNoZXMgYW5vdGhlciBPYmplY3TDosKAwplzLiBPYmplY3QgdHlwZSBpcyBhIHJlcXVpcmVkIHBhcmFtZXRlciwgYnV0IG90aGVyIHBhcmFtZXRlcnMgYXJlIG9wdGlvbmFsIGFuZCBkZXBlbmQgb24gdGhlIE9iamVjdCB0eXBlLiBXZSBoYXZlIHByb3ZpZGVkIG9wdGlvbmFsIHBhcmFtZXRlcnMgYXMgZXhhbXBsZXMgZm9yIHVwZGF0aW5nIGEgQ29udGFjdC4gV2hlbiB1c2luZyB0aGlzIGluIHlvdXIgYXBwbGljYXRpb24sIGFsbCBpbnZhbGlkIHBhcmFtZXRlcnMgd2lsbCBiZSBpZ25vcmVkLg==
+      displayName: Create or Merge an Object
+      responses:
+        200:
+          description: Successful object query
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Invalid objectID
+  /tag:
+    delete:
+      description: This will remove a Tag from an Object using a Tag ID. When adding or removing Tags, either <b>ids</b> or <b>group_ids</b> must be given.
+      displayName: This will remove an Object Tag
+      responses:
+        200:
+          description: Successfully removed Tag(s)
+          body:
+            application/json:
+              type: Response
+    put:
+      description: This will add a Tag to an Object. when adding or removing Tags, either <b>ids</b> or <b>group_ids</b> must be given.
+      displayName: This will add an Object Tag
+      responses:
+        200:
+          description: Successfully added Tag(s)
+          body:
+            application/json:
+              type: Response
+  get:
+    description: ''
+    displayName: This will get a list of Objects
+    queryParameters:
+      objectID:
+        type: integer
+        description: Object Type ID.
+        displayName: objectID
+        format: int32
+      ids?:
+        type: array
+        description: Array of Object IDs as comma-delimited list.
+        displayName: ids
+        items:
+          type: integer
+          format: int32
+      performAll?:
+        type: boolean
+        description: Perform request on all Objects that match criteria.
+        displayName: performAll
+        default: false
+      start?:
+        type: integer
+        description: Return results starting at this offset
+        displayName: start
+        format: int32
+      range?:
+        type: integer
+        description: Number of results to return (maximum=50)
+        displayName: range
+        format: int32
+      sort?:
+        type: string
+        description: Field used to sort results
+        displayName: sort
+      sortDir?:
+        type: string
+        description: Sort direction, must be used in conjunction with <b>sort</b> parameter.
+        displayName: sortDir
+        enum:
+        - asc
+        - desc
+      condition?:
+        type: string
+        description: Apply this condition to the collection query. This is essentially like a SQL WHERE clause, e.g. firstname='Ben'
+        displayName: condition
+      search?:
+        type: string
+        description: Search Objects for this string
+        displayName: search
+      searchNotes?:
+        type: boolean
+        description: Boolean flag to additionally search Object Notes for the Search term given in Search parameter
+        displayName: searchNotes
+      date_range?:
+        type: array
+        description: Start and End dates to search, in seconds since Jan 1, 1970, as a comma-separated list. Start (index 0 in the array) is inclusive, End (index 1) is exclusive. Either or both can be empty.
+        displayName: date_range
+        items:
+          type: integer
+          format: int32
+      group_ids?:
+        type: array
+        description: Array of Group ID for Object type as comma-delimited list
+        displayName: group_ids
+        items:
+          type: integer
+          format: int32
+      externs?:
+        type: string
+        description: External fields to include in results
+        displayName: externs
+      listFields?:
+        type: array
+        description: Array of fields to return in response as comma-delimited list.
+        displayName: listFields
+        items:
+          type: string
+    responses:
+      200:
+        description: Successful object query
+        body:
+          application/json:
+            type: Response
+      400:
+        description: Invalid objectID
+  delete:
+    description: ''
+    displayName: This will delete a list of Objects
+    queryParameters:
+      objectID:
+        type: integer
+        description: Object Type ID.
+        displayName: objectID
+        format: int32
+      ids?:
+        type: array
+        description: Array of Object IDs as comma-delimited list.
+        displayName: ids
+        items:
+          type: integer
+          format: int32
+      performAll?:
+        type: boolean
+        description: Perform request on all Objects that match criteria.
+        displayName: performAll
+        default: false
+      start?:
+        type: integer
+        description: Return results starting at this offset
+        displayName: start
+        format: int32
+      range?:
+        type: integer
+        description: Number of results to return (maximum=50)
+        displayName: range
+        format: int32
+      sort?:
+        type: string
+        description: Field used to sort results
+        displayName: sort
+      sortDir?:
+        type: string
+        description: Sort direction, must be used in conjunction with <b>sort</b> parameter.
+        displayName: sortDir
+        enum:
+        - asc
+        - desc
+      condition?:
+        type: string
+        description: Apply this condition to the collection query. This is essentially like a SQL WHERE clause, e.g. firstname='Ben'
+        displayName: condition
+      search?:
+        type: string
+        description: Search Objects for this string
+        displayName: search
+      searchNotes?:
+        type: boolean
+        description: Boolean flag to additionally search Object Notes for the Search term given in Search parameter
+        displayName: searchNotes
+      date_range?:
+        type: array
+        description: Start and End dates to search, in seconds since Jan 1, 1970, as a comma-separated list. Start (index 0 in the array) is inclusive, End (index 1) is exclusive. Either or both can be empty.
+        displayName: date_range
+        items:
+          type: integer
+          format: int32
+      group_ids?:
+        type: array
+        description: Array of Group ID for Object type as comma-delimited list
+        displayName: group_ids
+        items:
+          type: integer
+          format: int32
+      externs?:
+        type: string
+        description: External fields to include in results
+        displayName: externs
+      listFields?:
+        type: array
+        description: Array of fields to return in response as comma-delimited list.
+        displayName: listFields
+        items:
+          type: string
+    responses:
+      200:
+        description: Successful object query
+        body:
+          application/json:
+            type: Response
+      400:
+        description: Invalid objectID
+  post:
+    description: This will create an Object with the given data. Object type is a required parameters, but other parameters are optional and dependent upon the object type. We have provided optional parameters as examples for updating a Contact. When using this in your application, all invalid parameters will be ignored.
+    displayName: This will create an Object
+    responses:
+      200:
+        description: Successful object query
+        body:
+          application/json:
+            type: Response
+      400:
+        description: Invalid objectID
+  put:
+    description: This will update an Object's data. The Object type and ID and required parameters, but other parameters are dependent upon the object type. We have provided optional parameters as examples for updating a Contact. When using this in your application, all invalid parameters will be ignored.
+    displayName: This will update an Object's data
+    responses:
+      200:
+        description: Successfully updated object
+        body:
+          application/json:
+            type: Response
+      404:
+        description: Object not found
+/task:
+  /cancel:
+    post:
+      description: To affect a single Task or list of specific Tasks, use the <strong>ids</strong> array in the <strong>criteria</strong> parameter. Otherwise, you should use <strong>performAll</strong> and other criteria to select a Group of Tasks to cancel.
+      displayName: Cancel a set of Tasks
+      responses:
+        200:
+          description: Successfully canceled tasks
+          body:
+            application/json:
+              type: Response
+  /complete:
+    post:
+      description: This will mark one or many Tasks as complete. As an option, you can assign a new Task for further follow-up. To affect a single Task or list of specific Tasks, use the <strong>ids</strong> array in the <strong>criteria</strong> parameter. Otherwise, you should use <strong>performAll</strong> and other criteria to select a Group of Tasks to complete.
+      displayName: Complete a set of Tasks
+      responses:
+        200:
+          description: Successfully canceled tasks
+          body:
+            application/json:
+              type: Response
+/transaction:
+  /convertToCollections:
+    put:
+      description: ''
+      displayName: Convert the status of one or more Transactions to Collections
+      responses:
+        200:
+          description: Successfully converted transaction
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error converting transaction
+        404:
+          description: Object not found
+  /convertToDecline:
+    put:
+      description: ''
+      displayName: Convert the status of one or more Transactions to Declined
+      responses:
+        200:
+          description: Successfully converted transaction
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error converting transaction
+        404:
+          description: Object not found
+  /markPaid:
+    put:
+      description: ''
+      displayName: Mark a Transaction as Paid
+      responses:
+        200:
+          description: Successfully marked as paid
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error marking Transaction as paid
+        404:
+          description: Object not found
+  /order:
+    get:
+      description: ''
+      displayName: Get full information about an order
+      queryParameters:
+        id:
+          type: integer
+          description: Order ID.
+          displayName: id
+      responses:
+        200:
+          description: Success fetching Order
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error fetching Order
+    put:
+      description: Update information about an Order. Please note that if offer data is omitted, this Order will be deleted.
+      displayName: Update information about an Order
+      body:
+        application/json: Order
+      responses:
+        200:
+          description: Successfully updated Order information
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error updating Order information
+  /processManual:
+    post:
+      description: This will create a Transaction for a Contact. Please note that this request requires valid parameters for all associated members of the Transaction or the request will fail. If you have doubled-checked all parameters and the request is still failing, check that the payload JSON format is correct by using <a href="http://jsonlint.com/">JSONLint</a>. If credit card and billing information already exist for this contact, you may omit <b>billing_address</b> and <b>payer</b> from the request. Note that <b>trans_date</b> is given in milliseconds elapsed since midnight on 1/1/1970.
+      displayName: This will create a new Transaction
+      responses:
+        200:
+          description: Successfully created transaction
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error processing transaction
+  /refund:
+    put:
+      description: ''
+      displayName: Refund one or more Transactions
+      responses:
+        200:
+          description: Successfully refunded transaction
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error refunding transaction
+  /rerun:
+    post:
+      description: Re-run a single Transaction or a Group of Transactions that are currently in Collections.
+      displayName: Re-run a Transaction
+      responses:
+        200:
+          description: Successfully reran transaction
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error rerunning transaction
+  /rerunCommission:
+    put:
+      description: ''
+      displayName: Re-run a Partner commission
+      responses:
+        200:
+          description: Successfully reran commission
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error rerunning commission
+  /resendInvoice:
+    post:
+      description: ''
+      displayName: Re-send a Transaction invoice
+      responses:
+        200:
+          description: Successfully created transaction
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error processing transaction
+  /void:
+    put:
+      description: ''
+      displayName: Void a Transaction
+      responses:
+        200:
+          description: Successfully voided transaction
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error voiding transaction
+  /voidPurchase:
+    put:
+      description: ''
+      displayName: Void a purchase
+      responses:
+        200:
+          description: Successfully voided purchase
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error voiding purchase
+        404:
+          description: Object not found
+  /writeOff:
+    put:
+      description: ''
+      displayName: Write-off a Transaction
+      responses:
+        200:
+          description: Successfully wrote off transaction
+          body:
+            application/json:
+              type: Response
+        400:
+          description: Error writing off transaction
+        404:
+          description: Object not found

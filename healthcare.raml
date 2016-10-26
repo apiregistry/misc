@@ -1,0 +1,791 @@
+#%RAML 1.0
+title: Healthcare
+version: 1.0.0
+baseUri: www.healthcare.gov/
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  articlesList:
+    type: object
+    properties:
+      articles?:
+        type: array
+        items:
+          type: object
+          properties:
+            date?:
+              type: string
+            title-short?:
+              type: string
+            featured?:
+              type: boolean
+            topics?:
+              type: array
+              items:
+                type: array
+                items:
+                  type: string
+            published?:
+              type: boolean
+            sort?:
+              type: number
+            title?:
+              type: string
+            content?:
+              type: string
+            url?:
+              type: string
+            seo-keywords?:
+              type: string
+            tags?:
+              type: array
+              items:
+                type: array
+            layout?:
+              type: string
+            path?:
+              type: string
+            meta-description?:
+              type: string
+            related?:
+              type: array
+              items:
+                type: array
+                items:
+                  type: string
+            bite?:
+              type: string
+            meta-title?:
+              type: string
+            categories?:
+              type: array
+              items:
+                type: array
+                items:
+                  type: string
+            id?:
+              type: string
+            excerpt?:
+              type: string
+            lang?:
+              type: string
+  blogList:
+    type: object
+    properties:
+      blog?:
+        type: array
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              date?:
+                type: string
+              topics?:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: string
+              published?:
+                type: boolean
+              sort?:
+                type: number
+              title?:
+                type: string
+              content?:
+                type: string
+              url?:
+                type: string
+              seo-keywords?:
+                type: string
+              tags?:
+                type: array
+                items:
+                  type: array
+              layout?:
+                type: string
+              meta-description?:
+                type: string
+              meta-title?:
+                type: string
+              categories?:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: string
+              lang?:
+                type: string
+  blogPage:
+    type: object
+    properties:
+      categories?:
+        type: array
+        items:
+          type: array
+          items:
+            type: string
+      content?:
+        type: string
+      date?:
+        type: string
+      excerpt?:
+        type: string
+      id?:
+        type: string
+      lang?:
+        type: string
+      layout?:
+        type: string
+      meta-description?:
+        type: string
+      meta-title?:
+        type: string
+      path?:
+        type: string
+      published?:
+        type: boolean
+      seo-keywords?:
+        type: string
+      sort?:
+        type: number
+      tags?:
+        type: array
+        items:
+          type: array
+      title?:
+        type: string
+      topics?:
+        type: array
+        items:
+          type: array
+          items:
+            type: string
+      url?:
+        type: string
+  glossaryList:
+    type: object
+    properties:
+      glossary?:
+        type: array
+        items:
+          type: object
+          properties:
+            date?:
+              type: string
+            published?:
+              type: boolean
+            sort?:
+              type: number
+            title?:
+              type: string
+            content?:
+              type: string
+            url?:
+              type: string
+            tags?:
+              type: array
+              items:
+                type: string
+            layout?:
+              type: string
+            path?:
+              type: string
+            categories?:
+              type: array
+              items:
+                type: string
+            id?:
+              type: string
+            excerpt?:
+              type: string
+            lang?:
+              type: string
+  glossaryPage:
+    type: object
+    properties:
+      categories?:
+        type: array
+        items:
+          type: string
+      content?:
+        type: string
+      date?:
+        type: string
+      excerpt?:
+        type: string
+      id?:
+        type: string
+      lang?:
+        type: string
+      layout?:
+        type: string
+      path?:
+        type: string
+      published?:
+        type: boolean
+      sort?:
+        type: number
+      tags?:
+        type: array
+        items:
+          type: string
+      title?:
+        type: string
+      url?:
+        type: string
+  page:
+    type: object
+    properties:
+      categories?:
+        type: array
+        items:
+          type: array
+      content?:
+        type: string
+      date?:
+        type: string
+      excerpt?:
+        type: string
+      experience?:
+        type: string
+      id?:
+        type: string
+      lang?:
+        type: string
+      layout?:
+        type: string
+      path?:
+        type: string
+      published?:
+        type: boolean
+      sort?:
+        type: number
+      tags?:
+        type: array
+        items:
+          type: array
+      title?:
+        type: string
+      url?:
+        type: string
+  questionPage:
+    type: object
+    properties:
+      categories?:
+        type: array
+        items:
+          type: string
+      content?:
+        type: string
+      date?:
+        type: string
+      excerpt?:
+        type: string
+      id?:
+        type: string
+      lang?:
+        type: string
+      path?:
+        type: string
+      published?:
+        type: boolean
+      sort?:
+        type: number
+      tags?:
+        type: array
+        items:
+          type: string
+      title?:
+        type: string
+      url?:
+        type: string
+  questionsList:
+    type: object
+    properties:
+      questions?:
+        type: array
+        items:
+          type: object
+          properties:
+            date?:
+              type: string
+            path?:
+              type: string
+            categories?:
+              type: array
+              items:
+                type: string
+            id?:
+              type: string
+            published?:
+              type: boolean
+            sort?:
+              type: number
+            excerpt?:
+              type: string
+            lang?:
+              type: string
+            title?:
+              type: string
+            content?:
+              type: string
+            url?:
+              type: string
+            tags?:
+              type: array
+              items:
+                type: string
+  statePage:
+    type: object
+    properties:
+      categories?:
+        type: array
+        items:
+          type: array
+      content?:
+        type: string
+      date?:
+        type: string
+      excerpt?:
+        type: string
+      id?:
+        type: string
+      lang?:
+        type: string
+      path?:
+        type: string
+      sort?:
+        type: number
+      stateurl?:
+        type: string
+      tags?:
+        type: array
+        items:
+          type: array
+          items:
+            type: string
+      title?:
+        type: string
+      url?:
+        type: string
+  statesList:
+    type: object
+    properties:
+      states?:
+        type: array
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              date?:
+                type: string
+              path?:
+                type: string
+              categories?:
+                type: array
+                items:
+                  type: array
+              id?:
+                type: string
+              sort?:
+                type: number
+              excerpt?:
+                type: string
+              lang?:
+                type: string
+              stateurl?:
+                type: string
+              title?:
+                type: string
+              content?:
+                type: string
+              url?:
+                type: string
+              tags?:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: string
+  topicsList:
+    type: object
+    properties:
+      topics?:
+        type: array
+        items:
+          type: object
+          properties:
+            date?:
+              type: string
+            published?:
+              type: boolean
+            sort?:
+              type: number
+            title?:
+              type: string
+            content?:
+              type: string
+            url?:
+              type: string
+            tags?:
+              type: array
+              items:
+                type: array
+                items:
+                  type: string
+            layout?:
+              type: string
+            path?:
+              type: string
+            meta-description?:
+              type: string
+            meta-title?:
+              type: string
+            articleorder?:
+              type: array
+              items:
+                type: array
+                items:
+                  type: string
+            categories?:
+              type: array
+              items:
+                type: array
+            id?:
+              type: string
+            excerpt?:
+              type: string
+            lang?:
+              type: string
+            order?:
+              type: number
+/api:
+  /articles{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: articlesList
+        404:
+          description: Resource not found.
+  /blog{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: blogList
+        404:
+          description: Resource not found.
+  /glossary{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: glossaryList
+        404:
+          description: Resource not found.
+  /questions{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: questionsList
+        404:
+          description: Resource not found.
+  /states{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: statesList
+        404:
+          description: Resource not found.
+  /topics{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: topicsList
+        404:
+          description: Resource not found.
+/blog:
+  /{pageName}{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+      pageName:
+        type: string
+        displayName: pageName
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/html:
+              type: blogPage
+        404:
+          description: Resource not found.
+/es:
+  /blog:
+    /{pageName}{mediaTypeExtension}:
+      uriParameters:
+        mediaTypeExtension:
+          type: string
+          description: Omiting the param causes html to be returned.
+          displayName: mediaTypeExtension
+          enum:
+          - .json
+        pageName:
+          type: string
+          displayName: pageName
+      get:
+        description: Returns pages content.
+        responses:
+          200:
+            description: OK
+            body:
+              application/html:
+                type: blogPage
+          404:
+            description: Resource not found.
+  /glossary:
+    /{pageName}{mediaTypeExtension}:
+      uriParameters:
+        mediaTypeExtension:
+          type: string
+          description: Omiting the param causes html to be returned.
+          displayName: mediaTypeExtension
+          enum:
+          - .json
+        pageName:
+          type: string
+          displayName: pageName
+      get:
+        description: Returns pages content.
+        responses:
+          200:
+            description: OK
+            body:
+              application/html:
+                type: glossaryPage
+          404:
+            description: Resource not found.
+  /question:
+    /{pageName}{mediaTypeExtension}:
+      uriParameters:
+        mediaTypeExtension:
+          type: string
+          description: Omiting the param causes html to be returned.
+          displayName: mediaTypeExtension
+          enum:
+          - .json
+        pageName:
+          type: string
+          displayName: pageName
+      get:
+        description: Returns pages content.
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: questionPage
+          404:
+            description: Resource not found.
+  /{pageName}{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+      pageName:
+        type: string
+        displayName: pageName
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/html:
+              type: page
+        404:
+          description: Resource not found.
+  /{stateName}{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+      stateName:
+        type: string
+        displayName: stateName
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: statePage
+        404:
+          description: Resource not found.
+/glossary:
+  /{pageName}{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+      pageName:
+        type: string
+        displayName: pageName
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/html:
+              type: glossaryPage
+        404:
+          description: Resource not found.
+/question:
+  /{pageName}{mediaTypeExtension}:
+    uriParameters:
+      mediaTypeExtension:
+        type: string
+        description: Omiting the param causes html to be returned.
+        displayName: mediaTypeExtension
+        enum:
+        - .json
+      pageName:
+        type: string
+        displayName: pageName
+    get:
+      description: Returns pages content.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: questionPage
+        404:
+          description: Resource not found.
+/{pageName}{mediaTypeExtension}:
+  uriParameters:
+    mediaTypeExtension:
+      type: string
+      description: Omiting the param causes html to be returned.
+      displayName: mediaTypeExtension
+      enum:
+      - .json
+    pageName:
+      type: string
+      displayName: pageName
+  get:
+    description: Returns pages content.
+    responses:
+      200:
+        description: OK
+        body:
+          application/html:
+            type: page
+      404:
+        description: Resource not found.
+/{stateName}{mediaTypeExtension}:
+  uriParameters:
+    mediaTypeExtension:
+      type: string
+      description: Omiting the param causes html to be returned.
+      displayName: mediaTypeExtension
+      enum:
+      - .json
+    stateName:
+      type: string
+      displayName: stateName
+  get:
+    description: Returns pages content.
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            type: statePage
+      404:
+        description: Resource not found.

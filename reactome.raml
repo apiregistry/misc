@@ -1,0 +1,1595 @@
+#%RAML 1.0
+title: Pathway Analysis Service
+version: '1.0'
+baseUri: www.reactome.org/
+description: Provides an API for pathway over-representation and expression analysis as well as species comparison tool
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  AnalysisResult:
+    type: object
+    properties:
+      expression?:
+        type: ExpressionSummary
+      identifiersNotFound?:
+        type: integer
+        format: int32
+      pathways?:
+        type: array
+        items:
+          type: PathwaySummary
+      pathwaysFound?:
+        type: integer
+        format: int32
+      resourceSummary?:
+        type: array
+        items:
+          type: ResourceSummary
+      summary?:
+        type: AnalysisSummary
+      warnings?:
+        type: array
+        items:
+          type: string
+  AnalysisSummary:
+    type: object
+    properties:
+      fileName?:
+        type: string
+      sampleName?:
+        type: string
+      species?:
+        type: integer
+        format: int64
+      text?:
+        type: boolean
+      token?:
+        type: string
+      type?:
+        type: string
+  EntityStatistics:
+    type: object
+    properties:
+      curatedFound?:
+        type: integer
+        format: int32
+      curatedTotal?:
+        type: integer
+        format: int32
+      exp?:
+        type: array
+        items:
+          type: number
+          format: double
+      fdr?:
+        type: number
+        format: double
+      found?:
+        type: integer
+        format: int32
+      interactorsFound?:
+        type: integer
+        format: int32
+      interactorsTotal?:
+        type: integer
+        format: int32
+      pValue?:
+        type: number
+        format: double
+      ratio?:
+        type: number
+        format: double
+      resource?:
+        type: string
+      total?:
+        type: integer
+        format: int32
+  ExpressionSummary:
+    type: object
+    properties:
+      columnNames?:
+        type: array
+        items:
+          type: string
+      max?:
+        type: number
+        format: double
+      min?:
+        type: number
+        format: double
+  File:
+    type: object
+    properties:
+      absolute?:
+        type: boolean
+      absoluteFile?:
+        type: File
+      absolutePath?:
+        type: string
+      canonicalFile?:
+        type: File
+      canonicalPath?:
+        type: string
+      directory?:
+        type: boolean
+      file?:
+        type: boolean
+      freeSpace?:
+        type: integer
+        format: int64
+      hidden?:
+        type: boolean
+      name?:
+        type: string
+      parent?:
+        type: string
+      parentFile?:
+        type: File
+      path?:
+        type: string
+      totalSpace?:
+        type: integer
+        format: int64
+      usableSpace?:
+        type: integer
+        format: int64
+  FileSystemResource:
+    type: object
+    properties:
+      description?:
+        type: string
+      file?:
+        type: File
+      filename?:
+        type: string
+      inputStream?:
+        type: object
+      open?:
+        type: boolean
+      outputStream?:
+        type: object
+      path?:
+        type: string
+      readable?:
+        type: boolean
+      writable?:
+        type: boolean
+  FoundElements:
+    type: object
+    properties:
+      entities?:
+        type: array
+        items:
+          type: FoundEntity
+      expNames?:
+        type: array
+        items:
+          type: string
+      foundEntities?:
+        type: integer
+        format: int32
+      foundInteractors?:
+        type: integer
+        format: int32
+      interactors?:
+        type: array
+        items:
+          type: FoundInteractor
+      resources?:
+        type: array
+        items:
+          type: string
+  FoundEntities:
+    type: object
+    properties:
+      expNames?:
+        type: array
+        items:
+          type: string
+      found?:
+        type: integer
+        format: int32
+      identifiers?:
+        type: array
+        items:
+          type: FoundEntity
+      resources?:
+        type: array
+        items:
+          type: string
+  FoundEntity:
+    type: object
+    properties:
+      exp?:
+        type: array
+        items:
+          type: number
+          format: double
+      id?:
+        type: string
+      mapsTo?:
+        type: array
+        items:
+          type: IdentifierMap
+  FoundInteractor:
+    type: object
+    properties:
+      exp?:
+        type: array
+        items:
+          type: number
+          format: double
+      id?:
+        type: string
+      interactsWith?:
+        type: IdentifierMap
+      mapsTo?:
+        type: array
+        items:
+          type: string
+  FoundInteractors:
+    type: object
+    properties:
+      expNames?:
+        type: array
+        items:
+          type: string
+      found?:
+        type: integer
+        format: int32
+      identifiers?:
+        type: array
+        items:
+          type: FoundInteractor
+      resources?:
+        type: array
+        items:
+          type: string
+  IdentifierMap:
+    type: object
+    properties:
+      ids?:
+        type: array
+        items:
+          type: string
+      resource?:
+        type: string
+  IdentifierSummary:
+    type: object
+    properties:
+      exp?:
+        type: array
+        items:
+          type: number
+          format: double
+      id?:
+        type: string
+  PathwayBase:
+    type: object
+    properties:
+      dbId?:
+        type: integer
+        format: int64
+      entities?:
+        type: EntityStatistics
+      stId?:
+        type: string
+  PathwaySummary:
+    type: object
+    properties:
+      dbId?:
+        type: integer
+        format: int64
+      entities?:
+        type: EntityStatistics
+      llp?:
+        type: boolean
+      name?:
+        type: string
+      reactions?:
+        type: ReactionStatistics
+      species?:
+        type: SpeciesSummary
+      stId?:
+        type: string
+  ReactionStatistics:
+    type: object
+    properties:
+      found?:
+        type: integer
+        format: int32
+      ratio?:
+        type: number
+        format: double
+      resource?:
+        type: string
+      total?:
+        type: integer
+        format: int32
+  ResourceSummary:
+    type: object
+    properties:
+      pathways?:
+        type: integer
+        format: int32
+      resource?:
+        type: string
+  SpeciesFilteredResult:
+    type: object
+    properties:
+      expressionSummary?:
+        type: ExpressionSummary
+      pathways?:
+        type: array
+        items:
+          type: PathwayBase
+      type?:
+        type: string
+  SpeciesSummary:
+    type: object
+    properties:
+      dbId?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+/download:
+  /{token}:
+    uriParameters:
+      token:
+        type: string
+        description: The token associated with the data to download
+        displayName: token
+    /entities:
+      /found:
+        /{resource}:
+          uriParameters:
+            resource:
+              type: string
+              description: the preferred resource
+              displayName: resource
+              default: TOTAL
+              enum:
+              - TOTAL
+              - UNIPROT
+              - ENSEMBL
+              - CHEBI
+              - MIRBASE
+              - NCBI_PROTEIN
+              - EMBL
+              - COMPOUND
+          /{filename}.csv:
+            uriParameters:
+              filename:
+                type: string
+                description: the file name for the downloaded information
+                displayName: filename
+                default: result
+            get:
+              description: The identifiers are filtered by the selected resource. The filename is the one to be suggested in the download window.
+              displayName: Downloads those identifiers found for a given analysis and a certain resource
+              responses:
+                200:
+                  description: No response was specified
+                  body:
+                    text/csv:
+                      type: FileSystemResource
+                404:
+                  description: No result corresponding to the token was found
+                410:
+                  description: Result deleted due to a new data release
+      /notfound:
+        /{filename}.csv:
+          uriParameters:
+            filename:
+              type: string
+              description: the file name for the downloaded information
+              displayName: filename
+              default: result
+          get:
+            description: Those identifiers from the user sample that are not present up to the current data version. The filename is the one to be suggested in the download window.
+            displayName: Downloads a list of the not found identifiers
+            responses:
+              200:
+                description: No response was specified
+                body:
+                  text/csv:
+                    type: FileSystemResource
+              404:
+                description: No result corresponding to the token was found
+              410:
+                description: Result deleted due to a new data release
+    /pathways:
+      /{resource}:
+        uriParameters:
+          resource:
+            type: string
+            description: the preferred resource
+            displayName: resource
+            default: TOTAL
+            enum:
+            - TOTAL
+            - UNIPROT
+            - ENSEMBL
+            - CHEBI
+            - MIRBASE
+            - NCBI_PROTEIN
+            - EMBL
+            - COMPOUND
+        /{filename}.csv:
+          uriParameters:
+            filename:
+              type: string
+              description: the file name for the downloaded information
+              displayName: filename
+              default: result
+          get:
+            description: The results are filtered by the selected resource. The filename is the one to be suggested in the download window.
+            displayName: Downloads all hit pathways for a given analysis
+            responses:
+              200:
+                description: No response was specified
+                body:
+                  text/csv:
+                    type: FileSystemResource
+              404:
+                description: No result corresponding to the token was found
+              410:
+                description: Result deleted due to a new data release
+/identifier:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: The identifier of the element to be retrieved
+        displayName: id
+    /projection:
+      get:
+        description: The projection is calculated by the orthologous slot in the Reactome database. Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+        displayName: Analyse the identifier over the different species in the database and projects the result to Homo Sapiens
+        queryParameters:
+          interactors?:
+            type: boolean
+            description: Include interactors
+            displayName: interactors
+            default: false
+          pageSize?:
+            type: integer
+            description: pathways per page
+            displayName: pageSize
+            default: 20
+            format: int32
+          page?:
+            type: integer
+            description: page number
+            displayName: page
+            default: 1
+            format: int32
+          sortBy?:
+            type: string
+            description: how to sort the result
+            displayName: sortBy
+            default: ENTITIES_PVALUE
+            enum:
+            - NAME
+            - TOTAL_ENTITIES
+            - TOTAL_INTERACTORS
+            - TOTAL_REACTIONS
+            - FOUND_ENTITIES
+            - FOUND_INTERACTORS
+            - FOUND_REACTIONS
+            - ENTITIES_RATIO
+            - ENTITIES_PVALUE
+            - ENTITIES_FDR
+            - REACTIONS_RATIO
+          order?:
+            type: string
+            description: specifies the order
+            displayName: order
+            default: ASC
+            enum:
+            - ASC
+            - DESC
+          resource?:
+            type: string
+            description: resource to sort
+            displayName: resource
+            default: TOTAL
+            enum:
+            - TOTAL
+            - UNIPROT
+            - ENSEMBL
+            - CHEBI
+            - MIRBASE
+            - NCBI_PROTEIN
+            - EMBL
+            - COMPOUND
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: AnalysisResult
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not Found
+    get:
+      description: Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+      displayName: Analyse the identifier over the different species in the database
+      queryParameters:
+        interactors?:
+          type: boolean
+          description: Include interactors
+          displayName: interactors
+          default: false
+        pageSize?:
+          type: integer
+          description: pathways per page
+          displayName: pageSize
+          default: 20
+          format: int32
+        page?:
+          type: integer
+          description: page number
+          displayName: page
+          default: 1
+          format: int32
+        sortBy?:
+          type: string
+          description: how to sort the result
+          displayName: sortBy
+          default: ENTITIES_PVALUE
+          enum:
+          - NAME
+          - TOTAL_ENTITIES
+          - TOTAL_INTERACTORS
+          - TOTAL_REACTIONS
+          - FOUND_ENTITIES
+          - FOUND_INTERACTORS
+          - FOUND_REACTIONS
+          - ENTITIES_RATIO
+          - ENTITIES_PVALUE
+          - ENTITIES_FDR
+          - REACTIONS_RATIO
+        order?:
+          type: string
+          description: specifies the order
+          displayName: order
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+        resource?:
+          type: string
+          description: the resource to sort
+          displayName: resource
+          default: TOTAL
+          enum:
+          - TOTAL
+          - UNIPROT
+          - ENSEMBL
+          - CHEBI
+          - MIRBASE
+          - NCBI_PROTEIN
+          - EMBL
+          - COMPOUND
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: AnalysisResult
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+/identifiers:
+  /:
+    post:
+      description: Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+      displayName: Analyse the post identifiers over the different species
+      queryParameters:
+        interactors?:
+          type: boolean
+          description: Include interactors
+          displayName: interactors
+          default: false
+        pageSize?:
+          type: integer
+          description: pathways per page
+          displayName: pageSize
+          default: 20
+          format: int32
+        page?:
+          type: integer
+          description: page number
+          displayName: page
+          default: 1
+          format: int32
+        sortBy?:
+          type: string
+          description: how to sort the result
+          displayName: sortBy
+          default: ENTITIES_PVALUE
+          enum:
+          - NAME
+          - TOTAL_ENTITIES
+          - TOTAL_INTERACTORS
+          - TOTAL_REACTIONS
+          - FOUND_ENTITIES
+          - FOUND_INTERACTORS
+          - FOUND_REACTIONS
+          - ENTITIES_RATIO
+          - ENTITIES_PVALUE
+          - ENTITIES_FDR
+          - REACTIONS_RATIO
+        order?:
+          type: string
+          description: specifies the order
+          displayName: order
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+        resource?:
+          type: string
+          description: the resource to sort
+          displayName: resource
+          default: TOTAL
+          enum:
+          - TOTAL
+          - UNIPROT
+          - ENSEMBL
+          - CHEBI
+          - MIRBASE
+          - NCBI_PROTEIN
+          - EMBL
+          - COMPOUND
+      body:
+        text/plain:
+          type: string
+          description: 'A comma separated list with the identifiers of the pathways
+            of interest (NOTE: is plain text, not json)'
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: AnalysisResult
+        400:
+          description: Bad request
+  /form:
+    /projection:
+      post:
+        description: The projection is calculated by the orthologous slot in the Reactome database. Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+        displayName: Analyse the identifiers in the file over the different species and projects the result to Homo Sapiens
+        queryParameters:
+          interactors?:
+            type: boolean
+            description: Include interactors
+            displayName: interactors
+            default: false
+          pageSize?:
+            type: integer
+            description: pathways per page
+            displayName: pageSize
+            default: 20
+            format: int32
+          page?:
+            type: integer
+            description: page number
+            displayName: page
+            default: 1
+            format: int32
+          sortBy?:
+            type: string
+            description: how to sort the result
+            displayName: sortBy
+            default: ENTITIES_PVALUE
+            enum:
+            - NAME
+            - TOTAL_ENTITIES
+            - TOTAL_INTERACTORS
+            - TOTAL_REACTIONS
+            - FOUND_ENTITIES
+            - FOUND_INTERACTORS
+            - FOUND_REACTIONS
+            - ENTITIES_RATIO
+            - ENTITIES_PVALUE
+            - ENTITIES_FDR
+            - REACTIONS_RATIO
+          order?:
+            type: string
+            description: specifies the order
+            displayName: order
+            default: ASC
+            enum:
+            - ASC
+            - DESC
+          resource?:
+            type: string
+            description: the resource to sort
+            displayName: resource
+            default: TOTAL
+            enum:
+            - TOTAL
+            - UNIPROT
+            - ENSEMBL
+            - CHEBI
+            - MIRBASE
+            - NCBI_PROTEIN
+            - EMBL
+            - COMPOUND
+        body:
+          multipart/form-data:
+            type: object
+            properties:
+              file:
+                type: file
+                description: A file with the data to be analysed
+                displayName: file
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: AnalysisResult
+          400:
+            description: Bad request
+          413:
+            description: The file size is larger than the maximum configured size (50MB)
+          415:
+            description: Unsupported Media Type (only 'text/plain')
+    post:
+      description: Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+      displayName: Analyse the identifiers in the file over the different species
+      queryParameters:
+        interactors?:
+          type: boolean
+          description: Include interactors
+          displayName: interactors
+          default: false
+        pageSize?:
+          type: integer
+          description: pathways per page
+          displayName: pageSize
+          default: 20
+          format: int32
+        page?:
+          type: integer
+          description: page number
+          displayName: page
+          default: 1
+          format: int32
+        sortBy?:
+          type: string
+          description: how to sort the result
+          displayName: sortBy
+          default: ENTITIES_PVALUE
+          enum:
+          - NAME
+          - TOTAL_ENTITIES
+          - TOTAL_INTERACTORS
+          - TOTAL_REACTIONS
+          - FOUND_ENTITIES
+          - FOUND_INTERACTORS
+          - FOUND_REACTIONS
+          - ENTITIES_RATIO
+          - ENTITIES_PVALUE
+          - ENTITIES_FDR
+          - REACTIONS_RATIO
+        order?:
+          type: string
+          description: specifies the order
+          displayName: order
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+        resource?:
+          type: string
+          description: the resource to sort
+          displayName: resource
+          default: TOTAL
+          enum:
+          - TOTAL
+          - UNIPROT
+          - ENSEMBL
+          - CHEBI
+          - MIRBASE
+          - NCBI_PROTEIN
+          - EMBL
+          - COMPOUND
+      body:
+        multipart/form-data:
+          type: object
+          properties:
+            file:
+              type: file
+              description: A file with the data to be analysed
+              displayName: file
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: AnalysisResult
+        400:
+          description: Bad request
+        413:
+          description: The file size is larger than the maximum configured size (50MB)
+        415:
+          description: Unsupported Media Type (only 'text/plain')
+  /projection:
+    post:
+      description: The projection is calculated by the orthologous slot in the Reactome database. Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+      displayName: Analyse the post identifiers over the different species and projects the result to Homo Sapiens
+      queryParameters:
+        interactors?:
+          type: boolean
+          description: Include interactors
+          displayName: interactors
+          default: false
+        pageSize?:
+          type: integer
+          description: pathways per page
+          displayName: pageSize
+          default: 20
+          format: int32
+        page?:
+          type: integer
+          description: page number
+          displayName: page
+          default: 1
+          format: int32
+        sortBy?:
+          type: string
+          description: how to sort the result
+          displayName: sortBy
+          default: ENTITIES_PVALUE
+          enum:
+          - NAME
+          - TOTAL_ENTITIES
+          - TOTAL_INTERACTORS
+          - TOTAL_REACTIONS
+          - FOUND_ENTITIES
+          - FOUND_INTERACTORS
+          - FOUND_REACTIONS
+          - ENTITIES_RATIO
+          - ENTITIES_PVALUE
+          - ENTITIES_FDR
+          - REACTIONS_RATIO
+        order?:
+          type: string
+          description: specifies the order
+          displayName: order
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+        resource?:
+          type: string
+          description: the resource to sort
+          displayName: resource
+          default: TOTAL
+          enum:
+          - TOTAL
+          - UNIPROT
+          - ENSEMBL
+          - CHEBI
+          - MIRBASE
+          - NCBI_PROTEIN
+          - EMBL
+          - COMPOUND
+      body:
+        text/plain:
+          type: string
+          description: 'A comma separated list with the identifiers of the pathways
+            of interest (NOTE: is plain text, not json)'
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: AnalysisResult
+        400:
+          description: Bad request
+  /url:
+    /projection:
+      post:
+        description: The projection is calculated by the orthologous slot in the Reactome database. Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+        displayName: Analyse the identifiers contained in the provided url over the different species and projects the result to Homo Sapiens
+        queryParameters:
+          interactors?:
+            type: boolean
+            description: Include interactors
+            displayName: interactors
+            default: false
+          pageSize?:
+            type: integer
+            description: pathways per page
+            displayName: pageSize
+            default: 20
+            format: int32
+          page?:
+            type: integer
+            description: page number
+            displayName: page
+            default: 1
+            format: int32
+          sortBy?:
+            type: string
+            description: how to sort the result
+            displayName: sortBy
+            default: ENTITIES_PVALUE
+            enum:
+            - NAME
+            - TOTAL_ENTITIES
+            - TOTAL_INTERACTORS
+            - TOTAL_REACTIONS
+            - FOUND_ENTITIES
+            - FOUND_INTERACTORS
+            - FOUND_REACTIONS
+            - ENTITIES_RATIO
+            - ENTITIES_PVALUE
+            - ENTITIES_FDR
+            - REACTIONS_RATIO
+          order?:
+            type: string
+            description: specifies the order
+            displayName: order
+            default: ASC
+            enum:
+            - ASC
+            - DESC
+          resource?:
+            type: string
+            description: the resource to sort
+            displayName: resource
+            default: TOTAL
+            enum:
+            - TOTAL
+            - UNIPROT
+            - ENSEMBL
+            - CHEBI
+            - MIRBASE
+            - NCBI_PROTEIN
+            - EMBL
+            - COMPOUND
+        body:
+          text/plain:
+            type: string
+            description: 'A comma separated list with the identifiers of the pathways
+              of interest (NOTE: is plain text, not json)'
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: AnalysisResult
+          400:
+            description: Bad request
+          413:
+            description: The file size is larger than the maximum configured size (50MB)
+          415:
+            description: Unsupported Media Type (only 'text/plain')
+          422:
+            description: The provided URL is not processable
+    post:
+      description: Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+      displayName: Analyse the identifiers contained in the provided url over the different species
+      queryParameters:
+        interactors?:
+          type: boolean
+          description: Include interactors
+          displayName: interactors
+          default: false
+        pageSize?:
+          type: integer
+          description: pathways per page
+          displayName: pageSize
+          default: 20
+          format: int32
+        page?:
+          type: integer
+          description: page number
+          displayName: page
+          default: 1
+          format: int32
+        sortBy?:
+          type: string
+          description: how to sort the result
+          displayName: sortBy
+          default: ENTITIES_PVALUE
+          enum:
+          - NAME
+          - TOTAL_ENTITIES
+          - TOTAL_INTERACTORS
+          - TOTAL_REACTIONS
+          - FOUND_ENTITIES
+          - FOUND_INTERACTORS
+          - FOUND_REACTIONS
+          - ENTITIES_RATIO
+          - ENTITIES_PVALUE
+          - ENTITIES_FDR
+          - REACTIONS_RATIO
+        order?:
+          type: string
+          description: specifies the order
+          displayName: order
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+        resource?:
+          type: string
+          description: the resource to sort
+          displayName: resource
+          default: TOTAL
+          enum:
+          - TOTAL
+          - UNIPROT
+          - ENSEMBL
+          - CHEBI
+          - MIRBASE
+          - NCBI_PROTEIN
+          - EMBL
+          - COMPOUND
+      body:
+        text/plain:
+          type: string
+          description: 'A comma separated list with the identifiers of the pathways
+            of interest (NOTE: is plain text, not json)'
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: AnalysisResult
+        400:
+          description: Bad request
+        413:
+          description: The file size is larger than the maximum configured size (50MB)
+        415:
+          description: Unsupported Media Type (only 'text/plain')
+        422:
+          description: The provided URL is not processable
+/species:
+  /homoSapiens:
+    /{species}:
+      uriParameters:
+        species:
+          type: integer
+          description: The dbId of the species to compare to
+          displayName: species
+          format: int64
+      get:
+        description: Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+        displayName: Compares Homo sapiens to the specified species
+        queryParameters:
+          pageSize?:
+            type: integer
+            description: pathways per page
+            displayName: pageSize
+            default: 20
+            format: int32
+          page?:
+            type: integer
+            description: page number
+            displayName: page
+            default: 1
+            format: int32
+          sortBy?:
+            type: string
+            description: how to sort the result
+            displayName: sortBy
+            default: ENTITIES_PVALUE
+            enum:
+            - NAME
+            - TOTAL_ENTITIES
+            - TOTAL_INTERACTORS
+            - TOTAL_REACTIONS
+            - FOUND_ENTITIES
+            - FOUND_INTERACTORS
+            - FOUND_REACTIONS
+            - ENTITIES_RATIO
+            - ENTITIES_PVALUE
+            - ENTITIES_FDR
+            - REACTIONS_RATIO
+          order?:
+            type: string
+            description: specifies the order
+            displayName: order
+            default: ASC
+            enum:
+            - ASC
+            - DESC
+          resource?:
+            type: string
+            description: the resource to sort
+            displayName: resource
+            default: TOTAL
+            enum:
+            - TOTAL
+            - UNIPROT
+            - ENSEMBL
+            - CHEBI
+            - MIRBASE
+            - NCBI_PROTEIN
+            - EMBL
+            - COMPOUND
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: AnalysisResult
+          404:
+            description: Species identifier does not match with any of the species in the current data
+/token:
+  /{token}:
+    uriParameters:
+      token:
+        type: string
+        description: The token associated with the data to query
+        displayName: token
+    /filter:
+      /pathways:
+        post:
+          description: For a given list of pathway identifiers (dbId) it will retrieve a list containing those that are present in the result (with the results for the indicated molecule type)
+          displayName: Returns the result for the pathway ids sent by post (when they are present in the original result)
+          queryParameters:
+            resource?:
+              type: string
+              description: the resource to sort
+              displayName: resource
+              default: TOTAL
+              enum:
+              - TOTAL
+              - UNIPROT
+              - ENSEMBL
+              - CHEBI
+              - MIRBASE
+              - NCBI_PROTEIN
+              - EMBL
+              - COMPOUND
+          body:
+            text/plain:
+              type: string
+              description: 'A comma separated list with the identifiers of the pathways
+                of interest (NOTE: is plain text, not json)'
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: array
+                  items:
+                    type: PathwaySummary
+            404:
+              description: No result corresponding to the token was found
+            410:
+              description: Result deleted due to a new data release
+      /species:
+        /{species}:
+          uriParameters:
+            species:
+              type: integer
+              description: The dbId of the species to filter the result
+              displayName: species
+              format: int64
+          get:
+            description: filterBySpecies
+            displayName: Filters the result by species
+            queryParameters:
+              resource?:
+                type: string
+                description: the resource to sort
+                displayName: resource
+                default: TOTAL
+                enum:
+                - TOTAL
+                - UNIPROT
+                - ENSEMBL
+                - CHEBI
+                - MIRBASE
+                - NCBI_PROTEIN
+                - EMBL
+                - COMPOUND
+            responses:
+              200:
+                description: No response was specified
+                body:
+                  application/json:
+                    type: SpeciesFilteredResult
+              404:
+                description: No result corresponding to the token was found
+              410:
+                description: Result deleted due to a new data release
+    /found:
+      /all:
+        /{pathway}:
+          uriParameters:
+            pathway:
+              type: integer
+              description: The dbId of the pathway of interest
+              displayName: pathway
+              format: int64
+          get:
+            description: The identifiers submitted by the user that have a match in Reactome database. It also retrieves the mapping to the main identifiers for those that have been found.
+            displayName: Returns a summary of the contained identifiers for a pathway in the result for a given token
+            queryParameters:
+              resource?:
+                type: string
+                description: the resource to sort
+                displayName: resource
+                default: TOTAL
+                enum:
+                - TOTAL
+                - UNIPROT
+                - ENSEMBL
+                - CHEBI
+                - MIRBASE
+                - NCBI_PROTEIN
+                - EMBL
+                - COMPOUND
+            responses:
+              200:
+                description: No response was specified
+                body:
+                  application/json:
+                    type: FoundElements
+              404:
+                description: No result corresponding to the token was found
+              410:
+                description: Result deleted due to a new data release
+      /entities:
+        /{pathway}:
+          uriParameters:
+            pathway:
+              type: integer
+              description: The dbId of the pathway of interest
+              displayName: pathway
+              format: int64
+          get:
+            description: The identifiers submitted by the user that have a match in Reactome database. It also retrieves the mapping to the main identifiers for those that have been found.
+            displayName: Returns a summary of the contained identifiers for a pathway in the result for a given token
+            queryParameters:
+              page?:
+                type: integer
+                description: page number
+                displayName: page
+                default: 1
+                format: int32
+              pageSize?:
+                type: integer
+                description: identifiers per page
+                displayName: pageSize
+                default: 20
+                format: int32
+              resource?:
+                type: string
+                description: the resource to sort
+                displayName: resource
+                default: TOTAL
+                enum:
+                - TOTAL
+                - UNIPROT
+                - ENSEMBL
+                - CHEBI
+                - MIRBASE
+                - NCBI_PROTEIN
+                - EMBL
+                - COMPOUND
+            responses:
+              200:
+                description: No response was specified
+                body:
+                  application/json:
+                    type: FoundEntities
+              404:
+                description: No result corresponding to the token was found
+              410:
+                description: Result deleted due to a new data release
+      /interactors:
+        /{pathway}:
+          uriParameters:
+            pathway:
+              type: integer
+              description: The dbId of the pathway of interest
+              displayName: pathway
+              format: int64
+          get:
+            description: The identifiers submitted by the user that have a match with an interactor in Reactome database. It also retrieves the mapping to the main identifiers (the one interacting with) for those that have been found.
+            displayName: Returns a summary of the contained interactors for a pathway in the result for a given token
+            queryParameters:
+              page?:
+                type: integer
+                description: page number
+                displayName: page
+                default: 1
+                format: int32
+              pageSize?:
+                type: integer
+                description: identifiers per page
+                displayName: pageSize
+                default: 20
+                format: int32
+              resource?:
+                type: string
+                description: the resource to sort
+                displayName: resource
+                default: TOTAL
+                enum:
+                - TOTAL
+                - UNIPROT
+                - ENSEMBL
+                - CHEBI
+                - MIRBASE
+                - NCBI_PROTEIN
+                - EMBL
+                - COMPOUND
+            responses:
+              200:
+                description: No response was specified
+                body:
+                  application/json:
+                    type: FoundInteractors
+              404:
+                description: No result corresponding to the token was found
+              410:
+                description: Result deleted due to a new data release
+    /notFound:
+      get:
+        description: Those identifiers that have not been found in the Reactome database
+        displayName: Returns a list of the identifiers not found for a given token
+        queryParameters:
+          pageSize?:
+            type: integer
+            description: identifiers per page
+            displayName: pageSize
+            default: 40
+            format: int32
+          page?:
+            type: integer
+            description: page number
+            displayName: page
+            default: 1
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: IdentifierSummary
+          404:
+            description: No result corresponding to the token was found
+          410:
+            description: Result deleted due to a new data release
+    /page:
+      /{pathway}:
+        uriParameters:
+          pathway:
+            type: integer
+            description: The database identifier of the pathway of interest
+            displayName: pathway
+            format: int64
+        get:
+          description: Useful when implementing UI with tables showing the results in a page way and the user needs to know in which page a certain pathway is present for a given set of sorting and filtering options.
+          displayName: Returns the page where the corresponding pathway is taking into account the passed parameters
+          queryParameters:
+            pageSize?:
+              type: integer
+              description: pathways per page
+              displayName: pageSize
+              default: 20
+              format: int32
+            sortBy?:
+              type: string
+              description: how to sort the result
+              displayName: sortBy
+              default: ENTITIES_PVALUE
+              enum:
+              - NAME
+              - TOTAL_ENTITIES
+              - TOTAL_INTERACTORS
+              - TOTAL_REACTIONS
+              - FOUND_ENTITIES
+              - FOUND_INTERACTORS
+              - FOUND_REACTIONS
+              - ENTITIES_RATIO
+              - ENTITIES_PVALUE
+              - ENTITIES_FDR
+              - REACTIONS_RATIO
+            order?:
+              type: string
+              description: specifies the order
+              displayName: order
+              default: ASC
+              enum:
+              - ASC
+              - DESC
+            resource?:
+              type: string
+              description: the resource to sort
+              displayName: resource
+              default: TOTAL
+              enum:
+              - TOTAL
+              - UNIPROT
+              - ENSEMBL
+              - CHEBI
+              - MIRBASE
+              - NCBI_PROTEIN
+              - EMBL
+              - COMPOUND
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: integer
+                  format: int32
+            404:
+              description: No result corresponding to the token was found
+            410:
+              description: Result deleted due to a new data release
+    /reactions:
+      /pathways:
+        post:
+          description: It filters the submitted list and retrieves back only those that at least one of the participating molecules has been hit with the user submitted data.
+          displayName: Returns the reaction ids of the pathway ids sent by post that are present in the original result
+          queryParameters:
+            resource?:
+              type: string
+              description: the resource to sort
+              displayName: resource
+              default: TOTAL
+              enum:
+              - TOTAL
+              - UNIPROT
+              - ENSEMBL
+              - CHEBI
+              - MIRBASE
+              - NCBI_PROTEIN
+              - EMBL
+              - COMPOUND
+          body:
+            text/plain:
+              type: string
+              description: 'A comma separated list with the identifiers of the pathways
+                of interest (NOTE: is plain text, not json)'
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: array
+            404:
+              description: No result corresponding to the token was found
+            410:
+              description: Result deleted due to a new data release
+      /{pathway}:
+        uriParameters:
+          pathway:
+            type: integer
+            description: The database identifier of the pathway of interest
+            displayName: pathway
+            format: int64
+        get:
+          description: For a given pathway it returns the identifiers (dbId) of the reactions in the pathway that have been hit with the sample taking into account their participating molecules.
+          displayName: Returns the reaction ids of the provided pathway id that are present in the original result
+          queryParameters:
+            resource?:
+              type: string
+              description: the resource to sort
+              displayName: resource
+              default: TOTAL
+              enum:
+              - TOTAL
+              - UNIPROT
+              - ENSEMBL
+              - CHEBI
+              - MIRBASE
+              - NCBI_PROTEIN
+              - EMBL
+              - COMPOUND
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: array
+            404:
+              description: No result corresponding to the token was found
+            410:
+              description: Result deleted due to a new data release
+    /resources:
+      get:
+        description: A summary of the molecules type associated to the submitted data.
+        displayName: Returns the resources summary associated with the token
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: ResourceSummary
+          404:
+            description: No result corresponding to the token was found
+          410:
+            description: Result deleted due to a new data release
+    get:
+      description: Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+      displayName: Returns the result associated with the token
+      queryParameters:
+        pageSize?:
+          type: integer
+          description: pathways per page
+          displayName: pageSize
+          default: 20
+          format: int32
+        page?:
+          type: integer
+          description: page number
+          displayName: page
+          default: 1
+          format: int32
+        sortBy?:
+          type: string
+          description: how to sort the result
+          displayName: sortBy
+          default: ENTITIES_PVALUE
+          enum:
+          - NAME
+          - TOTAL_ENTITIES
+          - TOTAL_INTERACTORS
+          - TOTAL_REACTIONS
+          - FOUND_ENTITIES
+          - FOUND_INTERACTORS
+          - FOUND_REACTIONS
+          - ENTITIES_RATIO
+          - ENTITIES_PVALUE
+          - ENTITIES_FDR
+          - REACTIONS_RATIO
+        order?:
+          type: string
+          description: specifies the order
+          displayName: order
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+        resource?:
+          type: string
+          description: the resource to sort
+          displayName: resource
+          default: TOTAL
+          enum:
+          - TOTAL
+          - UNIPROT
+          - ENSEMBL
+          - CHEBI
+          - MIRBASE
+          - NCBI_PROTEIN
+          - EMBL
+          - COMPOUND
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: AnalysisResult
+        404:
+          description: No result corresponding to the token was found
+        410:
+          description: Result deleted due to a new data release

@@ -1,0 +1,2199 @@
+#%RAML 1.0
+title: Congress
+version: v3
+baseUri: api.nytimes.com/svc/politics/v3/us/legislative/congress
+description: Deprecated. Now provided by ProPublica (https://propublica.github.io/congress-api-docs/).
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api-key:
+    type: Pass Through
+/members:
+  /house:
+    /{state}:
+      uriParameters:
+        state:
+          type: string
+          displayName: state
+      /{district-number}:
+        uriParameters:
+          district-number:
+            type: string
+            displayName: district-number
+        /current.json:
+          get:
+            description: ''
+            displayName: Current House Members by State/District Number
+            responses:
+              200:
+                description: ''
+                body:
+                  application/json:
+                    type: object
+                    properties:
+                      copyright?:
+                        type: string
+                      results?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            role?:
+                              type: string
+                            gender?:
+                              type: string
+                            times_topics_url?:
+                              type: string
+                            api_url?:
+                              type: string
+                            district?:
+                              type: string
+                            name?:
+                              type: string
+                            next_election?:
+                              type: string
+                            id?:
+                              type: string
+                            twitter_id?:
+                              type: string
+                            youtube_id?:
+                              type: string
+                            party?:
+                              type: string
+                            seniority?:
+                              type: string
+                      status?:
+                        type: string
+  /new.json:
+    get:
+      description: ''
+      displayName: New Members
+      queryParameters:
+        api-key?:
+          type: string
+          displayName: api-key
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                results?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      gender?:
+                        type: string
+                      date_of_birth?:
+                        type: string
+                      cspan_id?:
+                        type: string
+                      roles?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            end_date?:
+                              type: string
+                            congress?:
+                              type: string
+                            committees?:
+                              type: array
+                              items:
+                                type: object
+                            title?:
+                              type: string
+                            chamber?:
+                              type: string
+                            district?:
+                              type: string
+                            missed_votes_pct?:
+                              type: string
+                            bills_sponsored?:
+                              type: string
+                            bills_cosponsored?:
+                              type: string
+                            state?:
+                              type: string
+                            party?:
+                              type: string
+                            seniority?:
+                              type: string
+                            votes_with_party_pct?:
+                              type: string
+                            start_date?:
+                              type: string
+                      rss_url?:
+                        type: string
+                      most_recent_vote?:
+                        type: string
+                      facebook_account?:
+                        type: string
+                      num_results?:
+                        type: string
+                      current_party?:
+                        type: string
+                      times_topics_url?:
+                        type: string
+                      members?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            chamber?:
+                              type: string
+                            district?:
+                              type: string
+                            last_name?:
+                              type: string
+                            id?:
+                              type: string
+                            state?:
+                              type: string
+                            middle_name?:
+                              type: string
+                            first_name?:
+                              type: string
+                            party?:
+                              type: string
+                            start_date?:
+                              type: string
+                      youtube_account?:
+                        type: string
+                      twitter_account?:
+                        type: string
+                      first_name?:
+                        type: string
+                      times_tag?:
+                        type: string
+                      member_id?:
+                        type: string
+                      offset?:
+                        type: string
+                      icpsr_id?:
+                        type: string
+                      last_name?:
+                        type: string
+                      thomas_id?:
+                        type: string
+                      middle_name?:
+                        type: string
+                      url?:
+                        type: string
+                      facebook_id?:
+                        type: string
+                      domain?:
+                        type: string
+                      govtrack_id?:
+                        type: string
+                status?:
+                  type: string
+  /senate:
+    /{state}:
+      uriParameters:
+        state:
+          type: string
+          displayName: state
+      /current.json:
+        get:
+          description: ''
+          displayName: Current Senate Members by State
+          queryParameters:
+            api-key?:
+              type: string
+              displayName: api-key
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          role?:
+                            type: string
+                          gender?:
+                            type: string
+                          times_topics_url?:
+                            type: string
+                          api_url?:
+                            type: string
+                          name?:
+                            type: string
+                          next_election?:
+                            type: string
+                          id?:
+                            type: string
+                          twitter_id?:
+                            type: string
+                          youtube_id?:
+                            type: string
+                          party?:
+                            type: string
+                          seniority?:
+                            type: string
+                    status?:
+                      type: string
+  /{member-id-1}:
+    uriParameters:
+      member-id-1:
+        type: string
+        description: To find a member's ID number, get the list of members for the appropriate House or Senate.
+        displayName: member-id-1
+    /bills:
+      /{member-id-2}:
+        uriParameters:
+          member-id-2:
+            type: string
+            description: To find a member's ID number, get the list of members for the appropriate House or Senate.
+            displayName: member-id-2
+        /{congress-number}:
+          uriParameters:
+            congress-number:
+              type: integer
+              description: !!binary |-
+                MTA1w6LCgMKTMTEz
+              displayName: congress-number
+          /{chamber}.json:
+            uriParameters:
+              chamber:
+                type: string
+                description: The chamber in which the members served
+                displayName: chamber
+                enum:
+                - house
+                - senate
+            get:
+              description: ''
+              displayName: Member Sponsorship Comparison
+              queryParameters:
+                api-key?:
+                  type: string
+                  displayName: api-key
+              responses:
+                200:
+                  description: ''
+                  body:
+                    application/json:
+                      type: object
+                      properties:
+                        copyright?:
+                          type: string
+                        results?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              common_votes?:
+                                type: string
+                              chamber?:
+                                type: string
+                              congress?:
+                                type: string
+                              disagree_percent?:
+                                type: string
+                              second_member_api_uri?:
+                                type: string
+                              agree_percent?:
+                                type: string
+                              first_member_api_uri?:
+                                type: string
+                              first_member_id?:
+                                type: string
+                              second_member_id?:
+                                type: string
+                              disagree_votes?:
+                                type: string
+                        status?:
+                          type: string
+    /votes:
+      /{member-id-2}:
+        uriParameters:
+          member-id-2:
+            type: string
+            description: To find a member's ID number, get the list of members for the appropriate House or Senate.
+            displayName: member-id-2
+        /{congress-number}:
+          uriParameters:
+            congress-number:
+              type: integer
+              description: !!binary |-
+                U2VuYXRlOiAxMDHDosKAwpMxMTMKSG91c2U6IDEwMsOiwoDCkzExMw==
+              displayName: congress-number
+          /{chamber}.json:
+            uriParameters:
+              chamber:
+                type: string
+                description: The chamber in which the members served
+                displayName: chamber
+                enum:
+                - house
+                - senate
+            get:
+              description: ''
+              displayName: Member Vote Comparison
+              responses:
+                200:
+                  description: ''
+                  body:
+                    application/json:
+                      type: object
+                      properties:
+                        copyright?:
+                          type: string
+                        results?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              common_votes?:
+                                type: string
+                              chamber?:
+                                type: string
+                              congress?:
+                                type: string
+                              disagree_percent?:
+                                type: string
+                              second_member_api_uri?:
+                                type: string
+                              agree_percent?:
+                                type: string
+                              first_member_api_uri?:
+                                type: string
+                              first_member_id?:
+                                type: string
+                              second_member_id?:
+                                type: string
+                              disagree_votes?:
+                                type: string
+                        status?:
+                          type: string
+  /{member-id}.json:
+    uriParameters:
+      member-id:
+        type: string
+        displayName: member-id
+    get:
+      description: ''
+      displayName: Member Bios & Roles
+      queryParameters:
+        api-key?:
+          type: string
+          displayName: api-key
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                results?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      gender?:
+                        type: string
+                      date_of_birth?:
+                        type: string
+                      cspan_id?:
+                        type: string
+                      roles?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            end_date?:
+                              type: string
+                            congress?:
+                              type: string
+                            committees?:
+                              type: array
+                              items:
+                                type: object
+                            title?:
+                              type: string
+                            chamber?:
+                              type: string
+                            district?:
+                              type: string
+                            missed_votes_pct?:
+                              type: string
+                            bills_sponsored?:
+                              type: string
+                            bills_cosponsored?:
+                              type: string
+                            state?:
+                              type: string
+                            party?:
+                              type: string
+                            seniority?:
+                              type: string
+                            votes_with_party_pct?:
+                              type: string
+                            start_date?:
+                              type: string
+                      rss_url?:
+                        type: string
+                      most_recent_vote?:
+                        type: string
+                      facebook_account?:
+                        type: string
+                      num_results?:
+                        type: string
+                      current_party?:
+                        type: string
+                      times_topics_url?:
+                        type: string
+                      members?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            chamber?:
+                              type: string
+                            district?:
+                              type: string
+                            last_name?:
+                              type: string
+                            id?:
+                              type: string
+                            state?:
+                              type: string
+                            middle_name?:
+                              type: string
+                            first_name?:
+                              type: string
+                            party?:
+                              type: string
+                            start_date?:
+                              type: string
+                      youtube_account?:
+                        type: string
+                      twitter_account?:
+                        type: string
+                      first_name?:
+                        type: string
+                      times_tag?:
+                        type: string
+                      member_id?:
+                        type: string
+                      offset?:
+                        type: string
+                      icpsr_id?:
+                        type: string
+                      last_name?:
+                        type: string
+                      thomas_id?:
+                        type: string
+                      middle_name?:
+                        type: string
+                      url?:
+                        type: string
+                      facebook_id?:
+                        type: string
+                      domain?:
+                        type: string
+                      govtrack_id?:
+                        type: string
+                status?:
+                  type: string
+  /{member-id}:
+    uriParameters:
+      member-id:
+        type: string
+        description: The member's unique ID number
+        displayName: member-id
+    /bills:
+      /{type}.json:
+        uriParameters:
+          type:
+            type: string
+            description: |-
+              cosponsored: the 20 bills most recently cosponsored by member-id.
+              withdrawn: the 20 most recently withdrawn cosponsorships for member-id.
+
+              When type = introduced, the introduced_date determines the set of recent bills. When type = updated, the latest_major_action_date determines the result set. See the sample responses for examples of bill summary data.
+            displayName: type
+            enum:
+            - cosponsored
+            - withdrawn
+            - introduced
+            - updated
+        get:
+          description: ''
+          displayName: Bills by a Member
+          queryParameters:
+            api-key?:
+              type: string
+              displayName: api-key
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          member_uri?:
+                            type: string
+                          offset?:
+                            type: string
+                          name?:
+                            type: string
+                          bills?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                number?:
+                                  type: string
+                                cosponsors?:
+                                  type: string
+                                congress?:
+                                  type: string
+                                introduced_date?:
+                                  type: string
+                                latest_major_action?:
+                                  type: string
+                                committees?:
+                                  type: string
+                                latest_major_action_date?:
+                                  type: string
+                                title?:
+                                  type: string
+                                sponsor_id?:
+                                  type: string
+                                bill_uri?:
+                                  type: string
+                                cosponsored_date?:
+                                  type: string
+                          id?:
+                            type: string
+                          num_results?:
+                            type: string
+                    status?:
+                      type: string
+    /floor_appearances.json:
+      get:
+        description: ''
+        displayName: Member Floor Appearances
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        appearances?:
+                          type: array
+                          items:
+                            type: object
+                        member_id?:
+                          type: string
+                        api_uri?:
+                          type: string
+                        name?:
+                          type: string
+                        num_results?:
+                          type: string
+                  status?:
+                    type: string
+    /votes.json:
+      get:
+        description: ''
+        displayName: Member Vote Positions
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        member_id?:
+                          type: string
+                        total_votes?:
+                          type: string
+                        offset?:
+                          type: string
+                        votes?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              date?:
+                                type: string
+                              member_id?:
+                                type: string
+                              roll_call?:
+                                type: string
+                              chamber?:
+                                type: string
+                              question?:
+                                type: string
+                              congress?:
+                                type: string
+                              session?:
+                                type: string
+                              bill?:
+                                type: object
+                                properties:
+                                  number?:
+                                    type: string
+                                  latest_action?:
+                                    type: string
+                                  title?:
+                                    type: string
+                                  bill_uri?:
+                                    type: string
+                              description?:
+                                type: string
+                              position?:
+                                type: string
+                              time?:
+                                type: string
+                  status?:
+                    type: string
+/states:
+  /members:
+    /party.json:
+      get:
+        description: ''
+        displayName: State Party Counts
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: object
+                    properties:
+                      senate?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            AK?:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  REP?:
+                                    type: string
+                      house?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            AK?:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  REP?:
+                                    type: string
+                  status?:
+                    type: string
+/{chamber}:
+  uriParameters:
+    chamber:
+      type: string
+      displayName: chamber
+      enum:
+      - house
+      - senate
+  /schedule.json:
+    get:
+      description: ''
+      displayName: Chamber Schedule
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                results?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      date?:
+                        type: string
+                      chamber?:
+                        type: string
+                      congress?:
+                        type: string
+                      description?:
+                        type: string
+                status?:
+                  type: string
+  /votes:
+    /{date-1}:
+      uriParameters:
+        date-1:
+          type: string
+          description: 'Start Date for vote range in the format: YYYY-MM-DD'
+          displayName: date-1
+      /{date-2}.json:
+        uriParameters:
+          date-2:
+            type: string
+            description: 'End Date for vote range in the format: YYYY-MM-DD'
+            displayName: date-2
+        get:
+          description: ''
+          displayName: Votes by Date Range
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: object
+                      properties:
+                        chamber?:
+                          type: string
+                        month?:
+                          type: string
+                        year?:
+                          type: string
+                        votes?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              date?:
+                                type: string
+                              independent?:
+                                type: object
+                                properties:
+                                  no?:
+                                    type: string
+                                  not_voting?:
+                                    type: string
+                                  yes?:
+                                    type: string
+                                  present?:
+                                    type: string
+                              question?:
+                                type: string
+                              vote_type?:
+                                type: string
+                              congress?:
+                                type: string
+                              session?:
+                                type: string
+                              republican?:
+                                type: object
+                                properties:
+                                  no?:
+                                    type: string
+                                  majority_position?:
+                                    type: string
+                                  not_voting?:
+                                    type: string
+                                  yes?:
+                                    type: string
+                                  present?:
+                                    type: string
+                              description?:
+                                type: string
+                              result?:
+                                type: string
+                              roll_call?:
+                                type: string
+                              total?:
+                                type: object
+                                properties:
+                                  no?:
+                                    type: string
+                                  not_voting?:
+                                    type: string
+                                  yes?:
+                                    type: string
+                                  present?:
+                                    type: string
+                              bill_number?:
+                                type: string
+                              democratic?:
+                                type: object
+                                properties:
+                                  no?:
+                                    type: string
+                                  majority_position?:
+                                    type: string
+                                  not_voting?:
+                                    type: string
+                                  yes?:
+                                    type: string
+                                  present?:
+                                    type: string
+                              time?:
+                                type: string
+                              vote_uri?:
+                                type: string
+                        num_results?:
+                          type: string
+                    status?:
+                      type: string
+    /{year}:
+      uriParameters:
+        year:
+          type: integer
+          description: YYYY, 1991 to present
+          displayName: year
+      /{month}.json:
+        uriParameters:
+          month:
+            type: string
+            displayName: month
+        get:
+          description: ''
+          displayName: Votes by Date
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: object
+                      properties:
+                        chamber?:
+                          type: string
+                        month?:
+                          type: string
+                        year?:
+                          type: string
+                        votes?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              date?:
+                                type: string
+                              independent?:
+                                type: object
+                                properties:
+                                  no?:
+                                    type: string
+                                  not_voting?:
+                                    type: string
+                                  yes?:
+                                    type: string
+                                  present?:
+                                    type: string
+                              question?:
+                                type: string
+                              vote_type?:
+                                type: string
+                              congress?:
+                                type: string
+                              session?:
+                                type: string
+                              republican?:
+                                type: object
+                                properties:
+                                  no?:
+                                    type: string
+                                  majority_position?:
+                                    type: string
+                                  not_voting?:
+                                    type: string
+                                  yes?:
+                                    type: string
+                                  present?:
+                                    type: string
+                              description?:
+                                type: string
+                              result?:
+                                type: string
+                              roll_call?:
+                                type: string
+                              total?:
+                                type: object
+                                properties:
+                                  no?:
+                                    type: string
+                                  not_voting?:
+                                    type: string
+                                  yes?:
+                                    type: string
+                                  present?:
+                                    type: string
+                              bill_number?:
+                                type: string
+                              democratic?:
+                                type: object
+                                properties:
+                                  no?:
+                                    type: string
+                                  majority_position?:
+                                    type: string
+                                  not_voting?:
+                                    type: string
+                                  yes?:
+                                    type: string
+                                  present?:
+                                    type: string
+                              time?:
+                                type: string
+                              vote_uri?:
+                                type: string
+                        num_results?:
+                          type: string
+                    status?:
+                      type: string
+/{congress-id}:
+  uriParameters:
+    congress-id:
+      type: integer
+      description: The number of the Congress during which the nominees were nominated
+      displayName: congress-id
+  /nominees:
+    /state:
+      /{state}.json:
+        uriParameters:
+          state:
+            type: string
+            description: Two-letter state abbreviation
+            displayName: state
+        get:
+          description: ''
+          displayName: Nominees by State
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    congress?:
+                      type: integer
+                    state?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          latest_action_date?:
+                            type: string
+                          committee?:
+                            type: string
+                          description?:
+                            type: string
+                          date_received?:
+                            type: string
+                          id?:
+                            type: string
+                          uri?:
+                            type: string
+                          nominee_state?:
+                            type: string
+                          status?:
+                            type: string
+                    num_results?:
+                      type: integer
+                    status?:
+                      type: string
+/{congress-number}:
+  uriParameters:
+    congress-number:
+      type: string
+      description: !!binary |-
+        MTA1w6LCgMKTMTE0
+      displayName: congress-number
+  /bills:
+    /{bill-id}.json:
+      uriParameters:
+        bill-id:
+          type: string
+          description: |-
+            The bill's unique ID number.
+
+            Bill ID numbers are included in bill summary responses as url_number
+          displayName: bill-id
+      get:
+        description: ''
+        displayName: Bill Details
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sponsor?:
+                          type: string
+                        cosponsors?:
+                          type: string
+                        congress?:
+                          type: string
+                        bill?:
+                          type: string
+                        committees?:
+                          type: string
+                        latest_major_action_date?:
+                          type: string
+                        gpo_pdf_uri?:
+                          type: string
+                        title?:
+                          type: string
+                        sponsor_uri?:
+                          type: string
+                        versions?:
+                          type: array
+                          items:
+                            type: object
+                        introduced_date?:
+                          type: string
+                        latest_major_action?:
+                          type: string
+                        actions?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              datetime?:
+                                type: string
+                              description?:
+                                type: string
+                        bill_uri?:
+                          type: string
+                  status?:
+                    type: string
+    /{bill-id}:
+      uriParameters:
+        bill-id:
+          type: string
+          description: The bill's unique ID number.  The bill's unique ID number
+          displayName: bill-id
+      /cosponsors.json:
+        get:
+          description: ''
+          displayName: Bill Cosponsors
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          sponsor?:
+                            type: string
+                          cosponsors?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                date?:
+                                  type: string
+                                cosponsor_id?:
+                                  type: string
+                                name?:
+                                  type: string
+                          congress?:
+                            type: string
+                          senate_passage_vote?:
+                            type: string
+                          subjects?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                url_name?:
+                                  type: string
+                                name?:
+                                  type: string
+                          url_number?:
+                            type: string
+                          bill?:
+                            type: string
+                          committees?:
+                            type: string
+                          latest_major_action_date?:
+                            type: string
+                          title?:
+                            type: string
+                          sponsor_id?:
+                            type: string
+                          cosponsors_by_party?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                party?:
+                                  type: object
+                                  properties:
+                                    sponsors?:
+                                      type: string
+                                    id?:
+                                      type: string
+                          introduced_date?:
+                            type: string
+                          latest_major_action?:
+                            type: string
+                          house_passage_vote?:
+                            type: string
+                    status?:
+                      type: string
+      /{resource}.json:
+        uriParameters:
+          resource:
+            type: string
+            displayName: resource
+            enum:
+            - subjects
+            - amendments
+            - related
+        get:
+          description: ''
+          displayName: Bill Subjects, Amendments, and Related Bills
+          queryParameters:
+            api-key?:
+              type: string
+              displayName: api-key
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          sponsor?:
+                            type: string
+                          cosponsors?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                date?:
+                                  type: string
+                                cosponsor_id?:
+                                  type: string
+                                name?:
+                                  type: string
+                          congress?:
+                            type: string
+                          senate_passage_vote?:
+                            type: string
+                          subjects?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                url_name?:
+                                  type: string
+                                name?:
+                                  type: string
+                          url_number?:
+                            type: string
+                          bill?:
+                            type: string
+                          committees?:
+                            type: string
+                          latest_major_action_date?:
+                            type: string
+                          title?:
+                            type: string
+                          sponsor_id?:
+                            type: string
+                          cosponsors_by_party?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                party?:
+                                  type: object
+                                  properties:
+                                    sponsors?:
+                                      type: string
+                                    id?:
+                                      type: string
+                          introduced_date?:
+                            type: string
+                          latest_major_action?:
+                            type: string
+                          house_passage_vote?:
+                            type: string
+                    status?:
+                      type: string
+  /nominations.json:
+    get:
+      description: ''
+      displayName: Nomination Votes
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                results?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      total_votes?:
+                        type: string
+                      offset?:
+                        type: string
+                      votes?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            date?:
+                              type: string
+                            nominee_uri?:
+                              type: string
+                            independent?:
+                              type: object
+                              properties:
+                                no?:
+                                  type: string
+                                not_voting?:
+                                  type: string
+                                yes?:
+                                  type: string
+                                present?:
+                                  type: string
+                            question?:
+                              type: string
+                            vote_type?:
+                              type: string
+                            congress?:
+                              type: string
+                            session?:
+                              type: string
+                            republican?:
+                              type: object
+                              properties:
+                                no?:
+                                  type: string
+                                majority_position?:
+                                  type: string
+                                not_voting?:
+                                  type: string
+                                yes?:
+                                  type: string
+                                present?:
+                                  type: string
+                            description?:
+                              type: string
+                            result?:
+                              type: string
+                            roll_call?:
+                              type: string
+                            total?:
+                              type: object
+                              properties:
+                                no?:
+                                  type: string
+                                margin?:
+                                  type: string
+                                not_voting?:
+                                  type: string
+                                yes?:
+                                  type: string
+                                present?:
+                                  type: string
+                            democratic?:
+                              type: object
+                              properties:
+                                no?:
+                                  type: string
+                                majority_position?:
+                                  type: string
+                                not_voting?:
+                                  type: string
+                                yes?:
+                                  type: string
+                                present?:
+                                  type: string
+                            time?:
+                              type: string
+                status?:
+                  type: string
+  /nominees:
+    /received.json:
+      get:
+        description: ''
+        displayName: Nominee Lists
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  congress?:
+                    type: integer
+                  results?:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        latest_action_date?:
+                          type: string
+                        committee_uri?:
+                          type: string
+                        description?:
+                          type: string
+                        date_received?:
+                          type: string
+                        id?:
+                          type: string
+                        uri?:
+                          type: string
+                        nominee_state?:
+                          type: string
+                        status?:
+                          type: string
+                  status?:
+                    type: string
+    /{nominee-ID}.json:
+      uriParameters:
+        nominee-ID:
+          type: string
+          displayName: nominee-ID
+      get:
+        description: ''
+        displayName: Nominee Details
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        latest_action_date?:
+                          type: string
+                        committee_uri?:
+                          type: string
+                        congress?:
+                          type: integer
+                        description?:
+                          type: string
+                        votes?:
+                          type: array
+                          items:
+                            type: object
+                        date_received?:
+                          type: string
+                        id?:
+                          type: string
+                        actions?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              date?:
+                                type: string
+                              description?:
+                                type: string
+                        nominee_state?:
+                          type: string
+                        status?:
+                          type: string
+                  status?:
+                    type: string
+  /{chamber}:
+    uriParameters:
+      chamber:
+        type: string
+        displayName: chamber
+        enum:
+        - house
+        - senate
+    /bills:
+      /{type}.json:
+        uriParameters:
+          type:
+            type: string
+            description: "Types introduced, updated and passed are the 20 most recent\
+              \ bills in each category as reported by the THOMAS site.\n\nThe parameter\
+              \ major retrieves the 20 most recent bills (for the specified chamber)\
+              \ that have been labeled as significant by The New York Times.\n\nWhen\
+              \ type = introduced, the introduced_date determines the set of recent\
+              \ bills. When type = updated, the latest_major_action_date determines\
+              \ the result set. "
+            displayName: type
+            enum:
+            - introduced
+            - updated
+            - passed
+            - major
+        get:
+          description: ''
+          displayName: Recent Bills
+          queryParameters:
+            api-key?:
+              type: string
+              displayName: api-key
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          chamber?:
+                            type: string
+                          offset?:
+                            type: string
+                          congress?:
+                            type: string
+                          bills?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                number?:
+                                  type: string
+                                sponsor_uri?:
+                                  type: string
+                                cosponsors?:
+                                  type: string
+                                introduced_date?:
+                                  type: string
+                                latest_major_action?:
+                                  type: string
+                                committees?:
+                                  type: string
+                                latest_major_action_date?:
+                                  type: string
+                                title?:
+                                  type: string
+                                bill_uri?:
+                                  type: string
+                          num_results?:
+                            type: string
+                    status?:
+                      type: string
+    /committees.json:
+      get:
+        description: ''
+        displayName: Committees
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chamber?:
+                          type: string
+                        offset?:
+                          type: string
+                        congress?:
+                          type: string
+                        committees?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              democratic_rss?:
+                                type: string
+                              chair?:
+                                type: string
+                              chair_party?:
+                                type: string
+                              api_uri?:
+                                type: string
+                              name?:
+                                type: string
+                              republican_rss?:
+                                type: string
+                              chair_state?:
+                                type: string
+                              chair_id?:
+                                type: string
+                              ranking_member_id?:
+                                type: string
+                              id?:
+                                type: string
+                              url?:
+                                type: string
+                              chair_uri?:
+                                type: string
+                        num_results?:
+                          type: string
+                  status?:
+                    type: string
+    /committees:
+      /{commitee-id}.json:
+        uriParameters:
+          commitee-id:
+            type: string
+            description: |-
+              Committee abbreviation
+
+              Use this parameter to get a committee roster.
+            displayName: commitee-id
+        get:
+          description: ''
+          displayName: Committee Members
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          former_members?:
+                            type: array
+                            items:
+                              type: object
+                          democratic_rss?:
+                            type: string
+                          committee?:
+                            type: string
+                          chairman_id?:
+                            type: string
+                          chamber?:
+                            type: string
+                          offset?:
+                            type: string
+                          congress?:
+                            type: string
+                          current_members?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                note?:
+                                  type: string
+                                begin_date?:
+                                  type: string
+                                api_uri?:
+                                  type: string
+                                name?:
+                                  type: string
+                                id?:
+                                  type: string
+                                state?:
+                                  type: string
+                                rank_in_party?:
+                                  type: string
+                                party?:
+                                  type: string
+                          republican_rss?:
+                            type: string
+                          ranking_member_id?:
+                            type: string
+                          num_results?:
+                            type: string
+                    status?:
+                      type: string
+    /members.json:
+      get:
+        description: ''
+        displayName: Members by Congress Number + Chamber
+        queryParameters:
+          state?:
+            type: string
+            description: Two-letter state code (e.g., CA)
+            displayName: state
+          district?:
+            type: string
+            description: House of Representatives district number. If you specify a district, you must also specify a state.
+            displayName: district
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chamber?:
+                          type: string
+                        offset?:
+                          type: string
+                        congress?:
+                          type: string
+                        members?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              dw_nominate?:
+                                type: string
+                              missed_votes?:
+                                type: string
+                              rss_url?:
+                                type: string
+                              api_uri?:
+                                type: string
+                              last_name?:
+                                type: string
+                              thomas_id?:
+                                type: string
+                              facebook_account?:
+                                type: string
+                              middle_name?:
+                                type: string
+                              ideal_point?:
+                                type: string
+                              url?:
+                                type: string
+                              facebook_id?:
+                                type: string
+                              total_present?:
+                                type: string
+                              total_votes?:
+                                type: string
+                              domain?:
+                                type: string
+                              missed_votes_pct?:
+                                type: string
+                              twitter_account?:
+                                type: string
+                              id?:
+                                type: string
+                              state?:
+                                type: string
+                              first_name?:
+                                type: string
+                              party?:
+                                type: string
+                              seniority?:
+                                type: string
+                              votes_with_party_pct?:
+                                type: string
+                        state?:
+                          type: string
+                        num_results?:
+                          type: string
+                  status?:
+                    type: string
+    /members:
+      /current.json:
+        get:
+          description: ''
+          displayName: Current Congress Members
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          chamber?:
+                            type: string
+                          offset?:
+                            type: string
+                          congress?:
+                            type: string
+                          members?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                dw_nominate?:
+                                  type: string
+                                missed_votes?:
+                                  type: string
+                                rss_url?:
+                                  type: string
+                                api_uri?:
+                                  type: string
+                                last_name?:
+                                  type: string
+                                thomas_id?:
+                                  type: string
+                                facebook_account?:
+                                  type: string
+                                ideal_point?:
+                                  type: string
+                                url?:
+                                  type: string
+                                facebook_id?:
+                                  type: string
+                                total_present?:
+                                  type: string
+                                total_votes?:
+                                  type: string
+                                district?:
+                                  type: string
+                                domain?:
+                                  type: string
+                                missed_votes_pct?:
+                                  type: string
+                                twitter_account?:
+                                  type: string
+                                id?:
+                                  type: string
+                                state?:
+                                  type: string
+                                first_name?:
+                                  type: string
+                                party?:
+                                  type: string
+                                seniority?:
+                                  type: string
+                                votes_with_party_pct?:
+                                  type: string
+                          num_results?:
+                            type: string
+                    status?:
+                      type: string
+      /leaving.json:
+        get:
+          description: ''
+          displayName: Members Leaving Office
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          gender?:
+                            type: string
+                          congress?:
+                            type: string
+                          date_of_birth?:
+                            type: string
+                          cspan_id?:
+                            type: string
+                          roles?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                end_date?:
+                                  type: string
+                                congress?:
+                                  type: string
+                                committees?:
+                                  type: array
+                                  items:
+                                    type: object
+                                title?:
+                                  type: string
+                                chamber?:
+                                  type: string
+                                district?:
+                                  type: string
+                                missed_votes_pct?:
+                                  type: string
+                                bills_sponsored?:
+                                  type: string
+                                bills_cosponsored?:
+                                  type: string
+                                state?:
+                                  type: string
+                                party?:
+                                  type: string
+                                seniority?:
+                                  type: string
+                                votes_with_party_pct?:
+                                  type: string
+                                start_date?:
+                                  type: string
+                          rss_url?:
+                            type: string
+                          most_recent_vote?:
+                            type: string
+                          facebook_account?:
+                            type: string
+                          num_results?:
+                            type: string
+                          current_party?:
+                            type: string
+                          chamber?:
+                            type: string
+                          times_topics_url?:
+                            type: string
+                          members?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                end_date?:
+                                  type: string
+                                note?:
+                                  type: string
+                                begin_date?:
+                                  type: string
+                                api_uri?:
+                                  type: string
+                                last_name?:
+                                  type: string
+                                middle_name?:
+                                  type: string
+                                chamber?:
+                                  type: string
+                                district?:
+                                  type: string
+                                id?:
+                                  type: string
+                                state?:
+                                  type: string
+                                first_name?:
+                                  type: string
+                                party?:
+                                  type: string
+                                start_date?:
+                                  type: string
+                                status?:
+                                  type: string
+                          youtube_account?:
+                            type: string
+                          twitter_account?:
+                            type: string
+                          first_name?:
+                            type: string
+                          times_tag?:
+                            type: string
+                          member_id?:
+                            type: string
+                          offset?:
+                            type: string
+                          icpsr_id?:
+                            type: string
+                          last_name?:
+                            type: string
+                          thomas_id?:
+                            type: string
+                          middle_name?:
+                            type: string
+                          url?:
+                            type: string
+                          facebook_id?:
+                            type: string
+                          domain?:
+                            type: string
+                          govtrack_id?:
+                            type: string
+                    status?:
+                      type: string
+            404:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    errors?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          error?:
+                            type: string
+                    status?:
+                      type: string
+    /sessions:
+      /{session-number}:
+        uriParameters:
+          session-number:
+            type: integer
+            description: 1 | 2 | [special session number]
+            displayName: session-number
+        /votes:
+          /{roll-call-number}.json:
+            uriParameters:
+              roll-call-number:
+                type: string
+                description: To get roll-call numbers, see the official sites of the U.S. Senate and U.S. House of Representatives.
+                displayName: roll-call-number
+            get:
+              description: ''
+              displayName: Roll Call Votes
+              queryParameters:
+                api-key?:
+                  type: string
+                  displayName: api-key
+              responses:
+                200:
+                  description: ''
+                  body:
+                    application/json:
+                      type: object
+                      properties:
+                        copyright?:
+                          type: string
+                        results?:
+                          type: object
+                          properties:
+                            votes?:
+                              type: object
+                              properties:
+                                vacant_seats?:
+                                  type: array
+                                  items:
+                                    type: object
+                                vote?:
+                                  type: object
+                                  properties:
+                                    date?:
+                                      type: string
+                                    independent?:
+                                      type: object
+                                      properties:
+                                        no?:
+                                          type: string
+                                        not_voting?:
+                                          type: string
+                                        yes?:
+                                          type: string
+                                        present?:
+                                          type: string
+                                    question?:
+                                      type: string
+                                    vote_type?:
+                                      type: string
+                                    congress?:
+                                      type: string
+                                    session?:
+                                      type: string
+                                    republican?:
+                                      type: object
+                                      properties:
+                                        no?:
+                                          type: string
+                                        majority_position?:
+                                          type: string
+                                        not_voting?:
+                                          type: string
+                                        yes?:
+                                          type: string
+                                        present?:
+                                          type: string
+                                    description?:
+                                      type: string
+                                    positions?:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          member_id?:
+                                            type: string
+                                          vote_position?:
+                                            type: string
+                                          dw_nominate?:
+                                            type: string
+                                    result?:
+                                      type: string
+                                    roll_call?:
+                                      type: string
+                                    total?:
+                                      type: object
+                                      properties:
+                                        no?:
+                                          type: string
+                                        not_voting?:
+                                          type: string
+                                        yes?:
+                                          type: string
+                                        present?:
+                                          type: string
+                                    chamber?:
+                                      type: string
+                                    democratic?:
+                                      type: object
+                                      properties:
+                                        no?:
+                                          type: string
+                                        majority_position?:
+                                          type: string
+                                        not_voting?:
+                                          type: string
+                                        yes?:
+                                          type: string
+                                        present?:
+                                          type: string
+                                    time?:
+                                      type: string
+                        status?:
+                          type: string
+    /votes:
+      /{vote-type}.json:
+        uriParameters:
+          vote-type:
+            type: string
+            displayName: vote-type
+            enum:
+            - missed
+            - party
+            - loneno
+            - perfect
+        get:
+          description: ''
+          displayName: Votes by Type
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    copyright?:
+                      type: string
+                    results?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          chamber?:
+                            type: string
+                          offset?:
+                            type: string
+                          congress?:
+                            type: string
+                          members?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                notes?:
+                                  type: string
+                                total_votes?:
+                                  type: string
+                                missed_votes?:
+                                  type: string
+                                district?:
+                                  type: string
+                                missed_votes_pct?:
+                                  type: string
+                                name?:
+                                  type: string
+                                rank?:
+                                  type: string
+                                id?:
+                                  type: string
+                                state?:
+                                  type: string
+                                party?:
+                                  type: string
+                          num_results?:
+                            type: string
+                    status?:
+                      type: string

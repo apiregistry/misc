@@ -1,0 +1,108 @@
+#%RAML 1.0
+title: The Consumer Financial Protection Bureau
+version: '1.0'
+baseUri: api.consumerfinance.gov:443/
+description: Learn more about home mortgage data, download the data yourself, or build new tools using our API.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  QueryResponse:
+    type: object
+    properties:
+      size:
+        type: integer
+      total:
+        type: integer
+    description: Response to a slice query.
+/data:
+  /hmda:
+    /concept:
+      /{concept}:
+        uriParameters:
+          concept:
+            type: string
+            description: Name of concept
+            displayName: concept
+        get:
+          displayName: Get information about a particular concept in this dataset.
+          responses:
+            200:
+              description: No response was specified
+    /slice:
+      /{slice}:
+        uriParameters:
+          slice:
+            type: string
+            description: Name of slice
+            displayName: slice
+        /metadata:
+          get:
+            displayName: Get the metadata for a slice in this dataset.
+            responses:
+              200:
+                description: No response was specified
+        get:
+          displayName: Query a slice in this dataset.
+          queryParameters:
+            $select?:
+              type: string
+              description: Fields to return, separated by commas.
+              displayName: $select
+            $where?:
+              type: string
+              description: Conditions to search for in the slice, in SQL WHERE style.
+              displayName: $where
+            $group?:
+              type: string
+              description: Fields to group by, summarizing the data, separated by commas.
+              displayName: $group
+            $limit?:
+              type: integer
+              description: Number of records to return, 100 by default. Enter 0 for no limit.
+              displayName: $limit
+            $offset?:
+              type: integer
+              description: Number of records to skip.
+              displayName: $offset
+            $orderBy?:
+              type: string
+              description: Fields to order by, separated by commas. ASC and DESC can be used to modify the order.
+              displayName: $orderBy
+            $callback?:
+              type: string
+              description: JavaScript callback to invoke. Only useful with JSONP requests.
+              displayName: $callback
+          responses:
+            200:
+              description: No response was specified
+              body:
+                application/json:
+                  type: QueryResponse
+                application/xml:
+                  type: QueryResponse
+                text/javascript:
+                  type: QueryResponse
+                text/csv:
+                  type: QueryResponse
+    get:
+      displayName: Get metadata for this dataset.
+      responses:
+        200:
+          description: No response was specified
+  /{dataset}:
+    uriParameters:
+      dataset:
+        type: string
+        description: Name of dataset
+        displayName: dataset
+    get:
+      displayName: Get metadata about a dataset.
+      responses:
+        200:
+          description: No response was specified
+  get:
+    displayName: Get a list of all datasets.
+    responses:
+      200:
+        description: No response was specified

@@ -1,0 +1,209 @@
+#%RAML 1.0
+title: I Am Real
+version: 1.0.0
+baseUri: api.iamreal.me/api/v2
+description: Use I Am Real's patented technology to perform social, video, and SMS validation on your users.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  RegisterUserRequest:
+    type: object
+    properties:
+      appId:
+        type: string
+        description: Application identifier. This never changes
+      appSecret:
+        type: string
+        description: Application Secret. This should never be shared and should be done from server only
+      callbackUrl?:
+        type: string
+        description: The URL address I Am Real will call once the end user's score is calculated
+      clientProof?:
+        type: string
+        description: A string that will be sent back with the analysis to prove that the response is sent from I Am Real servers
+      token:
+        type: string
+        description: Social network access token of the end user
+    description: User Request Details
+  SmsValidationResponse:
+    type: object
+    properties:
+      validated:
+        type: boolean
+        description: True if codes are identical, false if not
+  UserValidationResponse:
+    type: object
+    properties:
+      score:
+        type: string
+        description: User Score (0-100)
+      significance:
+        type: string
+        description: User Significance (0-100)
+      userId:
+        type: string
+        description: User Id given by provider (e.g. Facebook Id)
+  VideoValidationRequest:
+    type: object
+    properties:
+      appId:
+        type: string
+        description: Application identifier. This never changes
+      appSecret:
+        type: string
+        description: Application Secret. This should never be shared and should be done from server only
+      callbackUrl?:
+        type: string
+        description: The URL address I Am Real will call with Video Validation result
+      clientProof?:
+        type: string
+        description: A string that will be sent back with the validation to prove that the response is sent from I Am Real servers
+      photoUrl:
+        type: string
+        description: Url of photo to compare with live video. Link should be to an image that the user cannot modify
+      userId:
+        type: string
+        description: User Identifier (e.g. Facebook User Id or email address
+    description: User Request Details
+  VideoValidationResponse:
+    type: object
+    properties:
+      guid:
+        type: string
+        description: Global unique identifier (guid) to launch widget with
+      statusCode:
+        type: string
+        description: status code (201 - Created)
+/sms:
+  /check:
+    /{userId}:
+      uriParameters:
+        userId:
+          type: string
+          description: The user Id
+          displayName: userId
+      /:
+        get:
+          displayName: Validate that the code typed by user and the code sent are identical
+          queryParameters:
+            appId:
+              type: string
+              description: Application Id
+              displayName: appId
+            appSecret:
+              type: string
+              description: Application Secret
+              displayName: appSecret
+            phoneNumber:
+              type: string
+              description: Phone number provided by the user
+              displayName: phoneNumber
+            validationCode:
+              type: string
+              description: The validation code the user filled in
+              displayName: validationCode
+          responses:
+            200:
+              description: Description was not specified
+              body:
+                application/json:
+                  type: SmsValidationResponse
+            400:
+              description: Description was not specified
+            401:
+              description: Description was not specified
+  /verify:
+    post:
+      displayName: Post sms validation request
+      queryParameters:
+        appId:
+          type: string
+          description: Application identifier. This never changes.
+          displayName: appId
+        appSecret:
+          type: string
+          description: Application Secret. This should never be shared and should be done from server only.
+          displayName: appSecret
+        userId:
+          type: string
+          description: User Id
+          displayName: userId
+        phoneNumber:
+          type: string
+          description: Phone number provided by the user
+          displayName: phoneNumber
+        brand:
+          type: string
+          description: 'Your brand name, which will appear in the SMS message '
+          displayName: brand
+      responses:
+        200:
+          description: No response was specified
+        202:
+          description: Description was not specified
+        400:
+          description: Description was not specified
+        401:
+          description: Description was not specified
+/users:
+  /{userId}:
+    uriParameters:
+      userId:
+        type: string
+        description: User Id given by provider (e.g. Facebook Id)
+        displayName: userId
+    /:
+      get:
+        displayName: Get Score and Significance for existing user
+        queryParameters:
+          appId:
+            type: string
+            description: Application Id received when registered
+            displayName: appId
+          appSecret:
+            type: string
+            description: |2-
+
+              Application secret received when registered
+            displayName: appSecret
+          token:
+            type: string
+            description: Social network user token
+            displayName: token
+        responses:
+          200:
+            description: Description was not specified
+            body:
+              application/json:
+                type: UserValidationResponse
+          401:
+            description: Description was not specified
+          404:
+            description: Description was not specified
+      post:
+        displayName: Post a new / existing user for validation
+        responses:
+          200:
+            description: No response was specified
+          202:
+            description: Description was not specified
+          401:
+            description: Description was not specified
+          404:
+            description: Description was not specified
+/vfv:
+  post:
+    displayName: Setup video validation for specific user, and get global unique identifier (guid) to launch widget with
+    responses:
+      200:
+        description: Description was not specified
+        body:
+          application/json:
+            type: UserValidationResponse
+      400:
+        description: Description was not specified
+      401:
+        description: Description was not specified
+      500:
+        description: Description was not specified

@@ -1,0 +1,223 @@
+#%RAML 1.0
+title: OpenCage Geocoder
+version: '1'
+baseUri: api.opencagedata.com/geocode
+description: Worldwide forward and reverse geocoding
+mediaType:
+- application/json
+- application/xml
+- text/html
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  LatLng:
+    type: object
+    properties:
+      lat?:
+        type: number
+        format: float
+      lng?:
+        type: number
+        format: float
+  Response:
+    type: object
+    properties:
+      documentation?:
+        type: string
+      licenses?:
+        type: array
+        items:
+          type: object
+          properties:
+            name?:
+              type: string
+            url?:
+              type: string
+      rate?:
+        type: object
+        properties:
+          limit?:
+            type: integer
+          reset?:
+            type: integer
+          remaining?:
+            type: integer
+      results?:
+        type: array
+        items:
+          type: object
+          properties:
+            components?:
+              type: object
+            formatted?:
+              type: string
+            confidence?:
+              type: integer
+            bounds?:
+              type: object
+              properties:
+                southwest?:
+                  type: LatLng
+                northeast?:
+                  type: LatLng
+            annotations?:
+              type: object
+            geometry?:
+              type: LatLng
+      status?:
+        type: object
+        properties:
+          code?:
+            type: integer
+          message?:
+            type: string
+      stay_informed?:
+        type: object
+        properties:
+          twitter?:
+            type: string
+          blog?:
+            type: string
+      thanks?:
+        type: string
+      timestamp?:
+        type: object
+        properties:
+          created_unix?:
+            type: integer
+          created_http?:
+            type: string
+      total_results?:
+        type: integer
+/v{version}:
+  uriParameters:
+    version:
+      type: integer
+      description: API version.
+      displayName: version
+  /{format}:
+    uriParameters:
+      format:
+        type: string
+        description: format of the response. One of 'json', 'xml' or 'map'.
+        displayName: format
+    get:
+      description: geocode a query
+      queryParameters:
+        q:
+          type: string
+          description: string or lat,lng to be geocoded.
+          displayName: q
+        key:
+          type: string
+          description: an application key.
+          displayName: key
+        add_request?:
+          type: boolean
+          description: if true the request is included in the response.
+          displayName: add_request
+        bounds?:
+          type: string
+          description: four coordinate points forming the south-west and north-east corners of a bounding box (min long, min lat, max long, max lat).
+          displayName: bounds
+        countrycode?:
+          type: string
+          description: two letter code ISO 3166-1 Alpha 2 code to limit results to that country.
+          displayName: countrycode
+        jsonp?:
+          type: string
+          description: wraps the returned JSON with a function name.
+          displayName: jsonp
+        language?:
+          type: string
+          description: 'an IETF format language code (ex: ''es'' or ''pt-BR'').'
+          displayName: language
+        limit?:
+          type: integer
+          description: maximum number of results to return. Default is 10. Maximum is 100.
+          displayName: limit
+        min_confidence?:
+          type: integer
+          description: integer from 1-10. Only results with at least this confidence are returned.
+          displayName: min_confidence
+        no_annotations?:
+          type: boolean
+          description: when true annotations are not added to results.
+          displayName: no_annotations
+        no_dedupe?:
+          type: boolean
+          description: when true results are not deduplicated.
+          displayName: no_dedupe
+        no_record?:
+          type: boolean
+          description: when true query content is not logged.
+          displayName: no_record
+        pretty?:
+          type: boolean
+          description: when true results are pretty printed. Useful for debugging.
+          displayName: pretty
+      responses:
+        200:
+          description: Successful response
+          body:
+            application/json:
+              type: Response
+            application/xml:
+              type: Response
+            text/html:
+              type: Response
+        400:
+          description: Invalid request
+          body:
+            application/json:
+              type: Response
+            application/xml:
+              type: Response
+            text/html:
+              type: Response
+        402:
+          description: Valid request but quota exceeded
+          body:
+            application/json:
+              type: Response
+            application/xml:
+              type: Response
+            text/html:
+              type: Response
+        403:
+          description: Invalid or missing API key
+          body:
+            application/json:
+              type: Response
+            application/xml:
+              type: Response
+            text/html:
+              type: Response
+        404:
+          description: Invalid API endpoint
+          body:
+            application/json:
+              type: Response
+            application/xml:
+              type: Response
+            text/html:
+              type: Response
+        410:
+          description: Request too long
+          body:
+            application/json:
+              type: Response
+            application/xml:
+              type: Response
+            text/html:
+              type: Response
+        503:
+          description: Internal server error
+          body:
+            application/json:
+              type: Response
+            application/xml:
+              type: Response
+            text/html:
+              type: Response

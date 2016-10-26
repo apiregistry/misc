@@ -1,0 +1,1227 @@
+#%RAML 1.0
+title: PatientView
+version: '1.0'
+baseUri: www.patientview.org/
+description: The recommended REST API endpoints to be used when integrating with PatientView
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  BaseGroup:
+    type: object
+    properties:
+      code?:
+        type: string
+      groupType?:
+        type: Lookup
+      id?:
+        type: integer
+        format: int64
+      lastImportDate?:
+        type: datetime
+      name?:
+        type: string
+      parentCodes?:
+        type: array
+        items:
+          type: string
+      shortName?:
+        type: string
+      visible?:
+        type: boolean
+      visibleToJoin?:
+        type: boolean
+  Category:
+    type: object
+    properties:
+      friendlyDescription?:
+        type: string
+      hidden?:
+        type: boolean
+      icd10Description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      number?:
+        type: integer
+        format: int32
+  Code:
+    type: object
+    properties:
+      code?:
+        type: string
+      codeCategories?:
+        type: array
+        items:
+          type: CodeCategory
+      codeType?:
+        type: Lookup
+      created?:
+        type: datetime
+      description?:
+        type: string
+      displayOrder?:
+        type: integer
+        format: int32
+      externalStandards?:
+        type: array
+        items:
+          type: CodeExternalStandard
+      fullDescription?:
+        type: string
+      hideFromPatients?:
+        type: boolean
+      id?:
+        type: integer
+        format: int64
+      lastUpdate?:
+        type: datetime
+      links?:
+        type: array
+        items:
+          type: Link
+      patientFriendlyName?:
+        type: string
+      removedExternally?:
+        type: boolean
+      sourceType?:
+        type: string
+        enum:
+        - PATIENTVIEW
+        - NHS_CHOICES
+      standardType?:
+        type: Lookup
+  CodeCategory:
+    type: object
+    properties:
+      category?:
+        type: Category
+      id?:
+        type: integer
+        format: int64
+  CodeExternalStandard:
+    type: object
+    properties:
+      codeString?:
+        type: string
+      externalStandard?:
+        type: ExternalStandard
+      id?:
+        type: integer
+        format: int64
+  ContactPoint:
+    type: object
+    properties:
+      contactPointType?:
+        type: ContactPointType
+      content?:
+        type: string
+      created?:
+        type: datetime
+      id?:
+        type: integer
+        format: int64
+      lastUpdate?:
+        type: datetime
+  ContactPointType:
+    type: object
+    properties:
+      description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      lookupType?:
+        type: LookupType
+      value?:
+        type: string
+        enum:
+        - UNIT_WEB_ADDRESS
+        - TRUST_WEB_ADDRESS
+        - PV_ADMIN_NAME
+        - PV_ADMIN_PHONE
+        - PV_ADMIN_EMAIL
+        - UNIT_ENQUIRIES_PHONE
+        - UNIT_ENQUIRIES_EMAIL
+        - APPOINTMENT_PHONE
+        - APPOINTMENT_EMAIL
+        - OUT_OF_HOURS_INFO
+  Credentials:
+    type: object
+    properties:
+      apiKey?:
+        type: string
+      password?:
+        type: string
+      username?:
+        type: string
+    description: credentials
+  EntryÂ«long_MapÂ«string_ListÂ«FhirObservationÂ»Â»Â»:
+    type: object
+    properties:
+      key?:
+        type: array
+        items:
+          type: EntryÂ«string_ListÂ«FhirObservationÂ»Â»
+  EntryÂ«string_ListÂ«FhirObservationÂ»Â»:
+    type: object
+    properties:
+      key?:
+        type: array
+        items:
+          type: FhirObservation
+  ExternalStandard:
+    type: object
+    properties:
+      description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+  Feature:
+    type: object
+    properties:
+      created?:
+        type: datetime
+      description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      lastUpdate?:
+        type: datetime
+      name?:
+        type: string
+  FhirAllergy:
+    type: object
+    properties:
+      confidenceLevel?:
+        type: string
+      group?:
+        type: Group
+      id?:
+        type: integer
+        format: int64
+      identifier?:
+        type: string
+      infoSource?:
+        type: string
+      reaction?:
+        type: string
+      recordedDate?:
+        type: datetime
+      status?:
+        type: string
+      substance?:
+        type: string
+      type?:
+        type: string
+  FhirCondition:
+    type: object
+    properties:
+      asserter?:
+        type: string
+      category?:
+        type: string
+      code?:
+        type: string
+      date?:
+        type: datetime
+      description?:
+        type: string
+      fullDescription?:
+        type: string
+      group?:
+        type: Group
+      id?:
+        type: integer
+        format: int64
+      identifier?:
+        type: string
+      links?:
+        type: array
+        items:
+          type: Link
+      notes?:
+        type: string
+      severity?:
+        type: string
+      status?:
+        type: string
+  FhirContact:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      system?:
+        type: string
+      use?:
+        type: string
+      value?:
+        type: string
+  FhirEncounter:
+    type: object
+    properties:
+      date?:
+        type: datetime
+      encounterType?:
+        type: string
+      group?:
+        type: Group
+      id?:
+        type: integer
+        format: int64
+      identifier?:
+        type: string
+      links?:
+        type: array
+        items:
+          type: Link
+      observations?:
+        type: array
+        items:
+          type: FhirObservation
+      procedures?:
+        type: array
+        items:
+          type: FhirProcedure
+      status?:
+        type: string
+  FhirIdentifier:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      label?:
+        type: string
+      value?:
+        type: string
+  FhirObservation:
+    type: object
+    properties:
+      applies?:
+        type: datetime
+      bodySite?:
+        type: string
+      comments?:
+        type: string
+      comparator?:
+        type: string
+      diagram?:
+        type: string
+      group?:
+        type: Group
+      id?:
+        type: integer
+        format: int64
+      identifier?:
+        type: string
+      location?:
+        type: string
+      name?:
+        type: string
+      temporaryUuid?:
+        type: string
+      units?:
+        type: string
+      value?:
+        type: string
+  FhirObservationPage:
+    type: object
+    properties:
+      data?:
+        type: array
+        items:
+          type: EntryÂ«long_MapÂ«string_ListÂ«FhirObservationÂ»Â»Â»
+      totalElements?:
+        type: integer
+        format: int64
+      totalPages?:
+        type: integer
+        format: int64
+  FhirPatient:
+    type: object
+    properties:
+      address1?:
+        type: string
+      address2?:
+        type: string
+      address3?:
+        type: string
+      address4?:
+        type: string
+      contacts?:
+        type: array
+        items:
+          type: FhirContact
+      dateOfBirth?:
+        type: datetime
+      dateOfBirthNoTime?:
+        type: string
+      forename?:
+        type: string
+      gender?:
+        type: string
+      group?:
+        type: Group
+      groupCode?:
+        type: string
+      identifier?:
+        type: string
+      identifiers?:
+        type: array
+        items:
+          type: FhirIdentifier
+      postcode?:
+        type: string
+      practitioners?:
+        type: array
+        items:
+          type: FhirPractitioner
+      surname?:
+        type: string
+  FhirPractitioner:
+    type: object
+    properties:
+      address1?:
+        type: string
+      address2?:
+        type: string
+      address3?:
+        type: string
+      address4?:
+        type: string
+      allowInviteGp?:
+        type: boolean
+      contacts?:
+        type: array
+        items:
+          type: FhirContact
+      gender?:
+        type: string
+      groupCode?:
+        type: string
+      identifier?:
+        type: string
+      inviteDate?:
+        type: datetime
+      name?:
+        type: string
+      postcode?:
+        type: string
+      role?:
+        type: string
+  FhirProcedure:
+    type: object
+    properties:
+      bodySite?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      type?:
+        type: string
+  Group:
+    type: object
+    properties:
+      address1?:
+        type: string
+      address2?:
+        type: string
+      address3?:
+        type: string
+      childGroups?:
+        type: array
+        items:
+          type: Group
+      code?:
+        type: string
+      contactPoints?:
+        type: array
+        items:
+          type: ContactPoint
+      created?:
+        type: datetime
+      fhirResourceId?:
+        type: string
+      groupFeatures?:
+        type: array
+        items:
+          type: GroupFeature
+      groupType?:
+        type: Lookup
+      id?:
+        type: integer
+        format: int64
+      lastImportDate?:
+        type: datetime
+      lastUpdate?:
+        type: datetime
+      links?:
+        type: array
+        items:
+          type: Link
+      locations?:
+        type: array
+        items:
+          type: Location
+      name?:
+        type: string
+      parentGroups?:
+        type: array
+        items:
+          type: Group
+      postcode?:
+        type: string
+      sftpUser?:
+        type: string
+      shortName?:
+        type: string
+      visible?:
+        type: boolean
+      visibleToJoin?:
+        type: boolean
+  GroupFeature:
+    type: object
+    properties:
+      created?:
+        type: datetime
+      feature?:
+        type: Feature
+      id?:
+        type: integer
+        format: int64
+      lastUpdate?:
+        type: datetime
+  GroupRole:
+    type: object
+    properties:
+      group?:
+        type: Group
+      id?:
+        type: integer
+        format: int64
+      role?:
+        type: Role
+  Link:
+    type: object
+    properties:
+      created?:
+        type: datetime
+      displayOrder?:
+        type: integer
+        format: int32
+      id?:
+        type: integer
+        format: int64
+      lastUpdate?:
+        type: datetime
+      link?:
+        type: string
+      linkType?:
+        type: Lookup
+      name?:
+        type: string
+  Location:
+    type: object
+    properties:
+      address?:
+        type: string
+      created?:
+        type: datetime
+      email?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      label?:
+        type: string
+      lastUpdate?:
+        type: datetime
+      name?:
+        type: string
+      phone?:
+        type: string
+      web?:
+        type: string
+  Lookup:
+    type: object
+    properties:
+      created?:
+        type: datetime
+      description?:
+        type: string
+      descriptionFriendly?:
+        type: string
+      displayOrder?:
+        type: integer
+        format: int64
+      id?:
+        type: integer
+        format: int64
+      lastUpdate?:
+        type: datetime
+      lookupType?:
+        type: LookupType
+      value?:
+        type: string
+  LookupType:
+    type: object
+    properties:
+      created?:
+        type: datetime
+      description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      lastUpdate?:
+        type: datetime
+      type?:
+        type: string
+        enum:
+        - GROUP
+        - MENU
+        - ROLE
+        - CODE_STANDARD
+        - CODE_TYPE
+        - FEATURE_TYPE
+        - RELATIONSHIP_TYPE
+        - IDENTIFIER
+        - CONTACT_POINT_TYPE
+        - STATISTIC_TYPE
+        - NEWS_TYPE
+        - GENDER
+        - IBD_CROHNSLOCATION
+        - IBD_CROHNSPROXIMALTERMINALILEUM
+        - IBD_CROHNSPERIANAL
+        - IBD_CROHNSBEHAVIOUR
+        - IBD_UCEXTENT
+        - IBD_EGIMCOMPLICATION
+        - IBD_SURGERYMAINPROCEDURE
+        - IBD_SMOKINGSTATUS
+        - IBD_FAMILYHISTORY
+        - LINK_TYPE
+  ObservationHeading:
+    type: object
+    properties:
+      code?:
+        type: string
+      created?:
+        type: datetime
+      decimalPlaces?:
+        type: integer
+        format: int64
+      defaultPanel?:
+        type: integer
+        format: int64
+      defaultPanelOrder?:
+        type: integer
+        format: int64
+      heading?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      infoLink?:
+        type: string
+      lastUpdate?:
+        type: datetime
+      maxGraph?:
+        type: number
+        format: double
+      minGraph?:
+        type: number
+        format: double
+      name?:
+        type: string
+      normalRange?:
+        type: string
+      observationHeadingGroups?:
+        type: array
+        items:
+          type: ObservationHeadingGroup
+      units?:
+        type: string
+  ObservationHeadingGroup:
+    type: object
+    properties:
+      created?:
+        type: datetime
+      group?:
+        type: Group
+      id?:
+        type: integer
+        format: int64
+      panel?:
+        type: integer
+        format: int64
+      panelOrder?:
+        type: integer
+        format: int64
+  Patient:
+    type: object
+    properties:
+      diagnosisCodes?:
+        type: array
+        items:
+          type: Code
+      fhirAllergies?:
+        type: array
+        items:
+          type: FhirAllergy
+      fhirConditions?:
+        type: array
+        items:
+          type: FhirCondition
+      fhirEncounters?:
+        type: array
+        items:
+          type: FhirEncounter
+      fhirObservations?:
+        type: array
+        items:
+          type: FhirObservation
+      fhirPatient?:
+        type: FhirPatient
+      fhirPractitioners?:
+        type: array
+        items:
+          type: FhirPractitioner
+      group?:
+        type: Group
+      id?:
+        type: integer
+        format: int64
+  PatientManagement:
+    type: object
+    properties:
+      condition?:
+        type: FhirCondition
+      encounters?:
+        type: array
+        items:
+          type: FhirEncounter
+      groupCode?:
+        type: string
+      identifier?:
+        type: string
+      observations?:
+        type: array
+        items:
+          type: FhirObservation
+      patient?:
+        type: FhirPatient
+      practitioners?:
+        type: array
+        items:
+          type: FhirPractitioner
+    description: patientManagement
+  Role:
+    type: object
+    properties:
+      description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+        enum:
+        - PATIENT
+        - UNIT_ADMIN
+        - STAFF_ADMIN
+        - DISEASE_GROUP_ADMIN
+        - SPECIALTY_ADMIN
+        - GLOBAL_ADMIN
+        - GP_ADMIN
+        - MEMBER
+        - PUBLIC
+        - UNIT_ADMIN_API
+        - IMPORTER
+      visible?:
+        type: boolean
+  Route:
+    type: object
+    properties:
+      controller?:
+        type: string
+      created?:
+        type: datetime
+      displayOrder?:
+        type: integer
+        format: int32
+      id?:
+        type: integer
+        format: int64
+      lookup?:
+        type: Lookup
+      templateUrl?:
+        type: string
+      title?:
+        type: string
+      url?:
+        type: string
+  User:
+    type: object
+    properties:
+      canSwitchUser?:
+        type: boolean
+      changePassword?:
+        type: boolean
+      contactNumber?:
+        type: string
+      created?:
+        type: datetime
+      currentLogin?:
+        type: datetime
+      currentLoginIpAddress?:
+        type: string
+      dateOfBirth?:
+        type: datetime
+      deleted?:
+        type: boolean
+      dummy?:
+        type: boolean
+      email?:
+        type: string
+      emailVerified?:
+        type: boolean
+      forename?:
+        type: string
+      groupRoles?:
+        type: array
+        items:
+          type: GroupRole
+      hideSecretWordNotification?:
+        type: boolean
+      id?:
+        type: integer
+        format: int64
+      identifiers?:
+        type: array
+        items:
+          type: object
+      lastLogin?:
+        type: datetime
+      lastLoginIpAddress?:
+        type: string
+      latestDataReceivedBy?:
+        type: BaseGroup
+      latestDataReceivedDate?:
+        type: datetime
+      locked?:
+        type: boolean
+      picture?:
+        type: string
+      roleDescription?:
+        type: string
+      secretWordIsSet?:
+        type: boolean
+      surname?:
+        type: string
+      userFeatures?:
+        type: array
+        items:
+          type: UserFeature
+      username?:
+        type: string
+  UserFeature:
+    type: object
+    properties:
+      created?:
+        type: datetime
+      feature?:
+        type: Feature
+      id?:
+        type: integer
+        format: int64
+      lastUpdate?:
+        type: datetime
+      optInDate?:
+        type: datetime
+      optInHidden?:
+        type: boolean
+      optInStatus?:
+        type: boolean
+      optOutHidden?:
+        type: boolean
+  UserToken:
+    type: object
+    properties:
+      auditActions?:
+        type: array
+        items:
+          type: string
+      checkSecretWord?:
+        type: boolean
+      created?:
+        type: datetime
+      expiration?:
+        type: datetime
+      externalStandards?:
+        type: array
+        items:
+          type: ExternalStandard
+      groupFeatures?:
+        type: array
+        items:
+          type: Feature
+      groupMessagingEnabled?:
+        type: boolean
+      mustSetSecretWord?:
+        type: boolean
+      patientFeatures?:
+        type: array
+        items:
+          type: Feature
+      patientMessagingFeatureTypes?:
+        type: array
+        items:
+          type: string
+      patientRoles?:
+        type: array
+        items:
+          type: Role
+      routes?:
+        type: array
+        items:
+          type: Route
+      secretWordChoices?:
+        type: object
+      secretWordIndexes?:
+        type: array
+        items:
+          type: string
+      secretWordToken?:
+        type: string
+      securityRoles?:
+        type: array
+        items:
+          type: Role
+      shouldEnterCondition?:
+        type: boolean
+      staffFeatures?:
+        type: array
+        items:
+          type: Feature
+      staffRoles?:
+        type: array
+        items:
+          type: Role
+      token?:
+        type: string
+      user?:
+        type: User
+      userFeatures?:
+        type: array
+        items:
+          type: Feature
+      userGroups?:
+        type: array
+        items:
+          type: BaseGroup
+/auth:
+  /login:
+    post:
+      description: Authenticate using username and password, returns token, which must be added to X-Auth-Token in header of all future requests
+      displayName: Log In
+      body:
+        application/json: Credentials
+      responses:
+        200:
+          description: Description was not specified
+          body:
+            '*/*':
+              type: UserToken
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /logout:
+    /{token}:
+      uriParameters:
+        token:
+          type: string
+          description: token
+          displayName: token
+      delete:
+        description: Log Out
+        displayName: Log Out
+        responses:
+          200:
+            description: Description was not specified
+          204:
+            description: No Content
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+  /{token}:
+    uriParameters:
+      token:
+        type: string
+        description: token
+        displayName: token
+    /basicuserinformation:
+      get:
+        description: Once logged in and have a token, get basic user information including group role membership
+        displayName: Get Basic User Information
+        responses:
+          200:
+            description: OK
+            body:
+              '*/*':
+                type: User
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not Found
+/patient:
+  /{userId}:
+    uriParameters:
+      userId:
+        type: integer
+        description: userId
+        displayName: userId
+        format: int64
+    /basic:
+      get:
+        description: Given a User ID, get basic patient information for a user from clinical data stored in FHIR
+        displayName: Get Basic Patient Information
+        responses:
+          200:
+            description: OK
+            body:
+              '*/*':
+                type: array
+                items:
+                  type: Patient
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not Found
+/patientmanagement:
+  /diagnoses:
+    get:
+      description: getPatientManagementDiagnoses
+      displayName: getPatientManagementDiagnoses
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: Code
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /lookuptypes:
+    get:
+      description: getPatientManagementLookupTypes
+      displayName: getPatientManagementLookupTypes
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: LookupType
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /validate:
+    post:
+      description: validatePatientManagement
+      displayName: validatePatientManagement
+      body:
+        application/json: PatientManagement
+      responses:
+        200:
+          description: Description was not specified
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /{userId}:
+    uriParameters:
+      userId:
+        type: integer
+        description: userId
+        displayName: userId
+        format: int64
+    /group:
+      /{groupId}:
+        uriParameters:
+          groupId:
+            type: integer
+            description: groupId
+            displayName: groupId
+            format: int64
+        /identifier:
+          /{identifierId}:
+            uriParameters:
+              identifierId:
+                type: integer
+                description: identifierId
+                displayName: identifierId
+                format: int64
+            /surgeries:
+              post:
+                description: savePatientManagementSurgeries
+                displayName: savePatientManagementSurgeries
+                body:
+                  application/json: PatientManagement
+                responses:
+                  200:
+                    description: Description was not specified
+                  201:
+                    description: Created
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+            get:
+              description: getPatientManagement
+              displayName: getPatientManagement
+              responses:
+                200:
+                  description: OK
+                  body:
+                    application/json:
+                      type: PatientManagement
+                401:
+                  description: Unauthorized
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+            post:
+              description: savePatientManagement
+              displayName: savePatientManagement
+              body:
+                application/json: PatientManagement
+              responses:
+                200:
+                  description: Description was not specified
+                201:
+                  description: Created
+                401:
+                  description: Unauthorized
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+/user:
+  /{userId}:
+    uriParameters:
+      userId:
+        type: integer
+        description: userId
+        displayName: userId
+        format: int64
+    /availableobservationheadings:
+      get:
+        description: Given a User ID retrieve a list of available observation types for that user (where they have observation data).
+        displayName: Get Available Observations Types For a User
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: ObservationHeading
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not Found
+    /observations:
+      /{code}:
+        uriParameters:
+          code:
+            type: string
+            description: code
+            displayName: code
+        get:
+          description: Given a User ID and observation code, retrieve all observations.
+          displayName: Get Observations of a Certain Type For a User
+          responses:
+            200:
+              description: OK
+              body:
+                '*/*':
+                  type: array
+                  items:
+                    type: FhirObservation
+            401:
+              description: Unauthorized
+            403:
+              description: Forbidden
+            404:
+              description: Not Found
+      get:
+        description: Given a User ID and search parameters, retrieve a page of observations.
+        displayName: Get Observations of Multiple Types For a User
+        queryParameters:
+          code:
+            type: array
+            description: code
+            displayName: code
+            items:
+              type: string
+          limit:
+            type: integer
+            description: limit
+            displayName: limit
+            format: int64
+          offset:
+            type: integer
+            description: offset
+            displayName: offset
+            format: int64
+          orderDirection:
+            type: string
+            description: orderDirection
+            displayName: orderDirection
+        responses:
+          200:
+            description: OK
+            body:
+              '*/*':
+                type: FhirObservationPage
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not Found

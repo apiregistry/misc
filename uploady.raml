@@ -1,0 +1,466 @@
+#%RAML 1.0
+title: Uploady
+version: v1-beta
+baseUri: content.uploady.com/v1/api
+description: The Uploady API allows you to connect to the Uploady free online storage platform.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Children:
+    type: object
+    properties:
+      files?:
+        type: array
+        items:
+          type: File
+      folders?:
+        type: array
+        items:
+          type: Folder
+  Event:
+    type: object
+    properties:
+      file?:
+        type: File
+      file_id?:
+        type: string
+      folder?:
+        type: Folder
+      folder_id?:
+        type: string
+      id:
+        type: string
+      root_id:
+        type: string
+      time:
+        type: integer
+      type?:
+        type: string
+      user:
+        type: string
+    description: Event information
+  Events:
+    type: object
+    properties:
+      events:
+        type: array
+        items:
+          type: Event
+  File:
+    type: object
+    properties:
+      extension:
+        type: string
+      id:
+        type: string
+      mime_type:
+        type: string
+      name:
+        type: string
+      parent_folder:
+        type: string
+      sha1:
+        type: string
+      share_enabled?:
+        type: boolean
+      share_link?:
+        type: string
+      share_link_enabled?:
+        type: boolean
+      share_password?:
+        type: string
+      share_url?:
+        type: string
+      size:
+        type: integer
+        format: int64
+      time:
+        type: integer
+    description: File information
+  FileLink:
+    type: object
+    properties:
+      direct_link:
+        type: string
+      id:
+        type: string
+    description: Get file download url
+  FileShare:
+    type: object
+    properties:
+      emails:
+        type: array
+        items:
+          type: FileShareEmail
+  FileShareEmail:
+    type: object
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+  Files:
+    type: object
+    properties:
+      files:
+        type: array
+        items:
+          type: File
+  FilesLinks:
+    type: object
+    properties:
+      links:
+        type: array
+        items:
+          type: FileLink
+  Folder:
+    type: object
+    properties:
+      has_folders:
+        type: boolean
+      id:
+        type: string
+      name:
+        type: string
+      parent_folder?:
+        type: string
+      time:
+        type: integer
+      type?:
+        type: string
+    description: Folder information
+  Folders:
+    type: object
+    properties:
+      folders:
+        type: array
+        items:
+          type: Folder
+  Storage:
+    type: object
+    properties:
+      storage:
+        type: array
+        items:
+          type: StorageData
+  StorageData:
+    type: object
+    properties:
+      storage_limit:
+        type: integer
+      used_storage_size:
+        type: integer
+  Success:
+    type: object
+    properties:
+      success:
+        type: boolean
+  User:
+    type: object
+    properties:
+      display_name:
+        type: string
+      email:
+        type: string
+      family_name:
+        type: string
+      given_name:
+        type: string
+      group:
+        type: string
+      links:
+        type: array
+        items:
+          type: UserLinks
+      new_user:
+        type: boolean
+      verified:
+        type: boolean
+    description: User information.
+  UserLinks:
+    type: object
+    properties:
+      root_folder:
+        type: string
+      trash_folder:
+        type: string
+  Users:
+    type: object
+    properties:
+      users:
+        type: array
+        items:
+          type: User
+/events:
+  get:
+    description: |-
+      There are two types of events: for folders and for files.<br/>
+      All events will contain latest resource information about folder or file.
+      If `folder` or `file` key is set to `null`, this means what this object was deleted.<br/>
+      To access this resource, scope `read.events` is required.
+    displayName: Get events
+    queryParameters:
+      root_id:
+        type: string
+        description: Get events for root folder
+        displayName: root_id
+      last_event_id?:
+        type: string
+        description: ID of last known event id
+        displayName: last_event_id
+      include?:
+        type: string
+        description: 'Available values: links'
+        displayName: include
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Events
+/files:
+  /link:
+    post:
+      description: |-
+        You can get multiple links by joining id's with comma.<br/>
+         To access this resource, scope `read.file` is required.
+      displayName: Get download link
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: FilesLinks
+  /share:
+    get:
+      description: |-
+        Get shared emails.<br/>
+         To access this resource, scope `share.file` is required.
+      displayName: Get shared emails
+      queryParameters:
+        id:
+          type: string
+          description: file id
+          displayName: id
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: FileShare
+    delete:
+      description: |-
+        Delete shared email.<br/>
+        To access this resource, scope `share.file` is required.
+      displayName: Delete shared email
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Success
+        403:
+          description: You do not have permission to access this file
+        404:
+          description: File not found
+    post:
+      description: |-
+        Be sure that user is verified.<br/>
+         To access this resource, scope `share.file` is required.
+      displayName: Share file via email
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: FileShare
+  get:
+    description: |-
+      You can get multiple files by joining id's with comma.<br/>
+       To access this resource, scope `read.file` is required.
+    displayName: Find files
+    queryParameters:
+      id:
+        type: string
+        description: ID of file that needs to be fetched
+        displayName: id
+      include?:
+        type: string
+        description: 'Available values: links'
+        displayName: include
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Files
+  delete:
+    description: |-
+      File will be permanently deleted, recovery is not possible. You can delete multiple files by joining id's with comma. <br/>
+      To access this resource, scope `delete.file` is required.
+    displayName: Delete files
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Success
+      404:
+        description: No files were found
+  put:
+    description: |-
+      You can update multiple files by joining id's with comma. <br/>
+      To access this resource, scope `update.file` is required.
+    displayName: Update files information
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Files
+      403:
+        description: You do not have permission to access this folder
+/folders:
+  /children:
+    get:
+      description: To access this resource, scope `read.folder` is required.
+      displayName: Find child files and folders
+      queryParameters:
+        id:
+          type: string
+          description: ID of parent folder
+          displayName: id
+        get_files?:
+          type: boolean
+          description: set this to get child files
+          displayName: get_files
+        get_folders?:
+          type: boolean
+          description: set this to get child folders
+          displayName: get_folders
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Children
+  /path:
+    get:
+      description: |-
+        Folders are returned in strict order. From root folder to folder specified by id.<br/>
+
+         To access this resource, scope `read.folder` is required.
+      displayName: Get full path to the folder
+      queryParameters:
+        id:
+          type: string
+          description: folder id
+          displayName: id
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Folders
+  get:
+    description: |-
+      You can get multiple folders by joining id's with comma.<br/>
+       To access this resource, scope `read.folder` is required.
+    displayName: Find folder
+    queryParameters:
+      id:
+        type: string
+        description: ID of folder that needs to be fetched
+        displayName: id
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Folders
+  delete:
+    description: |-
+      You can delete multiple folders by joining id's with comma.<br/>
+       To access this resource, scope `delete.folder` is required.
+    displayName: Delete folder
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Folders
+  post:
+    description: |-
+      Create new folder.<br/>
+       To access this resource, scope `create.folder` is required.
+    displayName: Create folder
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Folders
+  put:
+    description: |-
+      You can update multiple folders by joining id's with comma. <br/>
+       To access this resource, scope `update.folder` is required.
+    displayName: Update folder
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Folders
+/upload:
+  post:
+    description: |-
+      Files are uploaded to https://content.uploady.com/v1/api/upload.<br/>
+                          To access this resource, scope `create.file` is required.
+    displayName: Upload files
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Files
+/users:
+  /logout:
+    post:
+      description: "Logout user. User will be detached from access token. \n Implicit\
+        \ grant does not provide a refresh token, but provided access token will be\
+        \ destroyed."
+      displayName: Destroy access and refresh tokens
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Success
+  /storage:
+    get:
+      displayName: Get user storage information.
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Storage
+  post:
+    description: |-
+      This api is only available for clients with static type.<br/>
+      Scope `register` is required.<br/>
+      Access token can be created with `client credentials` grant type.<br/>
+      This resource can not be accessed with cross origin request.
+    displayName: Static - Create new user
+    queryParameters:
+      include?:
+        type: string
+        description: 'Available values: storage,folders'
+        displayName: include
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Users

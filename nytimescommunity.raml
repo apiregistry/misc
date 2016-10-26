@@ -1,0 +1,497 @@
+#%RAML 1.0
+title: Community
+version: 3.0.0
+baseUri: api.nytimes.com/svc/community/v3
+description: Get access to comments from registered users on New York Times articles.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api-key:
+    type: Pass Through
+/user-content:
+  /by-date.json:
+    get:
+      description: ''
+      displayName: Comments by Date
+      queryParameters:
+        date?:
+          type: string
+          displayName: date
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                debug?:
+                  type: object
+                  properties:
+                    version?:
+                      type: number
+                results?:
+                  type: object
+                  properties:
+                    totalCommentsReturned?:
+                      type: integer
+                    comments?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          recommendationCount?:
+                            type: integer
+                          updateDate?:
+                            type: string
+                          approveDate?:
+                            type: string
+                          commentSequence?:
+                            type: integer
+                          userDisplayName?:
+                            type: string
+                          userLocation?:
+                            type: string
+                          userID?:
+                            type: integer
+                          userTitle?:
+                            type: string
+                          replyCount?:
+                            type: integer
+                          replies?:
+                            type: array
+                            items:
+                              type: object
+                          statusID?:
+                            type: integer
+                          commentTitle?:
+                            type: string
+                          assetID?:
+                            type: integer
+                          commentBody?:
+                            type: string
+                          commentType?:
+                            type: string
+                          commentID?:
+                            type: integer
+                          editorsSelection?:
+                            type: integer
+                          lft?:
+                            type: integer
+                          assetURL?:
+                            type: string
+                          rgt?:
+                            type: integer
+                          userURL?:
+                            type: integer
+                          createDate?:
+                            type: string
+                          status?:
+                            type: string
+                    api_timestamp?:
+                      type: string
+                    totalCommentsFound?:
+                      type: integer
+                status?:
+                  type: string
+  /recent.json:
+    get:
+      description: ''
+      displayName: Recent User Comments
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                debug?:
+                  type: object
+                  properties:
+                    version?:
+                      type: number
+                results?:
+                  type: object
+                  properties:
+                    totalCommentsReturned?:
+                      type: integer
+                    comments?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          recommendationCount?:
+                            type: integer
+                          updateDate?:
+                            type: string
+                          approveDate?:
+                            type: string
+                          commentSequence?:
+                            type: integer
+                          userDisplayName?:
+                            type: string
+                          userLocation?:
+                            type: string
+                          display_name?:
+                            type: string
+                          userID?:
+                            type: integer
+                          userTitle?:
+                            type: string
+                          replies?:
+                            type: array
+                            items:
+                              type: object
+                          statusID?:
+                            type: integer
+                          commentTitle?:
+                            type: string
+                          assetID?:
+                            type: integer
+                          commentBody?:
+                            type: string
+                          commentType?:
+                            type: string
+                          commentID?:
+                            type: integer
+                          editorsSelection?:
+                            type: integer
+                          location?:
+                            type: string
+                          asset?:
+                            type: object
+                            properties:
+                              updateDate?:
+                                type: string
+                              assetID?:
+                                type: integer
+                              assetTitle?:
+                                type: string
+                              vendorID?:
+                                type: string
+                              source?:
+                                type: string
+                              taxonomy?:
+                                type: string
+                              text?:
+                                type: array
+                                items:
+                                  type: object
+                              all-properties?:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name?:
+                                      type: string
+                                    description?:
+                                      type: string
+                                    properties?:
+                                      type: array
+                                      items:
+                                        type: object
+                              assetURL?:
+                                type: string
+                              properties?:
+                                type: object
+                                properties:
+                                  reached-max-com-off?:
+                                    type: object
+                                    properties:
+                                      taxonomyID?:
+                                        type: integer
+                                      groupID?:
+                                        type: integer
+                                  comment-list-sort-editors?:
+                                    type: object
+                                    properties:
+                                      taxonomyID?:
+                                        type: integer
+                                      groupID?:
+                                        type: integer
+                                  automoderation-on?:
+                                    type: object
+                                    properties:
+                                      taxonomyID?:
+                                        type: integer
+                                      groupID?:
+                                        type: integer
+                              createDate?:
+                                type: string
+                              labels?:
+                                type: array
+                                items:
+                                  type: object
+                          userURL?:
+                            type: string
+                          createDate?:
+                            type: string
+                          status?:
+                            type: string
+                    api_timestamp?:
+                      type: string
+                status?:
+                  type: string
+  /url.json:
+    get:
+      description: ''
+      displayName: Comments by URL
+      queryParameters:
+        url?:
+          type: string
+          displayName: url
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                debug?:
+                  type: object
+                  properties:
+                    version?:
+                      type: number
+                results?:
+                  type: object
+                  properties:
+                    replyLimit?:
+                      type: integer
+                    comments?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          updateDate?:
+                            type: string
+                          approveDate?:
+                            type: string
+                          commentSequence?:
+                            type: integer
+                          permID?:
+                            type: string
+                          userDisplayName?:
+                            type: string
+                          userLocation?:
+                            type: string
+                          sharing?:
+                            type: integer
+                          recommendations?:
+                            type: integer
+                          userID?:
+                            type: integer
+                          picURL?:
+                            type: string
+                          replyCount?:
+                            type: integer
+                          depth?:
+                            type: integer
+                          replies?:
+                            type: array
+                          commentTitle?:
+                            type: string
+                          trusted?:
+                            type: integer
+                          commentBody?:
+                            type: string
+                          commentType?:
+                            type: string
+                          commentID?:
+                            type: integer
+                          editorsSelection?:
+                            type: boolean
+                          timespeople?:
+                            type: integer
+                          createDate?:
+                            type: string
+                          status?:
+                            type: string
+                    api_timestamp?:
+                      type: string
+                    depthLimit?:
+                      type: integer
+                    totalReporterReplyCommentsFound?:
+                      type: integer
+                    totalEditorsSelectionFound?:
+                      type: integer
+                    sort?:
+                      type: string
+                    totalReplyCommentsFound?:
+                      type: integer
+                    totalReplyCommentsReturned?:
+                      type: integer
+                    totalCommentsFound?:
+                      type: integer
+                    totalEditorsSelectionReturned?:
+                      type: integer
+                    totalCommentsReturned?:
+                      type: integer
+                    totalParentCommentsReturned?:
+                      type: integer
+                    totalReporterReplyCommentsReturned?:
+                      type: integer
+                    page?:
+                      type: integer
+                    totalRecommendationsReturned?:
+                      type: integer
+                    totalParentCommentsFound?:
+                      type: integer
+                    totalRecommendationsFound?:
+                      type: integer
+                status?:
+                  type: string
+  /user.json:
+    get:
+      description: ''
+      displayName: Comments by User
+      queryParameters:
+        userID?:
+          type: integer
+          displayName: userID
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                debug?:
+                  type: object
+                  properties:
+                    version?:
+                      type: number
+                results?:
+                  type: object
+                  properties:
+                    totalCommentsReturned?:
+                      type: integer
+                    comments?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          updateDate?:
+                            type: string
+                          approveDate?:
+                            type: string
+                          commentSequence?:
+                            type: integer
+                          permid?:
+                            type: integer
+                          recommendations?:
+                            type: integer
+                          userID?:
+                            type: integer
+                          labels?:
+                            type: array
+                            items:
+                              type: object
+                          picURL?:
+                            type: string
+                          userSubmittedDisplayName?:
+                            type: string
+                          replyCount?:
+                            type: integer
+                          replies?:
+                            type: array
+                            items:
+                              type: object
+                          commentTitle?:
+                            type: string
+                          userSubmittedLocation?:
+                            type: string
+                          commentBody?:
+                            type: string
+                          commentType?:
+                            type: string
+                          commentID?:
+                            type: integer
+                          editorsSelection?:
+                            type: boolean
+                          asset?:
+                            type: object
+                            properties:
+                              updateDate?:
+                                type: string
+                              assetID?:
+                                type: integer
+                              assetTitle?:
+                                type: string
+                              vendorID?:
+                                type: string
+                              source?:
+                                type: string
+                              taxonomy?:
+                                type: string
+                              text?:
+                                type: array
+                                items:
+                                  type: object
+                              all-properties?:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name?:
+                                      type: string
+                                    description?:
+                                      type: string
+                                    properties?:
+                                      type: array
+                                      items:
+                                        type: object
+                              assetURL?:
+                                type: string
+                              properties?:
+                                type: object
+                                properties:
+                                  reached-max-com-on?:
+                                    type: object
+                                    properties:
+                                      taxonomyID?:
+                                        type: integer
+                                      groupID?:
+                                        type: integer
+                                  automoderation-off?:
+                                    type: object
+                                    properties:
+                                      taxonomyID?:
+                                        type: integer
+                                      groupID?:
+                                        type: integer
+                                  comment-list-sort-approvedate-desc?:
+                                    type: object
+                                    properties:
+                                      taxonomyID?:
+                                        type: integer
+                                      groupID?:
+                                        type: integer
+                              createDate?:
+                                type: string
+                              labels?:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    labelID?:
+                                      type: integer
+                                    labelName?:
+                                      type: string
+                          createDate?:
+                            type: string
+                          status?:
+                            type: string
+                    api_timestamp?:
+                      type: string
+                    totalCommentsFound?:
+                      type: integer
+                status?:
+                  type: string

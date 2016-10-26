@@ -1,0 +1,3114 @@
+#%RAML 1.0
+title: Mandrill
+version: '1.0'
+baseUri: mandrillapp.com/api/
+description: |
+  Mandrill is a reliable, scalable, and secure delivery API for transactional emails from websites and applications. It's ideal for sending data-driven transactional emails, including targeted e-commerce and personalized one-to-one messages.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  exports_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        result_url?:
+          type: string
+        finished_at?:
+          type: string
+        created_at?:
+          type: string
+        id?:
+          type: string
+        state?:
+          type: string
+        type?:
+          type: string
+  inbound_domains-response:
+    type: array
+    items:
+      type: object
+      properties:
+        domain?:
+          type: string
+        valid_mx?:
+          type: boolean
+        created_at?:
+          type: string
+  inbound_routes-response:
+    type: array
+    items:
+      type: object
+      properties:
+        pattern?:
+          type: string
+        id?:
+          type: string
+        url?:
+          type: string
+  inbound_send-raw-response:
+    type: array
+    items:
+      type: object
+      properties:
+        pattern?:
+          type: string
+        email?:
+          type: string
+        url?:
+          type: string
+  ips_list-pools-response:
+    type: array
+    items:
+      type: object
+      properties:
+        name?:
+          type: string
+        created_at?:
+          type: string
+        ips?:
+          type: array
+          items:
+            type: object
+            properties:
+              custom_dns?:
+                type: object
+                properties:
+                  valid?:
+                    type: boolean
+                  error?:
+                    type: string
+                  enabled?:
+                    type: boolean
+              domain?:
+                type: string
+              ip?:
+                type: string
+              pool?:
+                type: string
+              created_at?:
+                type: string
+              warmup?:
+                type: object
+                properties:
+                  end_at?:
+                    type: string
+                  warming_up?:
+                    type: boolean
+                  start_at?:
+                    type: string
+  ips_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        custom_dns?:
+          type: object
+          properties:
+            valid?:
+              type: boolean
+            error?:
+              type: string
+            enabled?:
+              type: boolean
+        domain?:
+          type: string
+        ip?:
+          type: string
+        pool?:
+          type: string
+        created_at?:
+          type: string
+        warmup?:
+          type: object
+          properties:
+            end_at?:
+              type: string
+            warming_up?:
+              type: boolean
+            start_at?:
+              type: string
+  message_send-status:
+    type: array
+    items:
+      type: object
+      properties:
+        _id?:
+          type: string
+        reject_reason?:
+          type: string
+        email?:
+          type: string
+        status?:
+          type: string
+  messages_list-scheduled-response:
+    type: array
+    items:
+      type: object
+      properties:
+        from_email?:
+          type: string
+        subject?:
+          type: string
+        created_at?:
+          type: string
+        send_at?:
+          type: string
+        _id?:
+          type: string
+        to?:
+          type: string
+  messages_search-response:
+    type: array
+    items:
+      type: object
+      properties:
+        template?:
+          type: string
+        metadata?:
+          type: object
+          properties:
+            website?:
+              type: string
+            user_id?:
+              type: string
+        subject?:
+          type: string
+        clicks_detail?:
+          type: array
+          items:
+            type: object
+            properties:
+              ip?:
+                type: string
+              location?:
+                type: string
+              ua?:
+                type: string
+              url?:
+                type: string
+              ts?:
+                type: integer
+        tags?:
+          type: array
+          items:
+            type: string
+        opens_detail?:
+          type: array
+          items:
+            type: object
+            properties:
+              ip?:
+                type: string
+              location?:
+                type: string
+              ua?:
+                type: string
+              ts?:
+                type: integer
+        sender?:
+          type: string
+        clicks?:
+          type: integer
+        opens?:
+          type: integer
+        _id?:
+          type: string
+        state?:
+          type: string
+        email?:
+          type: string
+        ts?:
+          type: integer
+  metadata_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        name?:
+          type: string
+        state?:
+          type: string
+        view_template?:
+          type: string
+  rejects_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        reason?:
+          type: string
+        expired?:
+          type: boolean
+        expires_at?:
+          type: string
+        last_event_at?:
+          type: string
+        sender?:
+          type: object
+          properties:
+            rejects?:
+              type: integer
+            address?:
+              type: string
+            hard_bounces?:
+              type: integer
+            unique_clicks?:
+              type: integer
+            unsubs?:
+              type: integer
+            complaints?:
+              type: integer
+            clicks?:
+              type: integer
+            created_at?:
+              type: string
+            opens?:
+              type: integer
+            soft_bounces?:
+              type: integer
+            sent?:
+              type: integer
+            unique_opens?:
+              type: integer
+        subaccount?:
+          type: string
+        created_at?:
+          type: string
+        detail?:
+          type: string
+        email?:
+          type: string
+  senders:
+    type: array
+    items:
+      type: object
+      properties:
+        rejects?:
+          type: integer
+        address?:
+          type: string
+        hard_bounces?:
+          type: integer
+        unique_clicks?:
+          type: integer
+        unsubs?:
+          type: integer
+        complaints?:
+          type: integer
+        clicks?:
+          type: integer
+        created_at?:
+          type: string
+        opens?:
+          type: integer
+        soft_bounces?:
+          type: integer
+        sent?:
+          type: integer
+        unique_opens?:
+          type: integer
+  senders_domains-response:
+    type: array
+    items:
+      type: object
+      properties:
+        valid_signing?:
+          type: boolean
+        last_tested_at?:
+          type: string
+        dkim?:
+          type: object
+          properties:
+            valid?:
+              type: boolean
+            valid_after?:
+              type: string
+            error?:
+              type: string
+        verified_at?:
+          type: string
+        domain?:
+          type: string
+        spf?:
+          type: object
+          properties:
+            valid?:
+              type: boolean
+            valid_after?:
+              type: string
+            error?:
+              type: string
+        created_at?:
+          type: string
+  subaccounts_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        custom_quota?:
+          type: integer
+        first_sent_at?:
+          type: string
+        name?:
+          type: string
+        created_at?:
+          type: string
+        reputation?:
+          type: integer
+        sent_total?:
+          type: integer
+        id?:
+          type: string
+        sent_monthly?:
+          type: integer
+        sent_weekly?:
+          type: integer
+        status?:
+          type: string
+  tags_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        rejects?:
+          type: integer
+        hard_bounces?:
+          type: integer
+        unique_clicks?:
+          type: integer
+        unsubs?:
+          type: integer
+        complaints?:
+          type: integer
+        clicks?:
+          type: integer
+        opens?:
+          type: integer
+        reputation?:
+          type: integer
+        soft_bounces?:
+          type: integer
+        tag?:
+          type: string
+        sent?:
+          type: integer
+        unique_opens?:
+          type: integer
+  templates_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        code?:
+          type: string
+        from_email?:
+          type: string
+        subject?:
+          type: string
+        publish_from_email?:
+          type: string
+        created_at?:
+          type: string
+        from_name?:
+          type: string
+        labels?:
+          type: array
+          items:
+            type: string
+        publish_name?:
+          type: string
+        publish_subject?:
+          type: string
+        updated_at?:
+          type: string
+        publish_text?:
+          type: string
+        name?:
+          type: string
+        text?:
+          type: string
+        publish_from_name?:
+          type: string
+        published_at?:
+          type: string
+        publish_code?:
+          type: string
+        slug?:
+          type: string
+  time-series:
+    type: array
+    items:
+      type: object
+      properties:
+        rejects?:
+          type: integer
+        hard_bounces?:
+          type: integer
+        unique_clicks?:
+          type: integer
+        complaints?:
+          type: integer
+        clicks?:
+          type: integer
+        opens?:
+          type: integer
+        soft_bounces?:
+          type: integer
+        time?:
+          type: string
+        sent?:
+          type: integer
+        unique_opens?:
+          type: integer
+  timeseries:
+    type: array
+    items:
+      type: object
+      properties:
+        rejects?:
+          type: integer
+        hard_bounces?:
+          type: integer
+        unique_clicks?:
+          type: integer
+        unsubs?:
+          type: integer
+        complaints?:
+          type: integer
+        clicks?:
+          type: integer
+        opens?:
+          type: integer
+        soft_bounces?:
+          type: integer
+        time?:
+          type: string
+        sent?:
+          type: integer
+        unique_opens?:
+          type: integer
+  url_infos:
+    type: array
+    items:
+      type: object
+      properties:
+        unique_clicks?:
+          type: integer
+        clicks?:
+          type: integer
+        sent?:
+          type: integer
+        url?:
+          type: string
+  urls_time-series-response:
+    type: array
+    items:
+      type: object
+      properties:
+        unique_clicks?:
+          type: integer
+        clicks?:
+          type: integer
+        time?:
+          type: string
+        sent?:
+          type: integer
+  urls_tracking-domains-response:
+    type: array
+    items:
+      type: object
+      properties:
+        last_tested_at?:
+          type: string
+        valid_tracking?:
+          type: boolean
+        domain?:
+          type: string
+        cname?:
+          type: object
+          properties:
+            valid?:
+              type: boolean
+            valid_after?:
+              type: string
+            error?:
+              type: string
+        created_at?:
+          type: string
+  webhooks_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        last_sent_at?:
+          type: string
+        events_sent?:
+          type: integer
+        created_at?:
+          type: string
+        description?:
+          type: string
+        auth_key?:
+          type: string
+        batches_sent?:
+          type: integer
+        id?:
+          type: integer
+        last_error?:
+          type: string
+        events?:
+          type: array
+          items:
+            type: string
+        url?:
+          type: string
+  whitelists_list-response:
+    type: array
+    items:
+      type: object
+      properties:
+        created_at?:
+          type: string
+        detail?:
+          type: string
+        email?:
+          type: string
+  api_key:
+    type: object
+    properties:
+      key?:
+        type: string
+  domain:
+    type: object
+    properties:
+      domain?:
+        type: string
+      key?:
+        type: string
+  email:
+    type: object
+    properties:
+      email?:
+        type: string
+      key?:
+        type: string
+  exports_activity:
+    type: object
+    properties:
+      api_keys?:
+        type: array
+        items:
+          type: string
+      date_from?:
+        type: string
+      date_to?:
+        type: string
+      key?:
+        type: string
+      notify_email?:
+        type: string
+      senders?:
+        type: array
+        items:
+          type: string
+      states?:
+        type: array
+        items:
+          type: string
+      tags?:
+        type: array
+        items:
+          type: string
+  exports_info-response:
+    type: object
+    properties:
+      created_at?:
+        type: string
+      finished_at?:
+        type: string
+      id?:
+        type: string
+      result_url?:
+        type: string
+      state?:
+        type: string
+      type?:
+        type: string
+  exports_satus:
+    type: object
+    properties:
+      created_at?:
+        type: string
+      id?:
+        type: string
+      state?:
+        type: string
+      type?:
+        type: string
+  id:
+    type: object
+    properties:
+      id?:
+        type: string
+      key?:
+        type: string
+  inbound_add-route:
+    type: object
+    properties:
+      domain?:
+        type: string
+      key?:
+        type: string
+      pattern?:
+        type: string
+      url?:
+        type: string
+  inbound_info:
+    type: object
+    properties:
+      created_at?:
+        type: string
+      domain?:
+        type: string
+      valid_mx?:
+        type: boolean
+  inbound_send-raw:
+    type: object
+    properties:
+      client_address?:
+        type: string
+      helo?:
+        type: string
+      key?:
+        type: string
+      mail_from?:
+        type: string
+      raw_message?:
+        type: string
+      to?:
+        type: array
+        items:
+          type: string
+  inbound_update-route:
+    type: object
+    properties:
+      id?:
+        type: string
+      key?:
+        type: string
+      pattern?:
+        type: string
+      url?:
+        type: string
+  ip:
+    type: object
+    properties:
+      ip?:
+        type: string
+      key?:
+        type: string
+  ip_domain:
+    type: object
+    properties:
+      domain?:
+        type: string
+      ip?:
+        type: string
+      key?:
+        type: string
+  ip_info:
+    type: object
+    properties:
+      created_at?:
+        type: string
+      custom_dns?:
+        type: object
+        properties:
+          valid?:
+            type: boolean
+          error?:
+            type: string
+          enabled?:
+            type: boolean
+      domain?:
+        type: string
+      ip?:
+        type: string
+      pool?:
+        type: string
+      warmup?:
+        type: object
+        properties:
+          end_at?:
+            type: string
+          warming_up?:
+            type: boolean
+          start_at?:
+            type: string
+  ips_check-custom-dns-response:
+    type: object
+    properties:
+      error?:
+        type: string
+      valid?:
+        type: boolean
+  ips_delete-pool-response:
+    type: object
+    properties:
+      deleted?:
+        type: boolean
+      pool?:
+        type: string
+  ips_delete-response:
+    type: object
+    properties:
+      deleted?:
+        type: boolean
+      ip?:
+        type: string
+  ips_pool:
+    type: object
+    properties:
+      created_at?:
+        type: string
+      ips?:
+        type: array
+        items:
+          type: object
+          properties:
+            custom_dns?:
+              type: object
+              properties:
+                valid?:
+                  type: boolean
+                error?:
+                  type: string
+                enabled?:
+                  type: boolean
+            domain?:
+              type: string
+            ip?:
+              type: string
+            pool?:
+              type: string
+            created_at?:
+              type: string
+            warmup?:
+              type: object
+              properties:
+                end_at?:
+                  type: string
+                warming_up?:
+                  type: boolean
+                start_at?:
+                  type: string
+      name?:
+        type: string
+  ips_pool-key:
+    type: object
+    properties:
+      key?:
+        type: string
+      pool?:
+        type: string
+  ips_provision:
+    type: object
+    properties:
+      key?:
+        type: string
+      pool?:
+        type: string
+      warmup?:
+        type: boolean
+  ips_provision-response:
+    type: object
+    properties:
+      requested_at?:
+        type: string
+  ips_set-pool:
+    type: object
+    properties:
+      create_pool?:
+        type: boolean
+      ip?:
+        type: string
+      key?:
+        type: string
+      pool?:
+        type: string
+  messages_cancel-scheduled:
+    type: object
+    properties:
+      key?:
+        type: string
+  messages_content-response:
+    type: object
+    properties:
+      _id?:
+        type: string
+      attachments?:
+        type: array
+        items:
+          type: object
+          properties:
+            name?:
+              type: string
+            type?:
+              type: string
+            content?:
+              type: string
+      from_email?:
+        type: string
+      from_name?:
+        type: string
+      headers?:
+        type: object
+        properties:
+          Reply-To?:
+            type: string
+      html?:
+        type: string
+      subject?:
+        type: string
+      tags?:
+        type: array
+        items:
+          type: string
+      text?:
+        type: string
+      to?:
+        type: object
+        properties:
+          name?:
+            type: string
+          email?:
+            type: string
+      ts?:
+        type: integer
+  messages_info-response:
+    type: object
+    properties:
+      _id?:
+        type: string
+      clicks?:
+        type: integer
+      clicks_detail?:
+        type: array
+        items:
+          type: object
+          properties:
+            ip?:
+              type: string
+            location?:
+              type: string
+            ua?:
+              type: string
+            url?:
+              type: string
+            ts?:
+              type: integer
+      email?:
+        type: string
+      metadata?:
+        type: object
+        properties:
+          website?:
+            type: string
+          user_id?:
+            type: string
+      opens?:
+        type: integer
+      opens_detail?:
+        type: array
+        items:
+          type: object
+          properties:
+            ip?:
+              type: string
+            location?:
+              type: string
+            ua?:
+              type: string
+            ts?:
+              type: integer
+      sender?:
+        type: string
+      smtp_events?:
+        type: array
+        items:
+          type: object
+          properties:
+            diag?:
+              type: string
+            type?:
+              type: string
+            ts?:
+              type: integer
+      state?:
+        type: string
+      subject?:
+        type: string
+      tags?:
+        type: array
+        items:
+          type: string
+      template?:
+        type: string
+      ts?:
+        type: integer
+  messages_list-scheduled:
+    type: object
+    properties:
+      key?:
+        type: string
+      to?:
+        type: string
+  messages_parse:
+    type: object
+    properties:
+      key?:
+        type: string
+      raw_message?:
+        type: string
+  messages_parse-response:
+    type: object
+    properties:
+      attachments?:
+        type: array
+        items:
+          type: object
+          properties:
+            binary?:
+              type: boolean
+            name?:
+              type: string
+            type?:
+              type: string
+            content?:
+              type: string
+      from_email?:
+        type: string
+      from_name?:
+        type: string
+      headers?:
+        type: object
+        properties:
+          Reply-To?:
+            type: string
+      html?:
+        type: string
+      images?:
+        type: array
+        items:
+          type: object
+          properties:
+            name?:
+              type: string
+            type?:
+              type: string
+            content?:
+              type: string
+      subject?:
+        type: string
+      text?:
+        type: string
+      to?:
+        type: array
+        items:
+          type: object
+          properties:
+            name?:
+              type: string
+            email?:
+              type: string
+  messages_reschedule:
+    type: object
+    properties:
+      id?:
+        type: string
+      key?:
+        type: string
+      send_at?:
+        type: string
+  messages_search:
+    type: object
+    properties:
+      api_keys?:
+        type: array
+        items:
+          type: string
+      date_from?:
+        type: string
+      date_to?:
+        type: string
+      key?:
+        type: string
+      limit?:
+        type: integer
+      query?:
+        type: string
+      senders?:
+        type: array
+        items:
+          type: string
+      tags?:
+        type: array
+        items:
+          type: string
+  messages_search-time-series:
+    type: object
+    properties:
+      date_from?:
+        type: string
+      date_to?:
+        type: string
+      key?:
+        type: string
+      query?:
+        type: string
+      senders?:
+        type: array
+        items:
+          type: string
+      tags?:
+        type: array
+        items:
+          type: string
+  messages_send:
+    type: object
+    properties:
+      async?:
+        type: boolean
+      ip_pool?:
+        type: string
+      key?:
+        type: string
+      message?:
+        type: object
+        properties:
+          google_analytics_campaign?:
+            type: string
+          headers?:
+            type: object
+            properties:
+              Reply-To?:
+                type: string
+          images?:
+            type: array
+            items:
+              type: object
+              properties:
+                name?:
+                  type: string
+                type?:
+                  type: string
+                content?:
+                  type: string
+          metadata?:
+            type: object
+            properties:
+              website?:
+                type: string
+          attachments?:
+            type: array
+            items:
+              type: object
+              properties:
+                name?:
+                  type: string
+                type?:
+                  type: string
+                content?:
+                  type: string
+          from_email?:
+            type: string
+          bcc_address?:
+            type: string
+          subaccount?:
+            type: string
+          subject?:
+            type: string
+          recipient_metadata?:
+            type: array
+            items:
+              type: object
+              properties:
+                rcpt?:
+                  type: string
+                values?:
+                  type: object
+                  properties:
+                    user_id?:
+                      type: integer
+          merge_vars?:
+            type: array
+            items:
+              type: object
+              properties:
+                rcpt?:
+                  type: string
+                vars?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name?:
+                        type: string
+                      content?:
+                        type: string
+          from_name?:
+            type: string
+          google_analytics_domains?:
+            type: array
+            items:
+              type: string
+          tags?:
+            type: array
+            items:
+              type: string
+          important?:
+            type: boolean
+          global_merge_vars?:
+            type: array
+            items:
+              type: object
+              properties:
+                name?:
+                  type: string
+                content?:
+                  type: string
+          merge?:
+            type: boolean
+          html?:
+            type: string
+          text?:
+            type: string
+          to?:
+            type: array
+            items:
+              type: object
+              properties:
+                name?:
+                  type: string
+                type?:
+                  type: string
+                email?:
+                  type: string
+      send_at?:
+        type: string
+  messages_send-raw:
+    type: object
+    properties:
+      async?:
+        type: boolean
+      from_email?:
+        type: string
+      from_name?:
+        type: string
+      ip_pool?:
+        type: string
+      key?:
+        type: string
+      raw_message?:
+        type: string
+      send_at?:
+        type: string
+      to?:
+        type: array
+        items:
+          type: string
+  messages_send-template:
+    type: object
+    properties:
+      async?:
+        type: boolean
+      ip_pool?:
+        type: string
+      key?:
+        type: string
+      message?:
+        type: object
+        properties:
+          google_analytics_campaign?:
+            type: string
+          headers?:
+            type: object
+            properties:
+              Reply-To?:
+                type: string
+          images?:
+            type: array
+            items:
+              type: object
+              properties:
+                name?:
+                  type: string
+                type?:
+                  type: string
+                content?:
+                  type: string
+          metadata?:
+            type: object
+            properties:
+              website?:
+                type: string
+          attachments?:
+            type: array
+            items:
+              type: object
+              properties:
+                name?:
+                  type: string
+                type?:
+                  type: string
+                content?:
+                  type: string
+          from_email?:
+            type: string
+          bcc_address?:
+            type: string
+          subaccount?:
+            type: string
+          subject?:
+            type: string
+          recipient_metadata?:
+            type: array
+            items:
+              type: object
+              properties:
+                rcpt?:
+                  type: string
+                values?:
+                  type: object
+                  properties:
+                    user_id?:
+                      type: integer
+          merge_vars?:
+            type: array
+            items:
+              type: object
+              properties:
+                rcpt?:
+                  type: string
+                vars?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name?:
+                        type: string
+                      content?:
+                        type: string
+          from_name?:
+            type: string
+          google_analytics_domains?:
+            type: array
+            items:
+              type: string
+          tags?:
+            type: array
+            items:
+              type: string
+          important?:
+            type: boolean
+          global_merge_vars?:
+            type: array
+            items:
+              type: object
+              properties:
+                name?:
+                  type: string
+                content?:
+                  type: string
+          merge?:
+            type: boolean
+          html?:
+            type: string
+          text?:
+            type: string
+          to?:
+            type: array
+            items:
+              type: object
+              properties:
+                name?:
+                  type: string
+                type?:
+                  type: string
+                email?:
+                  type: string
+      send_at?:
+        type: string
+      template_content?:
+        type: array
+        items:
+          type: object
+          properties:
+            name?:
+              type: string
+            content?:
+              type: string
+      template_name?:
+        type: string
+  metadata_info:
+    type: object
+    properties:
+      name?:
+        type: string
+      state?:
+        type: string
+      view_template?:
+        type: string
+  metadata_template:
+    type: object
+    properties:
+      key?:
+        type: string
+      name?:
+        type: string
+      view_template?:
+        type: string
+  name:
+    type: object
+    properties:
+      key?:
+        type: string
+      name?:
+        type: string
+  notify_email:
+    type: object
+    properties:
+      key?:
+        type: string
+      notify_email?:
+        type: string
+  rejects_add:
+    type: object
+    properties:
+      comment?:
+        type: string
+      email?:
+        type: string
+      key?:
+        type: string
+      subaccount?:
+        type: string
+  rejects_add-response:
+    type: object
+    properties:
+      added?:
+        type: boolean
+      email?:
+        type: string
+  rejects_delete:
+    type: object
+    properties:
+      email?:
+        type: string
+      key?:
+        type: string
+      subaccount?:
+        type: string
+  rejects_delete-response:
+    type: object
+    properties:
+      deleted?:
+        type: boolean
+      email?:
+        type: string
+      subaccount?:
+        type: string
+  rejects_list:
+    type: object
+    properties:
+      email?:
+        type: string
+      include_expired?:
+        type: boolean
+      key?:
+        type: string
+      subaccount?:
+        type: string
+  route:
+    type: object
+    properties:
+      id?:
+        type: string
+      pattern?:
+        type: string
+      url?:
+        type: string
+  schedulingchange_info:
+    type: object
+    properties:
+      _id?:
+        type: string
+      created_at?:
+        type: string
+      from_email?:
+        type: string
+      send_at?:
+        type: string
+      subject?:
+        type: string
+      to?:
+        type: string
+  sender_address:
+    type: object
+    properties:
+      address?:
+        type: string
+      key?:
+        type: string
+  sender_domain_info:
+    type: object
+    properties:
+      created_at?:
+        type: string
+      dkim?:
+        type: object
+        properties:
+          valid?:
+            type: boolean
+          valid_after?:
+            type: string
+          error?:
+            type: string
+      domain?:
+        type: string
+      last_tested_at?:
+        type: string
+      spf?:
+        type: object
+        properties:
+          valid?:
+            type: boolean
+          valid_after?:
+            type: string
+          error?:
+            type: string
+      valid_signing?:
+        type: boolean
+      verified_at?:
+        type: string
+  senders_info-response:
+    type: object
+    properties:
+      address?:
+        type: string
+      clicks?:
+        type: integer
+      complaints?:
+        type: integer
+      created_at?:
+        type: string
+      hard_bounces?:
+        type: integer
+      opens?:
+        type: integer
+      rejects?:
+        type: integer
+      sent?:
+        type: integer
+      soft_bounces?:
+        type: integer
+      stats?:
+        type: object
+        properties:
+          last_7_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          today?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_90_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_30_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_60_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+      unsubs?:
+        type: integer
+  senders_verify-domain:
+    type: object
+    properties:
+      domain?:
+        type: string
+      key?:
+        type: string
+      mailbox?:
+        type: string
+  senders_verify-domain-response:
+    type: object
+    properties:
+      domain?:
+        type: string
+      email?:
+        type: string
+      status?:
+        type: string
+  subaccount_info:
+    type: object
+    properties:
+      custom_quota?:
+        type: integer
+      id?:
+        type: string
+      key?:
+        type: string
+      name?:
+        type: string
+      notes?:
+        type: string
+  subaccount_info2:
+    type: object
+    properties:
+      created_at?:
+        type: string
+      custom_quota?:
+        type: integer
+      first_sent_at?:
+        type: string
+      id?:
+        type: string
+      name?:
+        type: string
+      reputation?:
+        type: integer
+      sent_monthly?:
+        type: integer
+      sent_total?:
+        type: integer
+      sent_weekly?:
+        type: integer
+      status?:
+        type: string
+  subaccounts_info-response:
+    type: object
+    properties:
+      created_at?:
+        type: string
+      custom_quota?:
+        type: integer
+      first_sent_at?:
+        type: string
+      hourly_quota?:
+        type: integer
+      id?:
+        type: string
+      last_30_days?:
+        type: object
+        properties:
+          rejects?:
+            type: integer
+          hard_bounces?:
+            type: integer
+          unique_clicks?:
+            type: integer
+          unsubs?:
+            type: integer
+          complaints?:
+            type: integer
+          clicks?:
+            type: integer
+          opens?:
+            type: integer
+          soft_bounces?:
+            type: integer
+          sent?:
+            type: integer
+          unique_opens?:
+            type: integer
+      name?:
+        type: string
+      notes?:
+        type: string
+      reputation?:
+        type: integer
+      sent_hourly?:
+        type: integer
+      sent_monthly?:
+        type: integer
+      sent_total?:
+        type: integer
+      sent_weekly?:
+        type: integer
+      status?:
+        type: string
+  tag_key:
+    type: object
+    properties:
+      key?:
+        type: string
+      tag?:
+        type: string
+  tags_delete-response:
+    type: object
+    properties:
+      clicks?:
+        type: integer
+      complaints?:
+        type: integer
+      hard_bounces?:
+        type: integer
+      opens?:
+        type: integer
+      rejects?:
+        type: integer
+      reputation?:
+        type: integer
+      sent?:
+        type: integer
+      soft_bounces?:
+        type: integer
+      tag?:
+        type: string
+      unique_clicks?:
+        type: integer
+      unique_opens?:
+        type: integer
+      unsubs?:
+        type: integer
+  tags_info-response:
+    type: object
+    properties:
+      clicks?:
+        type: integer
+      complaints?:
+        type: integer
+      hard_bounces?:
+        type: integer
+      opens?:
+        type: integer
+      rejects?:
+        type: integer
+      sent?:
+        type: integer
+      soft_bounces?:
+        type: integer
+      stats?:
+        type: object
+        properties:
+          last_7_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          today?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_90_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_30_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_60_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+      tag?:
+        type: string
+      unsubs?:
+        type: integer
+  template:
+    type: object
+    properties:
+      code?:
+        type: string
+      from_email?:
+        type: string
+      from_name?:
+        type: string
+      key?:
+        type: string
+      labels?:
+        type: array
+        items:
+          type: string
+      name?:
+        type: string
+      publish?:
+        type: boolean
+      subject?:
+        type: string
+      text?:
+        type: string
+  template_detailed:
+    type: object
+    properties:
+      code?:
+        type: string
+      created_at?:
+        type: string
+      from_email?:
+        type: string
+      from_name?:
+        type: string
+      labels?:
+        type: array
+        items:
+          type: string
+      name?:
+        type: string
+      publish_code?:
+        type: string
+      publish_from_email?:
+        type: string
+      publish_from_name?:
+        type: string
+      publish_name?:
+        type: string
+      publish_subject?:
+        type: string
+      publish_text?:
+        type: string
+      published_at?:
+        type: string
+      slug?:
+        type: string
+      subject?:
+        type: string
+      text?:
+        type: string
+      updated_at?:
+        type: string
+  templates_list:
+    type: object
+    properties:
+      key?:
+        type: string
+      label?:
+        type: string
+  templates_render:
+    type: object
+    properties:
+      key?:
+        type: string
+      merge_vars?:
+        type: array
+        items:
+          type: object
+          properties:
+            name?:
+              type: string
+            content?:
+              type: string
+      template_content?:
+        type: array
+        items:
+          type: object
+          properties:
+            name?:
+              type: string
+            content?:
+              type: string
+      template_name?:
+        type: string
+  templates_render-response:
+    type: object
+    properties:
+      html?:
+        type: string
+  tracking-domain-status:
+    type: object
+    properties:
+      cname?:
+        type: object
+        properties:
+          valid?:
+            type: boolean
+          valid_after?:
+            type: string
+          error?:
+            type: string
+      created_at?:
+        type: string
+      domain?:
+        type: string
+      last_tested_at?:
+        type: string
+      valid_tracking?:
+        type: boolean
+  url_key:
+    type: object
+    properties:
+      key?:
+        type: string
+      q?:
+        type: string
+  urls_time-series:
+    type: object
+    properties:
+      key?:
+        type: string
+      url?:
+        type: string
+  users_info-response:
+    type: object
+    properties:
+      backlog?:
+        type: integer
+      created_at?:
+        type: string
+      hourly_quota?:
+        type: integer
+      public_id?:
+        type: string
+      reputation?:
+        type: integer
+      stats?:
+        type: object
+        properties:
+          last_7_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          all_time?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          today?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_90_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_30_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+          last_60_days?:
+            type: object
+            properties:
+              rejects?:
+                type: integer
+              hard_bounces?:
+                type: integer
+              unique_clicks?:
+                type: integer
+              unsubs?:
+                type: integer
+              complaints?:
+                type: integer
+              clicks?:
+                type: integer
+              opens?:
+                type: integer
+              soft_bounces?:
+                type: integer
+              sent?:
+                type: integer
+              unique_opens?:
+                type: integer
+      username?:
+        type: string
+  users_ping2-response:
+    type: object
+    properties:
+      PING?:
+        type: string
+  webhook:
+    type: object
+    properties:
+      auth_key?:
+        type: string
+      batches_sent?:
+        type: integer
+      created_at?:
+        type: string
+      description?:
+        type: string
+      events?:
+        type: array
+        items:
+          type: string
+      events_sent?:
+        type: integer
+      id?:
+        type: integer
+      last_error?:
+        type: string
+      last_sent_at?:
+        type: string
+      url?:
+        type: string
+  webhook_key:
+    type: object
+    properties:
+      id?:
+        type: integer
+      key?:
+        type: string
+  webhooks_add:
+    type: object
+    properties:
+      description?:
+        type: string
+      events?:
+        type: array
+        items:
+          type: string
+      key?:
+        type: string
+      url?:
+        type: string
+  webhooks_update:
+    type: object
+    properties:
+      description?:
+        type: string
+      events?:
+        type: array
+        items:
+          type: string
+      id?:
+        type: integer
+      key?:
+        type: string
+      url?:
+        type: string
+  whitelists_add-response:
+    type: object
+    properties:
+      email?:
+        type: string
+      whether?:
+        type: boolean
+  whitelists_delete-response:
+    type: object
+    properties:
+      deleted?:
+        type: boolean
+      email?:
+        type: string
+/exports:
+  /activity.json:
+    post:
+      description: 'Begins an export of your activity history. The activity will be
+        exported to a zip archive containing a single file named activity.csv in the
+        same format as you would be able to export from your account''s activity view.
+        It includes the following fields: Date, Email Address, Sender, Subject, Status,
+        Tags, Opens, Clicks, Bounce Detail. If you have configured any custom metadata
+        fields, they will be included in the exported data.'
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: exports_satus
+  /info.json:
+    post:
+      description: Returns information about an export job. If the export job's state is 'complete', the returned data will include a URL you can use to fetch the results. Every export job produces a zip archive, but the format of the archive is distinct for each job type. The api calls that initiate exports include more details about the output format for that job type.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: exports_info-response
+  /list.json:
+    post:
+      description: Returns a list of your exports.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: exports_list-response
+  /rejects.json:
+    post:
+      description: 'Begins an export of your rejection blacklist. The blacklist will
+        be exported to a zip archive containing a single file named rejects.csv that
+        includes the following fields: email, reason, detail, created_at, expires_at,
+        last_event_at, expires_at.'
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: exports_satus
+  /whitelist.json:
+    post:
+      description: 'Begins an export of your rejection whitelist. The whitelist will
+        be exported to a zip archive containing a single file named whitelist.csv
+        that includes the following fields: email, detail, created_at.'
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: exports_satus
+/inbound:
+  /add-domain.json:
+    post:
+      description: Add an inbound domain to your account
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: inbound_info
+  /add-route.json:
+    post:
+      description: Add a new mailbox route to an inbound domain
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: route
+  /check-domain.json:
+    post:
+      description: Check the MX settings for an inbound domain. The domain must have already been added with the add-domain call
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: inbound_info
+  /delete-domain.json:
+    post:
+      description: Delete an inbound domain from the account. All mail will stop routing for this domain immediately.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: inbound_info
+  /delete-route.json:
+    post:
+      description: Delete an existing inbound mailbox route
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: route
+  /domains.json:
+    post:
+      description: List the domains that have been configured for inbound delivery
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: inbound_domains-response
+  /routes.json:
+    post:
+      description: List the mailbox routes defined for an inbound domain
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: inbound_routes-response
+  /send-raw.json:
+    post:
+      description: Take a raw MIME document destined for a domain with inbound domains set up, and send it to the inbound hook exactly as if it had been sent over SMTP
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: inbound_send-raw-response
+  /update-route.json:
+    post:
+      description: Update the pattern or webhook of an existing inbound mailbox route. If null is provided for any fields, the values will remain unchanged.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: route
+/ips:
+  /cancel-warmup.json:
+    post:
+      description: Cancels the warmup process for a dedicated IP.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ip_info
+  /check-custom-dns.json:
+    post:
+      description: Tests whether a domain name is valid for use as the custom reverse DNS for a dedicated IP.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ips_check-custom-dns-response
+  /create-pool.json:
+    post:
+      description: Creates a pool and returns it. If a pool already exists with this name, no action will be performed.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ips_pool
+  /delete-pool.json:
+    post:
+      description: Deletes a pool. A pool must be empty before you can delete it, and you cannot delete your default pool.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ips_delete-pool-response
+  /delete.json:
+    post:
+      description: Deletes a dedicated IP. This is permanent and cannot be undone.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ips_delete-response
+  /info.json:
+    post:
+      description: Retrieves information about a single dedicated ip.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ip_info
+  /list-pools.json:
+    post:
+      description: Lists your dedicated IP pools.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ips_list-pools-response
+  /list.json:
+    post:
+      description: Lists your dedicated IPs.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ips_list-response
+  /pool-info.json:
+    post:
+      description: Describes a single dedicated IP pool.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ips_pool
+  /provision.json:
+    post:
+      description: Requests an additional dedicated IP for your account. Accounts may have one outstanding request at any time, and provisioning requests are processed within 24 hours.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ips_provision-response
+  /set-custom-dns.json:
+    post:
+      description: Configures the custom DNS name for a dedicated IP.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ip_info
+  /set-pool.json:
+    post:
+      description: Moves a dedicated IP to a different pool.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ip_info
+  /start-warmup.json:
+    post:
+      description: Begins the warmup process for a dedicated IP. During the warmup process, Mandrill will gradually increase the percentage of your mail that is sent over the warming-up IP, over a period of roughly 30 days. The rest of your mail will be sent over shared IPs or other dedicated IPs in the same pool.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ip_info
+/messages:
+  /cancel-scheduled.json:
+    post:
+      description: Cancels a scheduled email.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: schedulingchange_info
+  /content.json:
+    post:
+      description: Get the full content of a recently sent message
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: messages_content-response
+  /info.json:
+    post:
+      description: Get the information for a single recently sent message
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: messages_info-response
+  /list-scheduled.json:
+    post:
+      description: Queries your scheduled emails by sender or recipient, or both.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: messages_list-scheduled-response
+  /parse.json:
+    post:
+      description: Parse the full MIME document for an email message, returning the content of the message broken into its constituent pieces
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: messages_parse-response
+  /reschedule.json:
+    post:
+      description: Reschedules a scheduled email.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: schedulingchange_info
+  /search-time-series.json:
+    post:
+      description: Search the content of recently sent messages and return the aggregated hourly stats for matching messages
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: timeseries
+  /search.json:
+    post:
+      description: Search the content of recently sent messages and optionally narrow by date range, tags and senders. This method may be called up to 20 times per minute. If you need the data more often, you can use /messages/info.json to get the information for a single message, or webhooks to push activity to your own application for querying.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: messages_search-response
+  /send-raw.json:
+    post:
+      description: Take a raw MIME document for a message, and send it exactly as if it were sent through Mandrill's SMTP servers
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: message_send-status
+  /send-template.json:
+    post:
+      description: Send a new transactional message through Mandrill using a template
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: message_send-status
+  /send.json:
+    post:
+      description: Send a new transactional message through Mandrill
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: message_send-status
+/metadata:
+  /add.json:
+    post:
+      description: Add a new custom metadata field to be indexed for the account.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: metadata_info
+  /delete.json:
+    post:
+      description: Delete an existing custom metadata field. Deletion isn't instataneous, and /metadata/list will continue to return the field until the asynchronous deletion process is complete.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: metadata_info
+  /list.json:
+    post:
+      description: Get the list of custom metadata fields indexed for the account.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: metadata_list-response
+  /update.json:
+    post:
+      description: Update an existing custom metadata field.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: metadata_info
+/rejects:
+  /add.json:
+    post:
+      description: Adds an email to your email rejection blacklist. Addresses that you add manually will never expire and there is no reputation penalty for removing them from your blacklist. Attempting to blacklist an address that has been whitelisted will have no effect.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: rejects_add-response
+  /delete.json:
+    post:
+      description: Deletes an email rejection. There is no limit to how many rejections you can remove from your blacklist, but keep in mind that each deletion has an affect on your reputation.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: rejects_delete-response
+  /list.json:
+    post:
+      description: Retrieves your email rejection blacklist. You can provide an email address to limit the results. Returns up to 1000 results. By default, entries that have expired are excluded from the results; set include_expired to true to include them.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: rejects_list-response
+/senders:
+  /add-domain.json:
+    post:
+      description: Adds a sender domain to your account. Sender domains are added automatically as you send, but you can use this call to add them ahead of time.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: sender_domain_info
+  /check-domain.json:
+    post:
+      description: Checks the SPF and DKIM settings for a domain. If you haven't already added this domain to your account, it will be added automatically.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: sender_domain_info
+  /domains.json:
+    post:
+      description: Returns the sender domains that have been added to this account.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: senders_domains-response
+  /info.json:
+    post:
+      description: Return more detailed information about a single sender, including aggregates of recent stats
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: senders_info-response
+  /list.json:
+    post:
+      description: Return the senders that have tried to use this account.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: senders
+  /time-series.json:
+    post:
+      description: Return the recent history (hourly stats for the last 30 days) for a sender
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: time-series
+  /verify-domain.json:
+    post:
+      description: Sends a verification email in order to verify ownership of a domain. Domain verification is an optional step to confirm ownership of a domain. Once a domain has been verified in a Mandrill account, other accounts may not have their messages signed by that domain unless they also verify the domain. This prevents other Mandrill accounts from sending mail signed by your domain.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: senders_verify-domain-response
+/subaccounts:
+  /add.json:
+    post:
+      description: Add a new subaccount
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: subaccount_info2
+  /delete.json:
+    post:
+      description: Delete an existing subaccount. Any email related to the subaccount will be saved, but stats will be removed and any future sending calls to this subaccount will fail.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: subaccount_info2
+  /info.json:
+    post:
+      description: Given the ID of an existing subaccount, return the data about it
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: subaccounts_info-response
+  /list.json:
+    post:
+      description: Get the list of subaccounts defined for the account, optionally filtered by a prefix
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: subaccounts_list-response
+  /pause.json:
+    post:
+      description: Pause a subaccount's sending. Any future emails delivered to this subaccount will be queued for a maximum of 3 days until the subaccount is resumed.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: subaccount_info2
+  /resume.json:
+    post:
+      description: Resume a paused subaccount's sending
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: subaccount_info2
+  /update.json:
+    post:
+      description: Update an existing subaccount
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: subaccount_info2
+/tags:
+  /all-time-series.json:
+    post:
+      description: Return the recent history (hourly stats for the last 30 days) for all tags
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: timeseries
+  /delete.json:
+    post:
+      description: Deletes a tag permanently. Deleting a tag removes the tag from any messages that have been sent, and also deletes the tag's stats. There is no way to undo this operation, so use it carefully.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: tags_delete-response
+  /info.json:
+    post:
+      description: Return more detailed information about a single tag, including aggregates of recent stats
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: tags_info-response
+  /list.json:
+    post:
+      description: Return all of the user-defined tag information
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: tags_list-response
+  /time-series.json:
+    post:
+      description: Return the recent history (hourly stats for the last 30 days) for a tag
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: timeseries
+/templates:
+  /add.json:
+    post:
+      description: Add a new template
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: template_detailed
+  /delete.json:
+    post:
+      description: Delete a template
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: template_detailed
+  /info.json:
+    post:
+      description: Get the information for an existing template
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: template_detailed
+  /list.json:
+    post:
+      description: Return a list of all the templates available to this user
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: templates_list-response
+  /publish.json:
+    post:
+      description: Publish the content for the template. Any new messages sent using this template will start using the content that was previously in draft.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: template_detailed
+  /render.json:
+    post:
+      description: Inject content and optionally merge fields into a template, returning the HTML that results
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: templates_render-response
+  /time-series.json:
+    post:
+      description: Return the recent history (hourly stats for the last 30 days) for a template
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: time-series
+  /update.json:
+    post:
+      description: Update the code for an existing template. If null is provided for any fields, the values will remain unchanged.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: template_detailed
+/urls:
+  /add-tracking-domain.json:
+    post:
+      description: Add a tracking domain to your account
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: tracking-domain-status
+  /check-tracking-domain.json:
+    post:
+      description: Checks the CNAME settings for a tracking domain. The domain must have been added already with the add-tracking-domain call
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: tracking-domain-status
+  /list.json:
+    post:
+      description: Get the 100 most clicked URLs
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: url_infos
+  /search.json:
+    post:
+      description: Return the 100 most clicked URLs that match the search query given
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: url_infos
+  /time-series.json:
+    post:
+      description: Return the recent history (hourly stats for the last 30 days) for a url
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: urls_time-series-response
+  /tracking-domains.json:
+    post:
+      description: Get the list of tracking domains set up for this account
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: urls_tracking-domains-response
+/users:
+  /info.json:
+    post:
+      description: Return the information about the API-connected user
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: users_info-response
+  /ping.json:
+    post:
+      description: Validate an API key and respond to a ping
+      responses:
+        200:
+          description: OK
+  /ping2.json:
+    post:
+      description: Validate an API key and respond to a ping (anal JSON parser version)
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: users_ping2-response
+  /senders.json:
+    post:
+      description: Return the senders that have tried to use this account, both verified and unverified
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: senders
+/webhooks:
+  /add.json:
+    post:
+      description: Add a new webhook
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: webhook
+  /delete.json:
+    post:
+      description: Delete an existing webhook
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: webhook
+  /info.json:
+    post:
+      description: Given the ID of an existing webhook, return the data about it
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: webhook
+  /list.json:
+    post:
+      description: Get the list of all webhooks defined on the account
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: webhooks_list-response
+  /update.json:
+    post:
+      description: Update an existing webhook
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: webhook
+/whitelists:
+  /add.json:
+    post:
+      description: Adds an email to your email rejection whitelist. If the address is currently on your blacklist, that blacklist entry will be removed automatically.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: whitelists_add-response
+  /delete.json:
+    post:
+      description: Removes an email address from the whitelist.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: whitelists_delete-response
+  /list.json:
+    post:
+      description: Retrieves your email rejection whitelist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: whitelists_list-response

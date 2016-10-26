@@ -1,0 +1,120 @@
+#%RAML 1.0
+title: MassiveRand TRNG Web Service
+version: '0.1'
+baseUri: testmr.eriomem.net/
+description: This is the experimental API documentation for <a href='http://www.massiverand.com/'>MassiveRand</a> TRNG Web Service. Serving true random numbers since December 2014!<p>Explore our <a href='../tutorials'>Tutorials</a>.</p>
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  RandomByte:
+    type: integer
+    format: int8
+  RandomArray:
+    type: object
+    properties:
+      rand?:
+        type: array
+        items:
+          type: integer
+          format: int8
+/rand:
+  get:
+    description: Returns a list of true random bytes from the MassiveRand True Random Number Generator as blank-separated decimal strings.
+    displayName: Generate a page of true random numbers.
+    queryParameters:
+      length?:
+        type: integer
+        description: Number of bytes to return
+        displayName: length
+      sep?:
+        type: string
+        description: String to use as separator between bytes
+        displayName: sep
+    responses:
+      200:
+        description: successful operation
+        body:
+          text/plain:
+            type: string
+      500:
+        description: Service failure
+/randb58:
+  get:
+    description: Returns a <a href='http://en.wikipedia.org/wiki/Base58'>base58</a> string of true random bytes from the MassiveRand True Random Number Generator.
+    displayName: Generate a base58 encoded page of true random numbers.
+    responses:
+      200:
+        description: successful operation
+      500:
+        description: Service failure
+/randb64:
+  get:
+    description: Returns a <a href='http://en.wikipedia.org/wiki/Base64'>base64</a> string of true random bytes from the MassiveRand True Random Number Generator.
+    displayName: Generate a base64 encoded page of true random numbers.
+    responses:
+      200:
+        description: successful operation
+      500:
+        description: Service failure
+/randbindl:
+  get:
+    description: Returns a binary blob of true random bytes from the MassiveRand True Random Number Generator as an attached file 'rand.raw'.
+    displayName: Generate a binary encoded file of true random numbers.
+    queryParameters:
+      length?:
+        type: integer
+        description: Number of bytes to return
+        displayName: length
+    responses:
+      200:
+        description: successful operation
+      500:
+        description: Service failure
+/randbinds:
+  get:
+    description: Returns a binary blob of true random bytes from the MassiveRand True Random Number Generator.
+    displayName: Generate a binary stream of true random numbers.
+    queryParameters:
+      length?:
+        type: integer
+        description: Number of bytes to return
+        displayName: length
+    responses:
+      200:
+        description: successful operation
+      500:
+        description: Service failure
+/randjson:
+  get:
+    description: Returns a list of true random bytes from the MassiveRand True Random Number Generator as a JSON string.
+    displayName: Generate a JSON list of true random numbers.
+    queryParameters:
+      length?:
+        type: integer
+        description: Number of bytes to return
+        displayName: length
+      sep?:
+        type: string
+        description: String to use as separator between bytes
+        displayName: sep
+    responses:
+      200:
+        description: successful operation
+        body:
+          text/plain:
+            type: RandomArray
+      500:
+        description: Service failure
+/randprime:
+  get:
+    description: Returns a large prime number (1536b long) from MassiveRand's Million Prime Database, as an hexadecimal string.
+    displayName: Generate a large random prime number.
+    responses:
+      200:
+        description: successful operation
+        body:
+          text/plain:
+            type: string
+      500:
+        description: Service failure

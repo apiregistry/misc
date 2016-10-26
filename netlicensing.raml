@@ -1,0 +1,1565 @@
+#%RAML 1.0
+title: Labs64 NetLicensing RESTful API Test Center
+version: 2.x
+baseUri: go.netlicensing.io/core/v2/rest
+description: !!binary |-
+  VGhlIExhYnM2NCA8YSBocmVmPSdodHRwczovL3d3dy5sYWJzNjQuZGUvY29uZmx1ZW5jZS94L3B3Q28nIHRhcmdldD0nX2JsYW5rJz5OZXRMaWNlbnNpbmcgUkVTVGZ1bCBBUEk8L2E+IGdpdmVzIHlvdSBhY2Nlc3MgdG8gTmV0TGljZW5zaW5nw6LCgMKZcyBjb3JlIGZlYXR1cmVzLjxici8+PGJyLz48c3Ryb25nPkF1dGhlbnRpY2F0aW9uPC9zdHJvbmc+PGJyLz5Zb3UgYXV0aGVudGljYXRlIHRvIHRoZSBOZXRMaWNlbnNpbmcgQVBJIGJ5IHByb3ZpZGluZyB5b3VyIGFjY291bnQgY3JlZGVudGlhbHMgb3Igc2ltcGx5IHVzZSBvdXIgZGVtbyBhY2NvdW50IC0gPGNvZGU+ZGVtbzpkZW1vPC9jb2RlPjxici8+PGJyLz5GaW5kIG91dCBtb3JlIGFib3V0IExhYnM2NCBOZXRMaWNlbnNpbmcgYXQgPGEgaHJlZj0naHR0cDovL25ldGxpY2Vuc2luZy5pbycgdGFyZ2V0PSdfYmxhbmsnPm5ldGxpY2Vuc2luZy5pbzwvYT4=
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api_key:
+    type: Pass Through
+  basicAuth:
+    type: Basic Authentication
+    description: HTTP Basic Authentication. Works over `HTTP` and `HTTPS`
+types:
+  License:
+    type: object
+    properties:
+      active?:
+        type: boolean
+        description: If set to 'false', the license is disabled. License can be re-enabled, but as long as it is disabled, the license is excluded from the validation process.
+      currency?:
+        type: string
+        description: specifies currency for the license price. Check data types to discover which currencies are supported. Read-only, set from license template on creation.
+      hidden?:
+        type: boolean
+        description: If set to 'true', this license is not shown in NetLicensing Shop as purchased license. Set from license template on creation, if not specified explicitly.
+      name?:
+        type: string
+        description: Name for the licensed item. Set from license template on creation, if not specified explicitly.
+      number?:
+        type: string
+        description: Unique number (across all products/licensees of a vendor) that identifies the license. Vendor can assign this number when creating a license or let NetLicensing generate one. Read-only after corresponding creation transaction status is set to closed.
+      price?:
+        type: number
+        description: price for the license. If >0, it must always be accompanied by the currency specification. Read-only, set from license template on creation.
+        format: double
+  LicenseTemplate:
+    type: object
+    properties:
+      active?:
+        type: boolean
+        description: If set to 'false', the license template is disabled. Licensee can not obtain any new licenses off this license template.
+      automatic?:
+        type: boolean
+        description: If set to 'true', every new licensee automatically gets one license out of this license template on creation. Automatic licenses must have their price set to 0.
+      currency?:
+        type: string
+        description: specifies currency for the license price. Check data types to discover which currencies are supported.
+      hidden?:
+        type: boolean
+        description: If set to 'true', this license template is not shown in NetLicensing Shop as offered for purchase.
+      hiddenLicenses?:
+        type: boolean
+        description: If set to 'true', licenses from this license template are not visible to the end customer, but participate in validation.
+      licenseType?:
+        type: string
+        description: type of licenses created from this license template
+        enum:
+        - FEATURE
+        - TIMEVOLUME
+      name?:
+        type: string
+        description: Name for the licensed item.
+      number?:
+        type: string
+        description: Unique number (across all products of a vendor) that identifies the license template. Vendor can assign this number when creating a license template or let NetLicensing generate one. Read-only after creation of the first license from this license template.
+      price?:
+        type: number
+        description: price for the license. If >0, it must always be accompanied by the currency specification.
+        format: double
+  Licensee:
+    type: object
+    properties:
+      active?:
+        type: boolean
+        description: If set to 'false', the licensee is disabled. Licensee can not obtain new licenses, and validation is disabled.
+      number?:
+        type: string
+        description: Unique number (across all products of a vendor) that identifies the licensee. Vendor can assign this number when creating a licensee or let NetLicensing generate one. Read-only after creation of the first license for the licensee.
+  PaymentMethod:
+    type: object
+    properties:
+      active?:
+        type: boolean
+      number?:
+        type: string
+  Product:
+    type: object
+    properties:
+      active?:
+        type: boolean
+        description: If set to 'false', the product is disabled. No new licensees can be registered for the product, existing licensees can not obtain new licenses
+      licenseeAutoCreate?:
+        type: boolean
+        description: If set to 'true', non-existing licensees will be created at first validation attempt.
+      name?:
+        type: string
+        description: Product name. Together with the version identifies the product for the end customer
+      number?:
+        type: string
+        description: Unique number that identifies the product. Vendor can assign this number when creating a product or let NetLicensing generate one. Read-only after creation of the first licensee for the product.
+      version?:
+        type: string
+        description: Product version. Convenience parameter, additional to the product name.
+  ProductModule:
+    type: object
+    properties:
+      active?:
+        type: boolean
+        description: If set to 'false', the product module is disabled. Licensees can not obtain any new licenses for this product module.
+      licensingInfo?:
+        type: string
+        description: Licensing model applied to this product module. Defines what license templates can be configured for the product module and how licenses for this product module are processed during validation.
+      name?:
+        type: string
+        description: Product module name that is visible to the end customers in NetLicensing Shop.
+      number?:
+        type: string
+        description: Unique number (across all products of a vendor) that identifies the product module. Vendor can assign this number when creating a product module or let NetLicensing generate one. Read-only after creation of the first licensee for the product.
+  Token:
+    type: object
+    properties:
+      active?:
+        type: boolean
+      expirationTime?:
+        type: datetime
+      licenseNumber?:
+        type: string
+      number?:
+        type: string
+      shopURL?:
+        type: string
+      tokenType?:
+        type: string
+      vensorNumber?:
+        type: string
+  Transaction:
+    type: object
+    properties:
+      active?:
+        type: string
+        description: Always true for the transactions
+      number?:
+        type: string
+        description: Unique number (across all products of a vendor) that identifies the transaction. This number is always generated by NetLicensing.
+      source?:
+        type: string
+        enum:
+        - SHOP
+      status?:
+        type: string
+        enum:
+        - CANCELLED
+        - CLOSED
+        - PENDING
+  discount:
+    type: object
+    properties:
+      amountPercent?:
+        type: string
+      currency?:
+        type: string
+      totalPrice?:
+        type: number
+        format: double
+  infos:
+    type: object
+  items:
+    type: object
+  licensingModel:
+    type: object
+    properties:
+      name?:
+        type: string
+  netlicensing:
+    type: object
+    properties:
+      infos?:
+        type: infos
+      items?:
+        type: items
+/license:
+  /{licenseNumber}:
+    uriParameters:
+      licenseNumber:
+        type: string
+        description: Unique number (across all products/licensees of a vendor) that identifies the license. Vendor can assign this number when creating a license or let NetLicensing generate one. Read-only after corresponding creation transaction status is set to closed.
+        displayName: licenseNumber
+    get:
+      description: Get license by a licenseNumber
+      displayName: Get license
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    delete:
+      description: Delete license by a licenseNumber
+      displayName: Delete license
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    post:
+      description: Update license by a licenseNumber
+      displayName: Update license
+      body:
+        application/x-www-form-urlencoded:
+          type: object
+          properties:
+            number?:
+              type: string
+              description: Unique number (across all products/licensees of a vendor) that identifies the license. Vendor can assign this number when creating a license or let NetLicensing generate one. Read-only after corresponding creation transaction status is set to closed.
+              displayName: number
+            active?:
+              type: boolean
+              displayName: active
+            name?:
+              type: string
+              description: Name for the licensed item. Set from license template on creation, if not specified explicitly.
+              displayName: name
+            startDate?:
+              type: datetime
+              description: for TIMEVOLUME licenseType
+              displayName: startDate
+            parentfeature?:
+              type: string
+              displayName: parentfeature
+            timeVolume?:
+              type: string
+              displayName: timeVolume
+            price?:
+              type: number
+              description: Price for the license. If > 0, it must always be accompanied by the currency specification. Read-only, set from license template on creation
+              displayName: price
+              format: double
+            currency?:
+              type: string
+              description: Specifies currency for the license price. Check data types to discover which currencies are supported. Read-only, set from license template on creation
+              displayName: currency
+            hidden?:
+              type: boolean
+              description: If set to 'true', this license is not shown in NetLicensing Shop as purchased license. Set from license template on creation, if not specified explicitly
+              displayName: hidden
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  get:
+    description: Return a list of all licenses for the current vendor
+    displayName: Licenses list
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: array
+            items:
+              type: netlicensing
+          application/json:
+            type: array
+            items:
+              type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+  post:
+    description: Creates a new license
+    displayName: Create license
+    body:
+      application/x-www-form-urlencoded:
+        type: object
+        properties:
+          licenseeNumber:
+            type: string
+            displayName: licenseeNumber
+          licenseTemplateNumber:
+            type: string
+            displayName: licenseTemplateNumber
+          active:
+            type: boolean
+            displayName: active
+          number:
+            type: string
+            displayName: number
+          name?:
+            type: string
+            description: Name for the licensed item. Set from license template on creation, if not specified explicitly.
+            displayName: name
+          parentfeature?:
+            type: string
+            description: Mandatory for 'TIMEVOLUME' license type and 'RENTAL' licensing model
+            displayName: parentfeature
+          timeVolume?:
+            type: string
+            description: Mandatory for 'TIMEVOLUME' license type.
+            displayName: timeVolume
+          startDate?:
+            type: datetime
+            description: Mandatory for 'TIMEVOLUME' license type.
+            displayName: startDate
+          price?:
+            type: number
+            description: Price for the license. If >0, it must always be accompanied by the currency specification. Read-only, set from license template on creation
+            displayName: price
+            format: double
+          currency?:
+            type: string
+            description: Specifies currency for the license price. Check data types to discover which currencies are supported. Read-only, set from license template on creation
+            displayName: currency
+          hidden?:
+            type: boolean
+            description: If set to 'true', this license is not shown in NetLicensing Shop as purchased license. Set from license template on creation, if not specified explicitly
+            displayName: hidden
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: netlicensing
+          application/json:
+            type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+/licensee:
+  /{licenseeNumber}:
+    uriParameters:
+      licenseeNumber:
+        type: string
+        description: Unique number (across all products of a vendor) that identifies the licensee. Vendor can assign this number when creating a licensee or let NetLicensing generate one. Read-only after creation of the first license for the licensee.
+        displayName: licenseeNumber
+    /validate:
+      get:
+        description: Validates active licenses of the licensee
+        displayName: Validate licensee
+        queryParameters:
+          productNumber?:
+            type: string
+            description: Product number, must be provided when 'licensee auto-create' is enabled (see also Product JavaDoc). Identifies the product to which new licensee should be added
+            displayName: productNumber
+          licenseeName?:
+            type: string
+            description: Human-readable name for the auto-created licensee (will be set as custom Licensee property)
+            displayName: licenseeName
+        responses:
+          200:
+            description: Successful request
+            body:
+              application/xml:
+                type: netlicensing
+              application/json:
+                type: netlicensing
+          400:
+            description: Malformed or illegal request
+          403:
+            description: Access is denied
+          404:
+            description: Resource not found
+          500:
+            description: Internal service error
+    get:
+      description: Return a licensee by licenseeNumber
+      displayName: Get licensee
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    delete:
+      description: Delete a licensee by number
+      displayName: Delete licensee
+      queryParameters:
+        forceCascade?:
+          type: boolean
+          description: Force object deletion and all descendants.
+          displayName: forceCascade
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    post:
+      description: Sets the provided properties to a licensee. Return an updated licensee
+      displayName: Update licensee
+      body:
+        application/x-www-form-urlencoded:
+          type: object
+          properties:
+            number?:
+              type: string
+              description: New licensee number (update).
+              displayName: number
+            active?:
+              type: boolean
+              description: If set to 'false', the licensee is disabled. Licensee can not obtain new licenses, and validation is disabled
+              displayName: active
+            name?:
+              type: string
+              displayName: name
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  get:
+    description: Return a list of all licensees for the current vendor
+    displayName: Licensees list
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: array
+            items:
+              type: netlicensing
+          application/json:
+            type: array
+            items:
+              type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+  post:
+    description: Creates a new licensee
+    displayName: Create licensee
+    body:
+      application/x-www-form-urlencoded:
+        type: object
+        properties:
+          number?:
+            type: string
+            description: Unique number (across all products of a vendor) that identifies the licensee. Vendor can assign this number when creating a licensee or let NetLicensing generate one. Read-only after creation of the first license for the licensee
+            displayName: number
+          productNumber:
+            type: string
+            description: productNumber to assign new licensee object
+            displayName: productNumber
+          name?:
+            type: string
+            displayName: name
+          active:
+            type: boolean
+            description: If set to 'false', the licensee is disabled. Licensee can not obtain new licenses, and validation is disabled
+            displayName: active
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: netlicensing
+          application/json:
+            type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+/licensetemplate:
+  /{licenseTemplateNumber}:
+    uriParameters:
+      licenseTemplateNumber:
+        type: string
+        description: Unique number (across all products of a vendor) that identifies the license template. Vendor can assign this number when creating a license template or let NetLicensing generate one. Read-only after creation of the first license from this license template.
+        displayName: licenseTemplateNumber
+    get:
+      description: Return a license template by licenseTemplateNumber
+      displayName: Get license template
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    delete:
+      description: Delete a license template by number.
+      displayName: Delete license template
+      queryParameters:
+        forceCascade?:
+          type: boolean
+          description: Force object deletion and all descendants.
+          displayName: forceCascade
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    post:
+      description: Sets the provided properties to a license template. Return an updated license template
+      displayName: Update license template
+      body:
+        application/x-www-form-urlencoded:
+          type: object
+          properties:
+            number?:
+              type: string
+              description: New license template number (update).
+              displayName: number
+            name?:
+              type: string
+              description: Name for the licensed item
+              displayName: name
+            active?:
+              type: boolean
+              description: If set to 'false', the license template is disabled. Licensee can not obtain any new licenses off this license template.
+              displayName: active
+            licenseType?:
+              type: array
+              description: 'type of licenses created from this license template. Supported
+                types: FEATURE, TIMEVOLUME, FLOATING'
+              displayName: licenseType
+              items:
+                type: string
+                enum:
+                - FEATURE
+                - TIMEVOLUME
+                - FLOATING
+            timeVolume?:
+              type: string
+              description: Mandatory for 'TIMEVOLUME' license type.
+              displayName: timeVolume
+            maxSessions?:
+              type: string
+              description: Mandatory for 'FLOATING' license type.
+              displayName: maxSessions
+            price?:
+              type: number
+              description: Price for the license. If >0, it must always be accompanied by the currency specification.
+              displayName: price
+              format: double
+            currency?:
+              type: string
+              description: Specifies currency for the license price. Check data types to discover which currencies are supported.
+              displayName: currency
+            automatic?:
+              type: boolean
+              description: If set to 'true', every new licensee automatically gets one license out of this license template on creation. Automatic licenses must have their price set to 0.
+              displayName: automatic
+            hidden?:
+              type: boolean
+              description: If set to 'true', this license template is not shown in NetLicensing Shop as offered for purchase.
+              displayName: hidden
+            hideLicenses?:
+              type: boolean
+              description: If set to 'true', licenses from this license template are not visible to the end customer, but participate in validation.
+              displayName: hideLicenses
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  get:
+    description: Return a list of all license templates for the current vendor
+    displayName: License Templates list
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: array
+            items:
+              type: netlicensing
+          application/json:
+            type: array
+            items:
+              type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+  post:
+    description: Creates a new license template
+    displayName: Create license template
+    body:
+      application/x-www-form-urlencoded:
+        type: object
+        properties:
+          productModuleNumber:
+            type: string
+            description: !!binary |-
+              TnVtYmVyIG9mIHByb2R1Y3QgbW9kdWxlIHRvIMORwoFyZWF0ZSBsaWNlbnNlIHRlbXBsYXRlIG9iamVjdA==
+            displayName: productModuleNumber
+          number:
+            type: string
+            description: lUnique number (across all products of a vendor) that identifies the license template. Vendor can assign this number when creating a license template or let NetLicensing generate one. Read-only after creation of the first license from this license template.
+            displayName: number
+          name:
+            type: string
+            description: !!binary |-
+              bGljZW5zZSB0ZW1wbGF0ZSBuYW1lIHRvIMORwoFyZWF0ZSBsaWNlbnNlIHRlbXBsYXRlIG9iamVjdA==
+            displayName: name
+          active:
+            type: boolean
+            description: If set to 'false', the license template is disabled. Licensee can not obtain any new licenses off this license template.
+            displayName: active
+          licenseType:
+            type: array
+            description: 'type of licenses created from this license template. Supported
+              types: FEATURE, TIMEVOLUME'
+            displayName: licenseType
+            items:
+              type: string
+              enum:
+              - FEATURE
+              - TIMEVOLUME
+              - FLOATING
+          timeVolume?:
+            type: string
+            description: Mandatory for 'TIMEVOLUME' license type.
+            displayName: timeVolume
+          maxSessions?:
+            type: string
+            description: Mandatory for 'FLOATING' license type.
+            displayName: maxSessions
+          price?:
+            type: number
+            description: price for the license. If >0, it must always be accompanied by the currency specification.
+            displayName: price
+            format: double
+          currency?:
+            type: string
+            description: specifies currency for the license price. Check data types to discover which currencies are supported.
+            displayName: currency
+          automatic?:
+            type: boolean
+            description: If set to 'true', every new licensee automatically gets one license out of this license template on creation. Automatic licenses must have their price set to 0.
+            displayName: automatic
+          hidden?:
+            type: boolean
+            description: If set to 'true', this license template is not shown in NetLicensing Shop as offered for purchase.
+            displayName: hidden
+          hideLicenses?:
+            type: boolean
+            description: If set to 'true', licenses from this license template are not visible to the end customer, but participate in validation.
+            displayName: hideLicenses
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: netlicensing
+          application/json:
+            type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+/paymentmethod:
+  /{paymentMethodNumber}:
+    uriParameters:
+      paymentMethodNumber:
+        type: string
+        description: Payment method number
+        displayName: paymentMethodNumber
+    get:
+      description: Return a payment method info by paymentMethodNumber
+      displayName: Get payment method
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    post:
+      description: Sets the provided properties to a payment method. Return an updated payment method
+      displayName: Update payment method
+      body:
+        application/x-www-form-urlencoded:
+          type: object
+          properties:
+            active?:
+              type: boolean
+              description: If set to 'false', the payment method is disabled.
+              displayName: active
+            paypal.subject?:
+              type: string
+              description: The e-mail address of the PayPal account for which you are making the API calls.
+              displayName: paypal.subject
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  get:
+    description: Return a list of all payment methods for the current vendor
+    displayName: Payment Methods list
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: array
+            items:
+              type: netlicensing
+          application/json:
+            type: array
+            items:
+              type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+/product:
+  /{productNumber}:
+    uriParameters:
+      productNumber:
+        type: string
+        description: Unique number that identifies the product.
+        displayName: productNumber
+    get:
+      description: Return a product by productNumber
+      displayName: Get product
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    delete:
+      description: Delete a product by number
+      displayName: Delete product
+      queryParameters:
+        forceCascade?:
+          type: boolean
+          description: Force object deletion and all descendants.
+          displayName: forceCascade
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    post:
+      description: Sets the provided properties to a product. Return an updated product
+      displayName: Update product
+      body:
+        application/x-www-form-urlencoded:
+          type: object
+          properties:
+            number?:
+              type: string
+              description: New product number (update)
+              displayName: number
+            active?:
+              type: boolean
+              description: If set to 'false', the product is disabled. No new licensees can be registered for the product, existing licensees can not obtain new licenses.
+              displayName: active
+            name?:
+              type: string
+              description: Product name. Together with the version identifies the product for the end customer.
+              displayName: name
+            version?:
+              type: string
+              description: Product version. Convenience parameter, additional to the product name.
+              displayName: version
+            licenseeAutoCreate?:
+              type: boolean
+              description: If set to 'true', non-existing licensees will be created at first validation attempt.
+              displayName: licenseeAutoCreate
+            description?:
+              type: string
+              description: Product description.
+              displayName: description
+            licensingInfo?:
+              type: string
+              description: Licensing information.
+              displayName: licensingInfo
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  get:
+    description: Return a list of all configured products for the current vendor
+    displayName: Products list
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: array
+            items:
+              type: netlicensing
+          application/json:
+            type: array
+            items:
+              type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+  post:
+    description: Creates a new product
+    displayName: Create product
+    body:
+      application/x-www-form-urlencoded:
+        type: object
+        properties:
+          number?:
+            type: string
+            description: Unique number that identifies the product. Vendor can assign this number when creating a product or let NetLicensing generate one.
+            displayName: number
+          active:
+            type: boolean
+            description: If set to 'false', the product is disabled. No new licensees can be registered for the product, existing licensees can not obtain new licenses.
+            displayName: active
+          name:
+            type: string
+            description: Product name. Together with the version identifies the product for the end customer.
+            displayName: name
+          version:
+            type: string
+            description: Product version. Convenience parameter, additional to the product name.
+            displayName: version
+          licenseeAutoCreate?:
+            type: boolean
+            description: If set to 'true', non-existing licensees will be created at first validation attempt.
+            displayName: licenseeAutoCreate
+          description?:
+            type: string
+            description: Product description.
+            displayName: description
+          licensingInfo?:
+            type: string
+            description: Licensing information.
+            displayName: licensingInfo
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: netlicensing
+          application/json:
+            type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+/productmodule:
+  /{productModuleNumber}:
+    uriParameters:
+      productModuleNumber:
+        type: string
+        description: Unique number (across all products of a vendor) that identifies the product module. Vendor can assign this number when creating a product module or let NetLicensing generate one. Read-only after creation of the first licensee for the product.
+        displayName: productModuleNumber
+    get:
+      description: Return a product module by productModuleNumber
+      displayName: Get product module
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    delete:
+      description: Delete a product module by number
+      displayName: Delete product module
+      queryParameters:
+        forceCascade?:
+          type: boolean
+          description: Force object deletion and all descendants.
+          displayName: forceCascade
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    post:
+      description: Sets the provided properties to a product module. Return an updated product module
+      displayName: Update product module
+      body:
+        application/x-www-form-urlencoded:
+          type: object
+          properties:
+            number?:
+              type: string
+              description: New product module number (update).
+              displayName: number
+            active?:
+              type: boolean
+              description: If set to 'false', the product module is disabled. Licensees can not obtain any new licenses for this product module.
+              displayName: active
+            name?:
+              type: string
+              description: Product module name that is visible to the end customers in NetLicensing Shop.
+              displayName: name
+            licensingModel?:
+              type: array
+              description: Licensing model applied to this product module. Defines what license templates can be configured for the product module and how licenses for this product module are processed during validation.
+              displayName: licensingModel
+              items:
+                type: string
+                enum:
+                - Subscription
+                - TryAndBuy
+                - Rental
+                - Floating
+            maxCheckoutValidity?:
+              type: integer
+              description: Maximum checkout validity (days). Mandatory for 'Floating' licensing model.
+              displayName: maxCheckoutValidity
+              format: int32
+            yellowThreshold?:
+              type: integer
+              description: Remaining time volume for yellow level. Mandatory for 'Rental' licensing model.
+              displayName: yellowThreshold
+              format: int32
+            redThreshold?:
+              type: integer
+              description: Remaining time volume for red level. Mandatory for 'Rental' licensing model.
+              displayName: redThreshold
+              format: int32
+            licenseTemplate?:
+              type: array
+              description: License template. Mandatory for 'Try &amp; Buy' licensing model.
+              displayName: licenseTemplate
+              items:
+                type: string
+                enum:
+                - TIMEVOLUME
+                - FEATURE
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  get:
+    description: Return a list of all product modules for the current vendor
+    displayName: Product Modules list
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: array
+            items:
+              type: netlicensing
+          application/json:
+            type: array
+            items:
+              type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+  post:
+    description: Creates a new product module
+    displayName: Create product module
+    body:
+      application/x-www-form-urlencoded:
+        type: object
+        properties:
+          productNumber:
+            type: string
+            description: Unique number (across all products of a vendor) that identifies the product module. Vendor can assign this number when creating a product module or let NetLicensing generate one. Read-only after creation of the first licensee for the product.
+            displayName: productNumber
+          number?:
+            type: string
+            description: Unique number (across all products of a vendor) that identifies the product module. Vendor can assign this number when creating a product module or let NetLicensing generate one. Read-only after creation of the first licensee for the product.
+            displayName: number
+          active:
+            type: boolean
+            description: If set to 'false', the product module is disabled. Licensees can not obtain any new licenses for this product module.
+            displayName: active
+          name:
+            type: string
+            description: Product module name that is visible to the end customers in NetLicensing Shop.
+            displayName: name
+          licensingModel:
+            type: array
+            description: Licensing model applied to this product module. Defines what license templates can be configured for the product module and how licenses for this product module are processed during validation.
+            displayName: licensingModel
+            items:
+              type: string
+              enum:
+              - Subscription
+              - TryAndBuy
+              - Rental
+              - Floating
+          maxCheckoutValidity?:
+            type: integer
+            description: Maximum checkout validity (days). Mandatory for 'Floating' licensing model.
+            displayName: maxCheckoutValidity
+            format: int32
+          yellowThreshold?:
+            type: integer
+            description: Remaining time volume for yellow level. Mandatory for 'Rental' licensing model.
+            displayName: yellowThreshold
+            format: int32
+          redThreshold?:
+            type: integer
+            description: Remaining time volume for red level. Mandatory for 'Rental' licensing model.
+            displayName: redThreshold
+            format: int32
+          licenseTemplate?:
+            type: array
+            description: License template. Mandatory for 'Try &amp; Buy' licensing model.
+            displayName: licenseTemplate
+            items:
+              type: string
+              enum:
+              - TIMEVOLUME
+              - FEATURE
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: netlicensing
+          application/json:
+            type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+/token:
+  /{tokenNumber}:
+    uriParameters:
+      tokenNumber:
+        type: string
+        description: Token number
+        displayName: tokenNumber
+    get:
+      description: Return a token by tokenNumber
+      displayName: Get token
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    delete:
+      description: Delete a token by number
+      displayName: Delete token
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  get:
+    description: Return a list of all tokens for the current vendor
+    displayName: Tokens list
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: array
+            items:
+              type: netlicensing
+          application/json:
+            type: array
+            items:
+              type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+  post:
+    description: Create token by tokenType and additional token parameters
+    displayName: Create token
+    body:
+      application/x-www-form-urlencoded:
+        type: object
+        properties:
+          tokenType:
+            type: string
+            description: Token type to be generated
+            displayName: tokenType
+            enum:
+            - DEFAULT
+            - SHOP
+            - APIKEY
+          licenseeNumber?:
+            type: string
+            description: for <i>tokenType=SHOP</i> only (mandatory); identifies licensee that will be assigned to the shop token
+            displayName: licenseeNumber
+          successURL?:
+            type: string
+            description: for <i>tokenType=SHOP</i> only; take customers to this URL when they finish checkout
+            displayName: successURL
+          successURLTitle?:
+            type: string
+            description: for <i>tokenType=SHOP</i> only; shop link title for successful checkout process
+            displayName: successURLTitle
+          cancelURL?:
+            type: string
+            description: for <i>tokenType=SHOP</i> only; take customers to this URL when they cancel their checkout
+            displayName: cancelURL
+          cancelURLTitle?:
+            type: string
+            description: for <i>tokenType=SHOP</i> only; shop link title for cancel checkout process
+            displayName: cancelURLTitle
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: netlicensing
+          application/json:
+            type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+/transaction:
+  /{transactionNumber}:
+    uriParameters:
+      transactionNumber:
+        type: string
+        description: Unique number (across all products of a vendor) that identifies the transaction
+        displayName: transactionNumber
+    get:
+      description: Return a transaction by transactionNumber
+      displayName: 'Get transaction '
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+    post:
+      description: Sets the provided properties to a transaction. Return an updated transaction
+      displayName: Update transaction
+      body:
+        application/x-www-form-urlencoded:
+          type: object
+          properties:
+            number?:
+              type: string
+              description: Unique number (across all products of a vendor) that identifies the transaction
+              displayName: number
+            active?:
+              type: boolean
+              description: always true for transactions
+              displayName: active
+            status?:
+              type: string
+              displayName: status
+              enum:
+              - CANCELLED
+              - CLOSED
+              - PENDING
+            source?:
+              type: string
+              description: AUTO transaction for internal use only
+              displayName: source
+              enum:
+              - SHOP
+            dateCreated?:
+              type: datetime
+              displayName: dateCreated
+            dateClosed?:
+              type: datetime
+              displayName: dateClosed
+            paymentMethod?:
+              type: string
+              displayName: paymentMethod
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  get:
+    description: Return a list of all transactions for the current vendor
+    displayName: Transactions list
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: array
+            items:
+              type: netlicensing
+          application/json:
+            type: array
+            items:
+              type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+  post:
+    description: Creates a new transaction
+    displayName: Create transaction
+    body:
+      application/x-www-form-urlencoded:
+        type: object
+        properties:
+          licenseeNumber:
+            type: string
+            displayName: licenseeNumber
+          number?:
+            type: string
+            description: Unique number (across all products of a vendor) that identifies the transaction
+            displayName: number
+          active:
+            type: boolean
+            description: always true for transactions
+            displayName: active
+          status:
+            type: string
+            displayName: status
+            enum:
+            - CANCELLED
+            - CLOSED
+            - PENDING
+          source:
+            type: string
+            description: AUTO transaction for internal use only
+            displayName: source
+            enum:
+            - SHOP
+          dateCreated?:
+            type: datetime
+            displayName: dateCreated
+          dateClosed?:
+            type: datetime
+            displayName: dateClosed
+          paymentMethod?:
+            type: string
+            displayName: paymentMethod
+    responses:
+      200:
+        description: Successful request
+        body:
+          application/xml:
+            type: netlicensing
+          application/json:
+            type: netlicensing
+      400:
+        description: Malformed or illegal request
+      403:
+        description: Access is denied
+      404:
+        description: Resource not found
+      500:
+        description: Internal service error
+/utility:
+  /licenseTypes:
+    get:
+      description: Return a list of all license types supported by the service
+      displayName: License Types list
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error
+  /licensingModels:
+    get:
+      description: Return a list of all licensing models supported by the service
+      displayName: Licensing Models list
+      responses:
+        200:
+          description: Successful request
+          body:
+            application/xml:
+              type: netlicensing
+            application/json:
+              type: netlicensing
+        400:
+          description: Malformed or illegal request
+        403:
+          description: Access is denied
+        404:
+          description: Resource not found
+        500:
+          description: Internal service error

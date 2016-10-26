@@ -1,0 +1,1970 @@
+#%RAML 1.0
+title: Indix
+version: 2.0.0
+baseUri: api.indix.com/
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/v2:
+  /brands:
+    get:
+      description: <p>Lists all brands, along with their IDs, matching query term. Does not support wildcards. Limit is 10 results per query. This API does not consume any credits.
+      displayName: !!binary |-
+        U2VhcmNoIEJyYW5kcyAtIExpc3RzIGFsbCBicmFuZHMgYWxvbmcgd2l0aCB0aGVpciBJRHMgLSBDcmVkaXRzOiDDo8KAwoAw
+      queryParameters:
+        q:
+          type: string
+          description: Search term to match against brand name. Partial match. Case insensitive.
+          displayName: q
+        app_id:
+          type: string
+          description: Your application id
+          displayName: app_id
+        app_key:
+          type: string
+          description: Your application key
+          displayName: app_key
+      responses:
+        200:
+          description: Response
+  /bulk:
+    /ase:
+      /{jobId}:
+        uriParameters:
+          jobId:
+            type: string
+            description: The id that would be used to query the status of the submitted job and download the final products
+            displayName: jobId
+        /download:
+          get:
+            description: API downloads the products as a file. This API does not consume any credits.
+            displayName: !!binary |-
+              QVNFIEJ1bGsgLSBEb3dubG9hZCB0aGUgcHJvZHVjdHMgYXMgYSBmaWxlIC0gQ3JlZGl0czogw6PCgMKAMA==
+            queryParameters:
+              app_id:
+                type: string
+                description: Your application id
+                displayName: app_id
+              app_key:
+                type: string
+                description: Your application key
+                displayName: app_key
+            responses:
+              200:
+                description: Response
+        get:
+          description: API returns the status  of  the bulk  Job. This API does not consume any credits.
+          displayName: !!binary |-
+            QVNFIEJ1bGsgLSBHZXQgam9iIHN0YXR1cyAtIENyZWRpdHM6IMOjwoDCgDA=
+          queryParameters:
+            app_id:
+              type: string
+              description: Your application id
+              displayName: app_id
+            app_key:
+              type: string
+              description: Your application key
+              displayName: app_key
+          responses:
+            200:
+              description: Response
+    /jobs:
+      /{jobId}:
+        uriParameters:
+          jobId:
+            type: string
+            description: The id that would be used to query the status of the submitted job and download the final products
+            displayName: jobId
+        /download:
+          get:
+            description: API downloads the products as a file. This API does not consume any credits.
+            displayName: !!binary |-
+              QnVsayAtIERvd25sb2FkIHRoZSBwcm9kdWN0cyBhcyBhIGZpbGUgLSBDcmVkaXRzOiDDo8KAwoAw
+            queryParameters:
+              app_id:
+                type: string
+                description: Your application id
+                displayName: app_id
+              app_key:
+                type: string
+                description: Your application key
+                displayName: app_key
+            responses:
+              200:
+                description: Response
+        get:
+          description: API returns the status  of  the bulk  Job. This API does not consume any credits.
+          displayName: !!binary |-
+            QnVsayAtIEdldCBqb2Igc3RhdHVzIC0gQ3JlZGl0czogw6PCgMKAMA==
+          queryParameters:
+            app_id:
+              type: string
+              description: Your application id
+              displayName: app_id
+            app_key:
+              type: string
+              description: Your application key
+              displayName: app_key
+          responses:
+            200:
+              description: Response
+  /catalogPremium:
+    /bulk:
+      /lookup:
+        post:
+          description: This operation returns the catalog premium information for the specified product across all the stores where it is sold at. This consumes 18 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIGNhdGFsb2cgcHJlbWl1bSBpbmZvcm1hdGlvbiBmb3IgYSBwcm9kdWN0IC0gQ3JlZGl0czogw6PCgMKAbiB4IDE4
+          body:
+            multipart/form-data:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                file:
+                  type: file
+                  description: |-
+                    File input format: JsonLines. Each line should be a valid json conforming to one of the below formats<br><pre>{"upc": "upc1"}
+                    {"mpn": "mpn1", "brandId":  123}
+                    {"sku": "mpn1", "storeId":  123}</pre>
+                  displayName: file
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+      /products:
+        post:
+          description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 18 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggdGhlaXIgY2F0YWxvZyBpbmZvIGFjcm9zcyBzdG9yZXMgLSBDcmVkaXRzOiDDo8KAwoBuIHggMTg=
+          body:
+            application/x-www-form-urlencoded:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                storeId?:
+                  type: array
+                  description: 'Limits results to products sold at store with id.
+                    Supports multiple values (acts as OR operator) '
+                  displayName: storeId
+                  items:
+                    type: string
+                alsoSoldAt?:
+                  type: array
+                  description: 'Combined with storeId limits results to products sold
+                    at both storeIds and alsoSoldAt storeIds. Supports multiple values
+                    (acts as OR operator) '
+                  displayName: alsoSoldAt
+                  items:
+                    type: string
+                brandId?:
+                  type: array
+                  description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator)
+                  displayName: brandId
+                  items:
+                    type: string
+                categoryId?:
+                  type: array
+                  description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+                  displayName: categoryId
+                  items:
+                    type: string
+                startPrice?:
+                  type: string
+                  description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: startPrice
+                endPrice?:
+                  type: string
+                  description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: endPrice
+                availability?:
+                  type: string
+                  description: 'Limits results to either in-stock or out-of-stock
+                    items. Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+                  displayName: availability
+                priceHistoryAvailable?:
+                  type: string
+                  description: 'Limits results to product that have price history
+                    available through the products/{:id}/prices endpoint. Accepted
+                    values: ''true'',''false'''
+                  displayName: priceHistoryAvailable
+                priceChange?:
+                  type: string
+                  description: 'Limits results to products whose prices have been
+                    increased or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED,
+                    EITHER'
+                  displayName: priceChange
+                onPromotion?:
+                  type: string
+                  description: 'Limits results to products which are on Promotion.
+                    Accepted values: ''true'',''false'''
+                  displayName: onPromotion
+                lastRecordedIn?:
+                  type: string
+                  description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+                  displayName: lastRecordedIn
+                storesCount?:
+                  type: string
+                  description: Limits results to products with at least a certain number of stores
+                  displayName: storesCount
+                applyFiltersTo?:
+                  type: string
+                  description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+                  displayName: applyFiltersTo
+                selectOffersFrom?:
+                  type: string
+                  description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+                  displayName: selectOffersFrom
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+    /products:
+      /{mpid}:
+        uriParameters:
+          mpid:
+            type: string
+            description: The Indix product identifier - should be a 32-digit HEX value retrieved via the Product Search API
+            displayName: mpid
+        get:
+          description: <p>This operation returns the catalog premium information for the specified product across all the stores where it is sold at. This consumes 18 credits.
+          displayName: !!binary |-
+            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBjYXRhbG9nIHByZW1pdW0gaW5mb3JtYXRpb24gZm9yIGEgcHJvZHVjdCAtIENyZWRpdHM6IMOjwoDCgDE4
+          queryParameters:
+            countryCode:
+              type: string
+              description: !!binary |-
+                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              displayName: countryCode
+            pageNumber?:
+              type: string
+              description: The page number of the result set to return. 50 results per page, plus similar items
+              displayName: pageNumber
+            app_id:
+              type: string
+              description: Your application id
+              displayName: app_id
+            app_key:
+              type: string
+              description: Your application key
+              displayName: app_key
+          responses:
+            200:
+              description: Response
+      get:
+        description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 18 credits per product returned.
+        displayName: !!binary |-
+          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIHRoZWlyIGNhdGFsb2cgaW5mbyBhY3Jvc3Mgc3RvcmVzIC0gQ3JlZGl0czogw6PCgMKAbiB4IDE4
+        queryParameters:
+          countryCode:
+            type: string
+            description: !!binary |-
+              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            displayName: countryCode
+          q?:
+            type: string
+            description: The product search term
+            displayName: q
+          storeId?:
+            type: array
+            description: 'Limits results to products sold at store with id. Supports
+              multiple values (acts as OR operator) '
+            displayName: storeId
+            items:
+              type: string
+          alsoSoldAt?:
+            type: array
+            description: 'Combined with storeId limits results to products sold at
+              both storeIds and alsoSoldAt storeIds. Supports multiple values (acts
+              as OR operator) '
+            displayName: alsoSoldAt
+            items:
+              type: string
+          brandId?:
+            type: array
+            description: Limits results to products of brand with id int. Supports multiple values (acts as OR operator)
+            displayName: brandId
+            items:
+              type: string
+          categoryId?:
+            type: array
+            description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+            displayName: categoryId
+            items:
+              type: string
+          url?:
+            type: string
+            description: Search by product URL
+            displayName: url
+          upc?:
+            type: string
+            description: Limit results to products with this UPC
+            displayName: upc
+          mpn?:
+            type: string
+            description: Limit results to products with this MPN
+            displayName: mpn
+          sku?:
+            type: string
+            description: Limit results to products with this SKU
+            displayName: sku
+          startPrice?:
+            type: string
+            description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+            displayName: startPrice
+          endPrice?:
+            type: string
+            description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+            displayName: endPrice
+          availability?:
+            type: string
+            description: 'Limits results to either in-stock or out-of-stock items.
+              Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+            displayName: availability
+          priceHistoryAvailable?:
+            type: string
+            description: 'Limits results to product that have price history available
+              through the products/{:id}/prices endpoint. Accepted values: ''true'',''false'''
+            displayName: priceHistoryAvailable
+          priceChange?:
+            type: string
+            description: 'Limits results to products whose prices have been increased
+              or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED, EITHER'
+            displayName: priceChange
+          onPromotion?:
+            type: string
+            description: 'Limits results to products which are on Promotion. Accepted
+              values: ''true'',''false'''
+            displayName: onPromotion
+          lastRecordedIn?:
+            type: string
+            description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+            displayName: lastRecordedIn
+          storesCount?:
+            type: string
+            description: Limits results to products with at least a certain number of stores
+            displayName: storesCount
+          applyFiltersTo?:
+            type: string
+            description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+            displayName: applyFiltersTo
+          selectOffersFrom?:
+            type: string
+            description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+            displayName: selectOffersFrom
+          sortBy?:
+            type: string
+            description: Sort by values - PRICE_LOW_TO_HIGH, PRICE_HIGH_TO_LOW, MOST_RECENT.
+            displayName: sortBy
+          facetBy?:
+            type: array
+            description: Facet by values - storeId, brandId, categoryId. Should be a comma separated list of allowed values.
+            displayName: facetBy
+            items:
+              type: string
+          pageNumber?:
+            type: string
+            description: The page number of the result set to return. 10 results per page.
+            displayName: pageNumber
+          pageSize?:
+            type: string
+            description: Number of results per page. Allowed values - 10, 20, 50.
+            displayName: pageSize
+          app_id:
+            type: string
+            description: Your application id
+            displayName: app_id
+          app_key:
+            type: string
+            description: Your application key
+            displayName: app_key
+        responses:
+          200:
+            description: Response
+  /catalogStandard:
+    /bulk:
+      /lookup:
+        post:
+          description: This operation returns the catalog standard information for the specified product across all the stores where it is sold at. This consumes 18 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIGNhdGFsb2cgc3RhbmRhcmQgaW5mb3JtYXRpb24gZm9yIGEgcHJvZHVjdCAtIENyZWRpdHM6IMOjwoDCgG4geCAxOA==
+          body:
+            multipart/form-data:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                file:
+                  type: file
+                  description: |-
+                    File input format: JsonLines. Each line should be a valid json conforming to one of the below formats<br><pre>{"upc": "upc1"}
+                    {"mpn": "mpn1", "brandId":  123}
+                    {"sku": "mpn1", "storeId":  123}</pre>
+                  displayName: file
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+      /products:
+        post:
+          description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 18 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggdGhlaXIgYWdncmVnYXRlZCBjYXRhbG9nIGluZm8gLSBDcmVkaXRzOiDDo8KAwoBuIHggMTg=
+          body:
+            application/x-www-form-urlencoded:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                storeId?:
+                  type: array
+                  description: 'Limits results to products sold at store with id.
+                    Supports multiple values (acts as OR operator) '
+                  displayName: storeId
+                  items:
+                    type: string
+                alsoSoldAt?:
+                  type: array
+                  description: 'Combined with storeId limits results to products sold
+                    at both storeIds and alsoSoldAt storeIds. Supports multiple values
+                    (acts as OR operator) '
+                  displayName: alsoSoldAt
+                  items:
+                    type: string
+                brandId?:
+                  type: array
+                  description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator)
+                  displayName: brandId
+                  items:
+                    type: string
+                categoryId?:
+                  type: array
+                  description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+                  displayName: categoryId
+                  items:
+                    type: string
+                startPrice?:
+                  type: string
+                  description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: startPrice
+                endPrice?:
+                  type: string
+                  description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: endPrice
+                availability?:
+                  type: string
+                  description: 'Limits results to either in-stock or out-of-stock
+                    items. Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+                  displayName: availability
+                priceHistoryAvailable?:
+                  type: string
+                  description: 'Limits results to product that have price history
+                    available through the products/{:id}/prices endpoint. Accepted
+                    values: ''true'',''false'''
+                  displayName: priceHistoryAvailable
+                priceChange?:
+                  type: string
+                  description: 'Limits results to products whose prices have been
+                    increased or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED,
+                    EITHER'
+                  displayName: priceChange
+                onPromotion?:
+                  type: string
+                  description: 'Limits results to products which are on Promotion.
+                    Accepted values: ''true'',''false'''
+                  displayName: onPromotion
+                lastRecordedIn?:
+                  type: string
+                  description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+                  displayName: lastRecordedIn
+                storesCount?:
+                  type: string
+                  description: Limits results to products with at least a certain number of stores
+                  displayName: storesCount
+                applyFiltersTo?:
+                  type: string
+                  description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+                  displayName: applyFiltersTo
+                selectOffersFrom?:
+                  type: string
+                  description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+                  displayName: selectOffersFrom
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+    /products:
+      /{mpid}:
+        uriParameters:
+          mpid:
+            type: string
+            description: The Indix product identifier - should be a 32-digit HEX value retrieved via the Product Search API
+            displayName: mpid
+        get:
+          description: <p>This operation returns the catalog standard information for the specified product across all the stores where it is sold at. This consumes 18 credits.
+          displayName: !!binary |-
+            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBjYXRhbG9nIHN0YW5kYXJkIGluZm9ybWF0aW9uIGZvciBhIHByb2R1Y3QgLSBDcmVkaXRzOiDDo8KAwoAxOA==
+          queryParameters:
+            countryCode:
+              type: string
+              description: !!binary |-
+                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              displayName: countryCode
+            pageNumber?:
+              type: string
+              description: The page number of the result set to return. 50 results per page, plus similar items
+              displayName: pageNumber
+            app_id:
+              type: string
+              description: Your application id
+              displayName: app_id
+            app_key:
+              type: string
+              description: Your application key
+              displayName: app_key
+          responses:
+            200:
+              description: Response
+      get:
+        description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 18 credits per product returned.
+        displayName: !!binary |-
+          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIHRoZWlyIGFnZ3JlZ2F0ZWQgY2F0YWxvZyBpbmZvIC0gQ3JlZGl0czogw6PCgMKAbiB4IDE4
+        queryParameters:
+          countryCode:
+            type: string
+            description: !!binary |-
+              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            displayName: countryCode
+          q?:
+            type: string
+            description: The product search term
+            displayName: q
+          storeId?:
+            type: array
+            description: 'Limits results to products sold at store with id. Supports
+              multiple values (acts as OR operator) '
+            displayName: storeId
+            items:
+              type: string
+          alsoSoldAt?:
+            type: array
+            description: 'Combined with storeId limits results to products sold at
+              both storeIds and alsoSoldAt storeIds. Supports multiple values (acts
+              as OR operator) '
+            displayName: alsoSoldAt
+            items:
+              type: string
+          brandId?:
+            type: array
+            description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator)
+            displayName: brandId
+            items:
+              type: string
+          categoryId?:
+            type: array
+            description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+            displayName: categoryId
+            items:
+              type: string
+          url?:
+            type: string
+            description: Search by product URL
+            displayName: url
+          upc?:
+            type: string
+            description: Limit results to products with this UPC
+            displayName: upc
+          mpn?:
+            type: string
+            description: Limit results to products with this MPN
+            displayName: mpn
+          sku?:
+            type: string
+            description: Limit results to products with this SKU
+            displayName: sku
+          startPrice?:
+            type: string
+            description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+            displayName: startPrice
+          endPrice?:
+            type: string
+            description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+            displayName: endPrice
+          availability?:
+            type: string
+            description: 'Limits results to either in-stock or out-of-stock items.
+              Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+            displayName: availability
+          priceHistoryAvailable?:
+            type: string
+            description: 'Limits results to product that have price history available
+              through the products/{:id}/prices endpoint. Accepted values: ''true'',''false'''
+            displayName: priceHistoryAvailable
+          priceChange?:
+            type: string
+            description: 'Limits results to products whose prices have been increased
+              or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED, EITHER'
+            displayName: priceChange
+          onPromotion?:
+            type: string
+            description: 'Limits results to products which are on Promotion. Accepted
+              values: ''true'',''false'''
+            displayName: onPromotion
+          lastRecordedIn?:
+            type: string
+            description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+            displayName: lastRecordedIn
+          storesCount?:
+            type: string
+            description: Limits results to products with at least a certain number of stores
+            displayName: storesCount
+          applyFiltersTo?:
+            type: string
+            description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+            displayName: applyFiltersTo
+          selectOffersFrom?:
+            type: string
+            description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+            displayName: selectOffersFrom
+          sortBy?:
+            type: string
+            description: Sort by values - PRICE_LOW_TO_HIGH, PRICE_HIGH_TO_LOW, MOST_RECENT.
+            displayName: sortBy
+          facetBy?:
+            type: array
+            description: Facet by values - storeId, brandId, categoryId. Should be a comma separated list of allowed values.
+            displayName: facetBy
+            items:
+              type: string
+          pageNumber?:
+            type: string
+            description: The page number of the result set to return. 10 results per page.
+            displayName: pageNumber
+          pageSize?:
+            type: string
+            description: Number of results per page. Allowed values - 10, 20, 50.
+            displayName: pageSize
+          app_id:
+            type: string
+            description: Your application id
+            displayName: app_id
+          app_key:
+            type: string
+            description: Your application key
+            displayName: app_key
+        responses:
+          200:
+            description: Response
+  /categories:
+    get:
+      description: <p>Lists all categories along with their IDs and ancestry. This API does not consume any credits.
+      displayName: !!binary |-
+        RXhwb3J0IENhdGVnb3JpZXMgLSBMaXN0cyBhbGwgY2F0ZWdvcmllcyBhbG9uZyB3aXRoIHRoZWlyIElEcyBhbmQgcGF0aCAtIENyZWRpdHM6IMOjwoDCgDA=
+      queryParameters:
+        app_id:
+          type: string
+          description: Your application id
+          displayName: app_id
+        app_key:
+          type: string
+          description: Your application key
+          displayName: app_key
+      responses:
+        200:
+          description: Response
+  /offersPremium:
+    /bulk:
+      /lookup:
+        post:
+          description: This operation returns the offers premium information for the specified product across all the stores where it is sold at. This consumes 4 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIG9mZmVycyBwcmVtaXVtIGluZm9ybWF0aW9uIGZvciBhIHByb2R1Y3QgLSBDcmVkaXRzOiDDo8KAwoBuIHggNA==
+          body:
+            multipart/form-data:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                file:
+                  type: file
+                  description: |-
+                    File input format: JsonLines. Each line should be a valid json conforming to one of the below formats<br><pre>{"upc": "upc1"}
+                    {"mpn": "mpn1", "brandId":  123}
+                    {"sku": "mpn1", "storeId":  123}</pre>
+                  displayName: file
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+      /products:
+        post:
+          description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 4 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggb2ZmZXJzIGluZm8gYWNyb3NzIHN0b3JlcyAtIENyZWRpdHM6IMOjwoDCgG4geCA0
+          body:
+            application/x-www-form-urlencoded:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                storeId?:
+                  type: array
+                  description: 'Limits results to products sold at store with id.
+                    Supports multiple values (acts as OR operator) '
+                  displayName: storeId
+                  items:
+                    type: string
+                alsoSoldAt?:
+                  type: array
+                  description: 'Combined with storeId limits results to products sold
+                    at both storeIds and alsoSoldAt storeIds. Supports multiple values
+                    (acts as OR operator) '
+                  displayName: alsoSoldAt
+                  items:
+                    type: string
+                brandId?:
+                  type: array
+                  description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator)
+                  displayName: brandId
+                  items:
+                    type: string
+                categoryId?:
+                  type: array
+                  description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+                  displayName: categoryId
+                  items:
+                    type: string
+                startPrice?:
+                  type: string
+                  description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: startPrice
+                endPrice?:
+                  type: string
+                  description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: endPrice
+                availability?:
+                  type: string
+                  description: 'Limits results to either in-stock or out-of-stock
+                    items. Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+                  displayName: availability
+                priceHistoryAvailable?:
+                  type: string
+                  description: 'Limits results to product that have price history
+                    available through the products/{:id}/prices endpoint. Accepted
+                    values: ''true'',''false'''
+                  displayName: priceHistoryAvailable
+                priceChange?:
+                  type: string
+                  description: 'Limits results to products whose prices have been
+                    increased or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED,
+                    EITHER'
+                  displayName: priceChange
+                onPromotion?:
+                  type: string
+                  description: 'Limits results to products which are on Promotion.
+                    Accepted values: ''true'',''false'''
+                  displayName: onPromotion
+                lastRecordedIn?:
+                  type: string
+                  description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+                  displayName: lastRecordedIn
+                storesCount?:
+                  type: string
+                  description: Limits results to products with at least a certain number of stores
+                  displayName: storesCount
+                applyFiltersTo?:
+                  type: string
+                  description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+                  displayName: applyFiltersTo
+                selectOffersFrom?:
+                  type: string
+                  description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+                  displayName: selectOffersFrom
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+    /products:
+      /{mpid}:
+        uriParameters:
+          mpid:
+            type: string
+            description: The Indix product identifier - should be a 32-digit HEX value retrieved via the Product Search API
+            displayName: mpid
+        get:
+          description: <p>This operation returns the offers premium information for the specified product across all the stores where it is sold at. This consumes 4 credits.
+          displayName: !!binary |-
+            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBvZmZlcnMgcHJlbWl1bSBpbmZvcm1hdGlvbiBmb3IgYSBwcm9kdWN0IC0gQ3JlZGl0czogw6PCgMKANA==
+          queryParameters:
+            countryCode:
+              type: string
+              description: !!binary |-
+                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              displayName: countryCode
+            pageNumber?:
+              type: string
+              description: The page number of the result set to return. 50 results per page, plus similar items
+              displayName: pageNumber
+            app_id:
+              type: string
+              description: Your application id
+              displayName: app_id
+            app_key:
+              type: string
+              description: Your application key
+              displayName: app_key
+          responses:
+            200:
+              description: Response
+      get:
+        description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 4 credits per product returned.
+        displayName: !!binary |-
+          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIG9mZmVycyBpbmZvIGFjcm9zcyBzdG9yZXMgLSBDcmVkaXRzOiDDo8KAwoBuIHggNA==
+        queryParameters:
+          countryCode:
+            type: string
+            description: !!binary |-
+              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            displayName: countryCode
+          q?:
+            type: string
+            description: The product search term
+            displayName: q
+          storeId?:
+            type: array
+            description: 'Limits results to products sold at store with id. Supports
+              multiple values (acts as OR operator) '
+            displayName: storeId
+            items:
+              type: string
+          alsoSoldAt?:
+            type: array
+            description: 'Combined with storeId limits results to products sold at
+              both storeIds and alsoSoldAt storeIds. Supports multiple values (acts
+              as OR operator) '
+            displayName: alsoSoldAt
+            items:
+              type: string
+          brandId?:
+            type: array
+            description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator
+            displayName: brandId
+            items:
+              type: string
+          categoryId?:
+            type: array
+            description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+            displayName: categoryId
+            items:
+              type: string
+          url?:
+            type: string
+            description: Search by product URL
+            displayName: url
+          upc?:
+            type: string
+            description: Limit results to products with this UPC
+            displayName: upc
+          mpn?:
+            type: string
+            description: Limit results to products with this MPN
+            displayName: mpn
+          sku?:
+            type: string
+            description: Limit results to products with this SKU
+            displayName: sku
+          startPrice?:
+            type: string
+            description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+            displayName: startPrice
+          endPrice?:
+            type: string
+            description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+            displayName: endPrice
+          availability?:
+            type: string
+            description: 'Limits results to either in-stock or out-of-stock items.
+              Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+            displayName: availability
+          priceHistoryAvailable?:
+            type: string
+            description: 'Limits results to product that have price history available
+              through the products/{:id}/prices endpoint. Accepted values: ''true'',''false'''
+            displayName: priceHistoryAvailable
+          priceChange?:
+            type: string
+            description: 'Limits results to products whose prices have been increased
+              or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED, EITHER'
+            displayName: priceChange
+          onPromotion?:
+            type: string
+            description: 'Limits results to products which are on Promotion. Accepted
+              values: ''true'',''false'''
+            displayName: onPromotion
+          lastRecordedIn?:
+            type: string
+            description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+            displayName: lastRecordedIn
+          storesCount?:
+            type: string
+            description: Limits results to products with at least a certain number of stores
+            displayName: storesCount
+          applyFiltersTo?:
+            type: string
+            description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+            displayName: applyFiltersTo
+          selectOffersFrom?:
+            type: string
+            description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+            displayName: selectOffersFrom
+          sortBy?:
+            type: string
+            description: Sort by values - PRICE_LOW_TO_HIGH, PRICE_HIGH_TO_LOW, MOST_RECENT.
+            displayName: sortBy
+          facetBy?:
+            type: array
+            description: Facet by values - storeId, brandId, categoryId. Should be a comma separated list of allowed values.
+            displayName: facetBy
+            items:
+              type: string
+          pageNumber?:
+            type: string
+            description: The page number of the result set to return. 10 results per page.
+            displayName: pageNumber
+          pageSize?:
+            type: string
+            description: Number of results per page. Allowed values - 10, 20, 50.
+            displayName: pageSize
+          app_id:
+            type: string
+            description: Your application id
+            displayName: app_id
+          app_key:
+            type: string
+            description: Your application key
+            displayName: app_key
+        responses:
+          200:
+            description: Response
+  /offersStandard:
+    /bulk:
+      /lookup:
+        post:
+          description: This operation returns the offers standard information for the specified product from a single storeId. This consumes 4 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIG9mZmVycyBzdGFuZGFyZCBpbmZvcm1hdGlvbiBmb3IgYSBwcm9kdWN0IGZyb20gYSBzaW5nbGUgc3RvcmVJZCAtIENyZWRpdHM6IMOjwoDCgG4geCA0
+          body:
+            multipart/form-data:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                file:
+                  type: file
+                  description: |-
+                    File input format: JsonLines. Each line should be a valid json conforming to one of the below formats<br><pre>{"upc": "upc1"}
+                    {"mpn": "mpn1", "brandId":  123}
+                    {"sku": "mpn1", "storeId":  123}</pre>
+                  displayName: file
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+      /products:
+        post:
+          description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 4 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggb2ZmZXJzIGluZm8gZnJvbSBhIHN0b3JlIC0gQ3JlZGl0czogw6PCgMKAbiB4IDQ=
+          body:
+            application/x-www-form-urlencoded:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                storeId?:
+                  type: array
+                  description: 'Limits results to products sold at store with id.
+                    Supports multiple values (acts as OR operator) '
+                  displayName: storeId
+                  items:
+                    type: string
+                alsoSoldAt?:
+                  type: array
+                  description: 'Combined with storeId limits results to products sold
+                    at both storeIds and alsoSoldAt storeIds. Supports multiple values
+                    (acts as OR operator) '
+                  displayName: alsoSoldAt
+                  items:
+                    type: string
+                brandId?:
+                  type: array
+                  description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator)
+                  displayName: brandId
+                  items:
+                    type: string
+                categoryId?:
+                  type: array
+                  description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+                  displayName: categoryId
+                  items:
+                    type: string
+                startPrice?:
+                  type: string
+                  description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: startPrice
+                endPrice?:
+                  type: string
+                  description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: endPrice
+                availability?:
+                  type: string
+                  description: 'Limits results to either in-stock or out-of-stock
+                    items. Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+                  displayName: availability
+                priceHistoryAvailable?:
+                  type: string
+                  description: 'Limits results to product that have price history
+                    available through the products/{:id}/prices endpoint. Accepted
+                    values: ''true'',''false'''
+                  displayName: priceHistoryAvailable
+                priceChange?:
+                  type: string
+                  description: 'Limits results to products whose prices have been
+                    increased or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED,
+                    EITHER'
+                  displayName: priceChange
+                onPromotion?:
+                  type: string
+                  description: 'Limits results to products which are on Promotion.
+                    Accepted values: ''true'',''false'''
+                  displayName: onPromotion
+                lastRecordedIn?:
+                  type: string
+                  description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+                  displayName: lastRecordedIn
+                storesCount?:
+                  type: string
+                  description: Limits results to products with at least a certain number of stores
+                  displayName: storesCount
+                applyFiltersTo?:
+                  type: string
+                  description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+                  displayName: applyFiltersTo
+                selectOffersFrom?:
+                  type: string
+                  description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+                  displayName: selectOffersFrom
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+    /products:
+      /{mpid}:
+        uriParameters:
+          mpid:
+            type: string
+            description: The Indix product identifier - should be a 32-digit HEX value retrieved via the Product Search API
+            displayName: mpid
+        get:
+          description: <p>This operation returns the offers standard information for the specified product from a single storeId. This consumes 4 credits.
+          displayName: !!binary |-
+            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBvZmZlcnMgc3RhbmRhcmQgaW5mb3JtYXRpb24gZm9yIGEgcHJvZHVjdCBmcm9tIGEgc2luZ2xlIHN0b3JlSWQgLSBDcmVkaXRzOiDDo8KAwoA0
+          queryParameters:
+            countryCode:
+              type: string
+              description: !!binary |-
+                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              displayName: countryCode
+            storeId:
+              type: string
+              description: Limits results to offers from this store
+              displayName: storeId
+            pageNumber?:
+              type: string
+              description: The page number of the result set to return. 50 results per page, plus similar items
+              displayName: pageNumber
+            app_id:
+              type: string
+              description: Your application id
+              displayName: app_id
+            app_key:
+              type: string
+              description: Your application key
+              displayName: app_key
+          responses:
+            200:
+              description: Response
+      get:
+        description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 4 credits per product returned.
+        displayName: !!binary |-
+          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIG9mZmVycyBpbmZvIGZyb20gYSBzdG9yZSAtIENyZWRpdHM6IMOjwoDCgG4geCA0
+        queryParameters:
+          countryCode:
+            type: string
+            description: !!binary |-
+              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            displayName: countryCode
+          q?:
+            type: string
+            description: The product search term
+            displayName: q
+          storeId:
+            type: string
+            description: Limits results to products sold at store with id.
+            displayName: storeId
+          alsoSoldAt?:
+            type: array
+            description: 'Combined with storeId limits results to products sold at
+              both storeIds and alsoSoldAt storeIds. Supports multiple values (acts
+              as OR operator) '
+            displayName: alsoSoldAt
+            items:
+              type: string
+          brandId?:
+            type: array
+            description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator
+            displayName: brandId
+            items:
+              type: string
+          categoryId?:
+            type: array
+            description: Limits results to products of category with this id. Support multiple values (acts as OR operator
+            displayName: categoryId
+            items:
+              type: string
+          url?:
+            type: string
+            description: Search by product URL
+            displayName: url
+          upc?:
+            type: string
+            description: Limit results to products with this UPC
+            displayName: upc
+          mpn?:
+            type: string
+            description: Limit results to products with this MPN
+            displayName: mpn
+          sku?:
+            type: string
+            description: Limit results to products with this SKU
+            displayName: sku
+          startPrice?:
+            type: string
+            description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+            displayName: startPrice
+          endPrice?:
+            type: string
+            description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+            displayName: endPrice
+          availability?:
+            type: string
+            description: 'Limits results to either in-stock or out-of-stock items.
+              Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+            displayName: availability
+          priceHistoryAvailable?:
+            type: string
+            description: 'Limits results to product that have price history available
+              through the products/{:id}/prices endpoint. Accepted values: ''true'',''false'''
+            displayName: priceHistoryAvailable
+          priceChange?:
+            type: string
+            description: 'Limits results to products whose prices have been increased
+              or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED, EITHER'
+            displayName: priceChange
+          onPromotion?:
+            type: string
+            description: 'Limits results to products which are on Promotion. Accepted
+              values: ''true'',''false'''
+            displayName: onPromotion
+          lastRecordedIn?:
+            type: string
+            description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+            displayName: lastRecordedIn
+          storesCount?:
+            type: string
+            description: Limits results to products with at least a certain number of stores
+            displayName: storesCount
+          applyFiltersTo?:
+            type: string
+            description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+            displayName: applyFiltersTo
+          selectOffersFrom?:
+            type: string
+            description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+            displayName: selectOffersFrom
+          sortBy?:
+            type: string
+            description: Sort by values - PRICE_LOW_TO_HIGH, PRICE_HIGH_TO_LOW, MOST_RECENT.
+            displayName: sortBy
+          facetBy?:
+            type: array
+            description: Facet by values - storeId, brandId, categoryId. Should be a comma separated list of allowed values.
+            displayName: facetBy
+            items:
+              type: string
+          pageNumber?:
+            type: string
+            description: The page number of the result set to return. 10 results per page.
+            displayName: pageNumber
+          pageSize?:
+            type: string
+            description: Number of results per page. Allowed values - 10, 20, 50.
+            displayName: pageSize
+          app_id:
+            type: string
+            description: Your application id
+            displayName: app_id
+          app_key:
+            type: string
+            description: Your application key
+            displayName: app_key
+        responses:
+          200:
+            description: Response
+  /products:
+    /suggestions:
+      get:
+        description: <p>Lists all search suggestions matching the query term. Does not support wildcards. Limit 100 results per query. This API does not consume any credits.
+        displayName: !!binary |-
+          U2VhcmNoIFN1Z2dlc3Rpb25zIC0gTGlzdHMgYWxsIHByb2R1Y3Qgc2VhcmNoIHN1Z2dlc3Rpb25zIC0gQ3JlZGl0czogw6PCgMKAMA==
+        queryParameters:
+          countryCode:
+            type: string
+            description: Limits results to products of the geography with this code.
+            displayName: countryCode
+          q:
+            type: string
+            description: Query term for which suggestions are to be provided
+            displayName: q
+          app_id:
+            type: string
+            description: Your application id
+            displayName: app_id
+          app_key:
+            type: string
+            description: Your application key
+            displayName: app_key
+        responses:
+          200:
+            description: Response
+  /stores:
+    get:
+      description: <p>Lists all stores, along with their IDs, matching the query term. Does not support wildcards. Limit 10 results per query. This API does not consume any credits.
+      displayName: !!binary |-
+        U2VhcmNoIFN0b3JlcyAtIExpc3RzIGFsbCBzdG9yZXMgYWxvbmcgd2l0aCB0aGVpciBJRHMgLSBDcmVkaXRzOiDDo8KAwoAw
+      queryParameters:
+        q:
+          type: string
+          description: Search term to match against store name or the store domain. Partial match. Case insensitive
+          displayName: q
+        app_id:
+          type: string
+          description: Your application id
+          displayName: app_id
+        app_key:
+          type: string
+          description: Your application key
+          displayName: app_key
+      responses:
+        200:
+          description: Response
+  /summary:
+    /bulk:
+      /lookup:
+        post:
+          description: This operation returns the summary information for the specified product. This consumes 2 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIHN1bW1hcnkgaW5mb3JtYXRpb24gZm9yIGEgcHJvZHVjdCAtIENyZWRpdHM6IMOjwoDCgG4geCAy
+          body:
+            multipart/form-data:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                file:
+                  type: file
+                  description: |-
+                    File input format: JsonLines. Each line should be a valid json conforming to one of the below formats<br><pre>{"upc": "upc1"}
+                    {"mpn": "mpn1", "brandId":  123}
+                    {"sku": "mpn1", "storeId":  123}</pre>
+                  displayName: file
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+      /products:
+        post:
+          description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 2 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggdGhlaXIgc3VtbWFyeSBpbmZvIC0gQ3JlZGl0czogw6PCgMKAbiB4IDI=
+          body:
+            application/x-www-form-urlencoded:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                storeId?:
+                  type: array
+                  description: 'Limits results to products sold at store with id.
+                    Supports multiple values (acts as OR operator) '
+                  displayName: storeId
+                  items:
+                    type: string
+                alsoSoldAt?:
+                  type: array
+                  description: 'Combined with storeId limits results to products sold
+                    at both storeIds and alsoSoldAt storeIds. Supports multiple values
+                    (acts as OR operator) '
+                  displayName: alsoSoldAt
+                  items:
+                    type: string
+                brandId?:
+                  type: array
+                  description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator)
+                  displayName: brandId
+                  items:
+                    type: string
+                categoryId?:
+                  type: array
+                  description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+                  displayName: categoryId
+                  items:
+                    type: string
+                startPrice?:
+                  type: string
+                  description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: startPrice
+                endPrice?:
+                  type: string
+                  description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: endPrice
+                availability?:
+                  type: string
+                  description: 'Limits results to either in-stock or out-of-stock
+                    items. Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+                  displayName: availability
+                priceHistoryAvailable?:
+                  type: string
+                  description: 'Limits results to product that have price history
+                    available through the products/{:id}/prices endpoint. Accepted
+                    values: ''true'',''false'''
+                  displayName: priceHistoryAvailable
+                priceChange?:
+                  type: string
+                  description: 'Limits results to products whose prices have been
+                    increased or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED,
+                    EITHER'
+                  displayName: priceChange
+                onPromotion?:
+                  type: string
+                  description: 'Limits results to products which are on Promotion.
+                    Accepted values: ''true'',''false'''
+                  displayName: onPromotion
+                lastRecordedIn?:
+                  type: string
+                  description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+                  displayName: lastRecordedIn
+                storesCount?:
+                  type: string
+                  description: Limits results to products with at least a certain number of stores
+                  displayName: storesCount
+                applyFiltersTo?:
+                  type: string
+                  description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+                  displayName: applyFiltersTo
+                selectOffersFrom?:
+                  type: string
+                  description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+                  displayName: selectOffersFrom
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+    /products:
+      /{mpid}:
+        uriParameters:
+          mpid:
+            type: string
+            description: The Indix product identifier - should be a 32-digit HEX value retrieved via the Product Search API
+            displayName: mpid
+        get:
+          description: <p>This operation returns the summary information for the specified product. This consumes 2 credits.
+          displayName: !!binary |-
+            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBzdW1tYXJ5IGluZm9ybWF0aW9uIGZvciBhIHByb2R1Y3QgLSBDcmVkaXRzOiDDo8KAwoAy
+          queryParameters:
+            countryCode:
+              type: string
+              description: !!binary |-
+                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              displayName: countryCode
+            app_id:
+              type: string
+              description: Your application id
+              displayName: app_id
+            app_key:
+              type: string
+              description: Your application key
+              displayName: app_key
+          responses:
+            200:
+              description: Response
+      get:
+        description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 2 credits per product returned.
+        displayName: !!binary |-
+          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIHRoZWlyIHN1bW1hcnkgaW5mbyAtIENyZWRpdHM6IMOjwoDCgG4geCAy
+        queryParameters:
+          countryCode:
+            type: string
+            description: !!binary |-
+              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            displayName: countryCode
+          q?:
+            type: string
+            description: The product search term
+            displayName: q
+          storeId?:
+            type: array
+            description: 'Limits results to products sold at store with id. Supports
+              multiple values (acts as OR operator) '
+            displayName: storeId
+            items:
+              type: string
+          alsoSoldAt?:
+            type: array
+            description: 'Combined with storeId limits results to products sold at
+              both storeIds and alsoSoldAt storeIds. Supports multiple values (acts
+              as OR operator) '
+            displayName: alsoSoldAt
+            items:
+              type: string
+          brandId?:
+            type: array
+            description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator)
+            displayName: brandId
+            items:
+              type: string
+          categoryId?:
+            type: array
+            description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+            displayName: categoryId
+            items:
+              type: string
+          url?:
+            type: string
+            description: Search by product URL
+            displayName: url
+          upc?:
+            type: string
+            description: Limit results to products with this UPC
+            displayName: upc
+          mpn?:
+            type: string
+            description: Limit results to products with this MPN
+            displayName: mpn
+          sku?:
+            type: string
+            description: Limit results to products with this SKU
+            displayName: sku
+          startPrice?:
+            type: string
+            description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+            displayName: startPrice
+          endPrice?:
+            type: string
+            description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+            displayName: endPrice
+          availability?:
+            type: string
+            description: 'Limits results to either in-stock or out-of-stock items.
+              Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+            displayName: availability
+          priceHistoryAvailable?:
+            type: string
+            description: 'Limits results to product that have price history available
+              through the products/{:id}/prices endpoint. Accepted values: ''true'',''false'''
+            displayName: priceHistoryAvailable
+          priceChange?:
+            type: string
+            description: 'Limits results to products whose prices have been increased
+              or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED, EITHER'
+            displayName: priceChange
+          onPromotion?:
+            type: string
+            description: 'Limits results to products which are on Promotion. Accepted
+              values: ''true'',''false'''
+            displayName: onPromotion
+          lastRecordedIn?:
+            type: string
+            description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+            displayName: lastRecordedIn
+          storesCount?:
+            type: string
+            description: Limits results to products with at least a certain number of stores
+            displayName: storesCount
+          applyFiltersTo?:
+            type: string
+            description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+            displayName: applyFiltersTo
+          selectOffersFrom?:
+            type: string
+            description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+            displayName: selectOffersFrom
+          sortBy?:
+            type: string
+            description: Sort by values - PRICE_LOW_TO_HIGH, PRICE_HIGH_TO_LOW, MOST_RECENT.
+            displayName: sortBy
+          facetBy?:
+            type: array
+            description: Facet by values - storeId, brandId, categoryId. Should be a comma separated list of allowed values.
+            displayName: facetBy
+            items:
+              type: string
+          pageNumber?:
+            type: string
+            description: The page number of the result set to return. 10 results per page.
+            displayName: pageNumber
+          pageSize?:
+            type: string
+            description: Number of results per page. Allowed values - 10, 20, 50.
+            displayName: pageSize
+          app_id:
+            type: string
+            description: Your application id
+            displayName: app_id
+          app_key:
+            type: string
+            description: Your application key
+            displayName: app_key
+        responses:
+          200:
+            description: Response
+  /universal:
+    /bulk:
+      /ase:
+        post:
+          description: Used  to  get a set of  exact and close matches for a given set of  query parameters. You must  include <b>productTitle</b> as a parameter. This consumes 25 credits per product returned.
+          displayName: !!binary |-
+            QVNFIFVuaXZlcnNhbCBCdWxrIC0gUmV0dXJucyBhIHNldCBvZiAgZXhhY3QgYW5kIGNsb3NlIG1hdGNoZXMgLSBDcmVkaXRzOiDDo8KAwoBuIHggMjU=
+          body:
+            multipart/form-data:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                file:
+                  type: file
+                  description: |-
+                    File input format: JsonLines. Each line should be a valid json conforming to one of the below formats<br><pre>{"productTitle": "Men's Hush  Puppies Circuit Slip  On  MT  Black Leather","brandName": "Hush Puppies","sku": "4784976","mpn": "HM01021-003","upc": "00018467091622"}
+                    {"productTitle": "LPS LPS 2 Brown Penetrating Lubricant - 55  gal Drum  - Food  Grade,  Military  Grade - 00255 [PRICE  is  per DRUM]" ,"mpn": "00255","upc": "078827002552"}
+                    {"productTitle": "LPS LPS 2 Brown Penetrating Lubricant - 55  gal Drum  - Food  Grade,  Military  Grade - 00255 [PRICE  is  per DRUM]", "upc": "078827002552"}
+                    {"productTitle": "LPS LPS 2 Brown Penetrating Lubricant - 55  gal Drum  - Food  Grade,  Military  Grade - 00255 [PRICE  is  per DRUM]"}</pre>
+                  displayName: file
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+      /lookup:
+        post:
+          description: This operation returns the complete information for the specified product across all the stores where it is sold at. This consumes 22 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIGNvbXBsZXRlIGluZm9ybWF0aW9uIGZvciBhIHByb2R1Y3QgLSBDcmVkaXRzOiDDo8KAwoBuIHggMjI=
+          body:
+            multipart/form-data:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                file:
+                  type: file
+                  description: |-
+                    File input format: JsonLines. Each line should be a valid json conforming to one of the below formats<br><pre>{"upc": "upc1"}
+                    {"mpn": "mpn1", "brandId":  123}
+                    {"sku": "mpn1", "storeId":  123}</pre>
+                  displayName: file
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+      /products:
+        post:
+          description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 22 credits per product returned.
+          displayName: !!binary |-
+            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggdGhlaXIgb2ZmZXJzIGFuZCBjYXRhbG9nIGluZm8gYWNyb3NzIHN0b3JlcyAtIENyZWRpdHM6IMOjwoDCgG4geCAyMg==
+          body:
+            application/x-www-form-urlencoded:
+              type: object
+              properties:
+                countryCode:
+                  type: string
+                  description: !!binary |-
+                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  displayName: countryCode
+                storeId?:
+                  type: array
+                  description: 'Limits results to products sold at store with id.
+                    Supports multiple values (acts as OR operator) '
+                  displayName: storeId
+                  items:
+                    type: string
+                alsoSoldAt?:
+                  type: array
+                  description: 'Combined with storeId limits results to products sold
+                    at both storeIds and alsoSoldAt storeIds. Supports multiple values
+                    (acts as OR operator) '
+                  displayName: alsoSoldAt
+                  items:
+                    type: string
+                brandId?:
+                  type: array
+                  description: Limits results to products of brand with id int.  Supports multiple values (acts as OR operator)
+                  displayName: brandId
+                  items:
+                    type: string
+                categoryId?:
+                  type: array
+                  description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+                  displayName: categoryId
+                  items:
+                    type: string
+                startPrice?:
+                  type: string
+                  description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: startPrice
+                endPrice?:
+                  type: string
+                  description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+                  displayName: endPrice
+                availability?:
+                  type: string
+                  description: 'Limits results to either in-stock or out-of-stock
+                    items. Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+                  displayName: availability
+                priceHistoryAvailable?:
+                  type: string
+                  description: 'Limits results to product that have price history
+                    available through the products/{:id}/prices endpoint. Accepted
+                    values: ''true'',''false'''
+                  displayName: priceHistoryAvailable
+                priceChange?:
+                  type: string
+                  description: 'Limits results to products whose prices have been
+                    increased or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED,
+                    EITHER'
+                  displayName: priceChange
+                onPromotion?:
+                  type: string
+                  description: 'Limits results to products which are on Promotion.
+                    Accepted values: ''true'',''false'''
+                  displayName: onPromotion
+                lastRecordedIn?:
+                  type: string
+                  description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+                  displayName: lastRecordedIn
+                storesCount?:
+                  type: string
+                  description: Limits results to products with at least a certain number of stores
+                  displayName: storesCount
+                applyFiltersTo?:
+                  type: string
+                  description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+                  displayName: applyFiltersTo
+                selectOffersFrom?:
+                  type: string
+                  description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+                  displayName: selectOffersFrom
+                app_id:
+                  type: string
+                  description: Your application id
+                  displayName: app_id
+                app_key:
+                  type: string
+                  description: Your application key
+                  displayName: app_key
+          responses:
+            200:
+              description: Response
+    /products:
+      /{mpid}:
+        uriParameters:
+          mpid:
+            type: string
+            description: The Indix product identifier - should be a 32-digit HEX value retrieved via the Product Search API
+            displayName: mpid
+        get:
+          description: <p>This operation returns the complete information for the specified product across all the stores where it is sold at. This consumes 22 credits.
+          displayName: !!binary |-
+            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBjb21wbGV0ZSBpbmZvcm1hdGlvbiBmb3IgYSBwcm9kdWN0IC0gQ3JlZGl0czogw6PCgMKAMjI=
+          queryParameters:
+            countryCode:
+              type: string
+              description: !!binary |-
+                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              displayName: countryCode
+            pageNumber?:
+              type: string
+              description: The page number of the result set to return. 50 results per page, plus similar items
+              displayName: pageNumber
+            app_id:
+              type: string
+              description: Your application id
+              displayName: app_id
+            app_key:
+              type: string
+              description: Your application key
+              displayName: app_key
+          responses:
+            200:
+              description: Response
+      get:
+        description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 22 credits per product returned.
+        displayName: !!binary |-
+          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIHRoZWlyIG9mZmVycyBhbmQgY2F0YWxvZyBpbmZvIGFjcm9zcyBzdG9yZXMgLSBDcmVkaXRzOiDDo8KAwoBuIHggMjI=
+        queryParameters:
+          countryCode:
+            type: string
+            description: !!binary |-
+              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            displayName: countryCode
+          q?:
+            type: string
+            description: The product search term
+            displayName: q
+          storeId?:
+            type: array
+            description: 'Limits results to products sold at store with id. Supports
+              multiple values (acts as OR operator) '
+            displayName: storeId
+            items:
+              type: string
+          alsoSoldAt?:
+            type: array
+            description: 'Combined with storeId limits results to products sold at
+              both storeIds and alsoSoldAt storeIds. Supports multiple values (acts
+              as OR operator) '
+            displayName: alsoSoldAt
+            items:
+              type: string
+          brandId?:
+            type: array
+            description: Limits results to products of brand with id int. Supports multiple values (acts as OR operator)
+            displayName: brandId
+            items:
+              type: string
+          categoryId?:
+            type: array
+            description: Limits results to products of category with this id. Supports multiple values (acts as OR operator)
+            displayName: categoryId
+            items:
+              type: string
+          url?:
+            type: string
+            description: Search by product URL
+            displayName: url
+          upc?:
+            type: string
+            description: Limit results to products with this UPC
+            displayName: upc
+          mpn?:
+            type: string
+            description: Limit results to products with this MPN
+            displayName: mpn
+          sku?:
+            type: string
+            description: Limit results to products with this SKU
+            displayName: sku
+          startPrice?:
+            type: string
+            description: Combined with end_price, limits results to products sold by at least one store at a price between start and end
+            displayName: startPrice
+          endPrice?:
+            type: string
+            description: Combined with start_price, limits results to products sold by at least one store at a price between start and end
+            displayName: endPrice
+          availability?:
+            type: string
+            description: 'Limits results to either in-stock or out-of-stock items.
+              Accepted values: ''IN_STOCK'',''OUT_OF_STOCK'''
+            displayName: availability
+          priceHistoryAvailable?:
+            type: string
+            description: 'Limits results to product that have price history available
+              through the products/{:id}/prices endpoint. Accepted values: ''true'',''false'''
+            displayName: priceHistoryAvailable
+          priceChange?:
+            type: string
+            description: 'Limits results to products whose prices have been increased
+              or decreased. Accepted Values: PRICE_INCREASED, PRICE_DECREASED, EITHER'
+            displayName: priceChange
+          onPromotion?:
+            type: string
+            description: 'Limits results to products which are on Promotion. Accepted
+              values: ''true'',''false'''
+            displayName: onPromotion
+          lastRecordedIn?:
+            type: string
+            description: Limits results to products which have price recorded in the last xx days. Accepted Value is a non-negative integer
+            displayName: lastRecordedIn
+          storesCount?:
+            type: string
+            description: Limits results to products with at least a certain number of stores
+            displayName: storesCount
+          applyFiltersTo?:
+            type: string
+            description: Specify the stores for which the offer level filter apply. Allowed values - storeId (apply filters to only stores in storeId), alsoSoldAt (apply filters to only stores in alsoSoldAt), storeIdOrAlsoSoldAt (apply filters to stores present in both storeId and alsoSoldAt), any (apply filters across all offers)
+            displayName: applyFiltersTo
+          selectOffersFrom?:
+            type: string
+            description: Specify the stores for which offers will be returned in the response. Allowed values - storeId (select offers matching filters from storeId), alsoSoldAt (select offers matching filters from alsoSoldAt), storeIdAndAlsoSoldAt (select offers matching filters from stores in both storeId and alsoSoldAt), all (select all offers irrespective of matching or storeId or alsoSoldAt data)
+            displayName: selectOffersFrom
+          sortBy?:
+            type: string
+            description: Sort by values - PRICE_LOW_TO_HIGH, PRICE_HIGH_TO_LOW, MOST_RECENT.
+            displayName: sortBy
+          facetBy?:
+            type: array
+            description: Facet by values - storeId, brandId, categoryId. Should be a comma separated list of allowed values.
+            displayName: facetBy
+            items:
+              type: string
+          pageNumber?:
+            type: string
+            description: The page number of the result set to return. 10 results per page.
+            displayName: pageNumber
+          pageSize?:
+            type: string
+            description: Number of results per page. Allowed values - 10, 20, 50.
+            displayName: pageSize
+          app_id:
+            type: string
+            description: Your application id
+            displayName: app_id
+          app_key:
+            type: string
+            description: Your application key
+            displayName: app_key
+        responses:
+          200:
+            description: Response

@@ -1,0 +1,1770 @@
+#%RAML 1.0
+title: ExaVault
+version: 1.0.0
+baseUri: api.exavault.com/
+description: |
+  ExaVault's API allows you to incorporate ExaVault's suite of file transfer and user management tools into your own application.
+
+  ExaVault supports both POST (recommended when requesting large data sets) and GET operations, and requires an API key in order to use.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Account:
+    type: object
+    properties:
+      appliedTrial:
+        type: string
+      bandwidthQuotaLimit:
+        type: integer
+        format: int64
+      bandwidthQuotaUsed:
+        type: integer
+        format: int64
+      branding:
+        type: boolean
+      clientId:
+        type: integer
+        format: int32
+      complexPasswords:
+        type: boolean
+      created:
+        type: string
+      customDomain:
+        type: boolean
+      diskQuotaLimit:
+        type: integer
+        format: int64
+      diskQuotaUsed:
+        type: integer
+        format: int64
+      externalDomains:
+        type: string
+      freeTrial:
+        type: boolean
+      id:
+        type: integer
+        format: int32
+      masterAccount:
+        type: User
+      maxUsers:
+        type: integer
+        format: int32
+      modified:
+        type: string
+      planCode:
+        type: string
+      quotaNoticeEnabled:
+        type: integer
+        format: int32
+      quotaNoticeThreshold:
+        type: integer
+        format: int32
+      redirect:
+        type: string
+      secureOnly:
+        type: boolean
+      showReferralLinks:
+        type: boolean
+      status:
+        type: integer
+        format: int32
+      userCount:
+        type: integer
+        format: int32
+      username:
+        type: string
+  AccountResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: Account
+      success:
+        type: integer
+        format: int32
+  Auth:
+    type: object
+    properties:
+      accessToken:
+        type: string
+      clientIp:
+        type: string
+      mode:
+        type: integer
+        format: int32
+      username:
+        type: string
+  AuthResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: Auth
+      success:
+        type: integer
+        format: int32
+  AvailableUser:
+    type: object
+    properties:
+      available:
+        type: boolean
+  AvailableUserResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: AvailableUser
+      success:
+        type: integer
+        format: int32
+  DeletedResource:
+    type: object
+    properties:
+      file:
+        type: string
+      size:
+        type: integer
+        format: int64
+      success:
+        type: integer
+        format: int32
+  DeletedResourcesResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: DeletedResource
+      success:
+        type: integer
+        format: int32
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+  ExistingResource:
+    type: object
+    properties:
+      exists:
+        type: boolean
+      resource:
+        type: ResourceProperty
+  ExistingResourcesResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: ExistingResource
+      success:
+        type: integer
+        format: int32
+  LogEntry:
+    type: object
+    properties:
+      bytesTransferred:
+        type: integer
+        format: int64
+      created:
+        type: string
+      duration:
+        type: string
+      fileName:
+        type: string
+      fileSource:
+        type: string
+      id:
+        type: integer
+        format: int32
+      ipAddress:
+        type: string
+      operation:
+        type: string
+      protocol:
+        type: string
+      sessionId:
+        type: string
+      status:
+        type: string
+      username:
+        type: string
+  LogResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: LogEntry
+      success:
+        type: integer
+        format: int32
+  Message:
+    type: object
+    properties:
+      body:
+        type: string
+      created:
+        type: string
+      id:
+        type: integer
+        format: int32
+      modified:
+        type: string
+      shareId:
+        type: string
+      subject:
+        type: string
+      userId:
+        type: integer
+        format: int32
+  ModifiedResource:
+    type: object
+    properties:
+      destination:
+        type: string
+      file:
+        type: string
+      size:
+        type: integer
+        format: int64
+      success:
+        type: integer
+        format: int32
+  ModifiedResourcesResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: ModifiedResource
+      success:
+        type: integer
+        format: int32
+  Notification:
+    type: object
+    properties:
+      action:
+        type: string
+      created:
+        type: string
+      id:
+        type: integer
+        format: int32
+      modified:
+        type: string
+      name:
+        type: string
+      path:
+        type: string
+      readableDescription:
+        type: string
+      readableDescriptionWithoutPath:
+        type: string
+      recipientEmails:
+        type: array
+        items:
+          type: string
+      recipients:
+        type: array
+        items:
+          type: Recipient
+      sendEmail:
+        type: string
+      shareId:
+        type: string
+      type:
+        type: string
+      userId:
+        type: string
+      usernames:
+        type: array
+        items:
+          type: string
+  NotificationActivityResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: NotificationMessage
+      success:
+        type: integer
+        format: int32
+  NotificationMessage:
+    type: object
+    properties:
+      action:
+        type: string
+      created:
+        type: string
+      id:
+        type: integer
+        format: int32
+      message:
+        type: string
+      notificationSetting:
+        type: Notification
+      path:
+        type: string
+      read:
+        type: boolean
+      sent:
+        type: boolean
+      username:
+        type: string
+  NotificationResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: Notification
+      success:
+        type: integer
+        format: int32
+  NotificationsResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: Notification
+      success:
+        type: integer
+        format: int32
+  PreviewFile:
+    type: object
+    properties:
+      image:
+        type: string
+      imageId:
+        type: string
+      size:
+        type: integer
+        format: int64
+  PreviewFileResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: PreviewFile
+      success:
+        type: integer
+        format: int32
+  Recipient:
+    type: object
+    properties:
+      created:
+        type: string
+      email:
+        type: string
+      hash:
+        type: string
+      id:
+        type: integer
+        format: int32
+      received:
+        type: boolean
+      sent:
+        type: boolean
+      shareId:
+        type: string
+      type:
+        type: string
+  Resource:
+    type: object
+    properties:
+      inheritedNotifications:
+        type: string
+      inheritedShares:
+        type: string
+      resources:
+        type: array
+        items:
+          type: ResourceProperty
+      totalFiles:
+        type: integer
+        format: int32
+  ResourcePropertiesResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: ResourceProperty
+      success:
+        type: integer
+        format: int32
+  ResourceProperty:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      file:
+        type: string
+      fileCount:
+        type: integer
+        format: int32
+      name:
+        type: string
+      notificationSettings:
+        type: string
+      parent:
+        type: string
+      path:
+        type: string
+      previewable:
+        type: boolean
+      shares:
+        type: array
+        items:
+          type: Share
+      size:
+        type: integer
+        format: int64
+      type?:
+        type: string
+      uploadDate:
+        type: string
+  ResourceResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: Resource
+      success:
+        type: integer
+        format: int32
+  Response:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: string
+      success:
+        type: integer
+        format: int32
+  Share:
+    type: object
+    properties:
+      accessDescription:
+        type: string
+      accessMode:
+        type: string
+      created:
+        type: string
+      embed:
+        type: boolean
+      expiration:
+        type: string
+      expired:
+        type: string
+      fileDropCreateFolders:
+        type: boolean
+      hasNotification:
+        type: boolean
+      hasPassword:
+        type: boolean
+      hash:
+        type: string
+      id:
+        type: integer
+        format: int32
+      inherited:
+        type: boolean
+      isPublic:
+        type: boolean
+      messages:
+        type: array
+        items:
+          type: Message
+      modified:
+        type: string
+      name:
+        type: string
+      notification:
+        type: string
+      owner:
+        type: integer
+        format: int32
+      ownerHash:
+        type: string
+      ownerUsername:
+        type: string
+      paths:
+        type: array
+        items:
+          type: string
+      recipients:
+        type: array
+        items:
+          type: Recipient
+      recipientsWithOwner:
+        type: array
+        items:
+          type: Recipient
+      requireEmail:
+        type: boolean
+      resent:
+        type: boolean
+      status:
+        type: integer
+        format: int32
+      trackingStatus:
+        type: string
+      type:
+        type: string
+  ShareActivityResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: ShareLogEntry
+      success:
+        type: integer
+        format: int32
+  ShareLogEntry:
+    type: object
+    properties:
+      action:
+        type: string
+      actionObjectId:
+        type: string
+      created:
+        type: string
+      detail:
+        type: string
+      id:
+        type: integer
+        format: int32
+      shareId:
+        type: string
+      username:
+        type: string
+  ShareResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: Share
+      success:
+        type: integer
+        format: int32
+  SharesResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: Share
+      success:
+        type: integer
+        format: int32
+  Url:
+    type: object
+    properties:
+      offset?:
+        type: integer
+        format: int32
+      url:
+        type: string
+  UrlResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: Url
+      success:
+        type: integer
+        format: int32
+  User:
+    type: object
+    properties:
+      accessTimestamp:
+        type: string
+      changePassword:
+        type: boolean
+      created:
+        type: string
+      delete:
+        type: boolean
+      download:
+        type: boolean
+      email:
+        type: string
+      expiration:
+        type: string
+      gid:
+        type: integer
+        format: int32
+      homeDir:
+        type: string
+      id:
+        type: integer
+        format: int32
+      list:
+        type: boolean
+      modified:
+        type: string
+      modify:
+        type: boolean
+      nickname:
+        type: string
+      notification:
+        type: boolean
+      owningAccountId:
+        type: integer
+        format: int32
+      role:
+        type: string
+      share:
+        type: boolean
+      status:
+        type: integer
+        format: int32
+      timeZone:
+        type: string
+      upload:
+        type: boolean
+      username:
+        type: string
+  UserResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: User
+      success:
+        type: integer
+        format: int32
+  UsersResponse:
+    type: object
+    properties:
+      error:
+        type: Error
+      results:
+        type: array
+        items:
+          type: User
+      success:
+        type: integer
+        format: int32
+/v1:
+  /authenticateUser:
+    get:
+      description: Returns access token in the Response object
+      displayName: Authenticates a user into the API
+      queryParameters:
+        username:
+          type: string
+          description: Name of of user to authenticate
+          displayName: username
+        password:
+          type: string
+          description: User's password
+          displayName: password
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: AuthResponse
+  /checkFilesExist:
+    get:
+      description: Requires access token obtained via the authenticateUser operation
+      displayName: Checks to see if each file or folder in the array exists
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        filePaths:
+          type: array
+          description: Array containing paths of the files or folders to check
+          displayName: filePaths
+          items:
+            type: string
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ExistingResourcesResponse
+  /copyResources:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'upload' permission.
+      displayName: Copies files, folders to the destination path
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        filePaths:
+          type: array
+          description: Remote paths of the files or folders to copy
+          displayName: filePaths
+          items:
+            type: string
+        destinationPath:
+          type: string
+          description: Remote destination path to copy files/folders to
+          displayName: destinationPath
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ModifiedResourcesResponse
+  /createFolder:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'upload' permission.
+      displayName: Create a folder at a specified path
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        folderName:
+          type: string
+          description: Name of the folder to create
+          displayName: folderName
+        path:
+          type: string
+          description: Where to create the folder
+          displayName: path
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /createNotification:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with 'notification' permission
+      displayName: Creates a new Notification object
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        path:
+          type: string
+          description: Full path of file/folder where notification is set.
+          displayName: path
+        action:
+          type: string
+          description: 'Type of action to filter on: ''upload'', ''download'', ''delete'',
+            ''all'''
+          displayName: action
+        usernames:
+          type: string
+          description: 'User type to filter on: ''notice_user_all'', ''notice_user_all_recipients'',
+            ''notice_user_all_users'''
+          displayName: usernames
+        sendEmail:
+          type: boolean
+          description: Set to true if the user should be notified by email when the notification is triggered.
+          displayName: sendEmail
+        emails?:
+          type: array
+          description: Email addresses to send notification to. If not specified, sends to owner by default.
+          displayName: emails
+          items:
+            type: string
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /createShare:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'share' permission
+      displayName: Create a new Share object
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        type:
+          type: string
+          description: 'The type of share to create: shared_folder, send, receive.'
+          displayName: type
+        name:
+          type: string
+          description: Name of the Share.
+          displayName: name
+        filePaths:
+          type: array
+          description: Array of strings containing the file paths to share.
+          displayName: filePaths
+          items:
+            type: string
+        subject?:
+          type: string
+          description: Share message subject (for email invitations).
+          displayName: subject
+        message?:
+          type: string
+          description: Share message contents (for email invitations).
+          displayName: message
+        emails?:
+          type: array
+          description: Array of strings for email recipients (for email invitations).
+          displayName: emails
+          items:
+            type: string
+        ccEmail?:
+          type: string
+          description: Specifies a CC email recipient.
+          displayName: ccEmail
+        requireEmail?:
+          type: boolean
+          description: Requires a user's email to access (defaults to false if not specified).
+          displayName: requireEmail
+          default: false
+        accessMode?:
+          type: string
+          description: 'Type of permissions share recipients have: upload, download,
+            download_upload, download_upload_modify, download_upload_modify_delete.
+            Defaults to download if no option specified.'
+          displayName: accessMode
+        embed?:
+          type: boolean
+          description: Allows user to embed a widget with the share. Defaults to false if not specified.
+          displayName: embed
+          default: false
+        isPublic?:
+          type: boolean
+          description: True if share has a public URL, otherwise defaults to false
+          displayName: isPublic
+          default: false
+        password?:
+          type: string
+          description: If not null, value of password is required to access this Share
+          displayName: password
+        expiration?:
+          type: string
+          description: The date the current Share should expire, formatted YYYY-mm-dd
+          displayName: expiration
+        hasNotification?:
+          type: boolean
+          description: True if the user should be notified about activity on this Share.
+          displayName: hasNotification
+        notificationEmails?:
+          type: array
+          description: An array of recipients who should receive notification emails.
+          displayName: notificationEmails
+          items:
+            type: string
+        fileDropCreateFolders?:
+          type: boolean
+          description: If true, all receive folder submissions will be uploaded separate folders (only applicable for Receive folder types)
+          displayName: fileDropCreateFolders
+          default: false
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /createUser:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'manage users' permission
+      displayName: Adds a new subaccount user to the current account
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        username:
+          type: string
+          description: Name of the subaccount user to create
+          displayName: username
+        destinationFolder:
+          type: string
+          description: The user's home folder
+          displayName: destinationFolder
+        email:
+          type: string
+          description: The user's email address
+          displayName: email
+        password:
+          type: string
+          description: The user's password
+          displayName: password
+        role:
+          type: string
+          description: 'The user''s role, i.e: ''user'' or ''admin'''
+          displayName: role
+        permissions:
+          type: string
+          description: 'A CSV string of user permissions. The following values are
+            supported: upload, download, delete, modify, list, changePassword, share,
+            notification.'
+          displayName: permissions
+        timeZone:
+          type: string
+          description: The user's timezone, used for accurate time display within SWFT. See <a href='https://php.net/manual/en/timezones.php' target='blank'>this page</a> for allowed values
+          displayName: timeZone
+          default: America/Los_Angeles
+        nickname?:
+          type: string
+          description: The user's nickname
+          displayName: nickname
+        expiration?:
+          type: string
+          description: The date when the user should expire, formatted YYYY-mm-dd
+          displayName: expiration
+        locked?:
+          type: boolean
+          description: If true, the user's account is locked by default
+          displayName: locked
+          default: false
+        welcomeEmail?:
+          type: boolean
+          description: If true, send a user email upon creation
+          displayName: welcomeEmail
+          default: false
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /deleteNotification:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with 'notification' permission
+      displayName: Deletes a Notification by ID
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        id:
+          type: integer
+          description: ID of the Notification to delete.
+          displayName: id
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /deleteResources:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'delete' permission
+      displayName: Delete the specified files/folders
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        filePaths:
+          type: array
+          description: Array containing paths of the files or folder to delete
+          displayName: filePaths
+          items:
+            type: string
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: DeletedResourcesResponse
+  /deleteShare:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with 'share' permission
+      displayName: Deletes a Share by ID
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        id:
+          type: integer
+          description: ID of the Share to delete.
+          displayName: id
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /deleteUser:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with 'manage users' permission
+      displayName: Deletes a subaccount user for the current account
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        username:
+          type: string
+          description: Name of the subaccount user to delete
+          displayName: username
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /getAccount:
+    get:
+      description: Requires access token obtained via the authenticateUser operation
+      displayName: Gets the account object for the currently logged in user
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: AccountResponse
+  /getCurrentUser:
+    get:
+      description: Requires access token obtained via the authenticateUser operation
+      displayName: Gets the user object for the currently logged in user
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: UserResponse
+  /getDownloadFileUrl:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. URL points at the appropriate storage server for file download.
+      displayName: Returns a unique URL for handling file downloads
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        filePaths:
+          type: string
+          description: Path of file to be downloaded
+          displayName: filePaths
+        downloadName?:
+          type: string
+          description: The name of the file to be downloaded
+          displayName: downloadName
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: UrlResponse
+  /getFileActivityLogs:
+    get:
+      displayName: Returns a list of account activity. Allows for searching the activity log.
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        offset?:
+          type: integer
+          description: Starting record in the result set. Can be used for pagination.
+          displayName: offset
+          default: 0
+          format: int32
+        sortBy?:
+          type: string
+          description: Sort method ['sort_logs_date' or 'sort_logs_ip_address' or 'sort_logs_username' or 'sort_logs_file' or 'sort_logs_file_source' or 'sort_logs_operation', or 'sort_logs_duration', or 'sort_logs_size', or 'sort_logs_protocol']
+          displayName: sortBy
+          default: sort_logs_date
+        sortOrder?:
+          type: string
+          description: 'Sort in either ascending or descending order: asc, desc'
+          displayName: sortOrder
+          default: desc
+        filterBy?:
+          type: string
+          description: Field to search on ['filter_logs_date' or 'filter_logs_ip_address' or 'filter_logs_username' or 'filter_logs_operation' or 'filter_logs_file']
+          displayName: filterBy
+        filter?:
+          type: string
+          description: Search criteria. For date ranges, use format 'start_date::end_date'
+          displayName: filter
+        itemLimit?:
+          type: integer
+          description: Number of logs to return. Can be used for pagination.
+          displayName: itemLimit
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: LogResponse
+  /getFolders:
+    get:
+      description: Requires access token obtained via the authenticateUser operation
+      displayName: Get folders for a specified path
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        path:
+          type: string
+          description: The remote file path
+          displayName: path
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ResourcePropertiesResponse
+  /getNotification:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'notification' permission
+      displayName: Returns a notification based on the given ID
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        id:
+          type: integer
+          description: ID of the Notification
+          displayName: id
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: NotificationResponse
+  /getNotificationActivity:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'notification' permission
+      displayName: Returns all notification activity for the current user
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: NotificationActivityResponse
+  /getNotifications:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'notification' permission
+      displayName: Returns all notifications for the current user
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        type:
+          type: string
+          description: 'Type of notification to filter on: ''file'', ''folder'', ''shared_folder'',
+            ''send_receipt'', ''share_receipt'', ''file_drop'''
+          displayName: type
+        sortBy?:
+          type: string
+          description: 'Sort by one of the following: ''sort_notifications_folder_name'',
+            ''sort_notifications_path'', ''sort_notifications_date'''
+          displayName: sortBy
+        sortOrder?:
+          type: string
+          description: Sort by 'asc' or 'desc' order.
+          displayName: sortOrder
+        filter?:
+          type: string
+          description: Filter by the provided search terms.
+          displayName: filter
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: NotificationsResponse
+  /getResourceList:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with 'list files' permission.
+      displayName: Get a listing of files/folders for the specified path
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        path:
+          type: string
+          description: The remote file path
+          displayName: path
+        sortBy:
+          type: string
+          description: 'Sort according to attribute: sort_files_name, sort_files_size,
+            sort_files_date, sort_files_type, sort_files_timeline'
+          displayName: sortBy
+        sortOrder:
+          type: string
+          description: 'Sort in either ascending or descending order: asc, desc'
+          displayName: sortOrder
+        offset:
+          type: integer
+          description: Determines which item to start on for pagination
+          displayName: offset
+          format: int32
+        limit:
+          type: integer
+          description: The number of files to limit the result
+          displayName: limit
+          format: int32
+        detailed?:
+          type: boolean
+          description: If true, returns sharedFolder, notifications or other objects associated with specified path
+          displayName: detailed
+          default: false
+        pattern?:
+          type: string
+          description: Regex string. If not null, perform a search with specified pattern
+          displayName: pattern
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ResourceResponse
+  /getResourceProperties:
+    get:
+      description: Requires access token obtained via the authenticateUser operation
+      displayName: Get the properties for each of the specified files/folders
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        filePaths:
+          type: array
+          description: Array containing paths of the files or folder to get
+          displayName: filePaths
+          items:
+            type: string
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ResourcePropertiesResponse
+  /getShare:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'share' permission
+      displayName: Returns a share by the specified ID
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        id:
+          type: integer
+          description: ID of the requested Share
+          displayName: id
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ShareResponse
+  /getShareActivity:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'share' permission
+      displayName: Return activity log entries for the specified Share ID
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        id:
+          type: integer
+          description: ID of the Share
+          displayName: id
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ShareActivityResponse
+  /getShares:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'share' permission
+      displayName: Returns all Shares for the current user
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        type?:
+          type: string
+          description: 'The type of share to return: ''shared_folder'', ''send'',
+            or ''receive''. If no argument specified, will return all Shares types.'
+          displayName: type
+        sortBy?:
+          type: string
+          description: 'Sort by one of the following: ''sort_shares_name'', ''sort_shares_date'',
+            ''sort_shares_user'', ''sort_shares_access_mode''.'
+          displayName: sortBy
+        sortOrder?:
+          type: string
+          description: Sort by 'asc' or 'desc' order.
+          displayName: sortOrder
+        filter?:
+          type: string
+          description: Filter by the provided search terms.
+          displayName: filter
+        include?:
+          type: string
+          description: Filter by all, active-only, or current user's only.
+          displayName: include
+        offset?:
+          type: integer
+          description: Start position of results to return, for pagination.
+          displayName: offset
+          format: int32
+        limit?:
+          type: integer
+          description: Maximum number of elements to return or 0 if no limit.
+          displayName: limit
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: SharesResponse
+  /getUploadFileUrl:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Called before an upload is started to get URL to appropriate storage server. Available to users with the 'write' permission.
+      displayName: Returns a unique URL for handling file uploads
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        fileSize:
+          type: integer
+          description: Size of the file to upload, in bytes
+          displayName: fileSize
+          format: int64
+        destinationPath:
+          type: string
+          description: Path relative to account's home directory, including file name
+          displayName: destinationPath
+        allowOverwrite?:
+          type: boolean
+          description: True if the file should be overwritten, false if different file names should be generated
+          displayName: allowOverwrite
+          default: true
+        resume?:
+          type: boolean
+          description: True if upload resume is supported, false if it isn't
+          displayName: resume
+          default: false
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: UrlResponse
+  /getUser:
+    get:
+      description: Requires access token obtained via the authenticateUser operation
+      displayName: Get the specified subaccount user for the current account
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        username:
+          type: string
+          description: Name of the subaccount user to get
+          displayName: username
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: UserResponse
+  /getUsers:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'manage users' permission set
+      displayName: Gets the user object for the currently logged in user
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        sortBy:
+          type: string
+          description: sort method ['sort_users_username' or 'sort_users_nickname' or 'sort_users_email' or 'sort_users_home_folder']
+          displayName: sortBy
+        sortOrder:
+          type: string
+          description: sort order, i.e. 'asc' or 'desc'
+          displayName: sortOrder
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: UsersResponse
+  /logoutUser:
+    get:
+      description: Requires access token obtained via the authenticateUser operation
+      displayName: Removes user's access token from database, logging them out of API
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /moveResources:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'upload' permission
+      displayName: Moves files, folders to the destination path
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        filePaths:
+          type: array
+          description: Remote paths of the files or folders to move
+          displayName: filePaths
+          items:
+            type: string
+        destinationPath:
+          type: string
+          description: Remote destination path to move files/folders to
+          displayName: destinationPath
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: ModifiedResourcesResponse
+  /previewFile:
+    get:
+      description: Requires access token obtained via authenticateUser operation
+      displayName: Returns a resized image of the specified document for support file types
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        path:
+          type: string
+          description: Path of the image relative to the user's home directory
+          displayName: path
+        size:
+          type: string
+          description: 'The size of the image: small, medium, large'
+          displayName: size
+        width?:
+          type: integer
+          description: Overrides sizes. Sets to a specific width
+          displayName: width
+          format: int32
+        height?:
+          type: integer
+          description: Overrides sizes. Sets to a specific height
+          displayName: height
+          format: int32
+        page?:
+          type: integer
+          description: Page number for the document
+          displayName: page
+          format: int32
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: PreviewFileResponse
+  /renameResource:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'modify' permission
+      displayName: Rename a file or folder at the specified path
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        filePath:
+          type: string
+          description: Remote path of the files or folder to rename
+          displayName: filePath
+        newName:
+          type: string
+          description: The new name of the file or folder
+          displayName: newName
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /updateNotification:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with 'notification' permission
+      displayName: Updates an existing notification by ID
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        id:
+          type: integer
+          description: The notification ID
+          displayName: id
+          format: int32
+        path?:
+          type: string
+          description: Full path of file/folder where notification is set.
+          displayName: path
+        action?:
+          type: string
+          description: 'Type of action to filter on: ''upload'', ''download'', ''delete'',
+            ''all'''
+          displayName: action
+        usernames?:
+          type: string
+          description: 'User type to filter on: ''notice_user_all'', ''notice_user_all_recipients'',
+            ''notice_user_all_users'''
+          displayName: usernames
+        emails?:
+          type: array
+          description: Email addresses to send notification to. If not specified, sends to owner by default.
+          displayName: emails
+          items:
+            type: string
+        sendEmail?:
+          type: boolean
+          description: Set to true if the user should be notified by email when the notification is triggered.
+          displayName: sendEmail
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /updateShare:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'share' permission
+      displayName: Update an existing Share by ID
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        id:
+          type: integer
+          description: The ID of the Share to update.
+          displayName: id
+          format: int32
+        name?:
+          type: string
+          description: Name of the Share.
+          displayName: name
+        filePaths?:
+          type: array
+          description: Array of strings containing the file paths to share.
+          displayName: filePaths
+          items:
+            type: string
+        subject?:
+          type: string
+          description: Share message subject (for email invitations).
+          displayName: subject
+        message?:
+          type: string
+          description: Share message contents (for email invitations).
+          displayName: message
+        emails?:
+          type: array
+          description: Array of strings for email recipients (for email invitations).
+          displayName: emails
+          items:
+            type: string
+        ccEmail?:
+          type: string
+          description: Specifies a CC email recipient.
+          displayName: ccEmail
+        requireEmail?:
+          type: boolean
+          description: Requires a user's email to access.
+          displayName: requireEmail
+        accessMode?:
+          type: string
+          description: 'Type of permissions share recipients have: upload, download,
+            download_upload, download_upload_modify, download_upload_modify_delete.'
+          displayName: accessMode
+        embed?:
+          type: boolean
+          description: Allows user to embed a widget with the share.
+          displayName: embed
+        isPublic?:
+          type: boolean
+          description: True if share has a public URL, otherwise defaults to false
+          displayName: isPublic
+        password?:
+          type: string
+          description: If not null, value of password is required to access this Share
+          displayName: password
+        expiration?:
+          type: string
+          description: The date the current Share should expire, formatted YYYY-mm-dd
+          displayName: expiration
+        hasNotification?:
+          type: boolean
+          description: True if the user should be notified about activity on this Share.
+          displayName: hasNotification
+        notificationEmails?:
+          type: array
+          description: An array of recipients who should receive notification emails.
+          displayName: notificationEmails
+          items:
+            type: string
+        fileDropCreateFolders?:
+          type: boolean
+          description: If true, all receive folder submissions will be uploaded separate folders (only applicable for Receive folder types)
+          displayName: fileDropCreateFolders
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /updateUser:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with 'manage users' permission
+      displayName: Updates a subaccount user for the current account
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        userId:
+          type: integer
+          description: The user ID, must be obtained from getUser method first
+          displayName: userId
+          format: int32
+        username?:
+          type: string
+          description: Name of the subaccount user to modify
+          displayName: username
+        nickname?:
+          type: string
+          description: The user's nickname
+          displayName: nickname
+        expiration?:
+          type: string
+          description: 'The date when use should expire in format: YYYY-MM-DD'
+          displayName: expiration
+        email?:
+          type: string
+          description: The user's email
+          displayName: email
+        destinationFolder?:
+          type: string
+          description: The user's home folder
+          displayName: destinationFolder
+        password?:
+          type: string
+          description: The user's password
+          displayName: password
+        locked?:
+          type: boolean
+          description: If true, the user's account is locked by default
+          displayName: locked
+        role?:
+          type: string
+          description: 'The user''s role, i.e: ''user'', ''admin'', ''master'''
+          displayName: role
+        permissions?:
+          type: string
+          description: A CSV string of user permissions.
+          displayName: permissions
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Response
+  /userAvailable:
+    get:
+      description: Requires access token obtained via the authenticateUser operation. Available to users with the 'manage users' permission
+      displayName: Returns true if requested username has not already been taken in the system
+      queryParameters:
+        access_token:
+          type: string
+          description: Access token required to make the API call
+          displayName: access_token
+        username:
+          type: string
+          description: Username to check
+          displayName: username
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: AvailableUserResponse

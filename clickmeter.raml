@@ -1,0 +1,5247 @@
+#%RAML 1.0
+title: ClickMeter
+version: v2
+baseUri: apiv2.clickmeter.com:80
+description: Api dashboard for ClickMeter API
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api_key:
+    type: Pass Through
+types:
+  Api_Core_Dto_Accounting_ConversionOptions:
+    type: object
+    properties:
+      hideComCost?:
+        type: boolean
+      hideCost?:
+        type: boolean
+      hideCount?:
+        type: boolean
+      hideParams?:
+        type: boolean
+      hideValue?:
+        type: boolean
+      percentCommission?:
+        type: integer
+        format: int32
+      percentValue?:
+        type: integer
+        format: int32
+  Api_Core_Dto_Accounting_DomainWhitelistEntry:
+    type: object
+    properties:
+      id?:
+        type: string
+      name?:
+        type: string
+    description: The entry to add
+  Api_Core_Dto_Accounting_ExtendedGrants:
+    type: object
+    properties:
+      allowAllGrants?:
+        type: boolean
+      allowGroupCreation?:
+        type: boolean
+  Api_Core_Dto_Accounting_Guest:
+    type: object
+    properties:
+      apiKey?:
+        type: string
+      conversionOptions?:
+        type: Api_Core_Dto_Accounting_ConversionOptions
+      creationDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      currentGrant?:
+        type: Api_Core_Dto_Grants_Grant
+      dateFormat?:
+        type: string
+      decimalSeparator?:
+        type: string
+      email?:
+        type: string
+      extendedGrants?:
+        type: Api_Core_Dto_Accounting_ExtendedGrants
+      groupGrants?:
+        type: integer
+        format: int64
+      hitOptions?:
+        type: Api_Core_Dto_Accounting_HitOptions
+      id?:
+        type: integer
+        format: int64
+      key?:
+        type: string
+      language?:
+        type: string
+      loginCount?:
+        type: integer
+        format: int32
+      name?:
+        type: string
+      notes?:
+        type: string
+      numberGroupSeparator?:
+        type: string
+      password?:
+        type: string
+      timeFormat?:
+        type: string
+        enum:
+        - AmPm
+        - H24
+      timeZone?:
+        type: integer
+        format: int32
+      timeframeMinDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      timezonename?:
+        type: string
+      tlGrants?:
+        type: integer
+        format: int64
+      tpGrants?:
+        type: integer
+        format: int64
+      userName?:
+        type: string
+    description: Guest object with field updated
+  Api_Core_Dto_Accounting_HitOptions:
+    type: object
+    properties:
+      hideReferrer?:
+        type: boolean
+  Api_Core_Dto_Accounting_IpBlacklistEntry:
+    type: object
+    properties:
+      id?:
+        type: string
+      ip?:
+        type: string
+    description: The entry to add
+  Api_Core_Dto_Accounting_Plan:
+    type: object
+    properties:
+      allowedPersonalDomains?:
+        type: integer
+        format: int32
+      allowedPersonalUrls?:
+        type: integer
+        format: int32
+      billingPeriodEnd?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      billingPeriodStart?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      bonusMonthlyEvents?:
+        type: integer
+        format: int64
+      maximumDatapoints?:
+        type: integer
+        format: int64
+      maximumGuests?:
+        type: integer
+        format: int64
+      monthlyEvents?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      price?:
+        type: number
+        format: double
+      profileId?:
+        type: integer
+        format: int64
+      recurring?:
+        type: boolean
+      recurringPeriod?:
+        type: integer
+        format: int32
+      usedDatapoints?:
+        type: integer
+        format: int64
+      usedMonthlyEvents?:
+        type: integer
+        format: int64
+  Api_Core_Dto_Accounting_User:
+    type: object
+    properties:
+      boGoVal?:
+        type: string
+      bonusClicks?:
+        type: integer
+        format: int64
+      companyName?:
+        type: string
+      companyRole?:
+        type: string
+      email?:
+        type: string
+      firstName?:
+        type: string
+      lastName?:
+        type: string
+      phone?:
+        type: string
+      redirectOnly?:
+        type: boolean
+      registrationDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      timeframeMinDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      timezone?:
+        type: integer
+        format: int32
+      timezonename?:
+        type: string
+  Api_Core_Dto_Aggregated_AggregatedResult:
+    type: object
+    properties:
+      activityDay?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      commissionsCost?:
+        type: number
+        format: double
+      conversionsCost?:
+        type: number
+        format: double
+      conversionsValue?:
+        type: number
+        format: double
+      convertedClicks?:
+        type: integer
+        format: int64
+      entityData?:
+        type: System_Object
+      entityId?:
+        type: string
+      fromDay?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      hourlyBreakDown?:
+        type: object
+        properties:
+          //:
+            type: Api_Core_Dto_Aggregated_AggregatedResult
+      lastHitDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      spiderHitsCount?:
+        type: integer
+        format: int64
+      toDay?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      totalClicks?:
+        type: integer
+        format: int64
+      totalViews?:
+        type: integer
+        format: int64
+      uniqueClicks?:
+        type: integer
+        format: int64
+      uniqueConversions?:
+        type: integer
+        format: int64
+      uniqueViews?:
+        type: integer
+        format: int64
+  Api_Core_Dto_Aggregated_AggregatedSummaryResult:
+    type: object
+    properties:
+      count?:
+        type: integer
+        format: int64
+      limit?:
+        type: integer
+        format: int32
+      offset?:
+        type: integer
+        format: int64
+      result?:
+        type: array
+        items:
+          type: Api_Core_Dto_Aggregated_AggregatedResult
+  Api_Core_Dto_ClickStream_Hit:
+    type: object
+    properties:
+      accessTime?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      browser?:
+        type: Api_Core_Dto_ClickStream_HitBrowserInfo
+      clientLanguage?:
+        type: string
+      conversion1?:
+        type: Api_Core_Dto_ClickStream_HitConversionInfo
+      conversion2?:
+        type: Api_Core_Dto_ClickStream_HitConversionInfo
+      conversion3?:
+        type: Api_Core_Dto_ClickStream_HitConversionInfo
+      conversion4?:
+        type: Api_Core_Dto_ClickStream_HitConversionInfo
+      conversion5?:
+        type: Api_Core_Dto_ClickStream_HitConversionInfo
+      conversions?:
+        type: array
+        items:
+          type: Api_Core_Dto_ClickStream_HitConversionInfo
+      entity?:
+        type: Api_Core_Dto_ClickStream_HitDatapointInfo
+      ip?:
+        type: string
+      isProxy?:
+        type: string
+      isSpider?:
+        type: string
+      isUnique?:
+        type: string
+      location?:
+        type: Api_Core_Dto_ClickStream_HitLocationInfo
+      org?:
+        type: string
+      os?:
+        type: Api_Core_Dto_ClickStream_HitOsInfo
+      queryParams?:
+        type: string
+      realDestinationUrl?:
+        type: string
+      referer?:
+        type: string
+      source?:
+        type: Api_Core_Dto_ClickStream_HitSource
+      type?:
+        type: string
+  Api_Core_Dto_ClickStream_HitBrowserInfo:
+    type: object
+    properties:
+      browserType?:
+        type: string
+      familyId?:
+        type: integer
+        format: int64
+      familyName?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+  Api_Core_Dto_ClickStream_HitConversionInfo:
+    type: object
+    properties:
+      accessTime?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      comcost?:
+        type: number
+        format: double
+      cost?:
+        type: number
+        format: double
+      date?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      deleted?:
+        type: boolean
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      parameter?:
+        type: string
+      value?:
+        type: number
+        format: double
+  Api_Core_Dto_ClickStream_HitDatapointInfo:
+    type: object
+    properties:
+      creationDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      datapointFavourite?:
+        type: boolean
+      datapointId?:
+        type: integer
+        format: int64
+      datapointName?:
+        type: string
+      datapointTitle?:
+        type: string
+      datapointType?:
+        type: string
+      destinationUrl?:
+        type: string
+      groupId?:
+        type: integer
+        format: int64
+      groupName?:
+        type: string
+      isABTest?:
+        type: boolean
+      isPrivateShared?:
+        type: boolean
+      isPublic?:
+        type: boolean
+      notes?:
+        type: string
+      status?:
+        type: string
+        enum:
+        - Active
+        - Paused
+        - Abuse
+        - Deleted
+      tags?:
+        type: array
+        items:
+          type: Api_Core_Dto_Tags_Tag
+      trackingCode?:
+        type: string
+  Api_Core_Dto_ClickStream_HitListPage:
+    type: object
+    properties:
+      hits?:
+        type: array
+        items:
+          type: Api_Core_Dto_ClickStream_Hit
+      lastKey?:
+        type: string
+  Api_Core_Dto_ClickStream_HitLocationInfo:
+    type: object
+    properties:
+      areacode?:
+        type: string
+      city?:
+        type: string
+      country?:
+        type: string
+      latitude?:
+        type: number
+        format: double
+      longitude?:
+        type: number
+        format: double
+      metrocode?:
+        type: string
+      organization?:
+        type: string
+      postalcode?:
+        type: string
+      region?:
+        type: string
+      regionName?:
+        type: string
+  Api_Core_Dto_ClickStream_HitOsInfo:
+    type: object
+    properties:
+      familyId?:
+        type: integer
+        format: int64
+      familyName?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+  Api_Core_Dto_ClickStream_HitSource:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      param?:
+        type: string
+  Api_Core_Dto_Conversions_Conversion:
+    type: object
+    properties:
+      code?:
+        type: string
+      creationDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      deleted?:
+        type: boolean
+      description?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      protocol?:
+        type: string
+        enum:
+        - Http
+        - Https
+      value?:
+        type: number
+        format: double
+    description: Updated body of the conversion
+  Api_Core_Dto_Datapoints_BrowserBaseDestinationItem:
+    type: object
+    properties:
+      emailDestinationUrl?:
+        type: string
+      mobileDestinationUrl?:
+        type: string
+      spidersDestinationUrl?:
+        type: string
+  Api_Core_Dto_Datapoints_Datapoint:
+    type: object
+    properties:
+      creationDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      encodeIp?:
+        type: boolean
+      fifthConversionId?:
+        type: integer
+        format: int64
+      fifthConversionName?:
+        type: string
+      firstConversionId?:
+        type: integer
+        format: int64
+      firstConversionName?:
+        type: string
+      fourthConversionId?:
+        type: integer
+        format: int64
+      fourthConversionName?:
+        type: string
+      groupId?:
+        type: integer
+        format: int64
+      groupName?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      isPublic?:
+        type: boolean
+      isSecured?:
+        type: boolean
+      lightTracking?:
+        type: boolean
+      name?:
+        type: string
+      notes?:
+        type: string
+      preferred?:
+        type: boolean
+      redirectOnly?:
+        type: boolean
+      secondConversionId?:
+        type: integer
+        format: int64
+      secondConversionName?:
+        type: string
+      status?:
+        type: string
+        enum:
+        - Active
+        - Paused
+        - Abuse
+        - Deleted
+      tags?:
+        type: array
+        items:
+          type: Api_Core_Dto_Tags_Tag
+      thirdConversionId?:
+        type: integer
+        format: int64
+      thirdConversionName?:
+        type: string
+      title?:
+        type: string
+      trackingCode?:
+        type: string
+      type?:
+        type: string
+        enum:
+        - TrackingLink
+        - TrackingPixel
+      typeTL?:
+        type: Api_Core_Dto_Datapoints_TrackingLinkSpecifics
+      typeTP?:
+        type: Api_Core_Dto_Datapoints_TrackingPixelSpecifics
+      writePermited?:
+        type: boolean
+    description: The body of the datapoint
+  Api_Core_Dto_Datapoints_DatapointRetargetingInfo:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+  Api_Core_Dto_Datapoints_MultipleDestinationItem:
+    type: object
+    properties:
+      url?:
+        type: string
+  Api_Core_Dto_Datapoints_TrackingLinkSpecifics:
+    type: object
+    properties:
+      appendQuery?:
+        type: boolean
+      browserDestinationItem?:
+        type: Api_Core_Dto_Datapoints_BrowserBaseDestinationItem
+      destinationMode?:
+        type: string
+        enum:
+        - Simple
+        - RandomDestination
+        - DestinationByLanguage
+        - SpilloverDestination
+        - DynamicUrl
+        - BrowserDestination
+        - DestinationByNation
+        - UniqueDestination
+        - SequentialDestination
+        - WeightedDestination
+      domainId?:
+        type: integer
+        format: int32
+      encodeUrl?:
+        type: boolean
+      expirationClicks?:
+        type: integer
+        format: int64
+      expirationDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      firstUrl?:
+        type: string
+      goDomainId?:
+        type: integer
+        format: int32
+      hideUrl?:
+        type: boolean
+      hideUrlTitle?:
+        type: string
+      isABTest?:
+        type: boolean
+      password?:
+        type: string
+      pauseAfterClicksExpiration?:
+        type: boolean
+      pauseAfterDateExpiration?:
+        type: boolean
+      randomDestinationItems?:
+        type: array
+        items:
+          type: Api_Core_Dto_Datapoints_MultipleDestinationItem
+      redirectType?:
+        type: string
+        enum:
+        - PermanentRedirect
+        - TemporaryRedirect
+      referrerClean?:
+        type: string
+        enum:
+        - None
+        - Clean
+        - Myself
+      scripts?:
+        type: array
+        items:
+          type: Api_Core_Dto_Datapoints_DatapointRetargetingInfo
+      sequentialDestinationItems?:
+        type: array
+        items:
+          type: Api_Core_Dto_Datapoints_MultipleDestinationItem
+      spilloverDestinationItems?:
+        type: array
+        items:
+          type: Api_Core_Dto_Datapoints_MultipleDestinationItem
+      uniqueDestinationItem?:
+        type: Api_Core_Dto_Datapoints_UniqueDestinationItem
+      url?:
+        type: string
+      urlAfterClicksExpiration?:
+        type: string
+      urlAfterDateExpiration?:
+        type: string
+      urlsByLanguage?:
+        type: array
+        items:
+          type: Api_Core_Dto_Datapoints_UrlByLanguageItem
+      urlsByNation?:
+        type: array
+        items:
+          type: Api_Core_Dto_Datapoints_UrlByNationItem
+      weightedDestinationItems?:
+        type: array
+        items:
+          type: Api_Core_Dto_Datapoints_WeightedDestinationItem
+  Api_Core_Dto_Datapoints_TrackingPixelSpecifics:
+    type: object
+    properties:
+      parameterNote?:
+        type: string
+  Api_Core_Dto_Datapoints_UniqueDestinationItem:
+    type: object
+    properties:
+      firstDestinationUrl?:
+        type: string
+  Api_Core_Dto_Datapoints_UrlByLanguageItem:
+    type: object
+    properties:
+      languageCode?:
+        type: string
+      url?:
+        type: string
+  Api_Core_Dto_Datapoints_UrlByNationItem:
+    type: object
+    properties:
+      nation?:
+        type: string
+      url?:
+        type: string
+  Api_Core_Dto_Datapoints_WeightedDestinationItem:
+    type: object
+    properties:
+      url?:
+        type: string
+      weight?:
+        type: integer
+        format: int32
+  Api_Core_Dto_Domains_Domain:
+    type: object
+    properties:
+      custom404?:
+        type: string
+      customHomepage?:
+        type: string
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      type?:
+        type: string
+        enum:
+        - System
+        - Go
+        - Dedicated
+        - Personal
+    description: The domain to update
+  Api_Core_Dto_EntityUriLong:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      uri?:
+        type: string
+  Api_Core_Dto_Grants_Grant:
+    type: object
+    properties:
+      DatapointType?:
+        type: string
+      Entity?:
+        type: Api_Core_Responses_EntityUri_System_Int64_
+      EntityName?:
+        type: string
+      EntityType?:
+        type: string
+      Type?:
+        type: string
+  Api_Core_Dto_Groups_Group:
+    type: object
+    properties:
+      creationDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      deleted?:
+        type: boolean
+      id?:
+        type: integer
+        format: int64
+      isPublic?:
+        type: boolean
+      name?:
+        type: string
+      notes?:
+        type: string
+      preferred?:
+        type: boolean
+      redirectOnly?:
+        type: boolean
+      tags?:
+        type: array
+        items:
+          type: Api_Core_Dto_Tags_Tag
+      writePermited?:
+        type: boolean
+    description: The body of the group
+  Api_Core_Dto_Retargeting_RetargetingScript:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+      script?:
+        type: string
+    description: The body of the retargeting script
+  Api_Core_Dto_Tags_Tag:
+    type: object
+    properties:
+      datapoints?:
+        type: array
+        items:
+          type: integer
+          format: int64
+      groups?:
+        type: array
+        items:
+          type: integer
+          format: int64
+      id?:
+        type: integer
+        format: int64
+      name?:
+        type: string
+    description: The body of the tag
+  Api_Core_Dto_Tops_Top:
+    type: object
+    properties:
+      createdAt?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      data?:
+        type: array
+        items:
+          type: Api_Core_Dto_Tops_TopItem
+      key?:
+        type: string
+  Api_Core_Dto_Tops_TopItem:
+    type: object
+    properties:
+      entityData?:
+        type: System_Object
+      id?:
+        type: string
+      lastHitDate?:
+        type: string
+        description: ' (A date in "YmdHis" format)'
+        example: '20120203120530'
+      spiderClicks?:
+        type: integer
+        format: int64
+      spiderHits?:
+        type: integer
+        format: int64
+      spiderViews?:
+        type: integer
+        format: int64
+      totalClicks?:
+        type: integer
+        format: int64
+      totalCommissionsCost?:
+        type: number
+        format: double
+      totalConversions?:
+        type: integer
+        format: int64
+      totalConversionsCost?:
+        type: number
+        format: double
+      totalConversionsValue?:
+        type: number
+        format: double
+      totalHits?:
+        type: integer
+        format: int64
+      totalViews?:
+        type: integer
+        format: int64
+      uniqueClicks?:
+        type: integer
+        format: int64
+      uniqueHits?:
+        type: integer
+        format: int64
+      uniqueViews?:
+        type: integer
+        format: int64
+  Api_Core_Requests_ConversionPatchBody:
+    type: object
+    properties:
+      Action?:
+        type: string
+      Id?:
+        type: integer
+        format: int64
+      ReplaceId?:
+        type: integer
+        format: int64
+    description: Patch request
+  Api_Core_Requests_DatapointsBatch:
+    type: object
+    properties:
+      List?:
+        type: array
+        items:
+          type: Api_Core_Dto_Datapoints_Datapoint
+    description: A json containing the datapoints to create.
+  Api_Core_Requests_DeleteBatch:
+    type: object
+    properties:
+      Entities?:
+        type: array
+        items:
+          type: Api_Core_Dto_EntityUriLong
+    description: A json containing the datapoints to delete.
+  Api_Core_Requests_GenericTextPatch:
+    type: object
+    properties:
+      Text?:
+        type: string
+    description: The body patch
+  Api_Core_Requests_PatchBody:
+    type: object
+    properties:
+      Action?:
+        type: string
+      Id?:
+        type: integer
+        format: int64
+    description: The body patch
+  Api_Core_Requests_PatchBodyBatch:
+    type: object
+    properties:
+      PatchRequests?:
+        type: array
+        items:
+          type: Api_Core_Requests_PatchBody
+    description: Patch requests
+  Api_Core_Requests_PermissionPatchRequest:
+    type: object
+    properties:
+      Action?:
+        type: string
+      Id?:
+        type: integer
+        format: int64
+      Verb?:
+        type: string
+    description: The patch permission request
+  Api_Core_Responses_CountResponce:
+    type: object
+    properties:
+      count?:
+        type: integer
+        format: int64
+  Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Accounting_DomainWhitelistEntry_:
+    type: object
+    properties:
+      entities?:
+        type: array
+        items:
+          type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+  Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Accounting_IpBlacklistEntry_:
+    type: object
+    properties:
+      entities?:
+        type: array
+        items:
+          type: Api_Core_Dto_Accounting_IpBlacklistEntry
+  Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_:
+    type: object
+    properties:
+      entities?:
+        type: array
+        items:
+          type: Api_Core_Dto_Aggregated_AggregatedResult
+  Api_Core_Responses_EntitiesResponse_Api_Core_Dto_ClickStream_Hit_:
+    type: object
+    properties:
+      entities?:
+        type: array
+        items:
+          type: Api_Core_Dto_ClickStream_Hit
+  Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Grants_Grant_:
+    type: object
+    properties:
+      entities?:
+        type: array
+        items:
+          type: Api_Core_Dto_Grants_Grant
+  Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__:
+    type: object
+    properties:
+      entities?:
+        type: array
+        items:
+          type: Api_Core_Responses_EntityUri_System_Int64_
+  Api_Core_Responses_EntityUri_System_Int64_:
+    type: object
+    properties:
+      id?:
+        type: integer
+        format: int64
+      uri?:
+        type: string
+  Api_Core_Responses_ModifyBatchItemResponce_Api_Core_Dto_Datapoints_Datapoint_System_Int64_:
+    type: object
+    properties:
+      entityData?:
+        type: Api_Core_Dto_Datapoints_Datapoint
+      errors?:
+        type: array
+        items:
+          type: ClickMeter_Infrastructure_Validation_ValidationFailure
+      result?:
+        type: Api_Core_Responses_EntityUri_System_Int64_
+      status?:
+        type: string
+  ClickMeter_Infrastructure_Validation_ValidationFailure:
+    type: object
+    properties:
+      code?:
+        type: System_Object
+      errorMessage?:
+        type: string
+      errorValue?:
+        type: System_Object
+      property?:
+        type: string
+  System_Object:
+    type: object
+/account:
+  /domainwhitelist:
+    /{whitelistId}:
+      uriParameters:
+        whitelistId:
+          type: string
+          description: The id of the domain to delete
+          displayName: whitelistId
+      delete:
+        displayName: Delete an domain entry
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+              text/json:
+                type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+              application/xml:
+                type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+              text/xml:
+                type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Retrieve list of a domains allowed to redirect in DDU mode
+      queryParameters:
+        offset?:
+          type: integer
+          description: Offset where to start from
+          displayName: offset
+          format: int32
+        limit?:
+          type: integer
+          description: Limit results to this number
+          displayName: limit
+          format: int32
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Accounting_DomainWhitelistEntry_
+            text/json:
+              type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Accounting_DomainWhitelistEntry_
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Create an domain entry
+      body:
+        application/json: Api_Core_Dto_Accounting_DomainWhitelistEntry
+        text/json: Api_Core_Dto_Accounting_DomainWhitelistEntry
+        application/xml: Api_Core_Dto_Accounting_DomainWhitelistEntry
+        text/xml: Api_Core_Dto_Accounting_DomainWhitelistEntry
+        application/x-www-form-urlencoded: Api_Core_Dto_Accounting_DomainWhitelistEntry
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+            text/json:
+              type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+            application/xml:
+              type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+            text/xml:
+              type: Api_Core_Dto_Accounting_DomainWhitelistEntry
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /guests:
+    /count:
+      get:
+        displayName: Retrieve count of guests
+        queryParameters:
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_CountResponce
+              text/json:
+                type: Api_Core_Responses_CountResponce
+              application/xml:
+                type: Api_Core_Responses_CountResponce
+              text/xml:
+                type: Api_Core_Responses_CountResponce
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /{guestId}:
+      uriParameters:
+        guestId:
+          type: integer
+          description: Id of the guest
+          displayName: guestId
+          format: int64
+      /permissions:
+        /count:
+          get:
+            displayName: Retrieve count of the permissions for a guest
+            queryParameters:
+              entityType?:
+                type: string
+                description: Can be "datapoint" or "group"
+                displayName: entityType
+                enum:
+                - datapoint
+                - group
+              type?:
+                type: string
+                description: Can be "w" or "r"
+                displayName: type
+                enum:
+                - r
+                - w
+              entityId?:
+                type: integer
+                description: Optional id of the datapoint/group entity to filter by
+                displayName: entityId
+                format: int64
+            responses:
+              200:
+                description: ''
+                body:
+                  application/json:
+                    type: Api_Core_Responses_CountResponce
+                  text/json:
+                    type: Api_Core_Responses_CountResponce
+                  application/xml:
+                    type: Api_Core_Responses_CountResponce
+                  text/xml:
+                    type: Api_Core_Responses_CountResponce
+              401:
+                description: Unauthorized
+              500:
+                description: Internal Server Error
+        get:
+          displayName: Retrieve permissions for a guest
+          queryParameters:
+            entityType?:
+              type: string
+              description: Can be "datapoint" or "group"
+              displayName: entityType
+              enum:
+              - datapoint
+              - group
+            offset?:
+              type: integer
+              description: Offset where to start from
+              displayName: offset
+              format: int32
+            limit?:
+              type: integer
+              description: Limit results to this number
+              displayName: limit
+              format: int32
+            type?:
+              type: string
+              description: Can be "w" or "r"
+              displayName: type
+              enum:
+              - r
+              - w
+            entityId?:
+              type: integer
+              description: Optional id of the datapoint/group entity to filter by
+              displayName: entityId
+              format: int64
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Grants_Grant_
+                text/json:
+                  type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Grants_Grant_
+            401:
+              description: Unauthorized
+            500:
+              description: Internal Server Error
+      /{type}:
+        uriParameters:
+          type:
+            type: string
+            description: Can be "datapoint" or "group"
+            displayName: type
+            enum:
+            - datapoint
+            - group
+        /permissions:
+          /patch:
+            post:
+              displayName: Change the permission on a shared object
+              body:
+                application/json: Api_Core_Requests_PermissionPatchRequest
+                text/json: Api_Core_Requests_PermissionPatchRequest
+                application/xml: Api_Core_Requests_PermissionPatchRequest
+                text/xml: Api_Core_Requests_PermissionPatchRequest
+                application/x-www-form-urlencoded: Api_Core_Requests_PermissionPatchRequest
+              responses:
+                200:
+                  description: ''
+                  body:
+                    application/json:
+                      type: Api_Core_Responses_EntityUri_System_Int64_
+                    text/json:
+                      type: Api_Core_Responses_EntityUri_System_Int64_
+                    application/xml:
+                      type: Api_Core_Responses_EntityUri_System_Int64_
+                    text/xml:
+                      type: Api_Core_Responses_EntityUri_System_Int64_
+                401:
+                  description: Unauthorized
+                500:
+                  description: Internal Server Error
+            put:
+              displayName: Change the permission on a shared object
+              body:
+                application/json: Api_Core_Requests_PermissionPatchRequest
+                text/json: Api_Core_Requests_PermissionPatchRequest
+                application/xml: Api_Core_Requests_PermissionPatchRequest
+                text/xml: Api_Core_Requests_PermissionPatchRequest
+                application/x-www-form-urlencoded: Api_Core_Requests_PermissionPatchRequest
+              responses:
+                200:
+                  description: ''
+                  body:
+                    application/json:
+                      type: Api_Core_Responses_EntityUri_System_Int64_
+                    text/json:
+                      type: Api_Core_Responses_EntityUri_System_Int64_
+                    application/xml:
+                      type: Api_Core_Responses_EntityUri_System_Int64_
+                    text/xml:
+                      type: Api_Core_Responses_EntityUri_System_Int64_
+                401:
+                  description: Unauthorized
+                500:
+                  description: Internal Server Error
+      get:
+        displayName: Retrieve a guest
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Accounting_Guest
+              text/json:
+                type: Api_Core_Dto_Accounting_Guest
+              application/xml:
+                type: Api_Core_Dto_Accounting_Guest
+              text/xml:
+                type: Api_Core_Dto_Accounting_Guest
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+      delete:
+        displayName: Delete a guest
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+      post:
+        displayName: Update a guest
+        body:
+          application/json: Api_Core_Dto_Accounting_Guest
+          text/json: Api_Core_Dto_Accounting_Guest
+          application/xml: Api_Core_Dto_Accounting_Guest
+          text/xml: Api_Core_Dto_Accounting_Guest
+          application/x-www-form-urlencoded: Api_Core_Dto_Accounting_Guest
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Accounting_Guest
+              text/json:
+                type: Api_Core_Dto_Accounting_Guest
+              application/xml:
+                type: Api_Core_Dto_Accounting_Guest
+              text/xml:
+                type: Api_Core_Dto_Accounting_Guest
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Retrieve list of a guest
+      queryParameters:
+        offset?:
+          type: integer
+          description: Offset where to start from
+          displayName: offset
+          format: int32
+        limit?:
+          type: integer
+          description: Limit results to this number
+          displayName: limit
+          format: int32
+        sortBy?:
+          type: string
+          description: Field to sort by
+          displayName: sortBy
+        sortDirection?:
+          type: string
+          description: Direction of sort "asc" or "desc"
+          displayName: sortDirection
+          enum:
+          - asc
+          - desc
+        textSearch?:
+          type: string
+          description: Filter fields by this pattern
+          displayName: textSearch
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+            text/json:
+              type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Create a guest
+      body:
+        application/json: Api_Core_Dto_Accounting_Guest
+        text/json: Api_Core_Dto_Accounting_Guest
+        application/xml: Api_Core_Dto_Accounting_Guest
+        text/xml: Api_Core_Dto_Accounting_Guest
+        application/x-www-form-urlencoded: Api_Core_Dto_Accounting_Guest
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Accounting_Guest
+            text/json:
+              type: Api_Core_Dto_Accounting_Guest
+            application/xml:
+              type: Api_Core_Dto_Accounting_Guest
+            text/xml:
+              type: Api_Core_Dto_Accounting_Guest
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /ipblacklist:
+    /{blacklistId}:
+      uriParameters:
+        blacklistId:
+          type: string
+          description: The id of the ip to delete
+          displayName: blacklistId
+      delete:
+        displayName: Delete an ip blacklist entry
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Accounting_IpBlacklistEntry
+              text/json:
+                type: Api_Core_Dto_Accounting_IpBlacklistEntry
+              application/xml:
+                type: Api_Core_Dto_Accounting_IpBlacklistEntry
+              text/xml:
+                type: Api_Core_Dto_Accounting_IpBlacklistEntry
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Retrieve list of a ip to exclude from event tracking
+      queryParameters:
+        offset?:
+          type: integer
+          description: Offset where to start from
+          displayName: offset
+          format: int32
+        limit?:
+          type: integer
+          description: Limit results to this number
+          displayName: limit
+          format: int32
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Accounting_IpBlacklistEntry_
+            text/json:
+              type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Accounting_IpBlacklistEntry_
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Create an ip blacklist entry
+      body:
+        application/json: Api_Core_Dto_Accounting_IpBlacklistEntry
+        text/json: Api_Core_Dto_Accounting_IpBlacklistEntry
+        application/xml: Api_Core_Dto_Accounting_IpBlacklistEntry
+        text/xml: Api_Core_Dto_Accounting_IpBlacklistEntry
+        application/x-www-form-urlencoded: Api_Core_Dto_Accounting_IpBlacklistEntry
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Accounting_IpBlacklistEntry
+            text/json:
+              type: Api_Core_Dto_Accounting_IpBlacklistEntry
+            application/xml:
+              type: Api_Core_Dto_Accounting_IpBlacklistEntry
+            text/xml:
+              type: Api_Core_Dto_Accounting_IpBlacklistEntry
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /plan:
+    get:
+      displayName: Retrieve current account plan
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Accounting_Plan
+            text/json:
+              type: Api_Core_Dto_Accounting_Plan
+            application/xml:
+              type: Api_Core_Dto_Accounting_Plan
+            text/xml:
+              type: Api_Core_Dto_Accounting_Plan
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  get:
+    displayName: Retrieve current account data
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Dto_Accounting_User
+          text/json:
+            type: Api_Core_Dto_Accounting_User
+          application/xml:
+            type: Api_Core_Dto_Accounting_User
+          text/xml:
+            type: Api_Core_Dto_Accounting_User
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+  post:
+    displayName: Update current account data
+    body:
+      application/json: Api_Core_Dto_Accounting_User
+      text/json: Api_Core_Dto_Accounting_User
+      application/xml: Api_Core_Dto_Accounting_User
+      text/xml: Api_Core_Dto_Accounting_User
+      application/x-www-form-urlencoded: Api_Core_Dto_Accounting_User
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Dto_Accounting_User
+          text/json:
+            type: Api_Core_Dto_Accounting_User
+          application/xml:
+            type: Api_Core_Dto_Accounting_User
+          text/xml:
+            type: Api_Core_Dto_Accounting_User
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+/aggregated:
+  /list:
+    get:
+      displayName: Retrieve statistics about this customer for a timeframe grouped by some temporal entity (day/week/month)
+      queryParameters:
+        timeFrame:
+          type: string
+          description: Timeframe of the request. See list at $timeframeList
+          displayName: timeFrame
+          enum:
+          - today
+          - yesterday
+          - last7
+          - last30
+          - lastmonth
+          - currentmonth
+          - previousmonth
+          - last90
+          - last120
+          - last180
+          - last12months
+          - lastyear
+          - currentyear
+          - beginning
+          - custom
+        fromDay?:
+          type: string
+          description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+          displayName: fromDay
+        toDay?:
+          type: string
+          description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+          displayName: toDay
+        groupBy?:
+          type: string
+          description: The temporal entity you want to group by ("week"/"month"). If unspecified is "day".
+          displayName: groupBy
+          enum:
+          - week
+          - month
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+            text/json:
+              type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /summary:
+    /conversions:
+      get:
+        displayName: Retrieve statistics about a subset of conversions for a timeframe with conversions data
+        queryParameters:
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          status?:
+            type: string
+            description: Status of conversion ("deleted"/"active")
+            displayName: status
+            enum:
+            - deleted
+            - active
+          sortBy?:
+            type: string
+            description: Field to sort by
+            displayName: sortBy
+          sortDirection?:
+            type: string
+            description: Direction of sort "asc" or "desc"
+            displayName: sortDirection
+            enum:
+            - asc
+            - desc
+          offset?:
+            type: integer
+            description: Offset where to start from
+            displayName: offset
+            format: int32
+          limit?:
+            type: integer
+            description: Limit results to this number
+            displayName: limit
+            format: int32
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Aggregated_AggregatedSummaryResult
+              text/json:
+                type: Api_Core_Dto_Aggregated_AggregatedSummaryResult
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /datapoints:
+      get:
+        displayName: Retrieve statistics about a subset of datapoints for a timeframe with datapoints data
+        queryParameters:
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          type:
+            type: string
+            description: Type of datapoint ("tl"/"tp")
+            displayName: type
+            enum:
+            - tp
+            - tl
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          status?:
+            type: string
+            description: Status of datapoint ("deleted"/"active"/"paused"/"spam")
+            displayName: status
+            enum:
+            - deleted
+            - active
+            - paused
+            - spam
+          tag?:
+            type: string
+            description: A comma separated list of tags you want to filter with.
+            displayName: tag
+          favourite?:
+            type: boolean
+            description: Is the datapoint marked as favourite
+            displayName: favourite
+          sortBy?:
+            type: string
+            description: Field to sort by
+            displayName: sortBy
+          sortDirection?:
+            type: string
+            description: Direction of sort "asc" or "desc"
+            displayName: sortDirection
+            enum:
+            - asc
+            - desc
+          offset?:
+            type: integer
+            description: Offset where to start from
+            displayName: offset
+            format: int32
+          limit?:
+            type: integer
+            description: Limit results to this number
+            displayName: limit
+            format: int32
+          groupId?:
+            type: integer
+            description: Filter by this group id
+            displayName: groupId
+            format: int64
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Aggregated_AggregatedSummaryResult
+              text/json:
+                type: Api_Core_Dto_Aggregated_AggregatedSummaryResult
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /groups:
+      get:
+        displayName: Retrieve statistics about a subset of groups for a timeframe with groups data
+        queryParameters:
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          status?:
+            type: string
+            description: Status of group ("deleted"/"active")
+            displayName: status
+            enum:
+            - deleted
+            - active
+          tag?:
+            type: string
+            description: A comma separated list of tags you want to filter with.
+            displayName: tag
+          favourite?:
+            type: boolean
+            description: Is the group marked as favourite
+            displayName: favourite
+          sortBy?:
+            type: string
+            description: Field to sort by
+            displayName: sortBy
+          sortDirection?:
+            type: string
+            description: Direction of sort "asc" or "desc"
+            displayName: sortDirection
+            enum:
+            - asc
+            - desc
+          offset?:
+            type: integer
+            description: Offset where to start from
+            displayName: offset
+            format: int32
+          limit?:
+            type: integer
+            description: Limit results to this number
+            displayName: limit
+            format: int32
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Aggregated_AggregatedSummaryResult
+              text/json:
+                type: Api_Core_Dto_Aggregated_AggregatedSummaryResult
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+  get:
+    displayName: Retrieve statistics about this customer for a timeframe
+    queryParameters:
+      timeFrame:
+        type: string
+        description: Timeframe of the request. See list at $timeframeList
+        displayName: timeFrame
+        enum:
+        - today
+        - yesterday
+        - last7
+        - last30
+        - lastmonth
+        - currentmonth
+        - previousmonth
+        - last90
+        - last120
+        - last180
+        - last12months
+        - lastyear
+        - currentyear
+        - beginning
+        - custom
+      fromDay?:
+        type: string
+        description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+        displayName: fromDay
+      toDay?:
+        type: string
+        description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+        displayName: toDay
+      hourly?:
+        type: boolean
+        description: If using "yesterday" or "today" timeframe you can ask for the hourly detail
+        displayName: hourly
+      onlyFavorites?:
+        type: string
+        displayName: onlyFavorites
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Dto_Aggregated_AggregatedResult
+          text/json:
+            type: Api_Core_Dto_Aggregated_AggregatedResult
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+/clickstream:
+  get:
+    displayName: Retrieve the latest list of events of this account. Limited to last 100.
+    queryParameters:
+      group?:
+        type: integer
+        description: Filter by this group id (mutually exclusive with "datapoint" and "conversion")
+        displayName: group
+        format: int64
+      datapoint?:
+        type: integer
+        description: Filter by this datapoint id (mutually exclusive with "group" and "conversion")
+        displayName: datapoint
+        format: int64
+      conversion?:
+        type: integer
+        description: Filter by this conversion id (mutually exclusive with "datapoint" and "group")
+        displayName: conversion
+        format: int64
+      pageSize?:
+        type: integer
+        description: Limit results to this number
+        displayName: pageSize
+        default: 50
+        format: int32
+      filter?:
+        type: string
+        description: Filter event type ("spiders"/"uniques"/"nonuniques"/"conversions")
+        displayName: filter
+        enum:
+        - ''
+        - spiders
+        - uniques
+        - nonuniques
+        - conversions
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_ClickStream_Hit_
+          text/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_ClickStream_Hit_
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+/conversions:
+  /aggregated:
+    /list:
+      get:
+        displayName: Retrieve statistics about this customer for a timeframe related to a subset of conversions grouped by some temporal entity (day/week/month)
+        queryParameters:
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          status?:
+            type: string
+            description: Status of conversion ("deleted"/"active")
+            displayName: status
+            enum:
+            - deleted
+            - active
+          groupBy?:
+            type: string
+            description: The temporal entity you want to group by ("week"/"month"). If unspecified is "day".
+            displayName: groupBy
+            enum:
+            - week
+            - month
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+              text/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+  /count:
+    get:
+      displayName: Retrieve a count of conversions
+      queryParameters:
+        status?:
+          type: string
+          description: Status of conversion ("deleted"/"active")
+          displayName: status
+          enum:
+          - deleted
+          - active
+        textSearch?:
+          type: string
+          description: Filter fields by this pattern
+          displayName: textSearch
+        createdAfter?:
+          type: string
+          description: Exclude conversions created before this date (YYYYMMDD)
+          displayName: createdAfter
+        createdBefore?:
+          type: string
+          description: Exclude conversions created after this date (YYYYMMDD)
+          displayName: createdBefore
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_CountResponce
+            text/json:
+              type: Api_Core_Responses_CountResponce
+            application/xml:
+              type: Api_Core_Responses_CountResponce
+            text/xml:
+              type: Api_Core_Responses_CountResponce
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /{conversionId}:
+    uriParameters:
+      conversionId:
+        type: integer
+        description: Id of the conversion
+        displayName: conversionId
+        format: int64
+    /aggregated:
+      /list:
+        get:
+          displayName: Retrieve statistics about this conversion for a timeframe grouped by some temporal entity (day/week/month)
+          queryParameters:
+            timeFrame:
+              type: string
+              description: Timeframe of the request. See list at $timeframeList
+              displayName: timeFrame
+              enum:
+              - today
+              - yesterday
+              - last7
+              - last30
+              - lastmonth
+              - currentmonth
+              - previousmonth
+              - last90
+              - last120
+              - last180
+              - last12months
+              - lastyear
+              - currentyear
+              - beginning
+              - custom
+            fromDay?:
+              type: string
+              description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+              displayName: fromDay
+            toDay?:
+              type: string
+              description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+              displayName: toDay
+            groupBy?:
+              type: string
+              description: The temporal entity you want to group by ("week"/"month"). If unspecified is "day".
+              displayName: groupBy
+              enum:
+              - week
+              - month
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+                text/json:
+                  type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+            401:
+              description: Unauthorized
+            500:
+              description: Internal Server Error
+      get:
+        displayName: Retrieve statistics about this conversion for a timeframe
+        queryParameters:
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          tag?:
+            type: string
+            description: Filter by this tag name
+            displayName: tag
+          favourite?:
+            type: boolean
+            description: Is the datapoint marked as favourite
+            displayName: favourite
+          hourly?:
+            type: boolean
+            description: If using "yesterday" or "today" timeframe you can ask for the hourly detail
+            displayName: hourly
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Aggregated_AggregatedResult
+              text/json:
+                type: Api_Core_Dto_Aggregated_AggregatedResult
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /datapoints:
+      /batch:
+        /patch:
+          put:
+            displayName: Modify the association between a conversion and multiple datapoints
+            body:
+              application/json: Api_Core_Requests_PatchBodyBatch
+              text/json: Api_Core_Requests_PatchBodyBatch
+              application/x-www-form-urlencoded: Api_Core_Requests_PatchBodyBatch
+            responses:
+              200:
+                description: ''
+                body:
+                  application/json:
+                    type: Api_Core_Responses_EntityUri_System_Int64_
+                  text/json:
+                    type: Api_Core_Responses_EntityUri_System_Int64_
+                  application/xml:
+                    type: Api_Core_Responses_EntityUri_System_Int64_
+                  text/xml:
+                    type: Api_Core_Responses_EntityUri_System_Int64_
+              401:
+                description: Unauthorized
+              404:
+                description: Not found
+              500:
+                description: Internal Server Error
+      /count:
+        get:
+          displayName: Retrieve a count of datapoints connected to this conversion
+          queryParameters:
+            type?:
+              type: string
+              description: Type of datapoint ("tl"/"tp")
+              displayName: type
+            status?:
+              type: string
+              description: Status of datapoint ("deleted"/"active"/"paused"/"spam")
+              displayName: status
+            tags?:
+              type: string
+              description: Filter by this tag name
+              displayName: tags
+            textSearch?:
+              type: string
+              description: Filter fields by this pattern
+              displayName: textSearch
+            createdAfter?:
+              type: string
+              description: Exclude datapoints created before this date (YYYYMMDD)
+              displayName: createdAfter
+            createdBefore?:
+              type: string
+              description: Exclude datapoints created after this date (YYYYMMDD)
+              displayName: createdBefore
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_CountResponce
+                text/json:
+                  type: Api_Core_Responses_CountResponce
+                application/xml:
+                  type: Api_Core_Responses_CountResponce
+                text/xml:
+                  type: Api_Core_Responses_CountResponce
+            401:
+              description: Unauthorized
+            500:
+              description: Internal Server Error
+      /patch:
+        put:
+          displayName: Modify the association between a conversion and a datapoint
+          body:
+            application/json: Api_Core_Requests_ConversionPatchBody
+            text/json: Api_Core_Requests_ConversionPatchBody
+            application/xml: Api_Core_Requests_ConversionPatchBody
+            text/xml: Api_Core_Requests_ConversionPatchBody
+            application/x-www-form-urlencoded: Api_Core_Requests_ConversionPatchBody
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                text/json:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                application/xml:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                text/xml:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+            401:
+              description: Unauthorized
+            404:
+              description: Not found
+            500:
+              description: Internal Server Error
+      get:
+        displayName: Retrieve a list of datapoints connected to this conversion
+        queryParameters:
+          offset?:
+            type: integer
+            description: Offset where to start from
+            displayName: offset
+            format: int32
+          limit?:
+            type: integer
+            description: Limit results to this number
+            displayName: limit
+            format: int32
+          type?:
+            type: string
+            description: Type of datapoint ("tl"/"tp")
+            displayName: type
+            enum:
+            - tp
+            - tl
+          status?:
+            type: string
+            description: Status of datapoint ("deleted"/"active"/"paused"/"spam")
+            displayName: status
+            enum:
+            - deleted
+            - active
+            - paused
+            - spam
+          tags?:
+            type: string
+            description: Filter by this tag name
+            displayName: tags
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+          createdAfter?:
+            type: string
+            description: Exclude datapoints created before this date (YYYYMMDD)
+            displayName: createdAfter
+          createdBefore?:
+            type: string
+            description: Exclude datapoints created after this date (YYYYMMDD)
+            displayName: createdBefore
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+              text/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /hits:
+      get:
+        displayName: Retrieve the list of events related to this conversion.
+        queryParameters:
+          timeframe:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeframe
+            enum:
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - custom
+          limit?:
+            type: integer
+            description: Limit results to this number
+            displayName: limit
+            format: int32
+          offset?:
+            type: string
+            description: Offset where to start from (it's the lastKey field in the response object)
+            displayName: offset
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          filter?:
+            type: string
+            description: Filter event type ("spiders"/"uniques"/"nonuniques"/"conversions")
+            displayName: filter
+            enum:
+            - spiders
+            - uniques
+            - nonuniques
+            - conversions
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_ClickStream_HitListPage
+              text/json:
+                type: Api_Core_Dto_ClickStream_HitListPage
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /notes:
+      put:
+        displayName: Fast patch the "notes" field of a conversion
+        body:
+          application/json: Api_Core_Requests_GenericTextPatch
+          text/json: Api_Core_Requests_GenericTextPatch
+          application/xml: Api_Core_Requests_GenericTextPatch
+          text/xml: Api_Core_Requests_GenericTextPatch
+          application/x-www-form-urlencoded: Api_Core_Requests_GenericTextPatch
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    /reports:
+      get:
+        displayName: Retrieve a top report connected to this conversion
+        queryParameters:
+          type:
+            type: string
+            description: Type of the report.
+            displayName: type
+            enum:
+            - datapoints
+            - groups
+            - browsers
+            - browsersfamilies
+            - platforms
+            - cities
+            - countries
+            - keywords
+            - referrers
+            - convparameters
+            - destinations
+            - languages
+            - params
+          timeframe:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeframe
+            enum:
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - beginning
+            - custom
+          hittype?:
+            type: string
+            description: Type of the event you want to filter this report with. By default no filter is applied.
+            displayName: hittype
+            enum:
+            - clicks
+            - views
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Tops_Top
+              text/json:
+                type: Api_Core_Dto_Tops_Top
+          401:
+            description: Forbidden
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Retrieve conversion specified by id
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Conversions_Conversion
+            text/json:
+              type: Api_Core_Dto_Conversions_Conversion
+            application/xml:
+              type: Api_Core_Dto_Conversions_Conversion
+            text/xml:
+              type: Api_Core_Dto_Conversions_Conversion
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    delete:
+      displayName: Delete conversion specified by id
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Update conversion specified by id
+      body:
+        application/json: Api_Core_Dto_Conversions_Conversion
+        text/json: Api_Core_Dto_Conversions_Conversion
+        application/xml: Api_Core_Dto_Conversions_Conversion
+        text/xml: Api_Core_Dto_Conversions_Conversion
+        application/x-www-form-urlencoded: Api_Core_Dto_Conversions_Conversion
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+  get:
+    displayName: Retrieve a list of conversions
+    queryParameters:
+      offset?:
+        type: integer
+        description: Offset where to start from
+        displayName: offset
+        format: int32
+      limit?:
+        type: integer
+        description: Limit results to this number
+        displayName: limit
+        format: int32
+      status?:
+        type: string
+        description: Status of conversion ("deleted"/"active")
+        displayName: status
+        enum:
+        - deleted
+        - active
+      textSearch?:
+        type: string
+        description: Filter fields by this pattern
+        displayName: textSearch
+      createdAfter?:
+        type: string
+        description: Exclude conversions created before this date (YYYYMMDD)
+        displayName: createdAfter
+      createdBefore?:
+        type: string
+        description: Exclude conversions created after this date (YYYYMMDD)
+        displayName: createdBefore
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          text/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+  post:
+    displayName: Create a conversion
+    body:
+      application/json: Api_Core_Dto_Conversions_Conversion
+      text/json: Api_Core_Dto_Conversions_Conversion
+      application/xml: Api_Core_Dto_Conversions_Conversion
+      text/xml: Api_Core_Dto_Conversions_Conversion
+      application/x-www-form-urlencoded: Api_Core_Dto_Conversions_Conversion
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          application/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+/datapoints:
+  /aggregated:
+    /list:
+      get:
+        displayName: Retrieve statistics about all datapoints of this customer for a timeframe grouped by some temporal entity (day/week/month)
+        queryParameters:
+          type:
+            type: string
+            description: Type of datapoint ("tl"/"tp")
+            displayName: type
+            enum:
+            - tp
+            - tl
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          status?:
+            type: string
+            description: Status of datapoint ("deleted"/"active"/"paused"/"spam")
+            displayName: status
+            enum:
+            - deleted
+            - active
+            - paused
+            - spam
+          tag?:
+            type: string
+            description: A comma separated list of tags you want to filter with.
+            displayName: tag
+          favourite?:
+            type: boolean
+            description: Is the datapoint is marked as favourite
+            displayName: favourite
+          groupBy?:
+            type: string
+            description: The temporal entity you want to group by ("week"/"month"). If unspecified is "day".
+            displayName: groupBy
+            enum:
+            - week
+            - month
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+              text/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Retrieve statistics about this customer for a timeframe by groups
+      queryParameters:
+        timeFrame:
+          type: string
+          description: Timeframe of the request. See list at $timeframeList
+          displayName: timeFrame
+          enum:
+          - today
+          - yesterday
+          - last7
+          - last30
+          - lastmonth
+          - currentmonth
+          - previousmonth
+          - last90
+          - last120
+          - last180
+          - last12months
+          - lastyear
+          - currentyear
+          - beginning
+          - custom
+        type?:
+          type: string
+          description: Type of datapoint ("tl"/"tp")
+          displayName: type
+          enum:
+          - tp
+          - tl
+        fromDay?:
+          type: string
+          description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+          displayName: fromDay
+        toDay?:
+          type: string
+          description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+          displayName: toDay
+        hourly?:
+          type: boolean
+          description: If using "yesterday" or "today" timeframe you can ask for the hourly detail
+          displayName: hourly
+        status?:
+          type: string
+          description: Status of datapoint ("deleted"/"active"/"paused"/"spam")
+          displayName: status
+          enum:
+          - deleted
+          - active
+          - paused
+          - spam
+        tag?:
+          type: string
+          description: A comma separated list of tags you want to filter with.
+          displayName: tag
+        favourite?:
+          type: boolean
+          description: Is the datapoint is marked as favourite
+          displayName: favourite
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Aggregated_AggregatedResult
+            text/json:
+              type: Api_Core_Dto_Aggregated_AggregatedResult
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /batch:
+    delete:
+      displayName: Delete multiple datapoints
+      body:
+        application/json: Api_Core_Requests_DeleteBatch
+        text/json: Api_Core_Requests_DeleteBatch
+        application/x-www-form-urlencoded: Api_Core_Requests_DeleteBatch
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_ModifyBatchItemResponce_Api_Core_Dto_Datapoints_Datapoint_System_Int64_
+            text/json:
+              type: Api_Core_Responses_ModifyBatchItemResponce_Api_Core_Dto_Datapoints_Datapoint_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Update multiple datapoints
+      body:
+        application/json: Api_Core_Requests_DatapointsBatch
+        text/json: Api_Core_Requests_DatapointsBatch
+        application/x-www-form-urlencoded: Api_Core_Requests_DatapointsBatch
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_ModifyBatchItemResponce_Api_Core_Dto_Datapoints_Datapoint_System_Int64_
+            text/json:
+              type: Api_Core_Responses_ModifyBatchItemResponce_Api_Core_Dto_Datapoints_Datapoint_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    put:
+      displayName: Create multiple datapoints
+      body:
+        application/json: Api_Core_Requests_DatapointsBatch
+        text/json: Api_Core_Requests_DatapointsBatch
+        application/x-www-form-urlencoded: Api_Core_Requests_DatapointsBatch
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_ModifyBatchItemResponce_Api_Core_Dto_Datapoints_Datapoint_System_Int64_
+            text/json:
+              type: Api_Core_Responses_ModifyBatchItemResponce_Api_Core_Dto_Datapoints_Datapoint_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+  /count:
+    get:
+      displayName: Count the datapoints associated to the user
+      queryParameters:
+        type?:
+          type: string
+          description: Type of the datapoint ("tp"/"tl")
+          displayName: type
+          enum:
+          - tp
+          - tl
+        status?:
+          type: string
+          description: Status of the datapoint
+          displayName: status
+          enum:
+          - deleted
+          - active
+          - paused
+          - spam
+        tags?:
+          type: string
+          description: A comma separated list of tags you want to filter with.
+          displayName: tags
+        textSearch?:
+          type: string
+          description: Filter fields by this pattern
+          displayName: textSearch
+        onlyFavorites?:
+          type: boolean
+          description: Filter fields by favourite status
+          displayName: onlyFavorites
+        createdAfter?:
+          type: string
+          description: Exclude datapoints created before this date (YYYYMMDD)
+          displayName: createdAfter
+        createdBefore?:
+          type: string
+          description: Exclude datapoints created after this date (YYYYMMDD)
+          displayName: createdBefore
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_CountResponce
+            text/json:
+              type: Api_Core_Responses_CountResponce
+            application/xml:
+              type: Api_Core_Responses_CountResponce
+            text/xml:
+              type: Api_Core_Responses_CountResponce
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: The id of the datapoint
+        displayName: id
+        format: int64
+    /aggregated:
+      /list:
+        get:
+          displayName: Retrieve statistics about this datapoint for a timeframe grouped by some temporal entity (day/week/month)
+          queryParameters:
+            timeFrame:
+              type: string
+              description: Timeframe of the request. See list at $timeframeList
+              displayName: timeFrame
+              enum:
+              - today
+              - yesterday
+              - last7
+              - last30
+              - lastmonth
+              - currentmonth
+              - previousmonth
+              - last90
+              - last120
+              - last180
+              - last12months
+              - lastyear
+              - currentyear
+              - beginning
+              - custom
+            fromDay?:
+              type: string
+              description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+              displayName: fromDay
+            toDay?:
+              type: string
+              description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+              displayName: toDay
+            groupBy?:
+              type: string
+              description: The temporal entity you want to group by ("week"/"month"). If unspecified is "day".
+              displayName: groupBy
+              enum:
+              - week
+              - month
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+                text/json:
+                  type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+            401:
+              description: Unauthorized
+            500:
+              description: Internal Server Error
+      get:
+        displayName: Retrieve statistics about this datapoint for a timeframe
+        queryParameters:
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          hourly?:
+            type: boolean
+            description: If using "yesterday" or "today" timeframe you can ask for the hourly detail
+            displayName: hourly
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Aggregated_AggregatedResult
+              text/json:
+                type: Api_Core_Dto_Aggregated_AggregatedResult
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /favourite:
+      put:
+        displayName: Fast switch the "favourite" field of a datapoint
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    /hits:
+      get:
+        displayName: Retrieve the list of events related to this datapoint.
+        queryParameters:
+          timeframe:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeframe
+            enum:
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - custom
+          limit?:
+            type: integer
+            description: Limit results to this number
+            displayName: limit
+            format: int32
+          offset?:
+            type: string
+            description: Offset where to start from (it's the lastKey field in the response object)
+            displayName: offset
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          filter?:
+            type: string
+            description: Filter event type ("spiders"/"uniques"/"nonuniques"/"conversions")
+            displayName: filter
+            enum:
+            - spiders
+            - uniques
+            - nonuniques
+            - conversions
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_ClickStream_HitListPage
+              text/json:
+                type: Api_Core_Dto_ClickStream_HitListPage
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /notes:
+      put:
+        displayName: Fast patch the "notes" field of a datapoint
+        body:
+          application/json: Api_Core_Requests_GenericTextPatch
+          text/json: Api_Core_Requests_GenericTextPatch
+          application/xml: Api_Core_Requests_GenericTextPatch
+          text/xml: Api_Core_Requests_GenericTextPatch
+          application/x-www-form-urlencoded: Api_Core_Requests_GenericTextPatch
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    /reports:
+      get:
+        displayName: Retrieve a top report connected to this datapoint
+        queryParameters:
+          type:
+            type: string
+            description: Type of the report.
+            displayName: type
+            enum:
+            - browsers
+            - browsersfamilies
+            - platforms
+            - cities
+            - countries
+            - isps
+            - ips
+            - oss
+            - ossfamilies
+            - keywords
+            - referrers
+            - destinations
+            - languages
+            - params
+          timeframe:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeframe
+            enum:
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Tops_Top
+              text/json:
+                type: Api_Core_Dto_Tops_Top
+          401:
+            description: Forbidden
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Get a datapoint
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Datapoints_Datapoint
+            text/json:
+              type: Api_Core_Dto_Datapoints_Datapoint
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    delete:
+      displayName: Delete a datapoint
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Update a datapoint
+      body:
+        application/json: Api_Core_Dto_Datapoints_Datapoint
+        text/json: Api_Core_Dto_Datapoints_Datapoint
+        application/x-www-form-urlencoded: Api_Core_Dto_Datapoints_Datapoint
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+  get:
+    displayName: List of all the datapoints associated to the user
+    queryParameters:
+      offset?:
+        type: integer
+        description: Where to start when retrieving elements. Default is 0 if not specified.
+        displayName: offset
+        default: 0
+        format: int32
+      limit?:
+        type: integer
+        description: Maximum elements to retrieve. Default to 20 if not specified.
+        displayName: limit
+        default: 20
+        format: int32
+      type?:
+        type: string
+        description: Type of the datapoint ("tp"/"tl")
+        displayName: type
+        enum:
+        - tp
+        - tl
+      status?:
+        type: string
+        description: Status of the datapoint
+        displayName: status
+        enum:
+        - deleted
+        - active
+        - paused
+        - spam
+      tags?:
+        type: string
+        description: A comma separated list of tags you want to filter with.
+        displayName: tags
+      textSearch?:
+        type: string
+        description: Filter fields by this pattern
+        displayName: textSearch
+      onlyFavorites?:
+        type: boolean
+        description: Filter fields by favourite status
+        displayName: onlyFavorites
+      sortBy?:
+        type: string
+        description: Field to sort by
+        displayName: sortBy
+      sortDirection?:
+        type: string
+        description: Direction of sort "asc" or "desc"
+        displayName: sortDirection
+        enum:
+        - asc
+        - desc
+      createdAfter?:
+        type: string
+        description: Exclude datapoints created before this date (YYYYMMDD)
+        displayName: createdAfter
+      createdBefore?:
+        type: string
+        description: Exclude datapoints created after this date (YYYYMMDD)
+        displayName: createdBefore
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          text/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+  post:
+    displayName: Create a datapoint
+    body:
+      application/json: Api_Core_Dto_Datapoints_Datapoint
+      text/json: Api_Core_Dto_Datapoints_Datapoint
+      application/x-www-form-urlencoded: Api_Core_Dto_Datapoints_Datapoint
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          application/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+/domains:
+  /count:
+    get:
+      displayName: Retrieve count of domains
+      queryParameters:
+        type?:
+          type: string
+          description: Type of domain ("system"/"go"/"personal"/"dedicated"). If not specified default is "system"
+          displayName: type
+          default: system
+          enum:
+          - system
+          - go
+          - personal
+          - dedicated
+        name?:
+          type: string
+          description: Filter domains with this anmen
+          displayName: name
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_CountResponce
+            text/json:
+              type: Api_Core_Responses_CountResponce
+            application/xml:
+              type: Api_Core_Responses_CountResponce
+            text/xml:
+              type: Api_Core_Responses_CountResponce
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: Id of domain
+        displayName: id
+        format: int64
+    get:
+      displayName: Get a domain
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Domains_Domain
+            text/json:
+              type: Api_Core_Dto_Domains_Domain
+            application/xml:
+              type: Api_Core_Dto_Domains_Domain
+            text/xml:
+              type: Api_Core_Dto_Domains_Domain
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+    delete:
+      displayName: Delete a domain
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Update a domain
+      body:
+        application/json: Api_Core_Dto_Domains_Domain
+        text/json: Api_Core_Dto_Domains_Domain
+        application/xml: Api_Core_Dto_Domains_Domain
+        text/xml: Api_Core_Dto_Domains_Domain
+        application/x-www-form-urlencoded: Api_Core_Dto_Domains_Domain
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  get:
+    displayName: Retrieve a list of domains
+    queryParameters:
+      offset?:
+        type: integer
+        description: Offset where to start from
+        displayName: offset
+        format: int32
+      limit?:
+        type: integer
+        description: Limit results to this number
+        displayName: limit
+        format: int32
+      type?:
+        type: string
+        description: Type of domain ("system"/"go"/"personal"/"dedicated"). If not specified default is "system"
+        displayName: type
+        default: system
+        enum:
+        - system
+        - go
+        - personal
+        - dedicated
+      name?:
+        type: string
+        description: Filter domains with this anmen
+        displayName: name
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          text/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+  post:
+    displayName: Create a domain
+    body:
+      application/json: Api_Core_Dto_Domains_Domain
+      text/json: Api_Core_Dto_Domains_Domain
+      application/xml: Api_Core_Dto_Domains_Domain
+      text/xml: Api_Core_Dto_Domains_Domain
+      application/x-www-form-urlencoded: Api_Core_Dto_Domains_Domain
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          application/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+/groups:
+  /aggregated:
+    /list:
+      get:
+        displayName: Retrieve statistics about all groups of this customer for a timeframe grouped by some temporal entity (day/week/month)
+        queryParameters:
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          status?:
+            type: string
+            description: Status of group ("deleted"/"active")
+            displayName: status
+          tag?:
+            type: string
+            description: A comma separated list of tags you want to filter with.
+            displayName: tag
+          favourite?:
+            type: boolean
+            description: Is the group is marked as favourite
+            displayName: favourite
+          groupBy?:
+            type: string
+            description: The temporal entity you want to group by ("week"/"month"). If unspecified is "day".
+            displayName: groupBy
+            enum:
+            - deleted
+            - active
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+              text/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Retrieve statistics about this customer for a timeframe by groups
+      queryParameters:
+        timeFrame:
+          type: string
+          description: Timeframe of the request. See list at $timeframeList
+          displayName: timeFrame
+          enum:
+          - today
+          - yesterday
+          - last7
+          - last30
+          - lastmonth
+          - currentmonth
+          - previousmonth
+          - last90
+          - last120
+          - last180
+          - last12months
+          - lastyear
+          - currentyear
+          - beginning
+          - custom
+        fromDay?:
+          type: string
+          description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+          displayName: fromDay
+        toDay?:
+          type: string
+          description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+          displayName: toDay
+        hourly?:
+          type: boolean
+          description: If using "yesterday" or "today" timeframe you can ask for the hourly detail
+          displayName: hourly
+        status?:
+          type: string
+          description: Status of group ("deleted"/"active")
+          displayName: status
+          enum:
+          - deleted
+          - active
+        tag?:
+          type: string
+          description: A comma separated list of tags you want to filter with.
+          displayName: tag
+        favourite?:
+          type: boolean
+          description: Is the group is marked as favourite
+          displayName: favourite
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Aggregated_AggregatedResult
+            text/json:
+              type: Api_Core_Dto_Aggregated_AggregatedResult
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /count:
+    get:
+      displayName: Count the groups associated to the user.
+      queryParameters:
+        status?:
+          type: string
+          description: Status of the datapoint
+          displayName: status
+          enum:
+          - deleted
+          - active
+        tags?:
+          type: string
+          description: A comma separated list of tags you want to filter with.
+          displayName: tags
+        textSearch?:
+          type: string
+          description: Filter fields by this pattern
+          displayName: textSearch
+        createdAfter?:
+          type: string
+          description: Exclude groups created before this date (YYYYMMDD)
+          displayName: createdAfter
+        createdBefore?:
+          type: string
+          description: Exclude groups created after this date (YYYYMMDD)
+          displayName: createdBefore
+        write?:
+          type: boolean
+          description: Write permission
+          displayName: write
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_CountResponce
+            text/json:
+              type: Api_Core_Responses_CountResponce
+            application/xml:
+              type: Api_Core_Responses_CountResponce
+            text/xml:
+              type: Api_Core_Responses_CountResponce
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: The id of the group
+        displayName: id
+        format: int64
+    /aggregated:
+      /list:
+        get:
+          displayName: Retrieve statistics about this group for a timeframe grouped by some temporal entity (day/week/month)
+          queryParameters:
+            timeFrame:
+              type: string
+              description: Timeframe of the request. See list at $timeframeList
+              displayName: timeFrame
+              enum:
+              - today
+              - yesterday
+              - last7
+              - last30
+              - lastmonth
+              - currentmonth
+              - previousmonth
+              - last90
+              - last120
+              - last180
+              - last12months
+              - lastyear
+              - currentyear
+              - beginning
+              - custom
+            fromDay?:
+              type: string
+              description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+              displayName: fromDay
+            toDay?:
+              type: string
+              description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+              displayName: toDay
+            groupBy?:
+              type: string
+              description: The temporal entity you want to group by ("week"/"month"). If unspecified is "day".
+              displayName: groupBy
+              enum:
+              - week
+              - month
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+                text/json:
+                  type: Api_Core_Responses_EntitiesResponse_Api_Core_Dto_Aggregated_AggregatedResult_
+            401:
+              description: Unauthorized
+            500:
+              description: Internal Server Error
+      /summary:
+        get:
+          displayName: Retrieve statistics about a subset of datapoints for a timeframe with datapoints data
+          queryParameters:
+            timeFrame:
+              type: string
+              description: Timeframe of the request. See list at $timeframeList
+              displayName: timeFrame
+              enum:
+              - today
+              - yesterday
+              - last7
+              - last30
+              - lastmonth
+              - currentmonth
+              - previousmonth
+              - last90
+              - last120
+              - last180
+              - last12months
+              - lastyear
+              - currentyear
+              - beginning
+              - custom
+            type?:
+              type: string
+              description: Type of datapoint ("tl"/"tp")
+              displayName: type
+              enum:
+              - tp
+              - tl
+            fromDay?:
+              type: string
+              description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+              displayName: fromDay
+            toDay?:
+              type: string
+              description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+              displayName: toDay
+            status?:
+              type: string
+              description: Status of datapoint ("deleted"/"active"/"paused"/"spam")
+              displayName: status
+              enum:
+              - deleted
+              - active
+            tag?:
+              type: string
+              description: A comma separated list of tags you want to filter with.
+              displayName: tag
+            favourite?:
+              type: boolean
+              description: Is the datapoint marked as favourite
+              displayName: favourite
+            sortBy?:
+              type: string
+              description: Field to sort by
+              displayName: sortBy
+            sortDirection?:
+              type: string
+              description: Direction of sort "asc" or "desc"
+              displayName: sortDirection
+              enum:
+              - asc
+              - desc
+            offset?:
+              type: integer
+              description: Offset where to start from
+              displayName: offset
+              default: 0
+              format: int32
+            limit?:
+              type: integer
+              description: Limit results to this number
+              displayName: limit
+              default: 20
+              format: int32
+            textSearch?:
+              type: string
+              description: Filter fields by this pattern
+              displayName: textSearch
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Dto_Aggregated_AggregatedSummaryResult
+                text/json:
+                  type: Api_Core_Dto_Aggregated_AggregatedSummaryResult
+            401:
+              description: Unauthorized
+            500:
+              description: Internal Server Error
+      get:
+        displayName: Retrieve statistics about this group for a timeframe
+        queryParameters:
+          timeFrame:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeFrame
+            enum:
+            - today
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - last12months
+            - lastyear
+            - currentyear
+            - beginning
+            - custom
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          hourly?:
+            type: boolean
+            description: If using "yesterday" or "today" timeframe you can ask for the hourly detail
+            displayName: hourly
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Aggregated_AggregatedResult
+              text/json:
+                type: Api_Core_Dto_Aggregated_AggregatedResult
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /datapoints:
+      /count:
+        get:
+          displayName: Count the datapoints associated to the user in this group.
+          queryParameters:
+            type?:
+              type: string
+              description: Type of the datapoint ("tp"/"tl")
+              displayName: type
+              enum:
+              - tp
+              - tl
+            status?:
+              type: string
+              description: Status of the datapoint
+              displayName: status
+              enum:
+              - deleted
+              - active
+              - paused
+              - spam
+            tags?:
+              type: string
+              description: A comma separated list of tags you want to filter with.
+              displayName: tags
+            textSearch?:
+              type: string
+              description: Filter fields by this pattern
+              displayName: textSearch
+            onlyFavorites?:
+              type: boolean
+              description: Filter fields by favourite status
+              displayName: onlyFavorites
+            createdAfter?:
+              type: string
+              description: Exclude datapoints created before this date (YYYYMMDD)
+              displayName: createdAfter
+            createdBefore?:
+              type: string
+              description: Exclude datapoints created after this date (YYYYMMDD)
+              displayName: createdBefore
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_CountResponce
+                text/json:
+                  type: Api_Core_Responses_CountResponce
+                application/xml:
+                  type: Api_Core_Responses_CountResponce
+                text/xml:
+                  type: Api_Core_Responses_CountResponce
+            401:
+              description: Unauthorized
+            404:
+              description: Not found
+            500:
+              description: Internal Server Error
+      get:
+        displayName: List of all the datapoints associated to the user in this group.
+        queryParameters:
+          offset?:
+            type: integer
+            description: Where to start when retrieving elements. Default is 0 if not specified.
+            displayName: offset
+            default: 0
+            format: int32
+          limit?:
+            type: integer
+            description: Maximum elements to retrieve. Default to 20 if not specified.
+            displayName: limit
+            default: 20
+            format: int32
+          type?:
+            type: string
+            description: Type of the datapoint ("tp"/"tl")
+            displayName: type
+            enum:
+            - tp
+            - tl
+          status?:
+            type: string
+            description: Status of the datapoint
+            displayName: status
+            enum:
+            - deleted
+            - active
+            - paused
+            - spam
+          tags?:
+            type: string
+            description: A comma separated list of tags you want to filter with.
+            displayName: tags
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+          onlyFavorites?:
+            type: boolean
+            description: Filter fields by favourite status
+            displayName: onlyFavorites
+          sortBy?:
+            type: string
+            description: Field to sort by
+            displayName: sortBy
+          sortDirection?:
+            type: string
+            description: Direction of sort "asc" or "desc"
+            displayName: sortDirection
+            enum:
+            - asc
+            - desc
+          createdAfter?:
+            type: string
+            description: Exclude datapoints created before this date (YYYYMMDD)
+            displayName: createdAfter
+          createdBefore?:
+            type: string
+            description: Exclude datapoints created after this date (YYYYMMDD)
+            displayName: createdBefore
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+              text/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          401:
+            description: Unauthorized
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+      post:
+        displayName: Create a datapoint in this group
+        body:
+          application/json: Api_Core_Dto_Datapoints_Datapoint
+          text/json: Api_Core_Dto_Datapoints_Datapoint
+          application/x-www-form-urlencoded: Api_Core_Dto_Datapoints_Datapoint
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    /favourite:
+      put:
+        displayName: Fast switch the "favourite" field of a group
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    /hits:
+      get:
+        displayName: Retrieve the list of events related to this group.
+        queryParameters:
+          timeframe:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeframe
+            enum:
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - custom
+          limit?:
+            type: integer
+            description: Limit results to this number
+            displayName: limit
+            format: int32
+          offset?:
+            type: string
+            description: Offset where to start from (it's the lastKey field in the response object)
+            displayName: offset
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+          filter?:
+            type: string
+            description: Filter event type ("spiders"/"uniques"/"nonuniques"/"conversions")
+            displayName: filter
+            enum:
+            - spiders
+            - uniques
+            - nonuniques
+            - conversions
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_ClickStream_HitListPage
+              text/json:
+                type: Api_Core_Dto_ClickStream_HitListPage
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /notes:
+      put:
+        displayName: Fast patch the "notes" field of a group
+        body:
+          application/json: Api_Core_Requests_GenericTextPatch
+          text/json: Api_Core_Requests_GenericTextPatch
+          application/xml: Api_Core_Requests_GenericTextPatch
+          text/xml: Api_Core_Requests_GenericTextPatch
+          application/x-www-form-urlencoded: Api_Core_Requests_GenericTextPatch
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    /reports:
+      get:
+        displayName: Retrieve a top report connected to this group
+        queryParameters:
+          type:
+            type: string
+            description: Type of the report.
+            displayName: type
+            enum:
+            - browsers
+            - browsersfamilies
+            - platforms
+            - cities
+            - countries
+            - isps
+            - ips
+            - oss
+            - ossfamilies
+            - keywords
+            - referrers
+            - destinations
+            - languages
+            - params
+          timeframe:
+            type: string
+            description: Timeframe of the request. See list at $timeframeList
+            displayName: timeframe
+            enum:
+            - yesterday
+            - last7
+            - last30
+            - lastmonth
+            - currentmonth
+            - previousmonth
+            - last90
+            - last120
+            - last180
+            - beginning
+            - custom
+          hittype?:
+            type: string
+            description: Type of the event you want to filter this report with. By default no filter is applied.
+            displayName: hittype
+            enum:
+            - clicks
+            - views
+          fromDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+            displayName: fromDay
+          toDay?:
+            type: string
+            description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+            displayName: toDay
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Dto_Tops_Top
+              text/json:
+                type: Api_Core_Dto_Tops_Top
+          401:
+            description: Forbidden
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Get a group
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Groups_Group
+            text/json:
+              type: Api_Core_Dto_Groups_Group
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    delete:
+      displayName: Delete group specified by id
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Update a group
+      body:
+        application/json: Api_Core_Dto_Groups_Group
+        text/json: Api_Core_Dto_Groups_Group
+        application/x-www-form-urlencoded: Api_Core_Dto_Groups_Group
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+  get:
+    displayName: List of all the groups associated to the user.
+    queryParameters:
+      offset?:
+        type: integer
+        description: Where to start when retrieving elements. Default is 0 if not specified.
+        displayName: offset
+        default: 0
+        format: int32
+      limit?:
+        type: integer
+        description: Maximum elements to retrieve. Default to 20 if not specified.
+        displayName: limit
+        default: 20
+        format: int32
+      status?:
+        type: string
+        description: Status of the group
+        displayName: status
+        enum:
+        - deleted
+        - active
+      tags?:
+        type: string
+        description: A comma separated list of tags you want to filter with.
+        displayName: tags
+      textSearch?:
+        type: string
+        description: Filter fields by this pattern
+        displayName: textSearch
+      createdAfter?:
+        type: string
+        description: Exclude groups created before this date (YYYYMMDD)
+        displayName: createdAfter
+      createdBefore?:
+        type: string
+        description: Exclude groups created after this date (YYYYMMDD)
+        displayName: createdBefore
+      write?:
+        type: boolean
+        description: Write permission
+        displayName: write
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          text/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+  post:
+    displayName: Create a group
+    body:
+      application/json: Api_Core_Dto_Groups_Group
+      text/json: Api_Core_Dto_Groups_Group
+      application/x-www-form-urlencoded: Api_Core_Dto_Groups_Group
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          application/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+/hits:
+  get:
+    displayName: Retrieve the list of events related to this account.
+    queryParameters:
+      timeframe:
+        type: string
+        description: Timeframe of the request. See list at $timeframeList
+        displayName: timeframe
+        enum:
+        - yesterday
+        - last7
+        - last30
+        - lastmonth
+        - currentmonth
+        - previousmonth
+        - last90
+        - last120
+        - last180
+        - custom
+      limit?:
+        type: integer
+        description: Limit results to this number
+        displayName: limit
+        format: int32
+      offset?:
+        type: string
+        description: Offset where to start from (it's the lastKey field in the response object)
+        displayName: offset
+      fromDay?:
+        type: string
+        description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+        displayName: fromDay
+      toDay?:
+        type: string
+        description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+        displayName: toDay
+      filter?:
+        type: string
+        description: Filter event type ("spiders"/"uniques"/"nonuniques"/"conversions")
+        displayName: filter
+        enum:
+        - spiders
+        - uniques
+        - nonuniques
+        - conversions
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Dto_ClickStream_HitListPage
+          text/json:
+            type: Api_Core_Dto_ClickStream_HitListPage
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+/me:
+  /plan:
+    get:
+      displayName: Retrieve current account plan
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Accounting_Plan
+            text/json:
+              type: Api_Core_Dto_Accounting_Plan
+            application/xml:
+              type: Api_Core_Dto_Accounting_Plan
+            text/xml:
+              type: Api_Core_Dto_Accounting_Plan
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  get:
+    displayName: Retrieve current account data
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Dto_Accounting_User
+          text/json:
+            type: Api_Core_Dto_Accounting_User
+          application/xml:
+            type: Api_Core_Dto_Accounting_User
+          text/xml:
+            type: Api_Core_Dto_Accounting_User
+      401:
+        description: Unauthorized
+      500:
+        description: Internal Server Error
+/reports:
+  get:
+    displayName: Retrieve a top report
+    queryParameters:
+      type:
+        type: string
+        description: Type of the report.
+        displayName: type
+        enum:
+        - browsers
+        - browsersfamilies
+        - platforms
+        - cities
+        - countries
+        - isps
+        - ips
+        - oss
+        - ossfamilies
+        - keywords
+        - referrers
+        - destinations
+        - languages
+        - params
+      timeframe:
+        type: string
+        description: Timeframe of the request. See list at $timeframeList
+        displayName: timeframe
+        enum:
+        - yesterday
+        - last7
+        - last30
+        - lastmonth
+        - currentmonth
+        - previousmonth
+        - last90
+        - last120
+        - last180
+        - beginning
+        - custom
+      hittype?:
+        type: string
+        description: Type of the event you want to filter this report with. By default no filter is applied.
+        displayName: hittype
+      group?:
+        type: integer
+        description: Filter by this group id (mutually exclusive with "datapoint" and "conversion")
+        displayName: group
+        format: int64
+      datapoint?:
+        type: integer
+        description: Filter by this datapoint id (mutually exclusive with "group" and "conversion")
+        displayName: datapoint
+        format: int64
+      conversion?:
+        type: integer
+        description: Filter by this conversion id (mutually exclusive with "datapoint" and "group")
+        displayName: conversion
+        format: int64
+      fromDay?:
+        type: string
+        description: If using a "custom" timeFrame you can specify the starting day (YYYYMMDD)
+        displayName: fromDay
+      toDay?:
+        type: string
+        description: If using a "custom" timeFrame you can specify the ending day (YYYYMMDD)
+        displayName: toDay
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Dto_Tops_Top
+          text/json:
+            type: Api_Core_Dto_Tops_Top
+      401:
+        description: Forbidden
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+/retargeting:
+  /count:
+    get:
+      displayName: Retrieve count of retargeting scripts
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_CountResponce
+            text/json:
+              type: Api_Core_Responses_CountResponce
+            application/xml:
+              type: Api_Core_Responses_CountResponce
+            text/xml:
+              type: Api_Core_Responses_CountResponce
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: The id of the retargeting script
+        displayName: id
+        format: int64
+    /datapoints:
+      /count:
+        get:
+          displayName: Count the datapoints associated to the retargeting script.
+          queryParameters:
+            status?:
+              type: string
+              description: Status of the datapoint
+              displayName: status
+              enum:
+              - deleted
+              - active
+              - paused
+              - spam
+            tags?:
+              type: string
+              description: A comma separated list of tags you want to filter with.
+              displayName: tags
+            textSearch?:
+              type: string
+              description: Filter fields by this pattern
+              displayName: textSearch
+            onlyFavorites?:
+              type: boolean
+              description: Filter fields by favourite status
+              displayName: onlyFavorites
+            createdAfter?:
+              type: string
+              description: Exclude datapoints created before this date (YYYYMMDD)
+              displayName: createdAfter
+            createdBefore?:
+              type: string
+              description: Exclude datapoints created after this date (YYYYMMDD)
+              displayName: createdBefore
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_CountResponce
+                text/json:
+                  type: Api_Core_Responses_CountResponce
+                application/xml:
+                  type: Api_Core_Responses_CountResponce
+                text/xml:
+                  type: Api_Core_Responses_CountResponce
+            401:
+              description: Unauthorized
+            404:
+              description: Not found
+            500:
+              description: Internal Server Error
+      get:
+        displayName: List of all the datapoints associated to the retargeting script.
+        queryParameters:
+          offset?:
+            type: integer
+            description: Where to start when retrieving elements. Default is 0 if not specified.
+            displayName: offset
+            default: 0
+            format: int32
+          limit?:
+            type: integer
+            description: Maximum elements to retrieve. Default to 20 if not specified.
+            displayName: limit
+            default: 20
+            format: int32
+          status?:
+            type: string
+            description: Status of the datapoint
+            displayName: status
+            enum:
+            - deleted
+            - active
+            - paused
+            - spam
+          tags?:
+            type: string
+            description: A comma separated list of tags you want to filter with.
+            displayName: tags
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+          onlyFavorites?:
+            type: boolean
+            description: Filter fields by favourite status
+            displayName: onlyFavorites
+          sortBy?:
+            type: string
+            description: Field to sort by
+            displayName: sortBy
+          sortDirection?:
+            type: string
+            description: Direction of sort "asc" or "desc"
+            displayName: sortDirection
+            enum:
+            - asc
+            - desc
+          createdAfter?:
+            type: string
+            description: Exclude datapoints created before this date (YYYYMMDD)
+            displayName: createdAfter
+          createdBefore?:
+            type: string
+            description: Exclude datapoints created after this date (YYYYMMDD)
+            displayName: createdBefore
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+              text/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          401:
+            description: Unauthorized
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Get a retargeting script object
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Retargeting_RetargetingScript
+            text/json:
+              type: Api_Core_Dto_Retargeting_RetargetingScript
+            application/xml:
+              type: Api_Core_Dto_Retargeting_RetargetingScript
+            text/xml:
+              type: Api_Core_Dto_Retargeting_RetargetingScript
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    delete:
+      displayName: Deletes a retargeting script (and remove associations)
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+    post:
+      displayName: Updates a retargeting script
+      body:
+        application/json: Api_Core_Dto_Retargeting_RetargetingScript
+        text/json: Api_Core_Dto_Retargeting_RetargetingScript
+        application/xml: Api_Core_Dto_Retargeting_RetargetingScript
+        text/xml: Api_Core_Dto_Retargeting_RetargetingScript
+        application/x-www-form-urlencoded: Api_Core_Dto_Retargeting_RetargetingScript
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/json:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            application/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+            text/xml:
+              type: Api_Core_Responses_EntityUri_System_Int64_
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+  get:
+    displayName: List of all the retargeting scripts associated to the user
+    queryParameters:
+      offset?:
+        type: integer
+        description: Where to start when retrieving elements. Default is 0 if not specified.
+        displayName: offset
+        default: 0
+        format: int32
+      limit?:
+        type: integer
+        description: Maximum elements to retrieve. Default to 20 if not specified.
+        displayName: limit
+        default: 20
+        format: int32
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          text/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+  post:
+    displayName: Creates a retargeting script
+    body:
+      application/json: Api_Core_Dto_Retargeting_RetargetingScript
+      text/json: Api_Core_Dto_Retargeting_RetargetingScript
+      application/xml: Api_Core_Dto_Retargeting_RetargetingScript
+      text/xml: Api_Core_Dto_Retargeting_RetargetingScript
+      application/x-www-form-urlencoded: Api_Core_Dto_Retargeting_RetargetingScript
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          application/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+/tags:
+  /count:
+    get:
+      displayName: List of all the groups associated to the user filtered by this tag.
+      queryParameters:
+        name?:
+          type: string
+          description: Name of the tag
+          displayName: name
+        datapoints?:
+          type: string
+          description: Comma separated list of datapoints id to filter by
+          displayName: datapoints
+        groups?:
+          type: string
+          description: Comma separated list of groups id to filter by
+          displayName: groups
+        type?:
+          type: string
+          description: Type of entity related to the tag
+          displayName: type
+          enum:
+          - tp
+          - tl
+          - dp
+          - gr
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: System_Object
+            text/json:
+              type: System_Object
+        401:
+          description: Unauthorized
+        404:
+          description: Not found
+        500:
+          description: Internal Server Error
+  /{tagId}:
+    uriParameters:
+      tagId:
+        type: integer
+        description: Id of the tag
+        displayName: tagId
+        format: int64
+    /datapoints:
+      /count:
+        get:
+          displayName: Count the datapoints associated to the user filtered by this tag
+          queryParameters:
+            type?:
+              type: string
+              description: Type of the datapoint ("tp"/"tl")
+              displayName: type
+              enum:
+              - tp
+              - tl
+            status?:
+              type: string
+              description: Status of the datapoint
+              displayName: status
+              enum:
+              - deleted
+              - active
+              - paused
+              - spam
+            textSearch?:
+              type: string
+              description: Filter fields by this pattern
+              displayName: textSearch
+            createdAfter?:
+              type: string
+              description: Exclude datapoints created before this date (YYYYMMDD)
+              displayName: createdAfter
+            createdBefore?:
+              type: string
+              description: Exclude datapoints created after this date (YYYYMMDD)
+              displayName: createdBefore
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_CountResponce
+                text/json:
+                  type: Api_Core_Responses_CountResponce
+                application/xml:
+                  type: Api_Core_Responses_CountResponce
+                text/xml:
+                  type: Api_Core_Responses_CountResponce
+            401:
+              description: Unauthorized
+            404:
+              description: Not found
+            500:
+              description: Internal Server Error
+      /patch:
+        put:
+          displayName: Associate/Deassociate a tag with a datapoint
+          body:
+            application/json: Api_Core_Requests_PatchBody
+            text/json: Api_Core_Requests_PatchBody
+            application/xml: Api_Core_Requests_PatchBody
+            text/xml: Api_Core_Requests_PatchBody
+            application/x-www-form-urlencoded: Api_Core_Requests_PatchBody
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                text/json:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                application/xml:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                text/xml:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+            401:
+              description: Unauthorized
+            404:
+              description: Not found
+            500:
+              description: Internal Server Error
+      get:
+        displayName: List of all the datapoints associated to the user filtered by this tag
+        queryParameters:
+          offset?:
+            type: integer
+            description: Where to start when retrieving elements. Default is 0 if not specified.
+            displayName: offset
+            default: 0
+            format: int32
+          limit?:
+            type: integer
+            description: Maximum elements to retrieve. Default to 20 if not specified.
+            displayName: limit
+            default: 20
+            format: int32
+          type?:
+            type: string
+            description: Type of the datapoint ("tp"/"tl")
+            displayName: type
+            enum:
+            - tp
+            - tl
+          status?:
+            type: string
+            description: Status of the datapoint
+            displayName: status
+            enum:
+            - deleted
+            - active
+            - paused
+            - spam
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+          createdAfter?:
+            type: string
+            description: Exclude datapoints created before this date (YYYYMMDD)
+            displayName: createdAfter
+          createdBefore?:
+            type: string
+            description: Exclude datapoints created after this date (YYYYMMDD)
+            displayName: createdBefore
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+              text/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          401:
+            description: Unauthorized
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+      delete:
+        displayName: Delete the association of this tag with all datapoints
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /groups:
+      /count:
+        get:
+          displayName: Count the groups associated to the user filtered by this tag
+          queryParameters:
+            status?:
+              type: string
+              description: Status of the datapoint
+              displayName: status
+              enum:
+              - deleted
+              - active
+            textSearch?:
+              type: string
+              description: Filter fields by this pattern
+              displayName: textSearch
+            createdAfter?:
+              type: string
+              description: Exclude groups created before this date (YYYYMMDD)
+              displayName: createdAfter
+            createdBefore?:
+              type: string
+              description: Exclude groups created after this date (YYYYMMDD)
+              displayName: createdBefore
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_CountResponce
+                text/json:
+                  type: Api_Core_Responses_CountResponce
+                application/xml:
+                  type: Api_Core_Responses_CountResponce
+                text/xml:
+                  type: Api_Core_Responses_CountResponce
+            401:
+              description: Unauthorized
+            404:
+              description: Not found
+            500:
+              description: Internal Server Error
+      /patch:
+        put:
+          displayName: Associate/Deassociate a tag with a group
+          body:
+            application/json: Api_Core_Requests_PatchBody
+            text/json: Api_Core_Requests_PatchBody
+            application/xml: Api_Core_Requests_PatchBody
+            text/xml: Api_Core_Requests_PatchBody
+            application/x-www-form-urlencoded: Api_Core_Requests_PatchBody
+          responses:
+            200:
+              description: ''
+              body:
+                application/json:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                text/json:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                application/xml:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+                text/xml:
+                  type: Api_Core_Responses_EntityUri_System_Int64_
+            401:
+              description: Unauthorized
+            404:
+              description: Not found
+            500:
+              description: Internal Server Error
+      get:
+        displayName: List of all the groups associated to the user filtered by this tag.
+        queryParameters:
+          offset?:
+            type: integer
+            description: Where to start when retrieving elements. Default is 0 if not specified.
+            displayName: offset
+            default: 0
+            format: int32
+          limit?:
+            type: integer
+            description: Maximum elements to retrieve. Default to 20 if not specified.
+            displayName: limit
+            default: 20
+            format: int32
+          status?:
+            type: string
+            description: Status of the datapoint
+            displayName: status
+            enum:
+            - deleted
+            - active
+          textSearch?:
+            type: string
+            description: Filter fields by this pattern
+            displayName: textSearch
+          createdAfter?:
+            type: string
+            description: Exclude groups created before this date (YYYYMMDD)
+            displayName: createdAfter
+          createdBefore?:
+            type: string
+            description: Exclude groups created after this date (YYYYMMDD)
+            displayName: createdBefore
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+              text/json:
+                type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          401:
+            description: Unauthorized
+          404:
+            description: Not found
+          500:
+            description: Internal Server Error
+      delete:
+        displayName: Delete the association of this tag with all groups
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    /name:
+      put:
+        displayName: Fast patch a tag name
+        body:
+          application/json: Api_Core_Requests_GenericTextPatch
+          text/json: Api_Core_Requests_GenericTextPatch
+          application/xml: Api_Core_Requests_GenericTextPatch
+          text/xml: Api_Core_Requests_GenericTextPatch
+          application/x-www-form-urlencoded: Api_Core_Requests_GenericTextPatch
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/json:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              application/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+              text/xml:
+                type: Api_Core_Responses_EntityUri_System_Int64_
+          401:
+            description: Unauthorized
+          500:
+            description: Internal Server Error
+    get:
+      displayName: Retrieve a tag
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: Api_Core_Dto_Tags_Tag
+            text/json:
+              type: Api_Core_Dto_Tags_Tag
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+    delete:
+      displayName: Delete a tag
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: System_Object
+            text/json:
+              type: System_Object
+        401:
+          description: Unauthorized
+        500:
+          description: Internal Server Error
+  get:
+    displayName: List of all the groups associated to the user filtered by this tag.
+    queryParameters:
+      offset?:
+        type: integer
+        description: Where to start when retrieving elements. Default is 0 if not specified.
+        displayName: offset
+        default: 0
+        format: int32
+      limit?:
+        type: integer
+        description: Maximum elements to retrieve. Default to 20 if not specified.
+        displayName: limit
+        default: 20
+        format: int32
+      name?:
+        type: string
+        description: Name of the tag
+        displayName: name
+      datapoints?:
+        type: string
+        description: Comma separated list of datapoints id to filter by
+        displayName: datapoints
+      groups?:
+        type: string
+        description: Comma separated list of groups id to filter by
+        displayName: groups
+      type?:
+        type: string
+        description: Type of entity related to the tag
+        displayName: type
+        enum:
+        - tp
+        - tl
+        - dp
+        - gr
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+          text/json:
+            type: Api_Core_Responses_EntitiesResponse_Api_Core_Responses_EntityUri_System_Int64__
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error
+  post:
+    displayName: Create a tag
+    body:
+      application/json: Api_Core_Dto_Tags_Tag
+      text/json: Api_Core_Dto_Tags_Tag
+      application/x-www-form-urlencoded: Api_Core_Dto_Tags_Tag
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/json:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          application/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+          text/xml:
+            type: Api_Core_Responses_EntityUri_System_Int64_
+      401:
+        description: Unauthorized
+      404:
+        description: Not found
+      500:
+        description: Internal Server Error

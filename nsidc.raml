@@ -1,0 +1,176 @@
+#%RAML 1.0
+title: NSIDC Web Service Documentation Index
+version: 1.0.0
+baseUri: nsidc.org/api/dataset/2
+description: This API allows programmers to build National Snow and Ice Data Center data and metadata services into their applications.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/Facets:
+  get:
+    description: In the NSIDC Search and Arctic Data Explorer interfaces, this endpoint is used in conjunction with /OpenSearch whenever a user submits a new search. Consequently, it has the same parameters as /OpenSearch.
+    displayName: View the facet information corresponding to a search
+    queryParameters:
+      searchTerms?:
+        type: string
+        description: URL-encoded keyword or keywords desired by the client; OpenSearch 1.1
+        displayName: searchTerms
+      count?:
+        type: integer
+        description: The number of search results per page desired by the client; OpenSearch 1.1
+        displayName: count
+        default: 25
+      startIndex?:
+        type: integer
+        description: First search result desired by the search client; OpenSearch 1.1
+        displayName: startIndex
+        default: 1
+      spatial?:
+        type: string
+        description: 4 comma separated values - W, S, E, N; OpenSearch-Geo 1.0, "box" parameter
+        displayName: spatial
+        default: -180.0,-90.0,180.0,90.0
+      sortKeys?:
+        type: string
+        description: Sort the results by most relevant (default), smallest or largest spatial area, shortest or longest temporal duration, or most recently updated; partial implementation of OpenSearch SRU 1.0
+        displayName: sortKeys
+        default: score,,desc
+        enum:
+        - score,,desc
+        - spatial_area,,asc
+        - spatial_area,,desc
+        - temporal_duration,,asc
+        - temporal_duration,,desc
+        - updated,,desc
+      startDate?:
+        type: datetime
+        description: The start date in yyyy-mm-dd format
+        displayName: startDate
+      endDate?:
+        type: datetime
+        description: The end date in yyyy-mm-dd format
+        displayName: endDate
+      facetFilters?:
+        type: string
+        description: Describes faceted restrictions on the search. A URL-encoded JSON object where the keys are the names of the facet, and the values are arrays of the selected facet values
+        displayName: facetFilters
+      source?:
+        type: string
+        description: Custom parameter for selecting which source to use; the Arctic Data Explorer (ADE) uses data aggregated from many sources, including, but not limited to, NSIDC
+        displayName: source
+        default: NSIDC
+        enum:
+        - NSIDC
+        - ADE
+    responses:
+      200:
+        description: OK
+        body:
+          application/nsidcfacets+xml:
+            type: string
+      400:
+        description: Bad request
+      500:
+        description: Internal server error
+/OpenSearch:
+  get:
+    description: This endpoint uses parameters from the OpenSearch 1.1 specification, as well as parameters from the OpenSearch Geo (1.0) and SRU (1.0) extensions.
+    displayName: Search documents using the OpenSearch 1.1 Specification
+    queryParameters:
+      searchTerms?:
+        type: string
+        description: URL-encoded keyword or keywords desired by the client; OpenSearch 1.1
+        displayName: searchTerms
+      count?:
+        type: integer
+        description: The number of search results per page desired by the client; OpenSearch 1.1
+        displayName: count
+        default: 25
+      startIndex?:
+        type: integer
+        description: First search result desired by the search client; OpenSearch 1.1
+        displayName: startIndex
+        default: 1
+      spatial?:
+        type: string
+        description: 4 comma separated values - W, S, E, N; OpenSearch-Geo 1.0, "box" parameter
+        displayName: spatial
+        default: -180.0,-90.0,180.0,90.0
+      sortKeys?:
+        type: string
+        description: Sort the results by most relevant (default), smallest or largest spatial area, shortest or longest temporal duration, or most recently updated; partial implementation of OpenSearch SRU 1.0
+        displayName: sortKeys
+        default: score,,desc
+        enum:
+        - score,,desc
+        - spatial_area,,asc
+        - spatial_area,,desc
+        - temporal_duration,,asc
+        - temporal_duration,,desc
+        - updated,,desc
+      startDate?:
+        type: datetime
+        description: The start date in yyyy-mm-dd format
+        displayName: startDate
+      endDate?:
+        type: datetime
+        description: The end date in yyyy-mm-dd format
+        displayName: endDate
+      facetFilters?:
+        type: string
+        description: Describes faceted restrictions on the search. A URL-encoded JSON object where the keys are the names of the facet, and the values are arrays of the selected facet values
+        displayName: facetFilters
+      source?:
+        type: string
+        description: Custom parameter for selecting which source to use; the Arctic Data Explorer (ADE) uses data aggregated from many sources, including, but not limited to, NSIDC
+        displayName: source
+        default: NSIDC
+        enum:
+        - NSIDC
+        - ADE
+    responses:
+      200:
+        description: OK
+        body:
+          application/atom+xml:
+            type: string
+      400:
+        description: Bad request
+      500:
+        description: Internal server error
+/OpenSearchDescription:
+  get:
+    displayName: Describes the web interface of NSIDC's data search engine
+    responses:
+      200:
+        description: Success
+        body:
+          application/opensearchdescription+xml:
+            type: string
+/suggest:
+  get:
+    description: In NSIDC Search and the Arctic Data Explorer, this endpoint is queried whenever the user types into the search terms box, and the returned suggestions are displayed in a dropdown beneath the search terms box. The q parameter and returned JSON follow the specifications of the OpenSearch Suggestions 1.0 extension.
+    displayName: Suggest search terms based on a partial query
+    queryParameters:
+      q:
+        type: string
+        description: Search terms typed into the interface (minimum two characters)
+        displayName: q
+      source:
+        type: string
+        description: Custom parameter for selecting which source to use; the Arctic Data Explorer (ADE) uses data aggregated from many sources, including, but not limited to, NSIDC
+        displayName: source
+        default: NSIDC
+        enum:
+        - NSIDC
+        - ADE
+    responses:
+      200:
+        description: OK
+        body:
+          application/x-suggestions+json:
+            type: string
+      400:
+        description: Bad request
+      500:
+        description: Internal server error

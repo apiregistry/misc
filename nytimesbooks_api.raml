@@ -1,0 +1,646 @@
+#%RAML 1.0
+title: Books
+version: 3.0.0
+baseUri: api.nytimes.com/svc/books/v3
+description: The Books API provides information about book reviews and The New York Times bestsellers lists.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api-key:
+    type: Pass Through
+/lists.{format}:
+  uriParameters:
+    format:
+      type: string
+      displayName: format
+      enum:
+      - json
+      - jsonp
+  get:
+    description: ''
+    displayName: Best Seller List
+    queryParameters:
+      list?:
+        type: string
+        description: |-
+          The name of the Times best-seller list. To get valid values, use a list names request.
+
+          Be sure to replace spaces with hyphens (e.g., e-book-fiction or hardcover-fiction, not E-Book Fiction or Hardcover Fiction). (The parameter is not case sensitive.)
+        displayName: list
+      weeks-on-list?:
+        type: integer
+        description: The number of weeks that the best seller has been on list-name, as of bestsellers-date
+        displayName: weeks-on-list
+      bestsellers-date?:
+        type: datetime
+        description: |-
+          YYYY-MM-DD
+
+          The week-ending date for the sales reflected on list-name. Times best-seller lists are compiled using available book sale data. The bestsellers-date may be significantly earlier than published-date. For additional information, see the explanation at the bottom of any best-seller list page on NYTimes.com (example: Hardcover Fiction, published Dec. 5 but reflecting sales to Nov. 29).
+        displayName: bestsellers-date
+      date?:
+        type: string
+        description: YYYY-MM-DD  The date the best-seller list was published on NYTimes.com (compare bestsellers-date)
+        displayName: date
+      isbn?:
+        type: string
+        description: International Standard Book Number, 10 or 13 digits
+        displayName: isbn
+      published-date?:
+        type: string
+        description: |-
+          YYYY-MM-DD
+
+          The date the best-seller list was published on NYTimes.com (compare bestsellers-date)
+        displayName: published-date
+      rank?:
+        type: integer
+        description: The rank of the best seller on list-name as of bestsellers-date
+        displayName: rank
+      rank-last-week?:
+        type: integer
+        description: The rank of the best seller on list-name one week prior to bestsellers-date
+        displayName: rank-last-week
+      offset?:
+        type: integer
+        description: Sets the starting point of the result set
+        displayName: offset
+      sort-order?:
+        type: string
+        description: Sets the sort order of the result set
+        displayName: sort-order
+        enum:
+        - ASC
+        - DESC
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: object
+            properties:
+              copyright?:
+                type: string
+              last_modified?:
+                type: string
+              results?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    isbns?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          isbn13?:
+                            type: string
+                          isbn10?:
+                            type: string
+                    dagger?:
+                      type: integer
+                    asterisk?:
+                      type: integer
+                    book_details?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          contributor_note?:
+                            type: string
+                          contributor?:
+                            type: string
+                          age_group?:
+                            type: string
+                          author?:
+                            type: string
+                          price?:
+                            type: integer
+                          description?:
+                            type: string
+                          publisher?:
+                            type: string
+                          primary_isbn10?:
+                            type: string
+                          primary_isbn13?:
+                            type: string
+                          title?:
+                            type: string
+                    list_name?:
+                      type: string
+                    display_name?:
+                      type: string
+                    weeks_on_list?:
+                      type: integer
+                    bestsellers_date?:
+                      type: string
+                    amazon_product_url?:
+                      type: string
+                    reviews?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          article_chapter_link?:
+                            type: string
+                          book_review_link?:
+                            type: string
+                          first_chapter_link?:
+                            type: string
+                          sunday_review_link?:
+                            type: string
+                    rank?:
+                      type: integer
+                    published_date?:
+                      type: string
+                    rank_last_week?:
+                      type: integer
+              num_results?:
+                type: integer
+              status?:
+                type: string
+/lists:
+  /best-sellers:
+    /history.json:
+      get:
+        description: ''
+        displayName: Best Seller History List
+        queryParameters:
+          age-group?:
+            type: string
+            description: The target age group for the best seller.
+            displayName: age-group
+          author?:
+            type: string
+            description: "The author of the best seller. The author field does not\
+              \ include additional contributors (see Data Structure for more details\
+              \ about the author and contributor fields).\n\nWhen searching the author\
+              \ field, you can specify any combination of first, middle and last names.\n\
+              \nWhen sort-by is set to author, the results will be sorted by author's\
+              \ first name. "
+            displayName: author
+          contributor?:
+            type: string
+            description: "The author of the best seller, as well as other contributors\
+              \ such as the illustrator (to search or sort by author name only, use\
+              \ author instead).\n\nWhen searching, you can specify any combination\
+              \ of first, middle and last names of any of the contributors.\n\nWhen\
+              \ sort-by is set to contributor, the results will be sorted by the first\
+              \ name of the first contributor listed. "
+            displayName: contributor
+          isbn?:
+            type: string
+            description: |-
+              International Standard Book Number, 10 or 13 digits
+
+              A best seller may have both 10-digit and 13-digit ISBNs, and may have multiple ISBNs of each type. To search on multiple ISBNs, separate the ISBNs with semicolons (example: 9780446579933;0061374229).
+            displayName: isbn
+          price?:
+            type: string
+            description: The publisher's list price of the best seller, including decimal point
+            displayName: price
+          publisher?:
+            type: string
+            description: The standardized name of the publisher
+            displayName: publisher
+          title?:
+            type: string
+            description: |-
+              The title of the best seller
+
+              When searching, you can specify a portion of a title or a full title.
+            displayName: title
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        isbns?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              isbn13?:
+                                type: string
+                              isbn10?:
+                                type: string
+                        contributor_note?:
+                          type: string
+                        ranks_history?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              weeks_on_list?:
+                                type: integer
+                              dagger?:
+                                type: integer
+                              bestsellers_date?:
+                                type: string
+                              asterisk?:
+                                type: integer
+                              rank?:
+                                type: integer
+                              list_name?:
+                                type: string
+                              primary_isbn10?:
+                                type: string
+                              display_name?:
+                                type: string
+                              primary_isbn13?:
+                                type: string
+                              published_date?:
+                                type: string
+                        contributor?:
+                          type: string
+                        reviews?:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              article_chapter_link?:
+                                type: string
+                              book_review_link?:
+                                type: string
+                              first_chapter_link?:
+                                type: string
+                              sunday_review_link?:
+                                type: string
+                        age_group?:
+                          type: string
+                        author?:
+                          type: string
+                        price?:
+                          type: integer
+                        description?:
+                          type: string
+                        publisher?:
+                          type: string
+                        title?:
+                          type: string
+                  num_results?:
+                    type: integer
+                  status?:
+                    type: string
+  /names.{format}:
+    uriParameters:
+      format:
+        type: string
+        displayName: format
+        enum:
+        - json
+        - jsonp
+    get:
+      description: ''
+      displayName: Best Seller List Names
+      queryParameters:
+        api-key?:
+          type: string
+          displayName: api-key
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                results?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      newest_published_date?:
+                        type: string
+                      oldest_published_date?:
+                        type: string
+                      list_name?:
+                        type: string
+                      list_name_encoded?:
+                        type: string
+                      display_name?:
+                        type: string
+                      updated?:
+                        type: string
+                num_results?:
+                  type: integer
+                status?:
+                  type: string
+  /overview.{format}:
+    uriParameters:
+      format:
+        type: string
+        displayName: format
+        enum:
+        - json
+        - jsonp
+    get:
+      description: ''
+      displayName: Best Seller List Overview
+      queryParameters:
+        published_date?:
+          type: string
+          description: |-
+            The best-seller list publication date. YYYY-MM-DD
+
+            You do not have to specify the exact date the list was published. The service will search forward (into the future) for the closest publication date to the date you specify. For example, a request for lists/overview/2013-05-22 will retrieve the list that was published on 05-26.
+
+            If you do not include a published_date, the current week's best-sellers lists will be returned.
+          displayName: published_date
+        api-key?:
+          type: string
+          displayName: api-key
+      responses:
+        200:
+          description: ''
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                results?:
+                  type: object
+                  properties:
+                    bestsellers_date?:
+                      type: string
+                    lists?:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          books?:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                contributor_note?:
+                                  type: string
+                                age_group?:
+                                  type: string
+                                author?:
+                                  type: string
+                                description?:
+                                  type: string
+                                primary_isbn10?:
+                                  type: string
+                                primary_isbn13?:
+                                  type: string
+                                title?:
+                                  type: string
+                                contributor?:
+                                  type: string
+                                price?:
+                                  type: integer
+                                publisher?:
+                                  type: string
+                                rank?:
+                                  type: integer
+                                created_date?:
+                                  type: string
+                                updated_date?:
+                                  type: string
+                          list_id?:
+                            type: integer
+                          list_image?:
+                            type: string
+                          list_name?:
+                            type: string
+                          display_name?:
+                            type: string
+                          updated?:
+                            type: string
+                    published_date?:
+                      type: string
+                num_results?:
+                  type: integer
+                status?:
+                  type: string
+  /{date}:
+    uriParameters:
+      date:
+        type: string
+        displayName: date
+    /{list}.json:
+      uriParameters:
+        list:
+          type: string
+          description: Name of the Best Sellers List. You can get the full list from /lists/names.json
+          displayName: list
+      get:
+        description: ''
+        displayName: Best Seller List by Date
+        queryParameters:
+          isbn?:
+            type: integer
+            description: International Standard Book Number, 10 or 13 digits
+            displayName: isbn
+          list-name?:
+            type: string
+            description: |-
+              The name of the Times best-seller list. To get valid values, use a list names request.
+
+              Be sure to replace spaces with hyphens (e.g., e-book-fiction or hardcover-fiction, not E-Book Fiction or Hardcover Fiction). (The parameter is not case sensitive.)
+            displayName: list-name
+          published-date?:
+            type: datetime
+            description: |-
+              YYYY-MM-DD
+
+              The date the best-seller list was published on NYTimes.com (compare bestsellers-date)
+            displayName: published-date
+          bestsellers-date?:
+            type: string
+            description: |-
+              YYYY-MM-DD
+
+              The week-ending date for the sales reflected on list-name. Times best-seller lists are compiled using available book sale data. The bestsellers-date may be significantly earlier than published-date. For additional information, see the explanation at the bottom of any best-seller list page on NYTimes.com (example: Hardcover Fiction, published Dec. 5 but reflecting sales to Nov. 29).
+            displayName: bestsellers-date
+          weeks-on-list?:
+            type: integer
+            description: The number of weeks that the best seller has been on list-name, as of bestsellers-date
+            displayName: weeks-on-list
+          rank?:
+            type: string
+            description: The rank of the best seller on list-name as of bestsellers-date
+            displayName: rank
+          rank-last-week?:
+            type: integer
+            description: The rank of the best seller on list-name one week prior to bestsellers-date
+            displayName: rank-last-week
+          offset?:
+            type: integer
+            description: Sets the starting point of the result set
+            displayName: offset
+          sort-order?:
+            type: string
+            description: !!binary |-
+              VGhlIGRlZmF1bHQgaXMgQVNDIChhc2NlbmRpbmcpLiBUaGUgc29ydC1vcmRlciBwYXJhbWV0ZXIgaXMgdXNlZCB3aXRoIHRoZSBzb3J0LWJ5IHBhcmFtZXRlciDDosKAwpQgZm9yIGRldGFpbHMsIHNlZSBlYWNoIHJlcXVlc3QgdHlwZS4=
+            displayName: sort-order
+            enum:
+            - ASC
+            - DESC
+        responses:
+          200:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  last_modified?:
+                    type: string
+                  results?:
+                    type: object
+                    properties:
+                      bestsellers_date?:
+                        type: string
+                      books?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            isbns?:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  isbn13?:
+                                    type: string
+                                  isbn10?:
+                                    type: string
+                            contributor_note?:
+                              type: string
+                            dagger?:
+                              type: integer
+                            age_group?:
+                              type: string
+                            author?:
+                              type: string
+                            asterisk?:
+                              type: integer
+                            description?:
+                              type: string
+                            primary_isbn10?:
+                              type: string
+                            primary_isbn13?:
+                              type: string
+                            title?:
+                              type: string
+                            sunday_review_link?:
+                              type: string
+                            article_chapter_link?:
+                              type: string
+                            weeks_on_list?:
+                              type: integer
+                            contributor?:
+                              type: string
+                            amazon_product_url?:
+                              type: string
+                            book_review_link?:
+                              type: string
+                            price?:
+                              type: integer
+                            book_image?:
+                              type: string
+                            publisher?:
+                              type: string
+                            rank?:
+                              type: integer
+                            rank_last_week?:
+                              type: integer
+                            first_chapter_link?:
+                              type: string
+                      corrections?:
+                        type: array
+                        items:
+                          type: object
+                      normal_list_ends_at?:
+                        type: integer
+                      list_name?:
+                        type: string
+                      display_name?:
+                        type: string
+                      published_date?:
+                        type: string
+                      updated?:
+                        type: string
+                  num_results?:
+                    type: integer
+                  status?:
+                    type: string
+/reviews.{format}:
+  uriParameters:
+    format:
+      type: string
+      displayName: format
+      enum:
+      - json
+      - jsonp
+  get:
+    description: ''
+    displayName: Reviews
+    queryParameters:
+      isbn?:
+        type: integer
+        description: Searching by ISBN is the recommended method. You can enter 10- or 13-digit ISBNs.
+        displayName: isbn
+      title?:
+        type: string
+        description: !!binary |-
+          WW91w6LCgMKZbGwgbmVlZCB0byBlbnRlciB0aGUgZnVsbCB0aXRsZSBvZiB0aGUgYm9vay4gU3BhY2VzIGluIHRoZSB0aXRsZSB3aWxsIGJlIGNvbnZlcnRlZCBpbnRvIHRoZSBjaGFyYWN0ZXJzICUyMC4=
+        displayName: title
+      author?:
+        type: string
+        description: !!binary |-
+          WW91w6LCgMKZbGwgbmVlZCB0byBlbnRlciB0aGUgYXV0aG9yw6LCgMKZcyBmaXJzdCBhbmQgbGFzdCBuYW1lLCBzZXBhcmF0ZWQgYnkgYSBzcGFjZS4gVGhpcyBzcGFjZSB3aWxsIGJlIGNvbnZlcnRlZCBpbnRvIHRoZSBjaGFyYWN0ZXJzICUyMC4=
+        displayName: author
+      api-key?:
+        type: string
+        displayName: api-key
+    responses:
+      200:
+        description: ''
+        body:
+          application/json:
+            type: object
+            properties:
+              copyright?:
+                type: string
+              results?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    summary?:
+                      type: string
+                    book_title?:
+                      type: string
+                    isbn13?:
+                      type: array
+                      items:
+                        type: string
+                    book_author?:
+                      type: string
+                    byline?:
+                      type: string
+                    publication_dt?:
+                      type: string
+                    url?:
+                      type: string
+              num_results?:
+                type: integer
+              status?:
+                type: string

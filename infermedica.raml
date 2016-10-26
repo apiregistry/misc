@@ -1,0 +1,354 @@
+#%RAML 1.0
+title: Infermedica
+version: v1
+baseUri: api.infermedica.com/v1
+description: Empower your healthcare services with intelligent diagnostic insights of Infermedica API.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Choice:
+    type: object
+    properties:
+      id:
+        type: string
+        enum:
+        - present
+        - absent
+        - unknown
+      label:
+        type: string
+  Condition:
+    type: object
+    properties:
+      acuteness?:
+        type: string
+        enum:
+        - chronic
+        - chronic_with_exacerbations
+        - acute_potentially_chronic
+        - acute
+      categories:
+        type: array
+        items:
+          type: string
+      id:
+        type: string
+      name:
+        type: string
+      prevalence?:
+        type: string
+        enum:
+        - very_rare
+        - rare
+        - moderate
+        - common
+      severity?:
+        type: string
+        enum:
+        - mild
+        - moderate
+        - severe
+      sex_filter:
+        type: string
+        enum:
+        - female
+        - male
+        - both
+  ConditionProbability:
+    type: object
+    properties:
+      id:
+        type: string
+        description: condition id
+      name:
+        type: string
+        description: condition name
+      probability:
+        type: number
+        format: double
+  DatabaseInfo:
+    type: object
+    properties:
+      conditions_count:
+        type: integer
+        format: int32
+      observations_count:
+        type: integer
+        format: int32
+      updated_at:
+        type: string
+        description: time of last database update in ISO 8601 format
+  DiagnosisRequest:
+    type: object
+    properties:
+      age:
+        type: integer
+        format: int32
+      evaluated_at?:
+        type: string
+        description: time when diagnosis was evaluated in ISO 8601 format
+      evidence?:
+        type: array
+        items:
+          type: Evidence
+      extras?:
+        type: object
+        properties:
+          //:
+            type: object
+      pursued?:
+        type: array
+        description: list of ids of pursued conditions
+        items:
+          type: string
+      sex:
+        type: string
+        enum:
+        - female
+        - male
+  DiagnosisResponse:
+    type: object
+    properties:
+      conditions?:
+        type: array
+        items:
+          type: ConditionProbability
+      extras?:
+        type: object
+        properties:
+          //:
+            type: object
+      question?:
+        type: Question
+  Evidence:
+    type: object
+    properties:
+      choice_id:
+        type: string
+        enum:
+        - present
+        - absent
+        - unknown
+      id:
+        type: string
+        description: id of observation, risk factor or condition
+      observed_at?:
+        type: string
+        description: time when evidence was observed in ISO 8601 format
+  Observation:
+    type: object
+    properties:
+      category?:
+        type: string
+      children?:
+        type: object
+        description: ids of child observations grouped by their relation with this observation
+      id:
+        type: string
+      name:
+        type: string
+      parent_id?:
+        type: string
+        description: id of parent observation
+      parent_relation_type?:
+        type: string
+        description: type of relation with parent observation
+        enum:
+        - base
+        - duration
+        - severity
+        - character
+        - exacerbating_factor
+        - diminishing_factor
+        - location
+        - radiation
+      sex_filter:
+        type: string
+        enum:
+        - female
+        - male
+        - both
+      valid_for?:
+        type: integer
+        description: number of days that this observation remains valid
+        format: int32
+  Question:
+    type: object
+    properties:
+      items:
+        type: array
+        description: one or more observations to evaluate
+        items:
+          type: QuestionItem
+      text:
+        type: string
+        description: question text
+      type?:
+        type: string
+        enum:
+        - single
+        - group_single
+        - group_multiple
+  QuestionItem:
+    type: object
+    properties:
+      choices:
+        type: array
+        description: list of available answer choices
+        items:
+          type: Choice
+      id:
+        type: string
+        description: observation id
+      name:
+        type: string
+        description: name or alias of observation
+  RiskFactor:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+/conditions:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: condition id
+        displayName: id
+    get:
+      description: Returns details of a single condition specified by id parameter.
+      displayName: Get condition by id
+      responses:
+        200:
+          description: successful operation
+          body:
+            application/json:
+              type: Condition
+        400:
+          description: Invalid id specified
+        404:
+          description: Condition not found
+  get:
+    description: Returns a list of all available conditions.
+    displayName: List all conditions
+    responses:
+      200:
+        description: successful operation
+        body:
+          application/json:
+            type: array
+            items:
+              type: Condition
+/diagnosis:
+  post:
+    description: Computes possible diagnoses and relevant observations based on provided patient information.
+    displayName: Query diagnostic engine
+    body:
+      application/json: DiagnosisRequest
+    responses:
+      200:
+        description: successful operation
+        body:
+          application/json:
+            type: DiagnosisResponse
+/info:
+  get:
+    description: Returns information about data used by diagnostic engine.
+    displayName: Get database information
+    responses:
+      200:
+        description: successful operation
+        body:
+          application/json:
+            type: DatabaseInfo
+/lookup:
+  get:
+    description: Returns details of a single observation if matched by the given phrase.
+    displayName: Find observation matching given phrase
+    queryParameters:
+      phrase:
+        type: string
+        description: phrase to match
+        displayName: phrase
+      sex?:
+        type: string
+        description: sex filter
+        displayName: sex
+        enum:
+        - female
+        - male
+    responses:
+      200:
+        description: successful operation
+        body:
+          application/json:
+            type: Observation
+      400:
+        description: Phrase missing or invalid sex specified
+      404:
+        description: No observation matches given phrase
+/observations:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: observation id
+        displayName: id
+    get:
+      description: Returns details of a single observation specified by id parameter.
+      displayName: Get observation by id
+      responses:
+        200:
+          description: successful operation
+          body:
+            application/json:
+              type: Observation
+        400:
+          description: Invalid id specified
+        404:
+          description: Observation not found
+  get:
+    description: Returns a list of all available observations.
+    displayName: List all observations
+    responses:
+      200:
+        description: successful operation
+        body:
+          application/json:
+            type: array
+            items:
+              type: Observation
+/risk_factors:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: risk factor id
+        displayName: id
+    get:
+      description: Returns details of a single risk factor specified by id parameter.
+      displayName: Get risk factor by id
+      responses:
+        200:
+          description: successful operation
+          body:
+            application/json:
+              type: RiskFactor
+        400:
+          description: Invalid id specified
+        404:
+          description: Risk factor not found
+  get:
+    description: Returns a list of all available risk factors.
+    displayName: List all risk factors
+    responses:
+      200:
+        description: successful operation
+        body:
+          application/json:
+            type: array
+            items:
+              type: RiskFactor

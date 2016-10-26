@@ -1,0 +1,322 @@
+#%RAML 1.0
+title: CitySDK Linked Data
+version: v1
+baseUri: api.citysdk.waag.org/
+description: An API for the distribution and annotation of open data, for small cities and big metropolitan areas.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/layers:
+  /{layer}:
+    uriParameters:
+      layer:
+        type: string
+        displayName: layer
+    /context:
+      get:
+        displayName: Return JSON-LD context of single layer
+        responses:
+          200:
+            description: No response was specified
+      put:
+        displayName: Overwrite JSON-LD context of single layer
+        responses:
+          200:
+            description: No response was specified
+    /fields:
+      /{field}:
+        uriParameters:
+          field:
+            type: string
+            displayName: field
+        get:
+          displayName: Return single field of single layer
+          responses:
+            200:
+              description: No response was specified
+        delete:
+          displayName: Delete a single field on single layer
+          responses:
+            200:
+              description: No response was specified
+        patch:
+          displayName: Edit single field on single layer
+          responses:
+            200:
+              description: No response was specified
+        put:
+          displayName: Overwrite single field on single layer
+          responses:
+            200:
+              description: No response was specified
+      get:
+        displayName: Return all fields of single layer
+        responses:
+          200:
+            description: No response was specified
+      post:
+        displayName: Create new field for single layer
+        responses:
+          200:
+            description: No response was specified
+    /objects:
+      /{cdk_id}:
+        uriParameters:
+          cdk_id:
+            type: string
+            displayName: cdk_id
+        get:
+          displayName: Return metadata of single layer about single object, e.g. the date the data was added/modified, etc.
+          responses:
+            200:
+              description: No response was specified
+      get:
+        displayName: Return all objects with data on single layer
+        responses:
+          200:
+            description: No response was specified
+      delete:
+        displayName: Delete all objects from a single layer
+        responses:
+          200:
+            description: No response was specified
+      patch:
+        displayName: Edit one or more objects and data on single layer
+        responses:
+          200:
+            description: No response was specified
+      post:
+        displayName: Create one or more objects with data on single layer, or add data to existing objects (or a combination thereof)
+        responses:
+          200:
+            description: No response was specified
+    /owners:
+      get:
+        displayName: Return all owners associated with single layer
+        responses:
+          200:
+            description: No response was specified
+    get:
+      displayName: Return single layer
+      responses:
+        200:
+          description: No response was specified
+    delete:
+      displayName: Delete a layer
+      responses:
+        200:
+          description: No response was specified
+    patch:
+      displayName: Edit a layer
+      responses:
+        200:
+          description: No response was specified
+  get:
+    displayName: Return all layers
+    responses:
+      200:
+        description: No response was specified
+  post:
+    displayName: Create new layer
+    responses:
+      200:
+        description: No response was specified
+/ngsi10:
+  /contextEntities:
+    /{entity}:
+      uriParameters:
+        entity:
+          type: string
+          displayName: entity
+      /attributes:
+        /{attribute}:
+          uriParameters:
+            attribute:
+              type: string
+              displayName: attribute
+          get:
+            displayName: Return single context entity attribute
+            responses:
+              200:
+                description: No response was specified
+        put:
+          displayName: Update attributes for single context entity
+          responses:
+            200:
+              description: No response was specified
+      get:
+        displayName: Return single context entity
+        responses:
+          200:
+            description: No response was specified
+  /contextEntityTypes:
+    /{cetype}:
+      uriParameters:
+        cetype:
+          type: string
+          displayName: cetype
+      /attributes:
+        /{attribute}:
+          uriParameters:
+            attribute:
+              type: string
+              displayName: attribute
+          get:
+            displayName: Return objects of particular type
+            responses:
+              200:
+                description: No response was specified
+      get:
+        displayName: Return objects of particular type
+        responses:
+          200:
+            description: No response was specified
+  /queryContext:
+    post:
+      displayName: Query context broker for contextElements
+      responses:
+        200:
+          description: No response was specified
+  /subscribeContext:
+    post:
+      displayName: Create a new context subscription
+      responses:
+        200:
+          description: No response was specified
+  /unsubscribeContext:
+    post:
+      displayName: Delete a context subscription
+      responses:
+        200:
+          description: No response was specified
+  /updateContext:
+    post:
+      displayName: Add or update NGSI contextElements
+      responses:
+        200:
+          description: No response was specified
+  /updateContextSubscription:
+    post:
+      displayName: Update/edit a context subscription
+      responses:
+        200:
+          description: No response was specified
+/objects:
+  /{cdk_id}:
+    uriParameters:
+      cdk_id:
+        type: string
+        displayName: cdk_id
+    /layers:
+      /{layer}:
+        uriParameters:
+          layer:
+            type: string
+            displayName: layer
+        get:
+          displayName: Return all data on single layer of single object
+          responses:
+            200:
+              description: No response was specified
+        delete:
+          displayName: Remove data on layer from single object
+          responses:
+            200:
+              description: No response was specified
+        patch:
+          displayName: Update data on layer to single object
+          responses:
+            200:
+              description: No response was specified
+        post:
+          displayName: Add data on layer to single object
+          responses:
+            200:
+              description: No response was specified
+        put:
+          displayName: Overwrite data on layer to single object
+          responses:
+            200:
+              description: No response was specified
+      get:
+        displayName: Get all layers that contain data of single object
+        responses:
+          200:
+            description: No response was specified
+    get:
+      displayName: Get a single object
+      responses:
+        200:
+          description: No response was specified
+    delete:
+      displayName: Delete a single object
+      responses:
+        200:
+          description: No response was specified
+    patch:
+      displayName: Edit a single object
+      responses:
+        200:
+          description: No response was specified
+  get:
+    displayName: Return all objects
+    responses:
+      200:
+        description: No response was specified
+/owners:
+  /{owner}:
+    uriParameters:
+      owner:
+        type: string
+        displayName: owner
+    /layers:
+      get:
+        displayName: Return all layers belonging to a single owner
+        responses:
+          200:
+            description: No response was specified
+    get:
+      displayName: Get a single owner
+      responses:
+        200:
+          description: No response was specified
+    delete:
+      displayName: Delete owner - and all layers and data belonging to this owner
+      responses:
+        200:
+          description: No response was specified
+    patch:
+      displayName: Edit an owner
+      responses:
+        200:
+          description: No response was specified
+  get:
+    displayName: Return all owners
+    responses:
+      200:
+        description: No response was specified
+  post:
+    displayName: Create new owner
+    responses:
+      200:
+        description: No response was specified
+/session:
+  get:
+    displayName: Return a session key
+    queryParameters:
+      name:
+        type: string
+        description: Login name.
+        displayName: name
+      password:
+        type: string
+        description: Login password.
+        displayName: password
+    responses:
+      200:
+        description: No response was specified
+  delete:
+    displayName: Close session
+    responses:
+      200:
+        description: No response was specified

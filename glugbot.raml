@@ -1,0 +1,158 @@
+#%RAML 1.0
+title: Glugbot
+version: '1'
+baseUri: www.glugbot.com/
+description: Text Processing API for Creative Writing
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Emotion:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+      score:
+        type: number
+        format: double
+  EmotionIndex:
+    type: object
+    properties:
+      all:
+        type: array
+        items:
+          type: Emotion
+      primary:
+        type: array
+        items:
+          type: Emotion
+  Quote:
+    type: object
+    properties:
+      author:
+        type: string
+      text:
+        type: string
+  TextInput:
+    type: object
+    properties:
+      text:
+        type: string
+    description: The text for which akin song snippets need to be computed
+/api:
+  /iris:
+    /akin-poem-snippets:
+      post:
+        description: Count cannot be more than 20
+        displayName: Gets snippets from poems which evoke similar emotions
+        queryParameters:
+          count?:
+            type: integer
+            description: Number of top words to return
+            displayName: count
+            format: int32
+        body:
+          application/json: TextInput
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: EmotionIndex
+    /akin-quotes:
+      post:
+        description: Count cannot be more than 20
+        displayName: Gets snippets from quotes which evoke similar emotions
+        queryParameters:
+          count?:
+            type: integer
+            description: Number of top words to return
+            displayName: count
+            format: int32
+        body:
+          application/json: TextInput
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: EmotionIndex
+    /akin-song-snippets:
+      post:
+        description: Count cannot be more than 20
+        displayName: Gets snippets from songs which evoke similar emotions
+        queryParameters:
+          count?:
+            type: integer
+            description: Number of top words to return
+            displayName: count
+            format: int32
+        body:
+          application/json: TextInput
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: EmotionIndex
+    /emotions:
+      post:
+        description: Gets a 20 point emotional index
+        displayName: Get emotional index for passed text
+        body:
+          application/json: TextInput
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: EmotionIndex
+  /random:
+    /feeling-words:
+      get:
+        description: Each word returned is a 'feeling word'
+        displayName: Get a random set of words which evoke a feeling
+        queryParameters:
+          count?:
+            type: integer
+            description: Number of words to return
+            displayName: count
+            format: int32
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: array
+                items:
+                  type: string
+    /quote:
+      get:
+        displayName: Get a random quote
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: Quote
+  /words:
+    /top-words:
+      post:
+        displayName: Gets top words in the passed text
+        queryParameters:
+          count?:
+            type: integer
+            description: Number of top words to return
+            displayName: count
+            format: int32
+        body:
+          application/json: TextInput
+        responses:
+          200:
+            description: No response was specified
+            body:
+              application/json:
+                type: EmotionIndex

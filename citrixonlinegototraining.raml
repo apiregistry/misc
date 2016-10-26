@@ -1,0 +1,881 @@
+#%RAML 1.0
+title: GoToTraining
+version: 1.0.0
+baseUri: api.citrixonline.com/G2T/rest
+description: The Citrix GoToTraining API enables developers to use the stable and robust GoToTraining functionality as the basis for online trainings in a proprietary learning management system. The GoToTraining APIs provide the ability to access the scheduling, registration, management, and reporting functions of GoToTraining from external applications. With the ability to tightly integrate GoToTraining into your learning infrastructure, you can offer your learners a seamless user experience and provide them with a market leading virtual classroom environment.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Attendance:
+    type: object
+    properties:
+      joinTime:
+        type: datetime
+        description: The time the attendee joined a part of a training session
+      leaveTime:
+        type: datetime
+        description: The time the attendee left a part of a training session
+      timeInPartOfSession:
+        type: integer
+        description: The time in minutes the attendee spent at a part of a training session
+        format: int32
+    description: Describes the times the attendee joined and left a part of a training session.
+  Attendee:
+    type: object
+    properties:
+      email:
+        type: string
+        description: The attendee's email address
+      givenName:
+        type: string
+        description: The attendee's first name
+      inSessionTimes:
+        type: array
+        description: List of the parts of the training session the attendee joined
+        items:
+          type: Attendance
+      surname:
+        type: string
+        description: The attendee's surname
+      timeInSession:
+        type: integer
+        description: The total time in minutes spent at all the parts of the training session the attendee joined
+        format: int32
+    description: Describes the attendee of a training session.
+  DateTimeRange:
+    type: object
+    properties:
+      endDate:
+        type: datetime
+        description: The ending time of an interval
+      startDate:
+        type: datetime
+        description: The starting time of an interval
+    description: The start and end times for the time range over which to retrieve training sessions
+  HostUrl:
+    type: object
+    properties:
+      hostURL:
+        type: string
+        description: The host URL that can be used to start a training
+    description: Host URL that can be used to start a training
+  NotifiedParties:
+    type: object
+    properties:
+      notifiedRegistrants:
+        type: integer
+        description: Number of registrants notified of changes to a training
+        format: int32
+      notifiedTrainers:
+        type: integer
+        description: Number of trainers notified of changes to a training
+        format: int32
+    description: Number of parties notified of a change to a training session times
+  Organizer:
+    type: object
+    properties:
+      email:
+        type: string
+        description: The email address of the training (co-)organizer
+      givenName:
+        type: string
+        description: The (co-)organizer's first name
+      organizerKey:
+        type: string
+        description: The key of the training (co-)organizer
+      surname:
+        type: string
+        description: The (co-)organizer's surname
+    description: Describes a training organizer.
+  Recording:
+    type: object
+    properties:
+      description?:
+        type: string
+        description: The description of the recording
+      downloadUrl?:
+        type: string
+        description: The url used to download the recording to the local device
+      endDate:
+        type: datetime
+        description: The time the recording was ended
+      name:
+        type: string
+        description: The title of the recording
+      recordingId:
+        type: integer
+        description: The unique id of the recording
+        format: int64
+      registrationUrl?:
+        type: string
+        description: The url where attendees can register to view the recording
+      startDate:
+        type: datetime
+        description: The time the recording was started
+    description: Describes an online recording of a training
+  RecordingsListForTraining:
+    type: object
+    properties:
+      recordingList:
+        type: array
+        description: The list of online recordings for the training
+        items:
+          type: Recording
+      trainingKey:
+        type: integer
+        description: The training's unique key
+        format: int64
+    description: Contains a list of recordings for the training.
+  Registrant:
+    type: object
+    properties:
+      confirmationUrl:
+        type: string
+        description: The URL where the confirmation for the registration can be found
+      email:
+        type: string
+        description: The registrant's email address
+      givenName:
+        type: string
+        description: The registrant's first name
+      joinUrl:
+        type: string
+        description: The URL the registrant will use to join the training
+      registrantKey:
+        type: string
+        description: The registrant's key
+      registrationDate:
+        type: datetime
+        description: The date and time the registration took place
+      status:
+        type: string
+        description: The registrant's status
+        enum:
+        - WAITING
+        - APPROVED
+        - DENIED
+      surname:
+        type: string
+        description: The registrant's surname
+    description: Describes a training registrant.
+  RegistrantCreated:
+    type: object
+    properties:
+      confirmationUrl:
+        type: string
+        description: The URL where confirmation for the registration can be found
+      joinUrl:
+        type: string
+        description: The URL the registrant will use to join the training
+      registrantKey:
+        type: string
+        description: The registrant's key
+    description: Describes a newly created training registrant
+  RegistrantReqCreate:
+    type: object
+    properties:
+      email:
+        type: string
+        description: The registrant's email address
+      givenName:
+        type: string
+        description: The registrant's first name
+      surname:
+        type: string
+        description: The registrant's surname
+    description: The details of the registrant to create
+  RegistrationSettings:
+    type: object
+    properties:
+      disableConfirmationEmail:
+        type: boolean
+        description: Indicates whether confirmation emails to the training registrants are disabled
+      disableWebRegistration:
+        type: boolean
+        description: Indicates whether the web registration for the training is disabled
+    description: The new registration settings for the training
+  Session:
+    type: object
+    properties:
+      attendanceCount:
+        type: integer
+        description: The number of attendees at the training session
+        format: int32
+      duration:
+        type: integer
+        description: The duration of the training session in minutes
+        format: int32
+      organizers:
+        type: array
+        description: The organizers of the training session.
+        items:
+          type: Organizer
+      sessionEndTime:
+        type: datetime
+        description: The time the training session finished
+      sessionKey:
+        type: string
+        description: The key of the training session
+      sessionStartTime:
+        type: datetime
+        description: The time the training session started
+      trainingName:
+        type: string
+        description: The subject of the training
+    description: Describes a completed training session.
+  Training:
+    type: object
+    properties:
+      description:
+        type: string
+        description: The training's description
+      name:
+        type: string
+        description: The training's subject
+      organizers:
+        type: array
+        description: The list of (co-)organizers for the training
+        items:
+          type: Organizer
+      registrationSettings:
+        type: RegistrationSettings
+        description: Training settings, namely web registration and confirmation emails to the training registrants
+      timeZone:
+        type: string
+        description: The time zone where the training takes place
+      times:
+        type: array
+        description: Array with startDate and endDate for the training sessions
+        items:
+          type: DateTimeRange
+      trainingId:
+        type: string
+        description: The 9-digit training's ID
+      trainingKey:
+        type: string
+        description: The training's unique key
+    description: Describes a scheduled training.
+  TrainingNameDescription:
+    type: object
+    properties:
+      description?:
+        type: string
+        description: The training's description
+      name:
+        type: string
+        description: The training's name
+    description: The new name and description for the training
+  TrainingOrganizers:
+    type: object
+    properties:
+      notifyOrganizers?:
+        type: boolean
+        description: Specifies whether an email should be sent notifying of the change to the training's organizers.
+      organizers:
+        type: array
+        description: List of keys of the organizers for the training.
+        items:
+          type: integer
+          format: int64
+    description: The details of the training to create
+  TrainingReqCreate:
+    type: object
+    properties:
+      description?:
+        type: string
+        description: Description of the training
+      name:
+        type: string
+        description: Name of the training
+      organizers?:
+        type: array
+        description: List of keys of the co-organizers for this training
+        items:
+          type: integer
+          format: int64
+      registrationSettings?:
+        type: RegistrationSettings
+        description: Training settings, namely web registration and confirmation emails to the training registrants
+      timeZone:
+        type: string
+        description: Time zone of the training. (Must be a valid time zone ID, see https://developer.citrixonline.com/citrix-rest-api-date-formats-and-time-zones)
+      times:
+        type: array
+        description: Array with startDate and endDate for the training sessions
+        items:
+          type: DateTimeRange
+    description: The details of the training to create
+  TrainingTimes:
+    type: object
+    properties:
+      notifyRegistrants?:
+        type: boolean
+        description: Notify registrants via email of change to training. Default is true
+      notifyTrainers?:
+        type: boolean
+        description: Notify trainers via email of change to training. Default is true
+      timeZone:
+        type: string
+        description: Time zone of the training. Must be a valid time zone ID, see https://developer.citrixonline.com/citrix-rest-api-date-formats-and-time-zones
+      times:
+        type: array
+        description: Start and end times for the training sessions
+        items:
+          type: DateTimeRange
+    description: The new start and end times for the scheduled training
+/accounts:
+  /{accountKey}:
+    uriParameters:
+      accountKey:
+        type: integer
+        description: The key of the multi-user account
+        displayName: accountKey
+        format: int64
+    /organizers:
+      get:
+        description: 'DEPRECATED: Please use the Admin API call ''Get all users''
+          instead. For details see https://developer.citrixonline.com/get-all-users.'
+        displayName: 'DEPRECATED: Get Organizers'
+        headers:
+          Authorization:
+            type: string
+            description: Access token
+            displayName: Authorization
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: Organizer
+          400:
+            description: Bad Request
+          403:
+            description: Forbidden
+        (commons.Depricated): null
+/organizers:
+  /{organizerKey}:
+    uriParameters:
+      organizerKey:
+        type: integer
+        description: The key of the training organizer
+        displayName: organizerKey
+        format: int64
+    /trainings:
+      /{trainingKey}:
+        uriParameters:
+          trainingKey:
+            type: integer
+            description: The key of the training
+            displayName: trainingKey
+            format: int64
+        /manageUrl:
+          get:
+            description: A request for a direct URL to the admin portal for a specific training. The request identifies the organizer and the training; the response provides a link the organizer can use to manage or launch the training in the admin portal. The training organizer will be required to log in. You can schedule and manage the training (e.g., add tests, polls and training materials) from the URL provided in the response.
+            displayName: Get Management URL for Training
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: string
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /nameDescription:
+          put:
+            description: Request to update a scheduled training name and description.
+            displayName: Update Training Name and Description
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            body:
+              application/json: TrainingNameDescription
+            responses:
+              204:
+                description: No Content
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /organizers:
+          get:
+            description: Retrieves organizer details for a specific training. This is only applicable to multi-user accounts with sharing enabled (co-organizers).
+            displayName: Get Training Organizers
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: array
+                    items:
+                      type: Organizer
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          put:
+            description: Replaces the co-organizers for a specific training. The scheduling organizer cannot be unassigned. Organizers will be notified via email if the notifyOrganizers parameter is set to true. Replaced organizers are not notified. This method is only applicable to multi-user accounts with sharing enabled (co-organizers).
+            displayName: Update Training Organizers
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            body:
+              application/json: TrainingOrganizers
+            responses:
+              204:
+                description: No Content
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /registrants:
+          /{registrantKey}:
+            uriParameters:
+              registrantKey:
+                type: integer
+                description: The key of the registrant
+                displayName: registrantKey
+                format: int64
+            get:
+              description: 'Retrieves details for specific registrant in a specific
+                training. Registrants can be:<br>WAITING - registrant registered and
+                is awaiting approval (where organizer has required approval)<br>APPROVED
+                - registrant registered and is approved<br>DENIED - registrant registered
+                and was not approved.<br><br>IMPORTANT: The registrant data caches
+                are typically updated immediately and the data will be returned in
+                the response. However, the update can take as long as two hours.'
+              displayName: Get Registrant
+              headers:
+                Authorization:
+                  type: string
+                  description: Access token
+                  displayName: Authorization
+              responses:
+                200:
+                  description: OK
+                  body:
+                    application/json:
+                      type: Registrant
+                400:
+                  description: Bad Request
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+            delete:
+              description: This call cancels a registration in a scheduled training for a specific registrant. If the registrant has paid for the training, a cancellation cannot be completed with this method; it must be completed on the Citrix external admin site. No notification is sent to the registrant or the organizer by default. The registrant can re-register if needed.
+              displayName: Cancel Registration
+              headers:
+                Authorization:
+                  type: string
+                  description: Access token
+                  displayName: Authorization
+              responses:
+                204:
+                  description: No Content
+                400:
+                  description: Bad Request
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+          get:
+            description: 'Retrieves details on all registrants for a specific training.
+              Registrants can be:<br>WAITING - registrant registered and is awaiting
+              approval (where organizer has required approval)<br>APPROVED - registrant
+              registered and is approved<br>DENIED - registrant registered and was
+              not approved.<br><br>IMPORTANT: The registrant data caches are typically
+              updated immediately and the data will be returned in the response. However,
+              the update can take as long as two hours.'
+            displayName: Get Training Registrants
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: array
+                    items:
+                      type: Registrant
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          post:
+            description: 'Registers one person, identified by a unique email address,
+              for a training. Approval is automatic unless payment or approval is
+              required. The response contains the Confirmation page URL and Join URL
+              for the registrant. NOTE: If some registrants do not receive a confirmation
+              email, the emails could be getting blocked by their email server due
+              to spam filtering or a grey-listing setting.'
+            displayName: Register for Training
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            body:
+              application/json: RegistrantReqCreate
+            responses:
+              201:
+                description: Created
+                body:
+                  application/json:
+                    type: RegistrantCreated
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+              409:
+                description: Conflict
+        /registrationSettings:
+          put:
+            description: An API request to automatically enable or disable web registrations and confirmation emails to registrants.
+            displayName: Update Training Registration Settings
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            body:
+              application/json: RegistrationSettings
+            responses:
+              204:
+                description: No Content
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /startUrl:
+          get:
+            description: Returns a URL that can be used to start a training. When this URL is opened in a web browser, the GoToTraining client will be downloaded and launched and the training will start after the organizer logs in with its credentials.
+            displayName: Get Start Url
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: string
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /times:
+          put:
+            description: ' A request to update a scheduled training''s start and end
+              times. If the request contains ''notifyTrainers = true'' and ''notifyRegistrants
+              = true'', both organizers and registrants are notified. The response
+              provides the number of notified trainers and registrants.'
+            displayName: Update Training Times
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            body:
+              application/json: TrainingTimes
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: NotifiedParties
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        get:
+          description: Uses the organizer key and training key to retrieve information on a scheduled training.
+          displayName: Get Training
+          headers:
+            Authorization:
+              type: string
+              description: Access token
+              displayName: Authorization
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: Training
+            400:
+              description: Bad Request
+            403:
+              description: Forbidden
+            404:
+              description: Not Found
+        delete:
+          description: 'Deletes a scheduled or completed training. For scheduled trainings,
+            it deletes all scheduled sessions of the training. For completed trainings,
+            the sessions remain in the database. No email is sent to organizers or
+            registrants, but when participants attempt to start or join the training,
+            they are directed to a page that states: Training Not Found: The training
+            you are trying to join is no longer available.'
+          displayName: Delete Training
+          headers:
+            Authorization:
+              type: string
+              description: Access token
+              displayName: Authorization
+          responses:
+            204:
+              description: No Content
+            400:
+              description: Bad Request
+            403:
+              description: Forbidden
+            404:
+              description: Not Found
+      get:
+        description: This call retrieves information on all scheduled trainings for a given organizer. The trainings are returned in the order in which they were created. Completed trainings are not included; ongoing trainings with past sessions are included along with the past sessions. If the organizer does not have any scheduled trainings, the response will be empty.
+        displayName: Get Trainings
+        headers:
+          Authorization:
+            type: string
+            description: Access token
+            displayName: Authorization
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: Training
+          400:
+            description: Bad Request
+          403:
+            description: Forbidden
+      post:
+        description: Schedules a training of one or more sessions. The call requires a training's name, at least one start and end time, and optionally may include additional sessions, a description, additional organizers (presenters), and registration settings. You can only add organizers to a training if you have a multi-user account. Once a training has been created with this method, you can accept registrations to the training. Registration is for the entire training - all sessions. (The GoToTraining admin site enables you to create trainings that allow participants to register for individual sessions as well as automatically create weekly or monthly events.) Registration settings controls whether you allow web registration for this training, and whether a confirmation email is sent to the registrant following registration. Disabling the confirmation email is an API-only setting. If the user registers through the GoToTraining website, a confirmation email is sent. If the user is manually approved by the training administrator through the GoToTraining web site, the confirmation email is sent. It is recommended that you disable web registration if you disable confirmation emails. The response contains a trainingKey for the scheduled training.
+        displayName: Create Training
+        headers:
+          Authorization:
+            type: string
+            description: Access token
+            displayName: Authorization
+        body:
+          application/json: TrainingReqCreate
+        responses:
+          201:
+            description: Created
+            body:
+              application/json:
+                type: string
+          400:
+            description: Bad Request
+          403:
+            description: Forbidden
+/reports:
+  /organizers:
+    /{organizerKey}:
+      uriParameters:
+        organizerKey:
+          type: integer
+          description: The key of the training organizer
+          displayName: organizerKey
+          format: int64
+      /sessions:
+        /{sessionKey}:
+          uriParameters:
+            sessionKey:
+              type: integer
+              description: The key of the training session
+              displayName: sessionKey
+              format: int64
+          /attendees:
+            get:
+              description: This call retrieves a list of registrants from a specific completed training session. The response includes the registrants' email addresses, and if they attended, it includes the duration of each period of their attendance in minutes, and the times at which they joined and left. If a registrant does not attend, they appear at the bottom of the listing with timeInSession = 0.
+              displayName: Get Attendance Details
+              headers:
+                Authorization:
+                  type: string
+                  description: Access token
+                  displayName: Authorization
+              responses:
+                200:
+                  description: OK
+                  body:
+                    application/json:
+                      type: array
+                      items:
+                        type: Attendee
+                400:
+                  description: Bad Request
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+        post:
+          description: This call returns all session details over a given date range for a given organizer. A session is a completed training event.
+          displayName: Get Sessions by Date Range
+          headers:
+            Authorization:
+              type: string
+              description: Access token
+              displayName: Authorization
+          body:
+            application/json: DateTimeRange
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: array
+                  items:
+                    type: Session
+            400:
+              description: Bad Request
+            403:
+              description: Forbidden
+      /trainings:
+        /{trainingKey}:
+          uriParameters:
+            trainingKey:
+              type: integer
+              description: The key of the training
+              displayName: trainingKey
+              format: int64
+          get:
+            description: This call returns session details for a given training. A session is a completed training event. Each training may contain one or more sessions.
+            displayName: Get Sessions By Training
+            headers:
+              Authorization:
+                type: string
+                description: Access token
+                displayName: Authorization
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: array
+                    items:
+                      type: Session
+              400:
+                description: Bad Request
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+/trainings:
+  /{trainingKey}:
+    uriParameters:
+      trainingKey:
+        type: integer
+        description: The key of the training
+        displayName: trainingKey
+        format: int64
+    /recordings:
+      /{recordingId}:
+        uriParameters:
+          recordingId:
+            type: integer
+            description: the unique id of the recording
+            displayName: recordingId
+            format: int64
+        get:
+          description: This call provides the download for the given recording by returning a 302 redirect to the original file.
+          displayName: Get Download for Online Recordings
+          headers:
+            Authorization:
+              type: string
+              description: Access token
+              displayName: Authorization
+          responses:
+            302:
+              description: Redirected to download
+            400:
+              description: Bad Request
+            403:
+              description: Forbidden
+            404:
+              description: Not Found
+      get:
+        description: This call retrieves information on all online recordings for a given training. If there are none, it returns an empty list.
+        displayName: Get Online Recordings for Training
+        headers:
+          Authorization:
+            type: string
+            description: Access token
+            displayName: Authorization
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: RecordingsListForTraining
+          400:
+            description: Bad Request
+          403:
+            description: Forbidden
+          404:
+            description: Not Found
+    /start:
+      get:
+        description: Returns a URL that can be used to start a training. When this URL is opened in a web browser, the GoToTraining client will be downloaded and launched and the training will start. A login of the organizer is not required.
+        displayName: Start Training
+        headers:
+          Authorization:
+            type: string
+            description: Access token
+            displayName: Authorization
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: HostUrl
+          400:
+            description: Bad Request
+          403:
+            description: Forbidden
+          404:
+            description: Not Found

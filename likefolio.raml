@@ -1,0 +1,526 @@
+#%RAML 1.0
+title: Likefolio Api Endpoints
+version: v0
+baseUri: likefolio.com/api
+description: Create a session to start to use it
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/v0:
+  /brands:
+    /mentionQty.json:
+      get:
+        displayName: Returns ordered mentions count for the given brand
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            displayName: id
+          startDate:
+            type: datetime
+            description: Start of the period. Must be in ISO8601 format
+            displayName: startDate
+          endDate?:
+            type: datetime
+            description: End of period. Must be in ISO8601 format
+            displayName: endDate
+        responses:
+          200:
+            description: No response was specified
+    /show.json:
+      get:
+        displayName: Returns brands basic information (up tp 50)
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            displayName: id
+        responses:
+          200:
+            description: No response was specified
+    /statistics.json:
+      get:
+        displayName: Returns statistics about the brand
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            displayName: id
+          period?:
+            type: string
+            description: 'Number of days/hours to get daya from. Period is calculated
+              backwards from now. For example, 1day means today. 7days means past
+              7 days and so on. The YTD value is the period from the beginning of
+              the current year to now, different from 1year, which means the past
+              365 days. Posible values: ["1hour", "6hours", "12hours", "24hours",
+              "72hours", "120hours", "168hours", "240hours", "336hours", "1day", "3days",
+              "5days", "7days", "10days", "14days", "1month", "3months", "6months",
+              "9months", "YTD", "1year", "2years", "3years"]'
+            displayName: period
+        responses:
+          200:
+            description: No response was specified
+    /topTweets.json:
+      post:
+        displayName: Returns list of tweets ordered by date
+        responses:
+          200:
+            description: No response was specified
+    /topUsers.json:
+      get:
+        displayName: Returns the list of Twitter IDs that have posted more mentions for the company
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            displayName: id
+          startDate:
+            type: datetime
+            description: Start of the period. Must be in ISO8601 format
+            displayName: startDate
+          endDate?:
+            type: datetime
+            description: End of period. Must be in ISO8601 format
+            displayName: endDate
+          qty?:
+            type: integer
+            description: Quantity of records to return
+            displayName: qty
+        responses:
+          200:
+            description: No response was specified
+  /companies:
+    /cei.json:
+      get:
+        displayName: Returns a list of CEI values for a single company on a given period.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            description: ID number of a company
+            displayName: id
+          startDate:
+            type: datetime
+            description: Start of the period. Must be in ISO8601 format
+            displayName: startDate
+          endDate?:
+            type: datetime
+            description: End of period. Must be in ISO8601 format
+            displayName: endDate
+        responses:
+          200:
+            description: No response was specified
+    /csi.json:
+      get:
+        displayName: Returns a list of CSI values for a single company on a given period.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            description: ID number of a company
+            displayName: id
+          startDate:
+            type: datetime
+            description: Start of the period. Must be in ISO8601 format
+            displayName: startDate
+          endDate?:
+            type: datetime
+            description: End of period. Must be in ISO8601 format
+            displayName: endDate
+        responses:
+          200:
+            description: No response was specified
+    /detail.json:
+      get:
+        displayName: Returns details for the last week for the given company
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          company_id:
+            type: integer
+            displayName: company_id
+        responses:
+          200:
+            description: No response was specified
+    /mentionQty.json:
+      get:
+        displayName: Returns amount of mentions per day for a given period
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            description: ID number of a company
+            displayName: id
+          startDate:
+            type: datetime
+            description: Start of the period. Must be in ISO8601 format
+            displayName: startDate
+          endDate?:
+            type: datetime
+            description: End of period. Must be in ISO8601 format
+            displayName: endDate
+        responses:
+          200:
+            description: No response was specified
+    /show.json:
+      get:
+        displayName: Company basic information.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            description: ID number of a company
+            displayName: id
+        responses:
+          200:
+            description: No response was specified
+    /statistics.json:
+      get:
+        displayName: Returns statistics for a single company on a single date
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            description: ID number of a company
+            displayName: id
+          period?:
+            type: string
+            description: 'Number of days/hours to get daya from. Period is calculated
+              backwards from now. For example, 1day means today. 7days means past
+              7 days and so on. The YTD value is the period from the beginning of
+              the current year to now, different from 1year, which means the past
+              365 days. Posible values: ["1hour", "6hours", "12hours", "24hours",
+              "72hours", "120hours", "168hours", "240hours", "336hours", "1day", "3days",
+              "5days", "7days", "10days", "14days", "1month", "3months", "6months",
+              "9months", "YTD", "1year", "2years", "3years"]'
+            displayName: period
+        responses:
+          200:
+            description: No response was specified
+    /tickerList.json:
+      get:
+        displayName: Returns list of available tickers.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+        responses:
+          200:
+            description: No response was specified
+    /tickers:
+      /forCharting.json:
+        get:
+          displayName: Lists available tickers to query company/statistics
+          queryParameters:
+            apiKey:
+              type: string
+              description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+              displayName: apiKey
+          responses:
+            200:
+              description: No response was specified
+      /show.json:
+        get:
+          displayName: Company basic information by ticker.
+          queryParameters:
+            apiKey:
+              type: string
+              description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+              displayName: apiKey
+            ticker:
+              type: string
+              description: Ticker of a company.
+              displayName: ticker
+          responses:
+            200:
+              description: No response was specified
+    /topBrands.json:
+      get:
+        displayName: Returns list of brands ordered by number of mentions.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            description: ID number of a company
+            displayName: id
+          startDate:
+            type: datetime
+            description: Start of the period. Must be in ISO8601 format
+            displayName: startDate
+          endDate?:
+            type: datetime
+            description: End of period. Must be in ISO8601 format
+            displayName: endDate
+        responses:
+          200:
+            description: No response was specified
+    /topCompanies.json:
+      get:
+        displayName: Return a list of companies ordered by mentions count.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          limit?:
+            type: integer
+            displayName: limit
+        responses:
+          200:
+            description: No response was specified
+    /topLinks.json:
+      get:
+        displayName: Returns list of links from mentions ordered by number of appearences.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          company_id?:
+            type: integer
+            description: ID of the company.
+            displayName: company_id
+          endDate?:
+            type: datetime
+            description: End of period. Must be in ISO8601 format
+            displayName: endDate
+          startDate?:
+            type: datetime
+            description: Start of the period. Must be in ISO8601 format.
+            displayName: startDate
+          qty?:
+            type: integer
+            description: Quantity of records to return
+            displayName: qty
+        responses:
+          200:
+            description: No response was specified
+    /topTweets.json:
+      post:
+        displayName: Returns list of tweets ordered by score. Use JSON to do the POST.
+        responses:
+          200:
+            description: No response was specified
+    /topTweets:
+      /mostRecent.json:
+        get:
+          displayName: Returns last 150 tweets from now to the past
+          queryParameters:
+            apiKey:
+              type: string
+              description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+              displayName: apiKey
+            id:
+              type: integer
+              description: ID number of a company
+              displayName: id
+            startDate?:
+              type: datetime
+              description: Start of the period. Must be in ISO8601 format
+              displayName: startDate
+          responses:
+            200:
+              description: No response was specified
+    /topUsers.json:
+      get:
+        displayName: Returns the list of Twitter IDs that have posted more mentions for the company.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            description: ID number of a company
+            displayName: id
+          startDate:
+            type: datetime
+            description: Start of the period. Must be in ISO8601 format
+            displayName: startDate
+          endDate?:
+            type: datetime
+            description: End of period. Must be in ISO8601 format
+            displayName: endDate
+          qty?:
+            type: integer
+            description: Quantity of records to return
+            displayName: qty
+        responses:
+          200:
+            description: No response was specified
+  /companyDivisions:
+    /show.json:
+      get:
+        displayName: Returns division basic information
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            displayName: id
+        responses:
+          200:
+            description: No response was specified
+    /statistics.json:
+      get:
+        displayName: Returns statistics about the division
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          id:
+            type: integer
+            displayName: id
+          period?:
+            type: string
+            description: 'Number of days/hours to get daya from. Period is calculated
+              backwards from now. For example, 1day means today. 7days means past
+              7 days and so on. The YTD value is the period from the beginning of
+              the current year to now, different from 1year, which means the past
+              365 days. Posible values: ["1hour", "6hours", "12hours", "24hours",
+              "72hours", "120hours", "168hours", "240hours", "336hours", "1day", "3days",
+              "5days", "7days", "10days", "14days", "1month", "3months", "6months",
+              "9months", "YTD", "1year", "2years", "3years"]'
+            displayName: period
+        responses:
+          200:
+            description: No response was specified
+  /sessions:
+    /create.json:
+      post:
+        displayName: If credentials are valid, a token usable for 15 minutes will be returned
+        responses:
+          200:
+            description: No response was specified
+  /swagger_doc.json:
+    get:
+      displayName: Swagger compatible API description
+      responses:
+        200:
+          description: No response was specified
+  /swagger_doc:
+    /{name}.json:
+      uriParameters:
+        name:
+          type: string
+          description: Resource name of mounted API
+          displayName: name
+      get:
+        displayName: Swagger compatible API description for specific API
+        responses:
+          200:
+            description: No response was specified
+  /tags:
+    /cashtags:
+      /mentionQty.json:
+        get:
+          displayName: Returns amount of mentions per day for a given period
+          queryParameters:
+            apiKey:
+              type: string
+              description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+              displayName: apiKey
+            text:
+              type: string
+              description: Text of the cashtag.
+              displayName: text
+            startDate:
+              type: datetime
+              description: Start of the period. Must be in ISO8601 format
+              displayName: startDate
+            endDate?:
+              type: datetime
+              description: End of period. Must be in ISO8601 format
+              displayName: endDate
+          responses:
+            200:
+              description: No response was specified
+    /match.json:
+      get:
+        displayName: Matches text passed and returns list of company tickers that matched. Text parameter is limited to valid URL encoded values.
+        queryParameters:
+          apiKey:
+            type: string
+            description: Api token granted to call the rest of the endpoints. You must call sessions/create to obtain a token and it will be valid for 15 minutes. After that, you must create another session.
+            displayName: apiKey
+          text:
+            type: string
+            description: Text to match agains tags.
+            displayName: text
+        responses:
+          200:
+            description: No response was specified
+      post:
+        displayName: Matches text passed and returns list of company tickers that matched.
+        responses:
+          200:
+            description: No response was specified
+  /users:
+    /topCompanies.json:
+      get:
+        displayName: Returns the scored companies for a user
+        queryParameters:
+          twitterId:
+            type: integer
+            displayName: twitterId
+          periodFilter:
+            type: string
+            displayName: periodFilter
+          cashtagFilter:
+            type: string
+            displayName: cashtagFilter
+        responses:
+          200:
+            description: No response was specified
+    /trendingCompanies.json:
+      get:
+        displayName: Returns the trending companies for a user
+        queryParameters:
+          twitterId:
+            type: integer
+            displayName: twitterId
+          periodFilter:
+            type: string
+            displayName: periodFilter
+          cashtagFilter:
+            type: string
+            displayName: cashtagFilter
+        responses:
+          200:
+            description: No response was specified

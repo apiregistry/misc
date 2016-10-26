@@ -1,0 +1,1590 @@
+#%RAML 1.0
+title: Vestorly
+version: 1.0.0
+baseUri: staging.vestorly.com/api/v2
+description: Vestorly Developers API
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Advisor:
+    type: object
+    properties:
+      about?:
+        type: string
+      account_type?:
+        type: string
+      address?:
+        type: string
+      adv_brochure?:
+        type: string
+      advisor_employees?:
+        type: string
+      api_key?:
+        type: string
+      city?:
+        type: string
+      company?:
+        type: string
+      compliance_bcc_email_address?:
+        type: string
+      consultation_reminder?:
+        type: string
+      dashboard_url?:
+        type: string
+      disclosure?:
+        type: string
+      email_blast?:
+        type: string
+      email_report_blast?:
+        type: string
+      external_options?:
+        type: string
+      facebook_blast?:
+        type: string
+      first_name?:
+        type: string
+      id:
+        type: string
+      last_name?:
+        type: string
+      linkedin?:
+        type: string
+      linkedin_blast?:
+        type: string
+      logo?:
+        type: string
+      name:
+        type: string
+      other_compensation?:
+        type: string
+      other_services_types?:
+        type: string
+      performance_audited?:
+        type: string
+      plan?:
+        type: string
+      profile_picture?:
+        type: string
+      referral_reminder?:
+        type: string
+      reg_number?:
+        type: string
+      state?:
+        type: string
+      tag?:
+        type: string
+      twitter_blast?:
+        type: string
+      twitter_handle?:
+        type: string
+      website?:
+        type: string
+      weekly_email_blast?:
+        type: string
+      zip?:
+        type: string
+  Advisorresponse:
+    type: object
+    properties:
+      advisor?:
+        type: Advisor
+  Advisors:
+    type: object
+    properties:
+      advisors?:
+        type: array
+        items:
+          type: Advisor
+  Article:
+    type: object
+    properties:
+      _id:
+        type: string
+      body?:
+        type: string
+      created_at?:
+        type: string
+      external_url?:
+        type: string
+      external_url_source?:
+        type: string
+      external_url_type?:
+        type: string
+      image_height?:
+        type: integer
+        format: int32
+      image_path?:
+        type: string
+      image_url?:
+        type: string
+      image_width?:
+        type: integer
+        format: int32
+      is_mobile_proxy_needed?:
+        type: boolean
+      is_proxy_needed?:
+        type: boolean
+      is_responsive?:
+        type: boolean
+      logo_url?:
+        type: string
+      needs_sanitize?:
+        type: boolean
+      proxy_url?:
+        type: string
+      square_logo_url?:
+        type: string
+      suitability_score?:
+        type: string
+      summary?:
+        type: string
+      title:
+        type: string
+      topic?:
+        type: string
+      url?:
+        type: string
+  Articleresponse:
+    type: object
+    properties:
+      article?:
+        type: Article
+  Articles:
+    type: object
+    properties:
+      articles?:
+        type: array
+        items:
+          type: Article
+  Event:
+    type: object
+    properties:
+      _id:
+        type: string
+      advisor_id?:
+        type: string
+      created_at?:
+        type: string
+      event_content?:
+        type: EventContent
+      original_url:
+        type: string
+      originator_email?:
+        type: string
+      originator_id?:
+        type: string
+      parent_event_id?:
+        type: string
+      referer?:
+        type: string
+      subject_email:
+        type: string
+      subject_id?:
+        type: string
+      type:
+        type: string
+        enum:
+        - page_view
+        - sign_up
+        - sign_in
+        - content_posted
+        - create_post
+        - publish_post
+        - update_post
+        - delete_post
+        - unpublish_post
+        - invite
+        - publish_newsletter
+        - publish_social
+        - click
+        - delivered
+        - open
+        - dropped
+        - bounce
+  EventContent:
+    type: object
+    properties:
+      _id?:
+        type: string
+        description: Mongo id of event
+      content_field?:
+        type: string
+      content_id?:
+        type: string
+      content_type?:
+        type: string
+      created_at?:
+        type: string
+      slug?:
+        type: string
+      updated_at?:
+        type: string
+  EventInput:
+    type: object
+    properties:
+      advisor_id?:
+        type: string
+      created_at?:
+        type: string
+      event_content?:
+        type: EventContent
+      original_url:
+        type: string
+      originator_email?:
+        type: string
+      originator_id?:
+        type: string
+      parent_event_id?:
+        type: string
+      referer?:
+        type: string
+      subject_email:
+        type: string
+      subject_id?:
+        type: string
+      type:
+        type: string
+        enum:
+        - page_view
+        - sign_up
+        - sign_in
+        - content_posted
+        - create_post
+        - publish_post
+        - update_post
+        - delete_post
+        - unpublish_post
+        - invite
+        - publish_newsletter
+        - publish_social
+        - click
+        - delivered
+        - open
+        - dropped
+        - bounce
+    description: Event
+  Eventcreateresponse:
+    type: object
+    properties:
+      meta?:
+        type: Meta
+  Eventresponse:
+    type: object
+    properties:
+      event?:
+        type: Event
+  Events:
+    type: object
+    properties:
+      events?:
+        type: array
+        items:
+          type: Event
+  Features:
+    type: object
+    properties:
+      _id:
+        type: string
+  Group:
+    type: object
+    properties:
+      _id:
+        type: string
+      autopublish?:
+        type: boolean
+      is_default?:
+        type: boolean
+      is_hidden?:
+        type: boolean
+      name?:
+        type: string
+      new_weekly_mailer_content?:
+        type: string
+      newsletter_subject?:
+        type: string
+      number_articles_per_group?:
+        type: integer
+        format: int32
+      number_articles_per_newsletter?:
+        type: integer
+        format: int32
+  GroupInput:
+    type: object
+    properties:
+      _id:
+        type: string
+      autopublish?:
+        type: boolean
+      is_default?:
+        type: boolean
+      is_hidden?:
+        type: boolean
+      name?:
+        type: string
+      new_weekly_mailer_content?:
+        type: string
+      newsletter_subject?:
+        type: string
+      number_articles_per_group?:
+        type: integer
+        format: int32
+      number_articles_per_newsletter?:
+        type: integer
+        format: int32
+    description: Group to update
+  Groupresponse:
+    type: object
+    properties:
+      group?:
+        type: Group
+  Groups:
+    type: object
+    properties:
+      groups?:
+        type: array
+        items:
+          type: Group
+  Member:
+    type: object
+    properties:
+      _id:
+        type: string
+      address?:
+        type: string
+      age?:
+        type: string
+      assets?:
+        type: string
+      city?:
+        type: string
+      data_estimated?:
+        type: boolean
+      education?:
+        type: string
+      email:
+        type: string
+      estimated_location?:
+        type: string
+      estimated_zip?:
+        type: string
+      family?:
+        type: string
+      first_name?:
+        type: string
+      gender?:
+        type: string
+      genuine_email?:
+        type: boolean
+      high_net_worth?:
+        type: boolean
+      home_market_value?:
+        type: string
+      home_owner_status?:
+        type: string
+      hometown?:
+        type: string
+      household_income?:
+        type: string
+      interest_consultation?:
+        type: string
+      interest_in_new_advisor?:
+        type: string
+      invited_by?:
+        type: string
+      invited_on?:
+        type: string
+      is_client?:
+        type: boolean
+      is_hidden?:
+        type: boolean
+      last_active_date?:
+        type: string
+      last_name?:
+        type: string
+      location?:
+        type: string
+      marital_status?:
+        type: string
+      message?:
+        type: string
+      occupation?:
+        type: string
+      phone?:
+        type: string
+      picture_url?:
+        type: string
+      portfolio_size?:
+        type: string
+      profile_url?:
+        type: string
+      register_ip_addr?:
+        type: string
+      signed_up_with?:
+        type: string
+      state?:
+        type: string
+      subscribed_group_ids?:
+        type: array
+        items:
+          type: string
+      tags?:
+        type: array
+        items:
+          type: string
+      unsubscribed?:
+        type: boolean
+      unsubscribed_date?:
+        type: boolean
+      user_type?:
+        type: string
+      zip?:
+        type: string
+    description: Member you want to update
+  MemberEvent:
+    type: object
+    properties:
+      _id?:
+        type: string
+      content_url?:
+        type: string
+      created_at?:
+        type: string
+      event_date?:
+        type: string
+      event_source?:
+        type: string
+      event_type?:
+        type: string
+      member_id?:
+        type: string
+      original_url?:
+        type: string
+      originator_email?:
+        type: string
+      originator_group_id?:
+        type: string
+      originator_id?:
+        type: string
+      originator_name?:
+        type: string
+      originator_type?:
+        type: string
+      parent_event_id?:
+        type: string
+      parent_originator_id?:
+        type: string
+      referer?:
+        type: string
+      source?:
+        type: string
+      subject_id?:
+        type: string
+      type?:
+        type: string
+      username?:
+        type: string
+  MemberEvents:
+    type: object
+    properties:
+      member_events?:
+        type: array
+        items:
+          type: MemberEvent
+      members?:
+        type: array
+        items:
+          type: TruncatedMember
+  MemberReport:
+    type: object
+    properties:
+      day?:
+        type: integer
+        format: int32
+      event_count?:
+        type: integer
+        format: int32
+      originator_group_id?:
+        type: string
+      parent_originator_id?:
+        type: string
+      source?:
+        type: string
+      type?:
+        type: string
+      year?:
+        type: integer
+        format: int32
+  MemberReports:
+    type: object
+    properties:
+      member_reports?:
+        type: array
+        items:
+          type: MemberReport
+  Memberresponse:
+    type: object
+    properties:
+      member?:
+        type: Member
+  Members:
+    type: object
+    properties:
+      members?:
+        type: array
+        items:
+          type: Member
+      meta?:
+        type: Meta
+      more_results?:
+        type: boolean
+  Meta:
+    type: object
+    properties:
+      message?:
+        type: string
+  Newsletter:
+    type: object
+    properties:
+      _id?:
+        type: string
+      click_count?:
+        type: integer
+        format: int64
+      is_default?:
+        type: boolean
+      is_sent?:
+        type: boolean
+      total_click_count?:
+        type: integer
+        format: int64
+      unique_click_count?:
+        type: integer
+        format: int64
+  NewsletterInput:
+    type: object
+    properties:
+      click_count?:
+        type: integer
+        format: int64
+      is_default?:
+        type: boolean
+      is_sent?:
+        type: boolean
+      total_click_count?:
+        type: integer
+        format: int64
+      unique_click_count?:
+        type: integer
+        format: int64
+    description: Newsletter
+  NewsletterSetting:
+    type: object
+    properties:
+      _id:
+        type: string
+      banner_color?:
+        type: string
+      body_html?:
+        type: string
+      email_accent_color?:
+        type: string
+      email_day_of_week?:
+        type: integer
+      email_hour?:
+        type: integer
+      email_status?:
+        type: string
+      facebook_active_wall?:
+        type: string
+      facebook_day_of_week?:
+        type: integer
+      facebook_hour?:
+        type: integer
+      facebook_status?:
+        type: string
+      footer_email_font?:
+        type: string
+      footer_html?:
+        type: string
+      footer_image_url?:
+        type: string
+      group_id?:
+        type: string
+      header_background_color?:
+        type: string
+      header_image_url?:
+        type: string
+      intro_text?:
+        type: string
+      linkedin_active_wall?:
+        type: string
+      linkedin_day_of_week?:
+        type: integer
+      linkedin_hour?:
+        type: integer
+      linkedin_status?:
+        type: string
+      montage_enabled?:
+        type: boolean
+      montage_facebook_image_url?:
+        type: string
+      montage_linkedin_image_url?:
+        type: string
+      montage_title?:
+        type: string
+      montage_twitter_image_url?:
+        type: string
+      newsletter_ids?:
+        type: array
+        items:
+          type: string
+      newsletter_type?:
+        type: string
+      primary_email_font?:
+        type: string
+      render_version?:
+        type: string
+      salutation_text?:
+        type: string
+      social_description?:
+        type: string
+      social_posting_text?:
+        type: string
+      social_subtitle?:
+        type: string
+      social_title?:
+        type: string
+      subject?:
+        type: string
+      title_color?:
+        type: string
+      twitter_day_of_week?:
+        type: integer
+      twitter_hour?:
+        type: integer
+      twitter_status?:
+        type: string
+  NewsletterSettings:
+    type: object
+    properties:
+      newsletter_settings?:
+        type: array
+        items:
+          type: NewsletterSetting
+  NewsletterSettingsInput:
+    type: object
+    properties:
+      newsletter_setting?:
+        type: NewsletterSetting
+    description: newsletter settings
+  Newsletterresponse:
+    type: object
+    properties:
+      newsletter?:
+        type: Newsletter
+  Newsletters:
+    type: object
+    properties:
+      newsletters?:
+        type: array
+        items:
+          type: Newsletter
+  Newslettersettingresponse:
+    type: object
+    properties:
+      newsletter_setting?:
+        type: NewsletterSetting
+  OrgSetting:
+    type: object
+    properties:
+      _id:
+        type: string
+      company_address?:
+        type: string
+      company_contact_email?:
+        type: string
+      company_homepage_url?:
+        type: string
+      email_theme_name?:
+        type: string
+      is_default?:
+        type: boolean
+      name?:
+        type: string
+      privacy_policy_url?:
+        type: string
+      site_url?:
+        type: string
+      terms_and_conditions_url?:
+        type: string
+  PersonalSettings:
+    type: object
+    properties:
+      _id:
+        type: string
+  Post:
+    type: object
+    properties:
+      _id?:
+        type: string
+      advisor_id?:
+        type: string
+      approval_status?:
+        type: string
+      approval_transactions?:
+        type: array
+        items:
+          type: string
+      article_id?:
+        type: string
+      comment?:
+        type: string
+      created_at?:
+        type: string
+      display_date?:
+        type: string
+      display_summary?:
+        type: string
+      display_tag?:
+        type: string
+      external_url?:
+        type: string
+      external_url_source?:
+        type: string
+      external_url_type?:
+        type: string
+      group_ids?:
+        type: array
+        items:
+          type: string
+      image_height?:
+        type: string
+      image_path?:
+        type: string
+      image_url?:
+        type: string
+      image_width?:
+        type: string
+      is_featured?:
+        type: boolean
+      is_mobile_proxy_needed?:
+        type: boolean
+      is_proxy_needed?:
+        type: boolean
+      is_published?:
+        type: boolean
+      is_responsive?:
+        type: boolean
+      logo_url?:
+        type: string
+      needs_sanitize?:
+        type: string
+      newsletter_ids?:
+        type: array
+        items:
+          type: string
+      pdf_attachment_url?:
+        type: string
+      post_date?:
+        type: string
+      proxy_url?:
+        type: string
+      slug?:
+        type: string
+      square_logo_url?:
+        type: string
+      suitability_score?:
+        type: string
+      summary?:
+        type: string
+      title?:
+        type: string
+      topic?:
+        type: string
+      updated_at?:
+        type: string
+      vestorly_url?:
+        type: string
+      video?:
+        type: string
+      video_id?:
+        type: string
+    description: Post you want to update
+  PostInput:
+    type: object
+    properties:
+      advisor_id?:
+        type: string
+      approval_status?:
+        type: string
+      approval_transactions?:
+        type: array
+        items:
+          type: string
+      article_id?:
+        type: string
+      comment?:
+        type: string
+      created_at?:
+        type: string
+      display_date?:
+        type: string
+      display_summary?:
+        type: string
+      display_tag?:
+        type: string
+      external_url?:
+        type: string
+      external_url_source?:
+        type: string
+      external_url_type?:
+        type: string
+      group_ids?:
+        type: array
+        items:
+          type: string
+      image_height?:
+        type: string
+      image_path?:
+        type: string
+      image_url?:
+        type: string
+      image_width?:
+        type: string
+      is_featured?:
+        type: boolean
+      is_mobile_proxy_needed?:
+        type: boolean
+      is_proxy_needed?:
+        type: boolean
+      is_published?:
+        type: boolean
+      is_responsive?:
+        type: boolean
+      logo_url?:
+        type: string
+      needs_sanitize?:
+        type: string
+      newsletter_ids?:
+        type: array
+        items:
+          type: string
+      pdf_attachment_url?:
+        type: string
+      post_date?:
+        type: string
+      proxy_url?:
+        type: string
+      slug?:
+        type: string
+      square_logo_url?:
+        type: string
+      suitability_score?:
+        type: string
+      summary?:
+        type: string
+      title:
+        type: string
+      topic?:
+        type: string
+      updated_at?:
+        type: string
+      vestorly_url?:
+        type: string
+      video?:
+        type: string
+      video_id?:
+        type: string
+    description: Post you want to create
+  Postrequest:
+    type: object
+    properties:
+      post?:
+        type: PostInput
+  Postresponse:
+    type: object
+    properties:
+      post?:
+        type: Post
+  Posts:
+    type: object
+    properties:
+      posts?:
+        type: array
+        items:
+          type: Post
+  Session:
+    type: object
+    properties:
+      _id?:
+        type: string
+      current_user?:
+        type: User
+      new_user?:
+        type: boolean
+      settings?:
+        type: Settings
+      vestorly-auth?:
+        type: string
+  SessionLogoutResponse:
+    type: object
+    properties:
+      message?:
+        type: string
+  Settings:
+    type: object
+    properties:
+      _id:
+        type: string
+      adv_brochure?:
+        type: string
+      company?:
+        type: string
+      disclosure?:
+        type: string
+      feature?:
+        type: Features
+      name?:
+        type: string
+      orgsetting?:
+        type: OrgSetting
+      personalsetting?:
+        type: PersonalSettings
+      picture_url?:
+        type: string
+      slug?:
+        type: string
+      website?:
+        type: string
+  Source:
+    type: object
+    properties:
+      _id:
+        type: string
+      custom_rss_feed?:
+        type: boolean
+      enabled?:
+        type: boolean
+      logo_url?:
+        type: string
+      name:
+        type: string
+      rss_publisher:
+        type: string
+      url:
+        type: string
+  SourceInput:
+    type: object
+    properties:
+      custom_rss_feed?:
+        type: boolean
+      enabled?:
+        type: boolean
+      logo_url?:
+        type: string
+      name:
+        type: string
+      rss_publisher:
+        type: string
+      url:
+        type: string
+    description: Source
+  Sourceresponse:
+    type: object
+    properties:
+      source?:
+        type: Source
+  Sources:
+    type: object
+    properties:
+      sources?:
+        type: array
+        items:
+          type: Source
+  TruncatedMember:
+    type: object
+    properties:
+      _id?:
+        type: string
+      added_on?:
+        type: string
+      email?:
+        type: string
+      first_name?:
+        type: string
+      last_name?:
+        type: string
+      picture_url?:
+        type: string
+  User:
+    type: object
+    properties:
+      _id:
+        type: string
+      company?:
+        type: string
+      first_name?:
+        type: string
+      last_name?:
+        type: string
+      name?:
+        type: string
+      new_user?:
+        type: boolean
+      picture_url?:
+        type: string
+      plan_expired?:
+        type: boolean
+      plan_id?:
+        type: string
+      plan_setup?:
+        type: boolean
+      plan_status?:
+        type: string
+      plan_stripe?:
+        type: boolean
+      show_tour?:
+        type: boolean
+      slug?:
+        type: string
+      user_type?:
+        type: string
+      username?:
+        type: string
+      website?:
+        type: string
+/advisors:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: Advisor Id to fetch
+        displayName: id
+    get:
+      description: Returns a single advisor given their ID
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: Advisor response
+          body:
+            application/json:
+              type: Advisor
+/articles:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: Article Id to fetch
+        displayName: id
+    get:
+      description: Returns a single article
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: Article response
+          body:
+            application/json:
+              type: Articleresponse
+  get:
+    description: Returns all articles
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+      limit?:
+        type: integer
+        description: Limit on the number of articles to return
+        displayName: limit
+        format: int32
+      text_query?:
+        type: string
+        description: Search query parameter
+        displayName: text_query
+      sort_direction?:
+        type: string
+        description: Direction of sort (used with sort_by parameter)
+        displayName: sort_direction
+      sort_by?:
+        type: string
+        description: Field on model to sort by
+        displayName: sort_by
+    responses:
+      200:
+        description: Response
+        body:
+          application/json:
+            type: Articles
+/events:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: Mongo ID of event to fetch
+        displayName: id
+    get:
+      description: Returns a single event if the user has access
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: Event response
+          body:
+            application/json:
+              type: Eventresponse
+  get:
+    description: Returns all events
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: Event response
+        body:
+          application/json:
+            type: Events
+  post:
+    description: Creates a new event in the system
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: Event response
+        body:
+          application/json:
+            type: Eventcreateresponse
+/groups:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: Mongo ID of group to fetch
+        displayName: id
+    get:
+      description: Returns a single group if user has access
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: Group response
+          body:
+            application/json:
+              type: Groupresponse
+    delete:
+      description: Deletes a Group
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: group response
+          body:
+            application/json:
+              type: Groupresponse
+    put:
+      description: Updates a Group
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: group response
+          body:
+            application/json:
+              type: Groupresponse
+  get:
+    description: Returns all groups
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: Group response
+        body:
+          application/json:
+            type: Groups
+  post:
+    description: Creates a new Group
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: group response
+        body:
+          application/json:
+            type: Groupresponse
+/member_events:
+  get:
+    description: Returns all MemberEvents
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: member event response
+        body:
+          application/json:
+            type: MemberEvents
+/member_reports:
+  get:
+    description: Returns all member reports
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: member reports response
+        body:
+          application/json:
+            type: MemberReports
+/members:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: Mongo ID of member to fetch
+        displayName: id
+    get:
+      description: Returns a single member
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: Member response
+          body:
+            application/json:
+              type: Memberresponse
+    put:
+      description: Updates a single member
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: Member response
+          body:
+            application/json:
+              type: Memberresponse
+  get:
+    description: Returns all members
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: Member response
+        body:
+          application/json:
+            type: Members
+  post:
+    description: Create a new member in the Vestorly Platform
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: member response
+        body:
+          application/json:
+            type: Memberresponse
+/newsletter_settings:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: Mongo ID of newsletter settings to fetch
+        displayName: id
+    get:
+      description: Returns a single newsletter settings if the user has access
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: newsletting setting response
+          body:
+            application/json:
+              type: Newslettersettingresponse
+    put:
+      description: Update a single newsletter setting by ID
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: newsletter settings response
+          body:
+            application/json:
+              type: Newslettersettingresponse
+  get:
+    description: Returns all newsletter settings
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: newsletter settings response
+        body:
+          application/json:
+            type: NewsletterSettings
+/newsletters:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: Mongo ID of event to get
+        displayName: id
+    get:
+      description: Get a newsletter by ID
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: Newsletter response
+          body:
+            application/json:
+              type: Newsletterresponse
+    put:
+      description: Updates a newsletter
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: Newsletter response
+          body:
+            application/json:
+              type: Newsletterresponse
+  get:
+    description: Returns all newsletters
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: Newsletter response
+        body:
+          application/json:
+            type: Newsletters
+/posts:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: ID of post to fetch
+        displayName: id
+    get:
+      description: Query all posts
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: post response
+          body:
+            application/json:
+              type: Postresponse
+    put:
+      description: Update A Post
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: post response
+          body:
+            application/json:
+              type: Postresponse
+  get:
+    description: Query all posts
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+      text_query?:
+        type: string
+        description: Filter post by parameters
+        displayName: text_query
+      external_url?:
+        type: string
+        description: Filter by External URL
+        displayName: external_url
+      is_published?:
+        type: string
+        description: Filter by is_published boolean
+        displayName: is_published
+    responses:
+      200:
+        description: posts response
+        body:
+          application/json:
+            type: Posts
+  post:
+    description: Create a new post in the Vestorly Platform
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: posts response
+        body:
+          application/json:
+            type: Postresponse
+/sessions:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: ID of pet to session
+        displayName: id
+    delete:
+      description: Logout of the vestorly platform
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Authenication token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: You have successfully logged out of the vestorly platform
+          body:
+            application/json:
+              type: SessionLogoutResponse
+  post:
+    description: Login To Vestorly Platform
+    queryParameters:
+      username:
+        type: string
+        description: Username in the vestorly platform
+        displayName: username
+      password:
+        type: string
+        description: Password in Vestorly Platform
+        displayName: password
+    responses:
+      200:
+        description: Response
+        body:
+          application/json:
+            type: Session
+/sources:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: ID of source to fetch
+        displayName: id
+    get:
+      description: Get Source By ID
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: source response
+          body:
+            application/json:
+              type: Sourceresponse
+    put:
+      description: Update Source By ID
+      queryParameters:
+        vestorly_auth:
+          type: string
+          description: Vestorly Auth Token
+          displayName: vestorly_auth
+      responses:
+        200:
+          description: source response
+          body:
+            application/json:
+              type: Sourceresponse
+  get:
+    description: Returns all sources
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: source response
+        body:
+          application/json:
+            type: Sources
+  post:
+    description: Create source
+    queryParameters:
+      vestorly_auth:
+        type: string
+        description: Vestorly Auth Token
+        displayName: vestorly_auth
+    responses:
+      200:
+        description: source response
+        body:
+          application/json:
+            type: Sourceresponse

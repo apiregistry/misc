@@ -1,0 +1,75 @@
+#%RAML 1.0
+title: Moon by Ai Weiwei & Olafur Eliasson
+version: '1.0'
+baseUri: moonmoonmoonmoon.com/
+description: !!binary |-
+  VHVybiBub3RoaW5nIGludG8gc29tZXRoaW5nIMOiwoDCkyBtYWtlIGEgZHJhd2luZywgbWFrZSBhIG1hcmsu
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/api:
+  /hashtags:
+    get:
+      description: Search for specified tag (no pound sign necessary). If <b>tag</b> is empty, the 50 most popular hashtags will be returned.
+      displayName: Fetches popular hashtags or marks tagged with specified hashtag
+      queryParameters:
+        tag?:
+          type: string
+          description: Hashtag to search for
+          displayName: tag
+      responses:
+        200:
+          description: No response was specified
+        400:
+          description: Bad Request
+  /marks:
+    get:
+      description: |-
+        The main method for querying the marks database. You may use the following options:
+                <ol style='list-style-type: lower-roman;'>
+                <li>No parameters to retrieve all marks in descending chronological order (use <b>before</b> for pagination)</li>
+                <li><b>popular</b> (and optionally <b>last_popular_id</b>) to retrieve all popular marks</li>
+                <li><b>featured</b> to retrieve all featured marks</li>
+                <li><b>x & y</b> to retrieve mark at specific coordinate</li>
+                <li><b>user</b> to retrieve all marks created by the specified user</li>
+                <li><b>collection</b> to retrieve all marks collected by the specified user</li>
+                </ol>
+      displayName: Fetches marks
+      queryParameters:
+        before?:
+          type: string
+          description: Before ID (pagination purposes)
+          displayName: before
+        popular?:
+          type: boolean
+          description: Popular marks
+          displayName: popular
+        last_popular_id?:
+          type: string
+          description: Last popular ID (for pagination purposes)
+          displayName: last_popular_id
+        featured?:
+          type: boolean
+          description: Featured marks
+          displayName: featured
+        x?:
+          type: integer
+          description: X coordinate
+          displayName: x
+        y?:
+          type: integer
+          description: Y coordinate
+          displayName: y
+        user?:
+          type: string
+          description: Created by user ID
+          displayName: user
+        collection?:
+          type: string
+          description: Collection ID
+          displayName: collection
+      responses:
+        200:
+          description: No response was specified
+        400:
+          description: Bad Request

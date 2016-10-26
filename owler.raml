@@ -1,0 +1,511 @@
+#%RAML 1.0
+title: Owler
+version: 1.0.0
+baseUri: api.owler.com/
+description: Search for information on companies using a website or company name and get access to Company Data, News, Blog Posts, Competitor Lists and much more.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  user_key:
+    type: Pass Through
+types:
+  Address:
+    type: object
+    properties:
+      city?:
+        type: string
+      country?:
+        type: string
+      phone?:
+        type: string
+      postal_code?:
+        type: string
+      state?:
+        type: string
+      street1?:
+        type: string
+      street2?:
+        type: string
+  Ceo:
+    type: object
+    properties:
+      first_name?:
+        type: string
+      image_url?:
+        type: string
+      last_name?:
+        type: string
+  CompanyBasicSearchVO:
+    type: object
+    properties:
+      company_id?:
+        type: integer
+        format: int64
+      hq_address?:
+        type: Address
+      name?:
+        type: string
+      perm_id?:
+        type: string
+      profile_url?:
+        type: string
+      short_name?:
+        type: string
+      website?:
+        type: string
+  CompanyBasicVO:
+    type: object
+    properties:
+      company_id:
+        type: integer
+        format: int64
+      logo_url:
+        type: string
+      name:
+        type: string
+      profile_url:
+        type: string
+      short_name?:
+        type: string
+      website:
+        type: string
+  CompanyCompetitorVO:
+    type: object
+    properties:
+      competitor?:
+        type: array
+        items:
+          type: CompanyBasicVO
+  CompanySearchResultVO:
+    type: object
+    properties:
+      company_id:
+        type: integer
+        format: int64
+      company_type?:
+        type: string
+        enum:
+        - Private
+        - Public
+        - Product/Brand/Service
+        - NGO/NPO/NFP/Organization/Association
+        - Investment Company
+        - Government
+      description?:
+        type: string
+      hq_address?:
+        type: Address
+      logo_url:
+        type: string
+      name:
+        type: string
+      perm_id?:
+        type: string
+      profile_url:
+        type: string
+      short_name?:
+        type: string
+      stock?:
+        type: Stock
+      website:
+        type: string
+  FeedsVO:
+    type: object
+    properties:
+      category?:
+        type: string
+      company?:
+        type: CompanyBasicVO
+      enclosure_image?:
+        type: string
+      feed_date?:
+        type: string
+      id?:
+        type: string
+      owler_feed_url?:
+        type: string
+      publisher_logo?:
+        type: string
+      publisher_name?:
+        type: string
+      source_url?:
+        type: string
+      title?:
+        type: string
+  Stock:
+    type: object
+    properties:
+      exchange?:
+        type: string
+      ticker?:
+        type: string
+  basic_results:
+    type: object
+    properties:
+      company?:
+        type: array
+        items:
+          type: CompanyBasicSearchVO
+  company:
+    type: object
+    properties:
+      ceo?:
+        type: Ceo
+      company_id:
+        type: integer
+        format: int64
+      company_type?:
+        type: string
+        enum:
+        - Private
+        - Public
+        - Product/Brand/Service
+        - NGO/NPO/NFP/Organization/Association
+        - Investment Company
+        - Government
+      description?:
+        type: string
+      employee_count?:
+        type: string
+      founded_date?:
+        type: string
+      hq_address?:
+        type: Address
+      industries?:
+        type: array
+        items:
+          type: string
+      logo_url:
+        type: string
+      name:
+        type: string
+      perm_id?:
+        type: string
+      profile_url:
+        type: string
+      revenue?:
+        type: string
+      short_name?:
+        type: string
+      stock?:
+        type: Stock
+      website:
+        type: string
+  results:
+    type: object
+    properties:
+      feeds?:
+        type: array
+        items:
+          type: FeedsVO
+      pagination_id?:
+        type: string
+/v1:
+  /company:
+    /basicsearch:
+      get:
+        description: The Company Basic Search API searches for a company based on the input and will returns results containing basic details about matching companies. By default the API returns the top 10 available results unless the limit is specified. The maximum limit is restricted to 30.
+        displayName: Basic Search Company by Ticker or Website or Name or PermID
+        queryParameters:
+          q:
+            type: string
+            description: Search term
+            displayName: q
+          fields?:
+            type: array
+            description: Fields to be searched - name, website, ticker, permid. If not specfied, will be searched against all fields
+            displayName: fields
+            items:
+              type: string
+              enum:
+              - name
+              - website
+              - ticker
+              - permid
+          limit?:
+            type: string
+            description: Number of results to be displayed - 10 (by default, if not specified) to 30
+            displayName: limit
+          format?:
+            type: string
+            description: Format of the response content - json (by default if not specified), xml
+            displayName: format
+            default: json
+            enum:
+            - xml
+            - json
+        responses:
+          200:
+            description: Search Results
+            body:
+              application/json:
+                type: basic_results
+              application/xml:
+                type: basic_results
+          400:
+            description: Invalid Parameters
+          403:
+            description: Authentication Failed
+          429:
+            description: Too Many Requests
+          500:
+            description: Internal Server Error
+    /competitor:
+      /id:
+        /{companyId}:
+          uriParameters:
+            companyId:
+              type: string
+              description: Company Id
+              displayName: companyId
+          get:
+            description: The Competitors API provides basic information about top 3 competitors of a company specified in the Company Id
+            displayName: Get Competitor information by Id
+            queryParameters:
+              format?:
+                type: string
+                description: Format of the response content - json (by default if not specified), xml
+                displayName: format
+                default: json
+                enum:
+                - xml
+                - json
+            responses:
+              200:
+                description: Competitors Data
+                body:
+                  application/json:
+                    type: CompanyCompetitorVO
+                  application/xml:
+                    type: CompanyCompetitorVO
+              400:
+                description: Invalid Parameters
+              403:
+                description: Authentication Failed
+              404:
+                description: Resource Not Found
+              429:
+                description: Too Many Requests
+              500:
+                description: Internal Server Error
+      /url:
+        /{website}:
+          uriParameters:
+            website:
+              type: string
+              description: Company Id
+              displayName: website
+          get:
+            description: The Competitors API provides basic information about top 3 competitors of a company specified in the website
+            displayName: Get Competitor information by URL
+            queryParameters:
+              format?:
+                type: string
+                description: Format of the response content - json (by default if not specified), xml
+                displayName: format
+                default: json
+                enum:
+                - xml
+                - json
+            responses:
+              200:
+                description: Competitors Data
+                body:
+                  application/json:
+                    type: CompanyCompetitorVO
+                  application/xml:
+                    type: CompanyCompetitorVO
+              400:
+                description: Invalid Parameters
+              403:
+                description: Authentication Failed
+              404:
+                description: Resource Not Found
+              429:
+                description: Too Many Requests
+              500:
+                description: Internal Server Error
+    /id:
+      /{companyId}:
+        uriParameters:
+          companyId:
+            type: string
+            description: Company Id
+            displayName: companyId
+        get:
+          description: 'The Company Data API provides complete information about a
+            company for the specified Company Id '
+          displayName: Get Company by Id
+          queryParameters:
+            format?:
+              type: string
+              description: Format of the response content - json (by default if not specified), xml
+              displayName: format
+              default: json
+              enum:
+              - xml
+              - json
+          responses:
+            200:
+              description: Company Data
+              body:
+                application/json:
+                  type: company
+                application/xml:
+                  type: company
+            400:
+              description: Invalid Parameters
+            403:
+              description: Authentication Failed
+            404:
+              description: Resource Not Found
+            429:
+              description: Too Many Requests
+            500:
+              description: Internal Server Error
+    /search:
+      get:
+        description: The Company Search API searches for a company based on the input and will returns results containing basic details about matching companies. By default the API returns the top 10 available results unless the limit is specified. The maximum limit is restricted to 30.
+        displayName: Search Company by Ticker or Website or Name or PermID
+        queryParameters:
+          q:
+            type: string
+            description: Search term
+            displayName: q
+          fields?:
+            type: array
+            description: Fields to be searched - name, website, ticker. If not specified, will be searched against all fields
+            displayName: fields
+            items:
+              type: string
+              enum:
+              - name
+              - website
+              - ticker
+              - permid
+          limit?:
+            type: string
+            description: Number of results to be displayed - 10 (by default, if not specified) to 30
+            displayName: limit
+          format?:
+            type: string
+            description: Format of the response content - json (by default if not specified), xml
+            displayName: format
+            default: json
+            enum:
+            - xml
+            - json
+        responses:
+          200:
+            description: Search Results
+            body:
+              application/json:
+                type: results
+              application/xml:
+                type: results
+          400:
+            description: Invalid Parameters
+          403:
+            description: Authentication Failed
+          429:
+            description: Too Many Requests
+          500:
+            description: Internal Server Error
+    /url:
+      /{website}:
+        uriParameters:
+          website:
+            type: string
+            description: Company Domain
+            displayName: website
+        get:
+          description: 'The Company Data API provides complete information about a
+            company for the specified URL '
+          displayName: Get Company by URL
+          queryParameters:
+            format?:
+              type: string
+              description: Format of the response content - json (by default if not specified), xml
+              displayName: format
+              default: json
+              enum:
+              - xml
+              - json
+          responses:
+            200:
+              description: Company Data
+              body:
+                application/json:
+                  type: company
+                application/xml:
+                  type: company
+            400:
+              description: Invalid Parameters
+            403:
+              description: Authentication Failed
+            404:
+              description: Resource Not Found
+            429:
+              description: Too Many Requests
+            500:
+              description: Internal Server Error
+  /feed:
+    get:
+      description: The Feeds API provides a list of feeds and individual feed information for the given Company Ids and Category. By default the API returns the latest 10 feeds available unless the limit is specified. The maximum result is restricted to 100 feeds per API request.
+      displayName: Get Feeds for given Company Ids
+      queryParameters:
+        format?:
+          type: string
+          description: Format of the response content - json (by default if not specified), xml
+          displayName: format
+          default: json
+          enum:
+          - xml
+          - json
+        company_id:
+          type: array
+          description: Company Ids separated by comma (Maximum of 150 Company Ids)
+          displayName: company_id
+          items:
+            type: string
+        limit?:
+          type: string
+          description: Number of results to be displayed - 10 (by default, if not specified) to 100
+          displayName: limit
+          default: '10'
+        pagination_id?:
+          type: string
+          description: Pass pagination_id as blank in the first API request. The API response will return the latest feeds along with the next pagination_id which can be passed in the subsequent API request to get the next set of feeds. Repeat this process until needed or till the pagination_id returned is blank
+          displayName: pagination_id
+          default: '*'
+        category?:
+          type: array
+          description: Categories separated by comma. If not specified, will search against all categories
+          displayName: category
+          items:
+            type: string
+            enum:
+            - NEWS
+            - PRESS
+            - FUNDING
+            - ACQUISITION
+            - PEOPLE
+            - BLOG
+            - VIDEOS
+      responses:
+        200:
+          description: Feeds Data
+          body:
+            application/json:
+              type: results
+            application/xml:
+              type: results
+        400:
+          description: Invalid Parameters
+        403:
+          description: Authentication Failed
+        429:
+          description: Too Many Requests
+        500:
+          description: Internal Server Error

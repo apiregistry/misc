@@ -1,0 +1,1233 @@
+#%RAML 1.0
+title: StatSocial Platform
+version: 1.0.0.
+baseUri: api.statsocial.com/api
+description: 'API Reference: <br><br> The StatSocial API is organized around REST.
+  Our API is designed to have predictable, resource-oriented URLs and to use HTTP
+  response codes to indicate API errors. We use built-in HTTP features, like HTTP
+  authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients,
+  and we support cross-origin resource sharing to allow you to interact securely with
+  our API from a client-side web application (remember that you should never expose
+  your secret API key in any public website''s client-side code). JSON will be returned
+  in all responses from the API, including errors (though if you''re using API bindings,
+  we will convert the response to the appropriate language-specific object).<br><br>Contact
+  help@statsocial.com to obtain a test API key'
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api_key:
+    type: Pass Through
+types:
+  '18_24':
+    type: object
+    properties:
+      average?:
+        type: integer
+      multiplicity?:
+        type: integer
+      percentile?:
+        type: integer
+      statistical_info?:
+        type: statistical_info_18
+      stdev?:
+        type: integer
+      value?:
+        type: integer
+  '25_34':
+    type: object
+    properties:
+      average?:
+        type: integer
+      multiplicity?:
+        type: integer
+      percentile?:
+        type: integer
+      statistical_info?:
+        type: statistical_info_25
+      stdev?:
+        type: integer
+      value?:
+        type: integer
+  '35_44':
+    type: object
+    properties:
+      average?:
+        type: integer
+      multiplicity?:
+        type: integer
+      percentile?:
+        type: integer
+      statistical_info?:
+        type: statistical_info_35
+      stdev?:
+        type: integer
+      value?:
+        type: integer
+  400_Error:
+    type: object
+    properties:
+      error_code_msg?:
+        type: string
+      msg?:
+        type: string
+      success?:
+        type: string
+  401_Error:
+    type: object
+    properties:
+      error_code_msg?:
+        type: string
+      msg?:
+        type: string
+      success?:
+        type: string
+  403_Error:
+    type: object
+    properties:
+      error_code_msg?:
+        type: string
+      msg?:
+        type: string
+      success?:
+        type: string
+  404_Error:
+    type: object
+    properties:
+      error_code_msg?:
+        type: string
+      msg?:
+        type: string
+      success?:
+        type: string
+  500_Error:
+    type: object
+    properties:
+      error_code_msg?:
+        type: string
+      msg?:
+        type: string
+      success?:
+        type: string
+  Application_Status:
+    type: object
+    properties:
+      data?:
+        type: application_response
+      msg?:
+        type: string
+      success?:
+        type: string
+  Combined_Age:
+    type: object
+    properties:
+      18 - 24?:
+        type: '18_24'
+      25 - 34?:
+        type: '25_34'
+      35 - 44?:
+        type: '35_44'
+  Create_Tweet:
+    type: object
+    properties:
+      data?:
+        type: create_tweet_response
+      msg?:
+        type: string
+      success?:
+        type: string
+  Create_Twitter:
+    type: object
+    properties:
+      data?:
+        type: follower_create_response
+      msg?:
+        type: string
+      success?:
+        type: string
+  Custom_Create:
+    type: object
+    properties:
+      data?:
+        type: custom_create_response
+      msg?:
+        type: string
+      success?:
+        type: string
+  Custom_Generate:
+    type: object
+    properties:
+      data?:
+        type: custom_generate_response
+      msg?:
+        type: string
+      success?:
+        type: string
+  Custom_Insert:
+    type: object
+    properties:
+      data?:
+        type: custom_insert_response
+      msg?:
+        type: string
+      success?:
+        type: string
+  Female:
+    type: object
+    properties:
+      average?:
+        type: integer
+      multiplicity?:
+        type: integer
+      percentile?:
+        type: integer
+      statistical_info?:
+        type: statistical_info_f
+      stdev?:
+        type: integer
+      value?:
+        type: integer
+  Male:
+    type: object
+    properties:
+      average?:
+        type: integer
+      multiplicity?:
+        type: integer
+      percentile?:
+        type: integer
+      statistical_info?:
+        type: statistical_info_m
+      stdev?:
+        type: integer
+      value?:
+        type: integer
+  Report_Dates:
+    type: object
+    properties:
+      data?:
+        type: array
+        items:
+          type: integer
+      msg?:
+        type: string
+      success?:
+        type: string
+  Report_Status:
+    type: object
+    properties:
+      msg?:
+        type: string
+      success?:
+        type: string
+  Report_Success:
+    type: object
+    properties:
+      data?:
+        type: report_response
+      msg?:
+        type: string
+      success?:
+        type: string
+  Sex:
+    type: object
+    properties:
+      Female?:
+        type: Female
+      Male?:
+        type: Male
+  application_response:
+    type: object
+    properties:
+      remaining_count?:
+        type: integer
+      reports?:
+        type: report_info
+      total_reports_count?:
+        type: integer
+      total_reports_done?:
+        type: integer
+  create_tweet_response:
+    type: object
+    properties:
+      aggregate_report_hash?:
+        type: string
+      daily_report_hash?:
+        type: string
+      monthly_report_hash?:
+        type: string
+      weekly_report_hash?:
+        type: string
+  custom_create_response:
+    type: object
+    properties:
+      report_hash?:
+        type: string
+  custom_generate_response:
+    type: object
+    properties:
+      upload_hash?:
+        type: string
+  custom_insert_response:
+    type: object
+    properties:
+      distinct_relations?:
+        type: integer
+      total_relations?:
+        type: integer
+  follower_create_response:
+    type: object
+    properties:
+      report_hash?:
+        type: string
+  report_info:
+    type: object
+    properties:
+      created?:
+        type: string
+      name?:
+        type: string
+      report_type?:
+        type: string
+      status?:
+        type: string
+  report_response:
+    type: object
+    properties:
+      Combined Age?:
+        type: Combined_Age
+      Sex?:
+        type: Sex
+  statistical_info_18:
+    type: object
+    properties:
+      error_range?:
+        type: integer
+      lower_bound?:
+        type: integer
+      upper_bound?:
+        type: integer
+  statistical_info_25:
+    type: object
+    properties:
+      error_range?:
+        type: integer
+      lower_bound?:
+        type: integer
+      upper_bound?:
+        type: integer
+  statistical_info_35:
+    type: object
+    properties:
+      error_range?:
+        type: integer
+      lower_bound?:
+        type: integer
+      upper_bound?:
+        type: integer
+  statistical_info_f:
+    type: object
+    properties:
+      error_range?:
+        type: integer
+      lower_bound?:
+        type: integer
+      upper_bound?:
+        type: integer
+  statistical_info_m:
+    type: object
+    properties:
+      error_range?:
+        type: integer
+      lower_bound?:
+        type: integer
+      upper_bound?:
+        type: integer
+/applications:
+  /status:
+    /:
+      get:
+        description: |
+          Remaining window and remaining count details, also returns reports that have been generated by this account.
+        displayName: Used to understand API usage
+        queryParameters:
+          key:
+            type: string
+            description: User application key
+            displayName: key
+        responses:
+          200:
+            description: Success
+            body:
+              application/json:
+                type: Application_Status
+          400:
+            description: 'Possible reasons include:<br>{success: 0, msg: Invalid API
+              parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0, msg:
+              Error please include the ''action'' parameter, error_code_msg: API_MISSING_ACTION_PARAMETER}'
+            body:
+              application/json:
+                type: 400_Error
+          401:
+            description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+            body:
+              application/json:
+                type: 401_Error
+          403:
+            description: '{success: 0, msg: you are going too fast}'
+            body:
+              application/json:
+                type: 403_Error
+          500:
+            description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+              application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+              0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}'
+            body:
+              application/json:
+                type: 500_Error
+/reports:
+  /:
+    get:
+      description: Output is ordered by Demographic and followed by Affinity information. For each data point the following metrics are provided value, count, mean, percentile, multiplicity and average. For Geographic, and Demographic data points an additional statistical_info metric will be present with information regarding statistical relevance.
+      displayName: Obtain report output
+      queryParameters:
+        report_hash:
+          type: string
+          description: Unique report hash
+          displayName: report_hash
+        baseline?:
+          type: integer
+          description: Default value will be 'world'
+          displayName: baseline
+        report_date?:
+          type: integer
+          description: report_date represents a Unix timestamp of when the report was generated. Default value will be the latest report generated. You can request the /report/dates/ endpoint in order to obtain available timestamps. Date must be in the future.
+          displayName: report_date
+        sample:
+          type: integer
+          description: Sample report indicator
+          displayName: sample
+          default: 1
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              type: Report_Success
+        400:
+          description: 'Possible reasons include:<br>{success: 0, msg: Invalid API
+            parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0, msg: Error
+            please include the ''action'' parameter, error_code_msg: API_MISSING_ACTION_PARAMETER}<br>{success:
+            0, msg: Invalid or non-existent baseline supplied, error_code_msg: INVALID_BASELINE}<br>{success:
+            0, msg: Invalid report_date parameter value. Must be an integer, error_code_msg:
+            INVALID_REPORT_DATE}'
+          body:
+            application/json:
+              type: 400_Error
+        401:
+          description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+          body:
+            application/json:
+              type: 401_Error
+        403:
+          description: '{success: 0, msg: You are going too fast}'
+          body:
+            application/json:
+              type: 403_Error
+        404:
+          description: '{success: 0, msg: Report does not currently exist, error_code_msg:
+            API_ERROR_RETRIEVING_REPORT}'
+          body:
+            application/json:
+              type: 404_Error
+        500:
+          description: 'Possible reasons include:<br>{success: 0, msg: Report has
+            no data, error_code_msg: API_ERROR_EMPTY_REPORT}<br>{success: 0, msg:
+            Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+            0, msg: Error getting application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}'
+          body:
+            application/json:
+              type: 500_Error
+    post:
+      description: |
+        Output is ordered by Demographic and followed by Affinity information. For each data point the following metrics are provided value, count, mean, percentile, multiplicity and average. For Geographic, and Demographic data points an additional statistical_info metric will be present with information regarding statistical relevance.
+      displayName: Obtain report output
+      queryParameters:
+        report_hash:
+          type: string
+          description: Unique report hash
+          displayName: report_hash
+        baseline?:
+          type: integer
+          description: Default value will be 'world'
+          displayName: baseline
+        report_date?:
+          type: integer
+          description: report_date represents a Unix timestamp of when the report was generated. Default value will be the latest report generated. You can request the /report/dates/ endpoint in order to obtain available timestamps. Date must be in the future.
+          displayName: report_date
+        sample:
+          type: integer
+          description: Sample report indicator
+          displayName: sample
+          default: 1
+      responses:
+        200:
+          description: Success
+          body:
+            application/json:
+              type: Report_Success
+        400:
+          description: 'Possible reasons include:<br>{success: 0, msg: Invalid API
+            parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0, msg: Error
+            please include the ''action'' parameter, error_code_msg: API_MISSING_ACTION_PARAMETER}<br>{success:
+            0, msg: Invalid or non-existent baseline supplied, error_code_msg: INVALID_BASELINE}<br>{success:
+            0, msg: Invalid report_date parameter value. Must be an integer, error_code_msg:
+            INVALID_REPORT_DATE}'
+          body:
+            application/json:
+              type: 400_Error
+        401:
+          description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+          body:
+            application/json:
+              type: 401_Error
+        403:
+          description: '{success: 0, msg: You are going too fast}'
+          body:
+            application/json:
+              type: 403_Error
+        404:
+          description: '{success: 0, msg: Report does not currently exist, error_code_msg:
+            API_ERROR_RETRIEVING_REPORT}'
+          body:
+            application/json:
+              type: 404_Error
+        500:
+          description: 'Possible reasons include:<br>{success: 0, msg: Report has
+            no data, error_code_msg: API_ERROR_EMPTY_REPORT}<br>{success: 0, msg:
+            Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+            0, msg: Error getting application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}'
+          body:
+            application/json:
+              type: 500_Error
+  /custom:
+    /create:
+      /:
+        get:
+          description: |
+            Used to create a custom report. This report treats the list of ids or handles as the audience (not their followers as in the twitter report). To create follower or tweet reports other methods must be used.
+          displayName: Step 3 of executing custom report
+          queryParameters:
+            upload_hash:
+              type: string
+              description: Upload hash to be used for inserting handles
+              displayName: upload_hash
+            filter?:
+              type: string
+              description: 'Filtering options to be used when creating a filtered
+                report. The options must be in JSON form, example: {''gender'':[''male''],''ages'':[''18-24''],''countries'':[''usa'']}'
+              displayName: filter
+          responses:
+            201:
+              description: Success
+              body:
+                application/json:
+                  type: Custom_Create
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: '{success: 0, msg: you are going too fast}'
+              body:
+                application/json:
+                  type: 403_Error
+            404:
+              description: '{success: 0, msg: The upload hash provided does not exist,
+                error_code_msg: UPLOAD_HASH_DOES_NOT_EXIST}'
+              body:
+                application/json:
+                  type: 404_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+                application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+                0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+                0, msg: Report has no data, error_code_msg: API_ERROR_EMPTY_REPORT}'
+              body:
+                application/json:
+                  type: 500_Error
+        post:
+          description: |
+            Used to create a custom report. This report treats the list of ids or handles as the audience (not their followers as in the twitter report). To create follower or tweet reports other methods must be used.
+          displayName: Step 3 of executing custom report
+          queryParameters:
+            upload_hash:
+              type: string
+              description: Upload hash to be used for inserting handles
+              displayName: upload_hash
+            filter?:
+              type: string
+              description: 'Filtering options to be used when creating a filtered
+                report. The options must be in JSON form, example: {''gender'':[''male''],''ages'':[''18-24''],''countries'':[''usa'']}'
+              displayName: filter
+          responses:
+            201:
+              description: Success
+              body:
+                application/json:
+                  type: Custom_Create
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: '{success: 0, msg: you are going too fast}'
+              body:
+                application/json:
+                  type: 403_Error
+            404:
+              description: '{success: 0, msg: The upload hash provided does not exist,
+                error_code_msg: UPLOAD_HASH_DOES_NOT_EXIST}'
+              body:
+                application/json:
+                  type: 404_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+                application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+                0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+                0, msg: Report has no data, error_code_msg: API_ERROR_EMPTY_REPORT}'
+              body:
+                application/json:
+                  type: 500_Error
+    /generate:
+      /:
+        get:
+          description: |
+            Used to create a custom report. This report treats the list of ids or handles as the audience (not their followers as in the twitter report). To create follower or tweet reports other methods must be used.
+          displayName: Step 1 of executing custom report
+          queryParameters:
+            report_name:
+              type: string
+              description: Name of the report
+              displayName: report_name
+          responses:
+            200:
+              description: Success
+              body:
+                application/json:
+                  type: Custom_Generate
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: 'Possible reasons include:<br>{success: 0, msg: you are
+                going too fast}<br>{success: 0, msg: Not enough tokens remaining under
+                your application, error_code_msg: API_INSUFFICIENT_TOKENS_REMAINING}'
+              body:
+                application/json:
+                  type: 403_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+                application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+                0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}'
+              body:
+                application/json:
+                  type: 500_Error
+        post:
+          description: |
+            Used to create a custom report. This report treats the list of ids or handles as the audience (not their followers as in the twitter report). To create follower or tweet reports other methods must be used.
+          displayName: Step 1 of executing custom report
+          queryParameters:
+            report_name:
+              type: string
+              description: Name of the report
+              displayName: report_name
+          responses:
+            200:
+              description: Success
+              body:
+                application/json:
+                  type: Custom_Generate
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: 'Possible reasons include:<br>{success: 0, msg: you are
+                going too fast}<br>{success: 0, msg: Not enough tokens remaining under
+                your application, error_code_msg: API_INSUFFICIENT_TOKENS_REMAINING}'
+              body:
+                application/json:
+                  type: 403_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+                application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+                0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}'
+              body:
+                application/json:
+                  type: 500_Error
+    /insert:
+      /:
+        get:
+          description: |
+            Inserting twitter ids or handles into a custom report. This is used for custom reports only
+          displayName: Step 2 of executing custom report
+          queryParameters:
+            upload_hash:
+              type: string
+              description: Upload hash to be used for inserting handles
+              displayName: upload_hash
+            ids:
+              type: array
+              description: List of twitter ids, separated by commas, to be inserted into report. Ids must be enclosed with brackets ie. [177490485] or [177490485,23423434]
+              displayName: ids
+          responses:
+            201:
+              description: Success
+              body:
+                application/json:
+                  type: Custom_Insert
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}<br>{success: 0, msg: IDS array is too
+                long or in an incorrect format, error_code_msg: API_INVALID_IDS}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: 'Possible reasons include:<br>{success: 0, msg: you are
+                going too fast}<br>{success: 0, msg: Not enough tokens remaining under
+                your application, error_code_msg: API_INSUFFICIENT_TOKENS_REMAINING}'
+              body:
+                application/json:
+                  type: 403_Error
+            404:
+              description: '{success: 0, msg: The upload hash provided does not exist,
+                error_code_msg: UPLOAD_HASH_DOES_NOT_EXIST}'
+              body:
+                application/json:
+                  type: 404_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+                application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+                0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+                0, msg: Error trying to insert relations to custom, error_code_msg:
+                API_ERROR_INSERTING_TO_CUSTOM}'
+              body:
+                application/json:
+                  type: 500_Error
+        post:
+          description: |
+            Inserting twitter ids or handles into a custom report. This is used for custom reports only
+          displayName: Step 2 of executing custom report
+          queryParameters:
+            upload_hash:
+              type: string
+              description: Upload hash to be used for inserting handles
+              displayName: upload_hash
+            ids:
+              type: array
+              description: List of twitter ids, separated by commas, to be inserted into report. Ids must be enclosed with brackets ie. [177490485] or [177490485,23423434]
+              displayName: ids
+          responses:
+            201:
+              description: Success
+              body:
+                application/json:
+                  type: Custom_Insert
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}<br>{success: 0, msg: IDS array is too
+                long or in an incorrect format, error_code_msg: API_INVALID_IDS}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: 'Possible reasons include:<br>{success: 0, msg: you are
+                going too fast}<br>{success: 0, msg: Not enough tokens remaining under
+                your application, error_code_msg: API_INSUFFICIENT_TOKENS_REMAINING}'
+              body:
+                application/json:
+                  type: 403_Error
+            404:
+              description: '{success: 0, msg: The upload hash provided does not exist,
+                error_code_msg: UPLOAD_HASH_DOES_NOT_EXIST}'
+              body:
+                application/json:
+                  type: 404_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+                application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+                0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+                0, msg: Error trying to insert relations to custom, error_code_msg:
+                API_ERROR_INSERTING_TO_CUSTOM}'
+              body:
+                application/json:
+                  type: 500_Error
+  /dates:
+    /:
+      get:
+        description: |
+          Get report dates available for a specific report.
+        displayName: Get report dates available for a specific report
+        queryParameters:
+          report_hash:
+            type: string
+            description: Unique report hash
+            displayName: report_hash
+        responses:
+          200:
+            description: Success
+            body:
+              application/json:
+                type: Report_Dates
+          400:
+            description: 'Possible reasons include:<br>{success: 0, msg: Invalid API
+              parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0, msg:
+              Error please include the ''action'' parameter, error_code_msg: API_MISSING_ACTION_PARAMETER}'
+            body:
+              application/json:
+                type: 400_Error
+          401:
+            description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+            body:
+              application/json:
+                type: 401_Error
+          403:
+            description: '{success: 0, msg: You are going too fast}'
+            body:
+              application/json:
+                type: 403_Error
+          404:
+            description: '{success: 0, msg: Report does not currently exist, error_code_msg:
+              API_ERROR_RETRIEVING_REPORT}'
+            body:
+              application/json:
+                type: 404_Error
+          500:
+            description: 'Possible reasons include:<br>{success: 0, msg: Report has
+              no data, error_code_msg: API_ERROR_EMPTY_REPORT}<br>{success: 0, msg:
+              Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+              0, msg: Error getting application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}'
+            body:
+              application/json:
+                type: 500_Error
+      post:
+        description: |
+          Get report dates available for a specific report.
+        displayName: Get report dates available for a specific report
+        queryParameters:
+          report_hash:
+            type: string
+            description: Unique report hash
+            displayName: report_hash
+        responses:
+          200:
+            description: Success
+            body:
+              application/json:
+                type: Report_Dates
+          400:
+            description: 'Possible reasons include:<br>{success: 0, msg: Invalid API
+              parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0, msg:
+              Error please include the ''action'' parameter, error_code_msg: API_MISSING_ACTION_PARAMETER}'
+            body:
+              application/json:
+                type: 400_Error
+          401:
+            description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+            body:
+              application/json:
+                type: 401_Error
+          403:
+            description: '{success: 0, msg: You are going too fast}'
+            body:
+              application/json:
+                type: 403_Error
+          404:
+            description: '{success: 0, msg: Report does not currently exist, error_code_msg:
+              API_ERROR_RETRIEVING_REPORT}'
+            body:
+              application/json:
+                type: 404_Error
+          500:
+            description: 'Possible reasons include:<br>{success: 0, msg: Report has
+              no data, error_code_msg: API_ERROR_EMPTY_REPORT}<br>{success: 0, msg:
+              Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+              0, msg: Error getting application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}'
+            body:
+              application/json:
+                type: 500_Error
+  /status:
+    /:
+      get:
+        description: |
+          Returns a list of custom reports generated by user (report name to upload hash etc).
+        displayName: Get list of generated reports
+        queryParameters:
+          report_hash:
+            type: string
+            description: Unique hash belonging to report
+            displayName: report_hash
+        responses:
+          200:
+            description: Success
+            body:
+              application/json:
+                type: Report_Status
+          400:
+            description: 'Possible reasons include:<br>{success: 0, msg: Invalid API
+              parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0, msg:
+              Error please include the ''action'' parameter, error_code_msg: API_MISSING_ACTION_PARAMETER}'
+            body:
+              application/json:
+                type: 400_Error
+          401:
+            description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+            body:
+              application/json:
+                type: 401_Error
+          403:
+            description: '{success: 0, msg: you are going too fast}'
+            body:
+              application/json:
+                type: 403_Error
+          500:
+            description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+              application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+              0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+              0, msg: Report has no data, error_code_msg: API_ERROR_EMPTY_REPORT}'
+            body:
+              application/json:
+                type: 500_Error
+      post:
+        description: |
+          Returns a list of custom reports generated by user (report name to upload hash etc).
+        displayName: Get list of generated reports
+        queryParameters:
+          report_hash:
+            type: string
+            description: Unique hash belonging to report
+            displayName: report_hash
+        responses:
+          200:
+            description: Success
+            body:
+              application/json:
+                type: Report_Status
+          400:
+            description: 'Possible reasons include:<br>{success: 0, msg: Invalid API
+              parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0, msg:
+              Error please include the ''action'' parameter, error_code_msg: API_MISSING_ACTION_PARAMETER}'
+            body:
+              application/json:
+                type: 400_Error
+          401:
+            description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+            body:
+              application/json:
+                type: 401_Error
+          403:
+            description: '{success: 0, msg: you are going too fast}'
+            body:
+              application/json:
+                type: 403_Error
+          500:
+            description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+              application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+              0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}<br>{success:
+              0, msg: Report has no data, error_code_msg: API_ERROR_EMPTY_REPORT}'
+            body:
+              application/json:
+                type: 500_Error
+  /tweet:
+    /create:
+      /:
+        get:
+          description: |
+            This report details the audience of the users who have tweeted content that matches what was provided in the keywords. To create custom or twitter reports other methods must be used.
+          displayName: Used to create tweet reports
+          queryParameters:
+            report_name:
+              type: string
+              description: Name of report
+              displayName: report_name
+            start_date:
+              type: integer
+              description: A unix timestamp. start_date will be set to the previous midnight.
+              displayName: start_date
+            end_date:
+              type: integer
+              description: A unix timestamp. end_date will be set to the next midnight.
+              displayName: end_date
+            terms:
+              type: string
+              description: If you are tracking a single term, then the keyword itself is suffice otherwise, tracking multiple terms must be in JSON form, example '[{"operator":"","word":"http://google.com"},{"operator":"or","word":"#test"},{"operator":"and","word":"test2"}]' Which results in filtering tweets containing 'http://google.com' OR '#test' AND 'test2'. (NOTE) Make sure to URL encode the terms value for multiple terms.
+              displayName: terms
+            filter?:
+              type: string
+              description: 'Filtering options to be used when creating a filtered
+                report. The options must be in JSON form, example: {''gender'':[''male''],''ages'':[''18-24''],''countries'':[''usa'']}'
+              displayName: filter
+          responses:
+            201:
+              description: Success
+              body:
+                application/json:
+                  type: Create_Tweet
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: 'Possible reasons include:<br>{success: 0, msg: you are
+                going too fast}<br>{success: 0, msg: Not enough tokens remaining under
+                your application, error_code_msg: API_INSUFFICIENT_TOKENS_REMAINING}'
+              body:
+                application/json:
+                  type: 403_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+                application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+                0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}'
+              body:
+                application/json:
+                  type: 500_Error
+        post:
+          description: |
+            This report details the audience of the users who have tweeted content that matches what was provided in the keywords. To create custom or twitter reports other methods must be used.
+          displayName: Used to create tweet reports
+          queryParameters:
+            report_name:
+              type: string
+              description: Name of report
+              displayName: report_name
+            start_date:
+              type: integer
+              description: A unix timestamp. start_date will be set to the previous midnight.
+              displayName: start_date
+            end_date:
+              type: integer
+              description: A unix timestamp. end_date will be set to the next midnight.
+              displayName: end_date
+            terms:
+              type: string
+              description: If you are tracking a single term, then the keyword itself is suffice otherwise, tracking multiple terms must be in JSON form, example '[{"operator":"","word":"http://google.com"},{"operator":"or","word":"#test"},{"operator":"and","word":"test2"}]' Which results in filtering tweets containing 'http://google.com' OR '#test' AND 'test2'. (NOTE) Make sure to URL encode the terms value for multiple terms.
+              displayName: terms
+            filter?:
+              type: string
+              description: 'Filtering options to be used when creating a filtered
+                report. The options must be in JSON form, example: {''gender'':[''male''],''ages'':[''18-24''],''countries'':[''usa'']}'
+              displayName: filter
+          responses:
+            201:
+              description: Success
+              body:
+                application/json:
+                  type: Create_Tweet
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: '{success: 0, msg: Invalid API key, error_code_msg: API_INVALID_KEY}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: 'Possible reasons include:<br>{success: 0, msg: you are
+                going too fast}<br>{success: 0, msg: Not enough tokens remaining under
+                your application, error_code_msg: API_INSUFFICIENT_TOKENS_REMAINING}'
+              body:
+                application/json:
+                  type: 403_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error getting
+                application''s credentials, error_code_msg: API_ERROR_GETTING_APPLICATION_INFO}<br>{success:
+                0, msg: Internal database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}'
+              body:
+                application/json:
+                  type: 500_Error
+  /twitter:
+    /create:
+      /:
+        get:
+          description: |
+            This report uses the twitter followers as the audience. To create custom or tweet reports other methods must be used. Any report older than two days will be automatically regenerated upon create.
+          displayName: Used to create twitter follower report
+          queryParameters:
+            twitter_id?:
+              type: integer
+              description: (required if twitter_handle is not supplied) twitter_id must be sent with all client requests. Multiple handles are separated by commas.
+              displayName: twitter_id
+            twitter_handle?:
+              type: string
+              description: (required if twitter_id is not supplied) twitter_handle must be sent with all client requests. Multiple ids are separated by commas.
+              displayName: twitter_handle
+            filter?:
+              type: string
+              description: 'Filtering options to be used when creating a filtered
+                report. The options must be in JSON form, example: {''gender'':[''male''],''ages'':[''18-24''],''countries'':[''usa'']}'
+              displayName: filter
+          responses:
+            201:
+              description: Success
+              body:
+                application/json:
+                  type: Create_Twitter
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}<br>{success: 0, msg: The twitter account
+                provided has no audience, error_code_msg: API_TWITTER_ERROR_INSUFFICIENT_COUNT}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API key, error_code_msg: API_INVALID_KEY}<br>{success: 0, msg: The
+                twitter account provided is private, error_code_msg: API_TWITTER_ERROR_PRIVATE}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: 'Possible reasons include:<br>{success: 0, msg: you are
+                going too fast}<br>{success: 0, msg: Not enough tokens remaining under
+                your application, error_code_msg: API_INSUFFICIENT_TOKENS_REMAINING}'
+              body:
+                application/json:
+                  type: 403_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error requesting
+                twitter info, error_code_msg: API_TWITTER_ERROR}<br>{success: 0, msg:
+                Error inserting new twitter report, error_code_msg: API_ERROR_CREATING_TWITTER_ACCOUNT}<br>{success:
+                0, msg: Error getting application''s credentials, error_code_msg:
+                API_ERROR_GETTING_APPLICATION_INFO}}<br>{success: 0, msg: Internal
+                database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}'
+              body:
+                application/json:
+                  type: 500_Error
+        post:
+          description: |
+            This report uses the twitter followers as the audience. To create custom or tweet reports other methods must be used. Any report older than two days will be automatically regenerated upon create.
+          displayName: Used to create twitter follower report
+          queryParameters:
+            twitter_id?:
+              type: integer
+              description: (required if twitter_handle is not supplied) twitter_id must be sent with all client requests. Multiple handles are separated by commas.
+              displayName: twitter_id
+            twitter_handle?:
+              type: string
+              description: (required if twitter_id is not supplied) twitter_handle must be sent with all client requests. Multiple ids are separated by commas.
+              displayName: twitter_handle
+            filter?:
+              type: string
+              description: 'Filtering options to be used when creating a filtered
+                report. The options must be in JSON form, example: {''gender'':[''male''],''ages'':[''18-24''],''countries'':[''usa'']}'
+              displayName: filter
+          responses:
+            201:
+              description: Success
+              body:
+                application/json:
+                  type: Create_Twitter
+            400:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API parameters, error_code_msg: API_INVALID_PARAMS}<br>{success: 0,
+                msg: Error please include the ''action'' parameter, error_code_msg:
+                API_MISSING_ACTION_PARAMETER}<br>{success: 0, msg: The twitter account
+                provided has no audience, error_code_msg: API_TWITTER_ERROR_INSUFFICIENT_COUNT}'
+              body:
+                application/json:
+                  type: 400_Error
+            401:
+              description: 'Possible reasons include:<br>{success: 0, msg: Invalid
+                API key, error_code_msg: API_INVALID_KEY}<br>{success: 0, msg: The
+                twitter account provided is private, error_code_msg: API_TWITTER_ERROR_PRIVATE}'
+              body:
+                application/json:
+                  type: 401_Error
+            403:
+              description: 'Possible reasons include:<br>{success: 0, msg: you are
+                going too fast}<br>{success: 0, msg: Not enough tokens remaining under
+                your application, error_code_msg: API_INSUFFICIENT_TOKENS_REMAINING}'
+              body:
+                application/json:
+                  type: 403_Error
+            500:
+              description: 'Possible reasons include:<br>{success: 0, msg: Error requesting
+                twitter info, error_code_msg: API_TWITTER_ERROR}<br>{success: 0, msg:
+                Error inserting new twitter report, error_code_msg: API_ERROR_CREATING_TWITTER_ACCOUNT}<br>{success:
+                0, msg: Error getting application''s credentials, error_code_msg:
+                API_ERROR_GETTING_APPLICATION_INFO}}<br>{success: 0, msg: Internal
+                database error, error_code_msg: API_ERROR_DATABASE_INITIATION_ERROR}'
+              body:
+                application/json:
+                  type: 500_Error

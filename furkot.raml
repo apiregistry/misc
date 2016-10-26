@@ -1,0 +1,135 @@
+#%RAML 1.0
+title: Furkot Trips
+version: 1.0.0
+baseUri: trips.furkot.com/pub/api
+description: |
+  Furkot provides Rest API to access user trip data.
+  Using Furkot API an application can list user trips and display stops for a specific trip.
+  Furkot API uses OAuth2 protocol to authorize applications to access data on behalf of users.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  furkot_auth_access_code:
+    type: OAuth 2.0
+    settings:
+      authorizationGrants:
+      - authorization_code
+      authorizationUri: https://trips.furkot.com/oauth/authorize
+      accessTokenUri: https://trips.furkot.com/pub/api/access_token
+      scopes:
+      - read:trips
+  furkot_auth_implicit:
+    type: OAuth 2.0
+    settings:
+      authorizationGrants:
+      - implicit
+      authorizationUri: https://trips.furkot.com/oauth/authorize
+      accessTokenUri: https://trips.furkot.com/oauth/authorize
+      scopes:
+      - read:trips
+types:
+  Step:
+    type: object
+    properties:
+      address?:
+        type: string
+        description: address of the stop
+      arrival?:
+        type: datetime
+        description: arrival at the stop in its local timezone as YYYY-MM-DDThh:mm
+      coordinates?:
+        type: object
+        properties:
+          lon?:
+            type: number
+            description: longitude
+            format: float
+          lat?:
+            type: number
+            description: latitude
+            format: float
+        description: geographical coordinates of the stop
+      departure?:
+        type: datetime
+        description: departure from the stop in its local timezone as YYYY-MM-DDThh:mm
+      name?:
+        type: string
+        description: name of the stop
+      nights?:
+        type: integer
+        description: number of nights
+        format: int64
+      route?:
+        type: object
+        properties:
+          duration?:
+            type: integer
+            description: route duration in seconds
+            format: int64
+          mode?:
+            type: string
+            description: travel mode
+            enum:
+            - car
+            - motorcycle
+            - bicycle
+            - walk
+            - other
+          distance?:
+            type: integer
+            description: route distance in meters
+            format: int64
+          polyline?:
+            type: string
+            description: route path compatible with Google polyline encoding algorithm
+        description: route leading to the stop
+      url?:
+        type: string
+        description: url of the page with more information about the stop
+  Trip:
+    type: object
+    properties:
+      begin?:
+        type: datetime
+        description: begin of the trip in its local timezone as YYYY-MM-DDThh:mm
+      description?:
+        type: string
+        description: description of the trip (truncated to 200 characters)
+      end?:
+        type: datetime
+        description: end of the trip in its local timezone as YYYY-MM-DDThh:mm
+      id?:
+        type: string
+        description: Unique ID of the trip
+      name?:
+        type: string
+        description: name of the trip
+/trip:
+  /{trip_id}:
+    uriParameters:
+      trip_id:
+        type: string
+        description: id of the trip
+        displayName: trip_id
+    /stop:
+      get:
+        description: list stops for a trip identified by {trip_id}
+        responses:
+          200:
+            description: Successful response
+            body:
+              application/json:
+                type: array
+                items:
+                  type: Step
+  get:
+    description: list user's trips
+    responses:
+      200:
+        description: Successful response
+        body:
+          application/json:
+            type: array
+            items:
+              type: Trip

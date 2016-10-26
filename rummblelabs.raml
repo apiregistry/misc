@@ -1,0 +1,378 @@
+#%RAML 1.0
+title: Seldon
+version: 1.0.0
+baseUri: recsvm.rummblelabs.com
+description: Seldon is an Open Predictive Platform that currently allows item recommendations and general predictive models to be deployed based on structured historical data.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Action:
+    type: object
+    properties:
+      item:
+        type: string
+        example: item1234
+      type:
+        type: integer
+        description: action type
+      user:
+        type: string
+        example: user1234
+      value?:
+        type: number
+        description: action value (e.g. a rating)
+    description: the json details
+  AttributesName:
+    type: object
+    properties:
+      attrName1?:
+        type: string
+        example: attrValue1
+      attrName2?:
+        type: string
+        example: attrValue2
+  Item:
+    type: object
+    properties:
+      attributesName?:
+        type: AttributesName
+      id:
+        type: string
+        example: myid1234
+      type?:
+        type: integer
+        description: type of item
+    description: the json details
+  User:
+    type: object
+    properties:
+      active?:
+        type: boolean
+        description: whether user is active
+      attributesName?:
+        type: AttributesName
+      id:
+        type: string
+        example: myid1234
+      username?:
+        type: string
+        description: name of user
+        example: Joe Bloggs
+    description: the json details
+/actions:
+  post:
+    description: ''
+    displayName: post new action between a user and an item
+    queryParameters:
+      oauth_token?:
+        type: string
+        description: oauth token
+        displayName: oauth_token
+    body:
+      application/json: Action
+    responses:
+      400:
+        description: Invalid parameters
+/items:
+  /type:
+    get:
+      description: ''
+      displayName: get item type
+      queryParameters:
+        oauth_token?:
+          type: string
+          description: oauth token
+          displayName: oauth_token
+      responses:
+        400:
+          description: Invalid parameters
+  /{itemId}:
+    uriParameters:
+      itemId:
+        type: string
+        description: the item id to get
+        displayName: itemId
+    get:
+      description: ''
+      displayName: get item
+      queryParameters:
+        oauth_token?:
+          type: string
+          description: oauth token
+          displayName: oauth_token
+        full?:
+          type: boolean
+          description: get all attributes for item
+          displayName: full
+      responses:
+        400:
+          description: Invalid parameters
+  get:
+    description: ''
+    displayName: get items
+    queryParameters:
+      oauth_token?:
+        type: string
+        description: oauth token
+        displayName: oauth_token
+      full?:
+        type: boolean
+        description: get all attributes for item
+        displayName: full
+      name?:
+        type: string
+        description: keywords to match
+        displayName: name
+      dimension?:
+        type: integer
+        description: limit items to a particular dimension
+        displayName: dimension
+      type?:
+        type: integer
+        description: limit items to a particular type
+        displayName: type
+      limit?:
+        type: integer
+        description: limit number of items returned
+        displayName: limit
+    responses:
+      400:
+        description: Invalid parameters
+  post:
+    description: ''
+    displayName: post new item
+    queryParameters:
+      oauth_token?:
+        type: string
+        description: oauth token
+        displayName: oauth_token
+    body:
+      application/json: Item
+    responses:
+      400:
+        description: Invalid parameters
+  put:
+    description: ''
+    displayName: update item
+    queryParameters:
+      oauth_token?:
+        type: string
+        description: oauth token
+        displayName: oauth_token
+    body:
+      application/json: Item
+    responses:
+      400:
+        description: Invalid parameters
+/js:
+  /action:
+    /new:
+      get:
+        description: ''
+        displayName: Add a user interaction
+        queryParameters:
+          consumer_key:
+            type: string
+            description: consumer key
+            displayName: consumer_key
+            default: uggyecofcz
+          user:
+            type: string
+            description: user id
+            displayName: user
+          item:
+            type: string
+            description: item id
+            displayName: item
+          type:
+            type: string
+            description: type
+            displayName: type
+          jsonpCallback:
+            type: string
+            description: JSONP callback
+            displayName: jsonpCallback
+          timestamp?:
+            type: integer
+            description: time
+            displayName: timestamp
+        responses:
+          400:
+            description: Invalid parameters
+  /recommendations:
+    get:
+      description: ''
+      displayName: Get recommendations for a user
+      queryParameters:
+        consumer_key:
+          type: string
+          description: consumer key
+          displayName: consumer_key
+          default: uggyecofcz
+        user:
+          type: string
+          description: user id
+          displayName: user
+        item?:
+          type: string
+          description: currently viewed item id
+          displayName: item
+        limit?:
+          type: integer
+          description: max number of recommendations to return
+          displayName: limit
+        dimension?:
+          type: integer
+          description: get recommendations for a particular item dimension (e.g., just sports articles)
+          displayName: dimension
+        attributes?:
+          type: string
+          description: the fields to return
+          displayName: attributes
+        algorithms?:
+          type: string
+          description: override default algorithms with specified algorithms
+          displayName: algorithms
+        jsonpCallback:
+          type: string
+          description: JSONP callback
+          displayName: jsonpCallback
+      responses:
+        400:
+          description: Invalid parameters
+/token:
+  get:
+    description: ''
+    displayName: get token
+    queryParameters:
+      consumer_key:
+        type: string
+        description: consumer key
+        displayName: consumer_key
+      consumer_secret:
+        type: string
+        description: consumer secret
+        displayName: consumer_secret
+    responses:
+      400:
+        description: Invalid parameters
+/users:
+  /{userId}:
+    uriParameters:
+      userId:
+        type: string
+        description: the user id to get
+        displayName: userId
+    /actions:
+      get:
+        description: ''
+        displayName: get a user's recent actions
+        queryParameters:
+          oauth_token?:
+            type: string
+            description: oauth token
+            displayName: oauth_token
+          full?:
+            type: boolean
+            description: get all attributes for user
+            displayName: full
+          limit?:
+            type: integer
+            description: limit number of actions returned
+            displayName: limit
+        responses:
+          400:
+            description: Invalid parameters
+    /recommendations:
+      get:
+        description: ''
+        displayName: get recommendations for a user
+        queryParameters:
+          oauth_token?:
+            type: string
+            description: oauth token
+            displayName: oauth_token
+          full?:
+            type: boolean
+            description: get all attributes for user
+            displayName: full
+          limit?:
+            type: integer
+            description: limit number of actions returned
+            displayName: limit
+          dimension?:
+            type: integer
+            description: get recommendations for a particular item dimension (e.g., just sports articles)
+            displayName: dimension
+          algorithms?:
+            type: string
+            description: override default algorithms with specified algorithms
+            displayName: algorithms
+        responses:
+          400:
+            description: Invalid parameters
+    get:
+      description: ''
+      displayName: get a user
+      queryParameters:
+        oauth_token?:
+          type: string
+          description: oauth token
+          displayName: oauth_token
+        full?:
+          type: boolean
+          description: get all attributes for user
+          displayName: full
+      responses:
+        400:
+          description: Invalid parameters
+  get:
+    description: ''
+    displayName: get users
+    queryParameters:
+      oauth_token?:
+        type: string
+        description: oauth token
+        displayName: oauth_token
+      full?:
+        type: boolean
+        description: get all attributes for user
+        displayName: full
+      name?:
+        type: string
+        description: keywords to match
+        displayName: name
+      limit?:
+        type: integer
+        description: limit number of users returned
+        displayName: limit
+    responses:
+      400:
+        description: Invalid parameters
+  post:
+    description: ''
+    displayName: post new user
+    queryParameters:
+      oauth_token?:
+        type: string
+        description: oauth token
+        displayName: oauth_token
+    body:
+      application/json: User
+    responses:
+      400:
+        description: Invalid parameters
+  put:
+    description: ''
+    displayName: update user
+    queryParameters:
+      oauth_token?:
+        type: string
+        description: oauth token
+        displayName: oauth_token
+    body:
+      application/json: User
+    responses:
+      400:
+        description: Invalid parameters

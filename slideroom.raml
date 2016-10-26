@@ -1,0 +1,593 @@
+#%RAML 1.0
+title: SlideRoom API V2
+version: v2
+baseUri: api.slideroom.com
+description: SlideRoom provides a RESTful API for exporting data out of your organization's SlideRoom account.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  ExportResultV2:
+    type: object
+    properties:
+      completed_files?:
+        type: integer
+        format: int32
+      file_urls?:
+        type: array
+        items:
+          type: string
+      status?:
+        type: string
+      total_files?:
+        type: integer
+        format: int32
+  RequestApplicationExportResultV2:
+    type: object
+    properties:
+      message?:
+        type: string
+      submissions?:
+        type: integer
+        format: int32
+      token?:
+        type: integer
+        format: int32
+/api:
+  /v2:
+    /applicant:
+      /attributes:
+        /names:
+          get:
+            displayName: Gets the custom applicant attributes used by the organization.
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: array
+                    items:
+                      type: string
+                  text/json:
+                    type: array
+                    items:
+                      type: string
+                  application/xml:
+                    type: array
+                    items:
+                      type: string
+                  text/xml:
+                    type: array
+                    items:
+                      type: string
+        get:
+          displayName: Gets the custom attributes for an applicant.
+          queryParameters:
+            email:
+              type: string
+              description: The email address of the applicant.
+              displayName: email
+            pool?:
+              type: string
+              displayName: pool
+              enum:
+              - Standard
+              - CommonAppSDS
+            commonAppYear?:
+              type: integer
+              displayName: commonAppYear
+              format: int32
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: object
+                  properties:
+                    //:
+                      type: string
+                text/json:
+                  type: object
+                  properties:
+                    //:
+                      type: string
+                application/xml:
+                  type: object
+                  properties:
+                    //:
+                      type: string
+                text/xml:
+                  type: object
+                  properties:
+                    //:
+                      type: string
+        delete:
+          displayName: Deletes a custom attribute for an applicant.
+          queryParameters:
+            email:
+              type: string
+              description: The email address of the applicant.
+              displayName: email
+            name:
+              type: string
+              description: The name of the attribute to be deleted.
+              displayName: name
+            pool?:
+              type: string
+              displayName: pool
+              enum:
+              - Standard
+              - CommonAppSDS
+            commonAppYear?:
+              type: integer
+              displayName: commonAppYear
+              format: int32
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: string
+                text/json:
+                  type: string
+                application/xml:
+                  type: string
+                text/xml:
+                  type: string
+        post:
+          description: This method only adds or updates attributes. Null values will be updated as nulls, but not deleted. API Import is available in the Advanced Plan.
+          displayName: Updates the custom attributes for an applicant.
+          queryParameters:
+            email:
+              type: string
+              description: The email address of the applicant.
+              displayName: email
+            pool?:
+              type: string
+              displayName: pool
+              enum:
+              - Standard
+              - CommonAppSDS
+            commonAppYear?:
+              type: integer
+              displayName: commonAppYear
+              format: int32
+          body:
+            application/json:
+              type: object
+              properties:
+                //:
+                  type: string
+              example: &id001
+                name1: Value1
+                name2: Value2
+              description: The name/value pairs of the attributes.
+            text/json:
+              type: object
+              properties:
+                //:
+                  type: string
+              example: *id001
+              description: The name/value pairs of the attributes.
+            application/xml:
+              type: object
+              properties:
+                //:
+                  type: string
+              example: *id001
+              description: The name/value pairs of the attributes.
+            text/xml:
+              type: object
+              properties:
+                //:
+                  type: string
+              example: *id001
+              description: The name/value pairs of the attributes.
+            application/x-www-form-urlencoded:
+              type: object
+              properties:
+                //:
+                  type: string
+              example: *id001
+              description: The name/value pairs of the attributes.
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: string
+                text/json:
+                  type: string
+                application/xml:
+                  type: string
+                text/xml:
+                  type: string
+    /application:
+      /attributes:
+        /names:
+          get:
+            displayName: Gets the custom application attributes used by the organization.
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: array
+                    items:
+                      type: string
+                  text/json:
+                    type: array
+                    items:
+                      type: string
+                  application/xml:
+                    type: array
+                    items:
+                      type: string
+                  text/xml:
+                    type: array
+                    items:
+                      type: string
+      /request-export:
+        post:
+          description: "Exports are generated asynchronously within SlideRoom.  To\
+            \ retrieve the export file generated by this request, use the api/v#/export/{token}\
+            \ endpoint to check the progress/result of the generation process.\r\n\
+            \            PDF and ZIP exports are available in the Advanced Plan."
+          displayName: Requests the generation of application export files (tabular, pdf, zip).
+          queryParameters:
+            format?:
+              type: string
+              displayName: format
+              enum:
+              - csv
+              - txt
+              - tab
+              - xlsx
+              - pdf
+              - zip
+              - json
+            roundType?:
+              type: string
+              displayName: roundType
+              enum:
+              - Assigned
+              - Current
+              - Named
+              - All
+            roundName?:
+              type: string
+              displayName: roundName
+            tab.export?:
+              type: string
+              displayName: tab.export
+            pdf.includeForms?:
+              type: boolean
+              displayName: pdf.includeForms
+            pdf.includeReferences?:
+              type: boolean
+              displayName: pdf.includeReferences
+            pdf.includeMedia?:
+              type: boolean
+              displayName: pdf.includeMedia
+            pdf.includeApplicantAttachments?:
+              type: boolean
+              displayName: pdf.includeApplicantAttachments
+            pdf.includeOrganizationAttachments?:
+              type: boolean
+              displayName: pdf.includeOrganizationAttachments
+            pdf.includeRatings?:
+              type: boolean
+              displayName: pdf.includeRatings
+            pdf.includeFullPageMedia?:
+              type: boolean
+              displayName: pdf.includeFullPageMedia
+            pdf.includeHighlights?:
+              type: boolean
+              displayName: pdf.includeHighlights
+            pdf.includeComments?:
+              type: boolean
+              displayName: pdf.includeComments
+            pdf.includeCommonApp?:
+              type: boolean
+              displayName: pdf.includeCommonApp
+            zip.originalMedia?:
+              type: boolean
+              displayName: zip.originalMedia
+            zip.includeForms?:
+              type: boolean
+              displayName: zip.includeForms
+            zip.includeReferences?:
+              type: boolean
+              displayName: zip.includeReferences
+            zip.includeMedia?:
+              type: boolean
+              displayName: zip.includeMedia
+            zip.includeApplicantAttachments?:
+              type: boolean
+              displayName: zip.includeApplicantAttachments
+            zip.includeOrganizationAttachments?:
+              type: boolean
+              displayName: zip.includeOrganizationAttachments
+            zip.includeRatings?:
+              type: boolean
+              displayName: zip.includeRatings
+            zip.includeComments?:
+              type: boolean
+              displayName: zip.includeComments
+            zip.includeCommonApp?:
+              type: boolean
+              displayName: zip.includeCommonApp
+            delivery.account?:
+              type: string
+              displayName: delivery.account
+            delivery.folder?:
+              type: string
+              displayName: delivery.folder
+            since?:
+              type: integer
+              displayName: since
+              format: int32
+            pool?:
+              type: string
+              displayName: pool
+              enum:
+              - All
+              - Current
+              - Archived
+              - CommonAppSDS
+            status?:
+              type: string
+              displayName: status
+              enum:
+              - All
+              - InProgress
+              - Submitted
+            searchName?:
+              type: string
+              displayName: searchName
+            email?:
+              type: string
+              displayName: email
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: RequestApplicationExportResultV2
+                text/json:
+                  type: RequestApplicationExportResultV2
+                application/xml:
+                  type: RequestApplicationExportResultV2
+                text/xml:
+                  type: RequestApplicationExportResultV2
+      /{applicationId}:
+        uriParameters:
+          applicationId:
+            type: string
+            description: The ID of the application.
+            displayName: applicationId
+        /attributes:
+          get:
+            displayName: Gets the custom attributes for an application.
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: object
+                    properties:
+                      //:
+                        type: string
+                  text/json:
+                    type: object
+                    properties:
+                      //:
+                        type: string
+                  application/xml:
+                    type: object
+                    properties:
+                      //:
+                        type: string
+                  text/xml:
+                    type: object
+                    properties:
+                      //:
+                        type: string
+          delete:
+            displayName: Deletes a custom attribute for an application.
+            queryParameters:
+              name:
+                type: string
+                description: The name of the attribute to be deleted.
+                displayName: name
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: string
+                  text/json:
+                    type: string
+                  application/xml:
+                    type: string
+                  text/xml:
+                    type: string
+          post:
+            description: This method only adds or updates attributes. Null values will be updated as nulls, but not deleted.
+            displayName: Updates the custom attributes for an application. API Import is available in the Advanced Plan.
+            body:
+              application/json:
+                type: object
+                properties:
+                  //:
+                    type: string
+                example: *id001
+                description: The name/value pairs of the attributes.
+              text/json:
+                type: object
+                properties:
+                  //:
+                    type: string
+                example: *id001
+                description: The name/value pairs of the attributes.
+              application/xml:
+                type: object
+                properties:
+                  //:
+                    type: string
+                example: *id001
+                description: The name/value pairs of the attributes.
+              text/xml:
+                type: object
+                properties:
+                  //:
+                    type: string
+                example: *id001
+                description: The name/value pairs of the attributes.
+              application/x-www-form-urlencoded:
+                type: object
+                properties:
+                  //:
+                    type: string
+                example: *id001
+                description: The name/value pairs of the attributes.
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: string
+                  text/json:
+                    type: string
+                  application/xml:
+                    type: string
+                  text/xml:
+                    type: string
+        /request-export:
+          post:
+            description: Exports are generated asynchronously within SlideRoom.  To retrieve the export file generated by this request, use the api/v#/export/{token} endpoint to check the progress/result of the generation process.
+            displayName: Requests the generation of a single application export file (tabular, pdf, zip).
+            queryParameters:
+              format?:
+                type: string
+                displayName: format
+                enum:
+                - csv
+                - txt
+                - tab
+                - xlsx
+                - pdf
+                - zip
+                - json
+              roundType?:
+                type: string
+                displayName: roundType
+                enum:
+                - Assigned
+                - Current
+                - Named
+                - All
+              roundName?:
+                type: string
+                displayName: roundName
+              tab.export?:
+                type: string
+                displayName: tab.export
+              pdf.includeForms?:
+                type: boolean
+                displayName: pdf.includeForms
+              pdf.includeReferences?:
+                type: boolean
+                displayName: pdf.includeReferences
+              pdf.includeMedia?:
+                type: boolean
+                displayName: pdf.includeMedia
+              pdf.includeApplicantAttachments?:
+                type: boolean
+                displayName: pdf.includeApplicantAttachments
+              pdf.includeOrganizationAttachments?:
+                type: boolean
+                displayName: pdf.includeOrganizationAttachments
+              pdf.includeRatings?:
+                type: boolean
+                displayName: pdf.includeRatings
+              pdf.includeFullPageMedia?:
+                type: boolean
+                displayName: pdf.includeFullPageMedia
+              pdf.includeHighlights?:
+                type: boolean
+                displayName: pdf.includeHighlights
+              pdf.includeComments?:
+                type: boolean
+                displayName: pdf.includeComments
+              pdf.includeCommonApp?:
+                type: boolean
+                displayName: pdf.includeCommonApp
+              zip.originalMedia?:
+                type: boolean
+                displayName: zip.originalMedia
+              zip.includeForms?:
+                type: boolean
+                displayName: zip.includeForms
+              zip.includeReferences?:
+                type: boolean
+                displayName: zip.includeReferences
+              zip.includeMedia?:
+                type: boolean
+                displayName: zip.includeMedia
+              zip.includeApplicantAttachments?:
+                type: boolean
+                displayName: zip.includeApplicantAttachments
+              zip.includeOrganizationAttachments?:
+                type: boolean
+                displayName: zip.includeOrganizationAttachments
+              zip.includeRatings?:
+                type: boolean
+                displayName: zip.includeRatings
+              zip.includeComments?:
+                type: boolean
+                displayName: zip.includeComments
+              zip.includeCommonApp?:
+                type: boolean
+                displayName: zip.includeCommonApp
+              delivery.account?:
+                type: string
+                displayName: delivery.account
+              delivery.folder?:
+                type: string
+                displayName: delivery.folder
+            responses:
+              202:
+                description: Accepted
+                body:
+                  application/json:
+                    type: RequestApplicationExportResultV2
+                  text/json:
+                    type: RequestApplicationExportResultV2
+                  application/xml:
+                    type: RequestApplicationExportResultV2
+                  text/xml:
+                    type: RequestApplicationExportResultV2
+              400:
+                description: Bad Request
+    /export:
+      /{token}:
+        uriParameters:
+          token:
+            type: integer
+            displayName: token
+            format: int32
+        get:
+          displayName: Gets the status/result of a requested export.
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: ExportResultV2
+                text/json:
+                  type: ExportResultV2
+                application/xml:
+                  type: ExportResultV2
+                text/xml:
+                  type: ExportResultV2

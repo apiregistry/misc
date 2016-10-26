@@ -1,0 +1,666 @@
+#%RAML 1.0
+title: Europeana
+version: 2.3.0
+baseUri: www.europeana.eu/api
+description: This Swagger API console provides an overview of and interface to the Europeana REST API. You can build and test anything from the simplest search to a complex query using facetList such as dates, geotags and permissions. For more help and information, head to our comprehensive <a href="http://labs.europeana.api/api/">online documentation</a>.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  AtomLink:
+    type: object
+    properties:
+      href?:
+        type: string
+  Channel:
+    type: object
+    properties:
+      atomLink?:
+        type: AtomLink
+      image?:
+        type: object
+      items?:
+        type: array
+        items:
+          type: Item
+      itemsPerPage?:
+        type: Statistic
+      query?:
+        type: Query
+      startIndex?:
+        type: Statistic
+      totalResults?:
+        type: Statistic
+  Enclosure:
+    type: object
+    properties:
+      url?:
+        type: string
+  Item:
+    type: object
+    properties:
+      dcCreator?:
+        type: string
+      dcTermsHasPart?:
+        type: array
+        items:
+          type: string
+      dcTermsIsPartOf?:
+        type: array
+        items:
+          type: string
+      description?:
+        type: string
+      enclosure?:
+        type: Enclosure
+      enrichmentAgentLabel?:
+        type: array
+        items:
+          type: string
+      enrichmentAgentTerm?:
+        type: array
+        items:
+          type: string
+      enrichmentConceptLabel?:
+        type: array
+        items:
+          type: string
+      enrichmentConceptTerm?:
+        type: array
+        items:
+          type: string
+      enrichmentPeriodBegin?:
+        type: string
+      enrichmentPeriodEnd?:
+        type: string
+      enrichmentPeriodLabel?:
+        type: array
+        items:
+          type: string
+      enrichmentPeriodTerm?:
+        type: array
+        items:
+          type: string
+      enrichmentPlaceLabel?:
+        type: array
+        items:
+          type: string
+      enrichmentPlaceLatitude?:
+        type: number
+        format: float
+      enrichmentPlaceLongitude?:
+        type: number
+        format: float
+      enrichmentPlaceTerm?:
+        type: array
+        items:
+          type: string
+      europeanaDataProvider?:
+        type: string
+      europeanaLanguage?:
+        type: string
+      europeanaProvider?:
+        type: string
+      europeanaRights?:
+        type: array
+        items:
+          type: string
+      europeanaType?:
+        type: string
+      europeanaYear?:
+        type: string
+      guid?:
+        type: string
+      link?:
+        type: string
+      title?:
+        type: string
+  ModelAndView:
+    type: object
+    properties:
+      empty?:
+        type: boolean
+      model?:
+        type: object
+      modelMap?:
+        type: object
+        properties:
+          //:
+            type: object
+      reference?:
+        type: boolean
+      view?:
+        type: View
+      viewName?:
+        type: string
+  ModelMap:
+    type: object
+    properties:
+      //:
+        type: object
+  Query:
+    type: object
+    properties:
+      searchTerms?:
+        type: string
+      startPage?:
+        type: integer
+        format: int32
+  RssResponse:
+    type: object
+    properties:
+      channel?:
+        type: Channel
+  Statistic:
+    type: object
+    properties:
+      value?:
+        type: integer
+        format: int64
+  View:
+    type: object
+    properties:
+      contentType?:
+        type: string
+/v2:
+  /dataset:
+    /{id}.json:
+      uriParameters:
+        id:
+          type: string
+          description: id
+          displayName: id
+      get:
+        displayName: get information about a specific dataset
+        queryParameters:
+          wskey?:
+            type: string
+            description: wskey
+            displayName: wskey
+          callback?:
+            type: string
+            description: callback
+            displayName: callback
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: ModelAndView
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not Found
+  /datasets.json:
+    get:
+      displayName: get the list of Europeana datasets
+      queryParameters:
+        wskey?:
+          type: string
+          description: wskey
+          displayName: wskey
+        callback?:
+          type: string
+          description: callback
+          displayName: callback
+        edmDatasetName?:
+          type: string
+          description: edmDatasetName
+          displayName: edmDatasetName
+        countryCode?:
+          type: string
+          description: countryCode
+          displayName: countryCode
+        status?:
+          type: string
+          description: status
+          displayName: status
+        offset?:
+          type: string
+          description: offset
+          displayName: offset
+        pagesize?:
+          type: string
+          description: pagesize
+          displayName: pagesize
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ModelAndView
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /opensearch.rss:
+    get:
+      displayName: basic search function following the OpenSearch specification
+      queryParameters:
+        searchTerms:
+          type: string
+          description: searchTerms
+          displayName: searchTerms
+        startIndex?:
+          type: integer
+          description: startIndex
+          displayName: startIndex
+          format: int32
+        count?:
+          type: integer
+          description: count
+          displayName: count
+          format: int32
+      responses:
+        200:
+          description: OK
+          body:
+            application/xml:
+              type: RssResponse
+            '*/*':
+              type: RssResponse
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /provider:
+    /{id}.json:
+      uriParameters:
+        id:
+          type: string
+          description: id
+          displayName: id
+      get:
+        displayName: get information about a specific Europeana provider
+        queryParameters:
+          wskey?:
+            type: string
+            description: wskey
+            displayName: wskey
+          callback?:
+            type: string
+            description: callback
+            displayName: callback
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: ModelAndView
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+          404:
+            description: Not Found
+    /{id}:
+      uriParameters:
+        id:
+          type: string
+          description: id
+          displayName: id
+      /datasets.json:
+        get:
+          displayName: get the list of datasets provided by a specific provider
+          queryParameters:
+            wskey?:
+              type: string
+              description: wskey
+              displayName: wskey
+            callback?:
+              type: string
+              description: callback
+              displayName: callback
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: ModelAndView
+            401:
+              description: Unauthorized
+            403:
+              description: Forbidden
+            404:
+              description: Not Found
+  /providers.json:
+    get:
+      displayName: get the list of Europeana data providers
+      queryParameters:
+        wskey?:
+          type: string
+          description: wskey
+          displayName: wskey
+        callback?:
+          type: string
+          description: callback
+          displayName: callback
+        countryCode?:
+          type: string
+          description: countryCode
+          displayName: countryCode
+        offset?:
+          type: string
+          description: offset
+          displayName: offset
+        pagesize?:
+          type: string
+          description: pagesize
+          displayName: pagesize
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ModelAndView
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /record:
+    /{collectionId}:
+      uriParameters:
+        collectionId:
+          type: string
+          description: collectionId
+          displayName: collectionId
+      /{recordId}.json:
+        uriParameters:
+          recordId:
+            type: string
+            description: recordId
+            displayName: recordId
+        get:
+          displayName: get a single record in JSON format
+          queryParameters:
+            profile?:
+              type: string
+              description: profile
+              displayName: profile
+            wskey:
+              type: string
+              description: wskey
+              displayName: wskey
+            callback?:
+              type: string
+              description: callback
+              displayName: callback
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: ModelAndView
+            401:
+              description: Unauthorized
+            403:
+              description: Forbidden
+            404:
+              description: Not Found
+      /{recordId}.jsonld:
+        uriParameters:
+          recordId:
+            type: string
+            description: recordId
+            displayName: recordId
+        get:
+          displayName: get single record in JSON LD format
+          queryParameters:
+            wskey:
+              type: string
+              description: wskey
+              displayName: wskey
+            format?:
+              type: string
+              description: format
+              displayName: format
+            callback?:
+              type: string
+              description: callback
+              displayName: callback
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: ModelAndView
+            401:
+              description: Unauthorized
+            403:
+              description: Forbidden
+            404:
+              description: Not Found
+      /{recordId}.rdf:
+        uriParameters:
+          recordId:
+            type: string
+            description: recordId
+            displayName: recordId
+        get:
+          displayName: get single record in RDF format)
+          queryParameters:
+            wskey:
+              type: string
+              description: wskey
+              displayName: wskey
+          responses:
+            200:
+              description: OK
+              body:
+                application/rdf+xml:
+                  type: ModelAndView
+            401:
+              description: Unauthorized
+            403:
+              description: Forbidden
+            404:
+              description: Not Found
+  /search.json:
+    get:
+      displayName: search for records
+      queryParameters:
+        wskey:
+          type: string
+          description: wskey
+          displayName: wskey
+        query?:
+          type: string
+          description: query
+          displayName: query
+        qf?:
+          type: array
+          description: qf
+          displayName: qf
+          items:
+            type: string
+        reusability?:
+          type: array
+          description: reusability
+          displayName: reusability
+          items:
+            type: string
+        profile?:
+          type: string
+          description: profile
+          displayName: profile
+        start?:
+          type: integer
+          description: start
+          displayName: start
+          format: int32
+        rows?:
+          type: integer
+          description: rows
+          displayName: rows
+          format: int32
+        facet?:
+          type: array
+          description: facet
+          displayName: facet
+          items:
+            type: string
+        sort?:
+          type: string
+          description: sort
+          displayName: sort
+        colourpalette?:
+          type: array
+          description: colourpalette
+          displayName: colourpalette
+          items:
+            type: string
+        thumbnail?:
+          type: boolean
+          description: thumbnail
+          displayName: thumbnail
+        media?:
+          type: boolean
+          description: media
+          displayName: media
+        text_fulltext?:
+          type: boolean
+          description: text_fulltext
+          displayName: text_fulltext
+        landingpage?:
+          type: boolean
+          description: landingpage
+          displayName: landingpage
+        cursor?:
+          type: string
+          description: cursor
+          displayName: cursor
+        callback?:
+          type: string
+          description: callback
+          displayName: callback
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ModelAndView
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /search.rss:
+    get:
+      displayName: Google Fieldtrip formatted RSS of selected collections
+      queryParameters:
+        query:
+          type: string
+          description: query
+          displayName: query
+        offset?:
+          type: integer
+          description: offset
+          displayName: offset
+          format: int32
+        limit?:
+          type: integer
+          description: limit
+          displayName: limit
+          format: int32
+        profile?:
+          type: string
+          description: profile
+          displayName: profile
+        language?:
+          type: string
+          description: language
+          displayName: language
+      responses:
+        200:
+          description: OK
+          body:
+            application/xml:
+              type: ModelAndView
+            '*/*':
+              type: ModelAndView
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /suggestions.json:
+    get:
+      displayName: get autocompletion recommendations for search queries
+      queryParameters:
+        query:
+          type: string
+          description: query
+          displayName: query
+        rows?:
+          type: integer
+          description: rows
+          displayName: rows
+          format: int32
+        phrases?:
+          type: boolean
+          description: phrases
+          displayName: phrases
+        callback?:
+          type: string
+          description: callback
+          displayName: callback
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ModelAndView
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+  /translateQuery.json:
+    get:
+      displayName: translate a term to different languages
+      queryParameters:
+        term:
+          type: string
+          description: term
+          displayName: term
+        languageCodes:
+          type: array
+          description: languageCodes
+          displayName: languageCodes
+          items:
+            type: string
+        wskey:
+          type: string
+          description: wskey
+          displayName: wskey
+        profile?:
+          type: string
+          description: profile
+          displayName: profile
+        callback?:
+          type: string
+          description: callback
+          displayName: callback
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: ModelAndView
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found

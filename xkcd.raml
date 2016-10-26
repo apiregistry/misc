@@ -1,0 +1,59 @@
+#%RAML 1.0
+title: XKCD
+version: 1.0.0
+baseUri: xkcd.com/
+description: Webcomic of romance, sarcasm, math, and language.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  comic:
+    type: object
+    properties:
+      alt?:
+        type: string
+      day?:
+        type: string
+      img?:
+        type: string
+      link?:
+        type: string
+      month?:
+        type: string
+      news?:
+        type: string
+      num?:
+        type: number
+      safe_title?:
+        type: string
+      title?:
+        type: string
+      transcript?:
+        type: string
+      year?:
+        type: string
+/info.0.json:
+  get:
+    description: |
+      Fetch current comic and metadata.
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            type: comic
+/{comicId}:
+  uriParameters:
+    comicId:
+      type: number
+      displayName: comicId
+  /info.0.json:
+    get:
+      description: |
+        Fetch comics and metadata  by comic id.
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: comic

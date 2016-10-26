@@ -1,0 +1,720 @@
+#%RAML 1.0
+title: Netlify's API definition
+version: 0.1.0
+baseUri: api.netlify.com/api/v1
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  netlifyAuth:
+    type: OAuth 2.0
+    settings:
+      authorizationGrants:
+      - implicit
+      authorizationUri: https://app.netlify.com/authorize
+      accessTokenUri: https://app.netlify.com/authorize
+types:
+  File:
+    type: object
+    properties:
+      id?:
+        type: string
+      mime_type?:
+        type: string
+      path?:
+        type: string
+      sha?:
+        type: string
+      size?:
+        type: integer
+        format: int64
+  deploy:
+    type: object
+    properties:
+      commit_ref?:
+        type: string
+      created_at?:
+        type: datetime
+      deploy_ssl_url?:
+        type: string
+      deploy_url?:
+        type: string
+      id?:
+        type: string
+      required?:
+        type: array
+        items:
+          type: string
+      review_id?:
+        type: string
+      screenshot_url?:
+        type: string
+      site_id?:
+        type: string
+      state?:
+        type: string
+      updated_at?:
+        type: datetime
+      url?:
+        type: string
+      user_id?:
+        type: string
+  deployFiles:
+    type: object
+    properties:
+      async?:
+        type: boolean
+      files?:
+        type: object
+  dnsRecord:
+    type: object
+    properties:
+      hostname?:
+        type: string
+      id?:
+        type: string
+      priority?:
+        type: integer
+        format: int64
+      ttl?:
+        type: integer
+        format: int64
+      type?:
+        type: string
+      value?:
+        type: string
+  dnsZone:
+    type: object
+    properties:
+      id?:
+        type: string
+      name?:
+        type: string
+      records?:
+        type: array
+        items:
+          type: dnsRecord
+  error:
+    type: object
+    properties:
+      code?:
+        type: integer
+        format: int64
+      message:
+        type: string
+  form:
+    type: object
+    properties:
+      created_at?:
+        type: datetime
+      fields?:
+        type: array
+        items:
+          type: object
+      id?:
+        type: string
+      name?:
+        type: string
+      paths?:
+        type: array
+        items:
+          type: string
+      site_id?:
+        type: string
+      submission_count?:
+        type: integer
+        format: int32
+  hook:
+    type: object
+    properties:
+      created_at?:
+        type: datetime
+      data?:
+        type: object
+      event?:
+        type: string
+      id?:
+        type: string
+      site_id?:
+        type: string
+      type?:
+        type: string
+      updated_at?:
+        type: datetime
+  hookType:
+    type: object
+    properties:
+      events?:
+        type: array
+        items:
+          type: string
+      fields?:
+        type: array
+        items:
+          type: object
+      name?:
+        type: string
+  metadata:
+    type: object
+  site:
+    type: object
+    properties:
+      admin_url?:
+        type: string
+      created_at?:
+        type: datetime
+      custom_domain?:
+        type: string
+      force_ssl?:
+        type: boolean
+      id?:
+        type: string
+      name?:
+        type: string
+      notification_email?:
+        type: string
+      screenshot_url?:
+        type: string
+      updated_at?:
+        type: datetime
+      url?:
+        type: string
+      user_id?:
+        type: string
+  sniCertificate:
+    type: object
+    properties:
+      created_at?:
+        type: datetime
+      domains?:
+        type: array
+        items:
+          type: string
+      expires_at?:
+        type: datetime
+      state?:
+        type: string
+      updated_at?:
+        type: datetime
+  snippet:
+    type: object
+    properties:
+      general?:
+        type: string
+      general_position?:
+        type: string
+      goal?:
+        type: string
+      goal_position?:
+        type: string
+      id?:
+        type: integer
+        format: int32
+      site_id?:
+        type: string
+      title?:
+        type: string
+  submission:
+    type: object
+    properties:
+      body?:
+        type: string
+      company?:
+        type: string
+      created_at?:
+        type: datetime
+      data?:
+        type: object
+      email?:
+        type: string
+      first_name?:
+        type: string
+      id?:
+        type: string
+      last_name?:
+        type: string
+      name?:
+        type: string
+      number?:
+        type: integer
+        format: int32
+      site_url?:
+        type: string
+      summary?:
+        type: string
+/deploys:
+  /{deploy_id}:
+    uriParameters:
+      deploy_id:
+        type: string
+        displayName: deploy_id
+    /files:
+      /{path}:
+        uriParameters:
+          path:
+            type: string
+            displayName: path
+        put:
+          body:
+            application/octet-stream:
+              type: string
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: File
+            500:
+              description: error
+              body:
+                application/json:
+                  type: error
+/forms:
+  /{form_id}:
+    uriParameters:
+      form_id:
+        type: string
+        displayName: form_id
+    /submissions:
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: submission
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+  get:
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            type: array
+            items:
+              type: form
+      500:
+        description: error
+        body:
+          application/json:
+            type: error
+/hooks:
+  /types:
+    get:
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: hookType
+        500:
+          description: error
+          body:
+            application/json:
+              type: error
+  /{hook_id}:
+    uriParameters:
+      hook_id:
+        type: string
+        displayName: hook_id
+    delete:
+      responses:
+        204:
+          description: No content
+  get:
+    queryParameters:
+      site_id:
+        type: string
+        displayName: site_id
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            type: array
+            items:
+              type: hook
+      500:
+        description: error
+        body:
+          application/json:
+            type: error
+  post:
+    body:
+      application/json:
+        type: string
+    responses:
+      201:
+        description: OK
+        body:
+          application/json:
+            type: hook
+      500:
+        description: error
+        body:
+          application/json:
+            type: error
+/sites:
+  /{site_id}:
+    uriParameters:
+      site_id:
+        type: string
+        displayName: site_id
+    /deploys:
+      /{deploy_id}:
+        uriParameters:
+          deploy_id:
+            type: string
+            displayName: deploy_id
+        /restore:
+          post:
+            responses:
+              201:
+                description: Created
+                body:
+                  application/json:
+                    type: deploy
+              500:
+                description: error
+                body:
+                  application/json:
+                    type: error
+        get:
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: deploy
+            500:
+              description: error
+              body:
+                application/json:
+                  type: error
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: deploy
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+      post:
+        body:
+          application/json:
+            type: string
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: deploy
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+    /dns:
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: dnsZone
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+      put:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: dnsZone
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+    /files:
+      /{file_path}:
+        uriParameters:
+          file_path:
+            type: string
+            displayName: file_path
+        get:
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: File
+            500:
+              description: error
+              body:
+                application/json:
+                  type: error
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: File
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+    /forms:
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: form
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+    /metadata:
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: metadata
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+      put:
+        body:
+          application/json:
+            type: string
+        responses:
+          204:
+            description: No content
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+    /snippets:
+      /{snippet_id}:
+        uriParameters:
+          snippet_id:
+            type: string
+            displayName: snippet_id
+        get:
+          responses:
+            200:
+              description: OK
+              body:
+                application/json:
+                  type: snippet
+            500:
+              description: error
+              body:
+                application/json:
+                  type: error
+        delete:
+          responses:
+            204:
+              description: No content
+            500:
+              description: error
+              body:
+                application/json:
+                  type: error
+        put:
+          body:
+            application/json:
+              type: string
+          responses:
+            204:
+              description: No content
+            500:
+              description: error
+              body:
+                application/json:
+                  type: error
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: snippet
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+      post:
+        body:
+          application/json:
+            type: string
+        responses:
+          201:
+            description: OK
+            body:
+              application/json:
+                type: snippet
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+    /ssl:
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: sniCertificate
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+      post:
+        queryParameters:
+          certificate?:
+            type: string
+            displayName: certificate
+          key?:
+            type: string
+            displayName: key
+          ca_certificates?:
+            type: string
+            displayName: ca_certificates
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: sniCertificate
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+    /submissions:
+      get:
+        responses:
+          200:
+            description: OK
+            body:
+              application/json:
+                type: array
+                items:
+                  type: submission
+          500:
+            description: error
+            body:
+              application/json:
+                type: error
+    get:
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: site
+        500:
+          description: error
+          body:
+            application/json:
+              type: error
+    delete:
+      responses:
+        200:
+          description: OK
+        500:
+          description: error
+          body:
+            application/json:
+              type: error
+    patch:
+      body:
+        application/json:
+          type: string
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: site
+        500:
+          description: error
+          body:
+            application/json:
+              type: error
+  get:
+    responses:
+      200:
+        description: OK
+        body:
+          application/json:
+            type: array
+            items:
+              type: site
+      500:
+        description: error
+        body:
+          application/json:
+            type: error
+  post:
+    queryParameters:
+      configure_dns?:
+        type: boolean
+        displayName: configure_dns
+    body:
+      application/json:
+        type: string
+    responses:
+      201:
+        description: Created
+        body:
+          application/json:
+            type: site
+      500:
+        description: error
+        body:
+          application/json:
+            type: error

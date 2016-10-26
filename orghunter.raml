@@ -1,0 +1,111 @@
+#%RAML 1.0
+title: OrgHunter
+version: 1.0.0
+baseUri: data.orghunter.com/
+description: Get the latest IRS data and most up to date charity information for your website or application
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  user_key:
+    type: Pass Through
+/v1:
+  /categories:
+    post:
+      description: <p>This operation provides a list of categories.</p>
+      displayName: Get categories!
+      responses:
+        200:
+          description: No response was specified
+  /charitybasic:
+    post:
+      description: <p>This operation detail data.</p>
+      displayName: Get details!
+      queryParameters:
+        ein?:
+          type: string
+          description: ein (Employer Identification Number)
+          displayName: ein
+      responses:
+        200:
+          description: No response was specified
+  /charityfinancial:
+    post:
+      description: <p>This operation detail data.</p>
+      displayName: Get details!
+      queryParameters:
+        ein?:
+          type: string
+          description: ein (Employer Identification Number)
+          displayName: ein
+      responses:
+        200:
+          description: No response was specified
+  /charitygeolocation:
+    post:
+      description: <p>This operation detail data.</p>
+      displayName: Get details!
+      queryParameters:
+        ein?:
+          type: string
+          description: ein (Employer Identification Number)
+          displayName: ein
+      responses:
+        200:
+          description: No response was specified
+  /charitypremium:
+    post:
+      description: <p>This operation detail data.</p>
+      displayName: Get details!
+      queryParameters:
+        ein?:
+          type: string
+          description: ein (Employer Identification Number)
+          displayName: ein
+      responses:
+        200:
+          description: No response was specified
+  /charitysearch:
+    post:
+      description: <p>This operation provides summary data.</p>
+      displayName: Get summary data!
+      queryParameters:
+        ein?:
+          type: string
+          description: Employer Identification Number (EIN)
+          displayName: ein
+        searchTerm?:
+          type: string
+          description: 'Charity Name or Keyword. Example: humane society or cancer'
+          displayName: searchTerm
+        city?:
+          type: string
+          description: 'City Name. Example: Miami'
+          displayName: city
+        state?:
+          type: string
+          description: State Name - Two letter state abbreviation
+          displayName: state
+        zipCode?:
+          type: string
+          description: Zipcode Value - 5 digit zipcode value
+          displayName: zipCode
+        category?:
+          type: string
+          description: Category Value Selected from Categories API
+          displayName: category
+        eligible?:
+          type: string
+          description: eligible=1 will return only organizations that are tax deductible and in good standing with the IRS
+          displayName: eligible
+        start?:
+          type: string
+          description: Record Set Start Position
+          displayName: start
+        rows?:
+          type: string
+          description: Records Per Page. Default Value = 20
+          displayName: rows
+      responses:
+        200:
+          description: No response was specified

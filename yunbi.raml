@@ -1,0 +1,399 @@
+#%RAML 1.0
+title: Yunbi
+version: v2
+baseUri: yunbi.com/api
+description: Professional Cloud Trading Platform for Digital Assets
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/v2:
+  /addresses:
+    /{address}.json:
+      uriParameters:
+        address:
+          type: string
+          displayName: address
+      get:
+        displayName: Check Deposit Address
+        responses:
+          200:
+            description: No response was specified
+  /deposit.json:
+    get:
+      displayName: Get details of specific deposit.
+      queryParameters:
+        access_key:
+          type: string
+          description: Access key.
+          displayName: access_key
+        tonce:
+          type: integer
+          description: Tonce is an integer represents the milliseconds elapsed since Unix epoch.
+          displayName: tonce
+        signature:
+          type: string
+          description: The signature of your request payload, generated using your secret key.
+          displayName: signature
+        txid:
+          type: string
+          displayName: txid
+      responses:
+        200:
+          description: No response was specified
+  /deposit_address.json:
+    get:
+      displayName: Where to deposit. The address field could be empty when a new address is generating (e.g. for bitcoin), you should try again later in that case.
+      queryParameters:
+        access_key:
+          type: string
+          description: Access key.
+          displayName: access_key
+        tonce:
+          type: integer
+          description: Tonce is an integer represents the milliseconds elapsed since Unix epoch.
+          displayName: tonce
+        signature:
+          type: string
+          description: The signature of your request payload, generated using your secret key.
+          displayName: signature
+        currency:
+          type: string
+          description: 'The account to which you want to deposit. Available values:
+            cny, btc, eth, pls, note, bts, bitcny, bitusd, bitbtc, yun, nxt, ltc,
+            doge, sc, dgd, dcs, dao, etc, amp, 1st'
+          displayName: currency
+      responses:
+        200:
+          description: No response was specified
+  /deposits.json:
+    get:
+      displayName: Get your deposits history.
+      queryParameters:
+        access_key:
+          type: string
+          description: Access key.
+          displayName: access_key
+        tonce:
+          type: integer
+          description: Tonce is an integer represents the milliseconds elapsed since Unix epoch.
+          displayName: tonce
+        signature:
+          type: string
+          description: The signature of your request payload, generated using your secret key.
+          displayName: signature
+        currency?:
+          type: string
+          description: Currency value contains  cny,btc,eth,pls,note,bts,bitcny,bitusd,bitbtc,yun,nxt,ltc,doge,sc,dgd,dcs,dao,etc,amp,1st
+          displayName: currency
+        limit?:
+          type: integer
+          description: Set result limit.
+          displayName: limit
+        state?:
+          type: string
+          displayName: state
+      responses:
+        200:
+          description: No response was specified
+  /depth.json:
+    get:
+      displayName: Get depth or specified market. Both asks and bids are sorted from highest price to lowest.
+      queryParameters:
+        market:
+          type: string
+          description: Unique market id. It's always in the form of xxxyyy, where xxx is the base currency code, yyy is the quote currency code, e.g. 'btccny'. All available markets can be found at /api/v2/markets.
+          displayName: market
+        limit?:
+          type: integer
+          description: Limit the number of returned price levels. Default to 300.
+          displayName: limit
+      responses:
+        200:
+          description: No response was specified
+  /k.json:
+    get:
+      displayName: Get OHLC(k line) of specific market.
+      queryParameters:
+        market:
+          type: string
+          description: Unique market id. It's always in the form of xxxyyy, where xxx is the base currency code, yyy is the quote currency code, e.g. 'btccny'. All available markets can be found at /api/v2/markets.
+          displayName: market
+        limit?:
+          type: integer
+          description: Limit the number of returned data points, default to 30.
+          displayName: limit
+        period?:
+          type: integer
+          description: Time period of K line, default to 1. You can choose between 1, 5, 15, 30, 60, 120, 240, 360, 720, 1440, 4320, 10080
+          displayName: period
+        timestamp?:
+          type: integer
+          description: An integer represents the seconds elapsed since Unix epoch. If set, only k-line data after that time will be returned.
+          displayName: timestamp
+      responses:
+        200:
+          description: No response was specified
+  /k_with_pending_trades.json:
+    get:
+      displayName: Get K data with pending trades, which are the trades not included in K data yet, because there's delay between trade generated and processed by K data generator.
+      queryParameters:
+        market:
+          type: string
+          description: Unique market id. It's always in the form of xxxyyy, where xxx is the base currency code, yyy is the quote currency code, e.g. 'btccny'. All available markets can be found at /api/v2/markets.
+          displayName: market
+        trade_id:
+          type: integer
+          description: The trade id of the first trade you received.
+          displayName: trade_id
+        limit?:
+          type: integer
+          description: Limit the number of returned data points, default to 30.
+          displayName: limit
+        period?:
+          type: integer
+          description: Time period of K line, default to 1. You can choose between 1, 5, 15, 30, 60, 120, 240, 360, 720, 1440, 4320, 10080
+          displayName: period
+        timestamp?:
+          type: integer
+          description: An integer represents the seconds elapsed since Unix epoch. If set, only k-line data after that time will be returned.
+          displayName: timestamp
+      responses:
+        200:
+          description: No response was specified
+  /markets.json:
+    get:
+      displayName: Get all available markets.
+      responses:
+        200:
+          description: No response was specified
+  /members:
+    /me.json:
+      get:
+        displayName: Get your profile and accounts info.
+        queryParameters:
+          access_key:
+            type: string
+            description: Access key.
+            displayName: access_key
+          tonce:
+            type: integer
+            description: Tonce is an integer represents the milliseconds elapsed since Unix epoch.
+            displayName: tonce
+          signature:
+            type: string
+            description: The signature of your request payload, generated using your secret key.
+            displayName: signature
+        responses:
+          200:
+            description: No response was specified
+  /order.json:
+    get:
+      displayName: Get information of specified order.
+      queryParameters:
+        access_key:
+          type: string
+          description: Access key.
+          displayName: access_key
+        tonce:
+          type: integer
+          description: Tonce is an integer represents the milliseconds elapsed since Unix epoch.
+          displayName: tonce
+        signature:
+          type: string
+          description: The signature of your request payload, generated using your secret key.
+          displayName: signature
+        id:
+          type: integer
+          description: Unique order id.
+          displayName: id
+      responses:
+        200:
+          description: No response was specified
+  /order:
+    /delete.json:
+      post:
+        displayName: Cancel an order.
+        responses:
+          200:
+            description: No response was specified
+  /order_book.json:
+    get:
+      displayName: Get the order book of specified market.
+      queryParameters:
+        market:
+          type: string
+          description: Unique market id. It's always in the form of xxxyyy, where xxx is the base currency code, yyy is the quote currency code, e.g. 'btccny'. All available markets can be found at /api/v2/markets.
+          displayName: market
+        asks_limit?:
+          type: integer
+          description: Limit the number of returned sell orders. Default to 20.
+          displayName: asks_limit
+        bids_limit?:
+          type: integer
+          description: Limit the number of returned buy orders. Default to 20.
+          displayName: bids_limit
+      responses:
+        200:
+          description: No response was specified
+  /orders.json:
+    get:
+      displayName: Get your orders, results is paginated.
+      queryParameters:
+        access_key:
+          type: string
+          description: Access key.
+          displayName: access_key
+        tonce:
+          type: integer
+          description: Tonce is an integer represents the milliseconds elapsed since Unix epoch.
+          displayName: tonce
+        signature:
+          type: string
+          description: The signature of your request payload, generated using your secret key.
+          displayName: signature
+        market:
+          type: string
+          description: Unique market id. It's always in the form of xxxyyy, where xxx is the base currency code, yyy is the quote currency code, e.g. 'btccny'. All available markets can be found at /api/v2/markets.
+          displayName: market
+        state?:
+          type: string
+          description: Filter order by state, default to 'wait' (active orders).
+          displayName: state
+        limit?:
+          type: integer
+          description: Limit the number of returned orders, default to 100.
+          displayName: limit
+        page?:
+          type: integer
+          description: Specify the page of paginated results.
+          displayName: page
+        order_by?:
+          type: string
+          description: If set, returned orders will be sorted in specific order, default to 'asc'.
+          displayName: order_by
+      responses:
+        200:
+          description: No response was specified
+    post:
+      displayName: Create a Sell/Buy order.
+      responses:
+        200:
+          description: No response was specified
+  /orders:
+    /clear.json:
+      post:
+        displayName: Cancel all my orders.
+        responses:
+          200:
+            description: No response was specified
+    /multi.json:
+      post:
+        displayName: Create multiple sell/buy orders.
+        responses:
+          200:
+            description: No response was specified
+  /tickers.json:
+    get:
+      displayName: Get ticker of all markets.
+      responses:
+        200:
+          description: No response was specified
+  /tickers:
+    /{market}.json:
+      uriParameters:
+        market:
+          type: string
+          description: Unique market id. It's always in the form of xxxyyy, where xxx is the base currency code, yyy is the quote currency code, e.g. 'btccny'. All available markets can be found at /api/v2/markets.
+          displayName: market
+      get:
+        displayName: Get ticker of specific market.
+        responses:
+          200:
+            description: No response was specified
+  /timestamp.json:
+    get:
+      displayName: Get server current time, in seconds since Unix epoch.
+      responses:
+        200:
+          description: No response was specified
+  /trades.json:
+    get:
+      displayName: Get recent trades on market, each trade is included only once. Trades are sorted in reverse creation order.
+      queryParameters:
+        market:
+          type: string
+          description: Unique market id. It's always in the form of xxxyyy, where xxx is the base currency code, yyy is the quote currency code, e.g. 'btccny'. All available markets can be found at /api/v2/markets.
+          displayName: market
+        limit?:
+          type: integer
+          description: Limit the number of returned trades. Default to 50.
+          displayName: limit
+        timestamp?:
+          type: integer
+          description: An integer represents the seconds elapsed since Unix epoch. If set, only trades executed before the time will be returned.
+          displayName: timestamp
+        from?:
+          type: integer
+          description: Trade id. If set, only trades created after the trade will be returned.
+          displayName: from
+        to?:
+          type: integer
+          description: Trade id. If set, only trades created before the trade will be returned.
+          displayName: to
+        order_by?:
+          type: string
+          description: If set, returned trades will be sorted in specific order, default to 'desc'.
+          displayName: order_by
+      responses:
+        200:
+          description: No response was specified
+  /trades:
+    /my.json:
+      get:
+        displayName: Get your executed trades. Trades are sorted in reverse creation order.
+        queryParameters:
+          access_key:
+            type: string
+            description: Access key.
+            displayName: access_key
+          tonce:
+            type: integer
+            description: Tonce is an integer represents the milliseconds elapsed since Unix epoch.
+            displayName: tonce
+          signature:
+            type: string
+            description: The signature of your request payload, generated using your secret key.
+            displayName: signature
+          market:
+            type: string
+            description: Unique market id. It's always in the form of xxxyyy, where xxx is the base currency code, yyy is the quote currency code, e.g. 'btccny'. All available markets can be found at /api/v2/markets.
+            displayName: market
+          limit?:
+            type: integer
+            description: Limit the number of returned trades. Default to 50.
+            displayName: limit
+          timestamp?:
+            type: integer
+            description: An integer represents the seconds elapsed since Unix epoch. If set, only trades executed before the time will be returned.
+            displayName: timestamp
+          from?:
+            type: integer
+            description: Trade id. If set, only trades created after the trade will be returned.
+            displayName: from
+          to?:
+            type: integer
+            description: Trade id. If set, only trades created before the trade will be returned.
+            displayName: to
+          order_by?:
+            type: string
+            description: If set, returned trades will be sorted in specific order, default to 'desc'.
+            displayName: order_by
+        responses:
+          200:
+            description: No response was specified
+  /withdraw.json:
+    post:
+      displayName: Generate withdrawal application
+      responses:
+        200:
+          description: No response was specified

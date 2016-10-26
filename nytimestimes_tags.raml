@@ -1,0 +1,45 @@
+#%RAML 1.0
+title: TimesTags
+version: 1.0.0
+baseUri: api.nytimes.com/svc/suggest/v1
+description: With the TimesTags API, you can mine the riches of the New York Times tag set. The TimesTags service matches your query to the controlled vocabularies that fuel NYTimes.com metadata. You supply a string of characters, and the service returns a ranked list of suggested terms.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  apikey:
+    type: Pass Through
+/timestags.json:
+  get:
+    queryParameters:
+      query:
+        type: string
+        description: Your search query
+        displayName: query
+      filter?:
+        type: string
+        description: |
+          If you do not specify a value for filter (see the Optional Parameters), your query will be matched to tags in all four Times dictionaries: subject, geographic location, organization and person. To use more than one, separate with commas.
+        displayName: filter
+        enum:
+        - Des
+        - Geo
+        - Org
+        - Per
+      max?:
+        type: integer
+        description: Sets the maximum number of results
+        displayName: max
+        default: 10
+    responses:
+      200:
+        description: An array of tags
+        body:
+          application/json:
+            type: array
+            items:
+              type: array
+              items:
+                type: string

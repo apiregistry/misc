@@ -1,0 +1,264 @@
+#%RAML 1.0
+title: Winning Email
+version: 1.0.0
+baseUri: winning.email/api/v1
+description: The Winning Email API allows you to access our services from your applications. Contact us if you need help with anything, or require access to something we don't yet offer. The API overview is available <a href='/api/v1/docs' target='_blank'>here</a>.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  internalApiKey:
+    type: Pass Through
+types:
+  ErrorModel:
+    type: object
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+        format: int32
+  Report:
+    type: object
+    properties:
+      baseScore?:
+        type: integer
+      report?:
+        type: object
+        properties:
+          markupReport?:
+            type: object
+            properties:
+              score?:
+                type: number
+                format: float
+              response?:
+                type: object
+                properties:
+                  tripleTree?:
+                    type: array
+                  groupedErrors?:
+                    type: array
+                  warnings?:
+                    type: array
+                  errors?:
+                    type: array
+          spellReport?:
+            type: object
+            properties:
+              score?:
+                type: number
+                format: float
+              subject?:
+                type: array
+              html?:
+                type: array
+              text?:
+                type: array
+          bodyReport?:
+            type: object
+            properties:
+              score?:
+                type: number
+                format: float
+              address?:
+                type: object
+              hasJS?:
+                type: integer
+              textLength?:
+                type: integer
+              hasForm?:
+                type: integer
+              htmlLength?:
+                type: integer
+          linkReport?:
+            type: object
+            properties:
+              score?:
+                type: number
+                format: float
+              errors?:
+                type: array
+          spamassassinReport?:
+            type: object
+            properties:
+              score?:
+                type: number
+                format: float
+              tests?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    score?:
+                      type: number
+                      format: float
+                    name?:
+                      type: string
+                    desc?:
+                      type: string
+              baseSpamScore?:
+                type: number
+                format: float
+              spamScore?:
+                type: number
+                format: float
+              isSpam?:
+                type: boolean
+              responseMessage?:
+                type: string
+              responseCode?:
+                type: integer
+          subjectReport?:
+            type: object
+            properties:
+              score?:
+                type: number
+                format: float
+              overallOpenRate?:
+                type: string
+              subject?:
+                type: string
+              openrates?:
+                type: array
+              subjectLength?:
+                type: integer
+          validateHTML?:
+            type: object
+            properties:
+              score?:
+                type: number
+                format: float
+              errors?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    lastLine?:
+                      type: integer
+                    lastColumn?:
+                      type: integer
+                    message?:
+                      type: string
+                    type?:
+                      type: string
+          imageReport?:
+            type: object
+            properties:
+              score?:
+                type: number
+                format: float
+              optimization?:
+                type: array
+              imagesNeedOptimization?:
+                type: integer
+              imagesNoAlt?:
+                type: array
+      score?:
+        type: number
+        format: float
+      time?:
+        type: string
+  Service:
+    type: object
+    properties:
+      limit?:
+        type: integer
+      name?:
+        type: string
+      remaining?:
+        type: integer
+      reset?:
+        type: integer
+      used?:
+        type: integer
+/email-booster:
+  post:
+    description: With our API, you can access the same results available through the Winning Email website, but in a raw, JSON, format, that you can use however you wish in your application. Read more about Email Booster <a href='/email-booster/' target='_blank'>here</a>.<br><br><strong>Input Parameters</strong><br>If <strong>source</strong> provided, then all other inputs are ignored. Otherwise, <strong>subject</strong> AND one or both of <strong>html</strong> and <strong>text</strong> are required.
+    displayName: The Email Booster service will scan your email subjects and bodies (both HTML and plain text), and give you recommendations on what to change to improve your open and click-through rates.<br><br>
+    responses:
+      200:
+        description: email booster report
+        body:
+          application/json:
+            type: object
+            properties:
+              report?:
+                type: Report
+              message?:
+                type: string
+              status?:
+                type: integer
+      400:
+        description: bad request error
+        body:
+          application/json:
+            type: object
+            properties:
+              message?:
+                type: string
+              errors?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg?:
+                      type: string
+                    param?:
+                      type: string
+              status?:
+                type: integer
+      500:
+        description: error
+        body:
+          application/json:
+            type: ErrorModel
+/rate-limit-status:
+  get:
+    description: Check how many API queries you've used, and what your limit is.
+    displayName: Rate Limit Status of Services
+    responses:
+      200:
+        description: rate limit
+        body:
+          application/json:
+            type: object
+            properties:
+              services?:
+                type: array
+                items:
+                  type: Service
+              message?:
+                type: string
+              status?:
+                type: integer
+      500:
+        description: error
+        body:
+          application/json:
+            type: ErrorModel
+/status:
+  get:
+    description: Check the status of the Winning Email API.
+    displayName: API Server Status
+    responses:
+      200:
+        description: status
+        body:
+          application/json:
+            type: object
+            properties:
+              message?:
+                type: string
+              status?:
+                type: integer
+              uptime?:
+                type: number
+                format: double
+      500:
+        description: error
+        body:
+          application/json:
+            type: ErrorModel

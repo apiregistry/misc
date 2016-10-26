@@ -1,0 +1,1281 @@
+#%RAML 1.0
+title: Zoom Connect
+version: '1'
+baseUri: www.zoomconnect.com/app
+description: The world's greatest SMS API
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Link:
+    type: object
+    properties:
+      href?:
+        type: string
+      rel?:
+        type: string
+      templated?:
+        type: boolean
+  RestErrorDTO:
+    type: object
+    properties:
+      code?:
+        type: integer
+        format: int32
+      developerMessage?:
+        type: string
+      message?:
+        type: string
+      moreInfoUrl?:
+        type: string
+      status?:
+        type: string
+    description: RestErrorDTO
+  WebServiceAccount:
+    type: object
+    properties:
+      creditBalance?:
+        type: number
+        format: double
+      links?:
+        type: array
+        items:
+          type: Link
+    description: WebServiceAccount
+  WebServiceContact:
+    type: object
+    properties:
+      contactId?:
+        type: string
+      contactNumber?:
+        type: string
+      firstName?:
+        type: string
+      lastName?:
+        type: string
+      links?:
+        type: array
+        items:
+          type: Link
+      title?:
+        type: string
+    description: webServiceContact
+  WebServiceContactLink:
+    type: object
+    properties:
+      contactId?:
+        type: string
+      links?:
+        type: array
+        items:
+          type: Link
+    description: WebServiceContactLink
+  WebServiceContacts:
+    type: object
+    properties:
+      links?:
+        type: array
+        items:
+          type: Link
+      webServiceContacts?:
+        type: array
+        items:
+          type: WebServiceContact
+    description: WebServiceContacts
+  WebServiceGroup:
+    type: object
+    properties:
+      groupId?:
+        type: string
+      links?:
+        type: array
+        items:
+          type: Link
+      name?:
+        type: string
+    description: WebServiceGroup
+  WebServiceGroups:
+    type: object
+    properties:
+      links?:
+        type: array
+        items:
+          type: Link
+      webServiceGroups?:
+        type: array
+        items:
+          type: WebServiceGroup
+    description: WebServiceGroups
+  WebServiceMessage:
+    type: object
+    properties:
+      campaign?:
+        type: string
+      contact?:
+        type: WebServiceContactLink
+      creditCost?:
+        type: number
+        format: double
+      dateTimeReceived?:
+        type: datetime
+      dateTimeScheduled?:
+        type: datetime
+      dateTimeSent?:
+        type: datetime
+      deleted?:
+        type: boolean
+      fromNumber?:
+        type: string
+      links?:
+        type: array
+        items:
+          type: Link
+      message?:
+        type: string
+      messageId?:
+        type: string
+      messageStatus?:
+        type: string
+      messageType?:
+        type: string
+      numberOfMessages?:
+        type: integer
+        format: int32
+      read?:
+        type: boolean
+      toNumber?:
+        type: string
+      userDataField?:
+        type: string
+    description: WebServiceMessage
+  WebServiceMessages:
+    type: object
+    properties:
+      elements?:
+        type: integer
+        format: int32
+      links?:
+        type: array
+        items:
+          type: Link
+      page?:
+        type: integer
+        format: int32
+      pageSize?:
+        type: integer
+        format: int32
+      totalElements?:
+        type: integer
+        format: int64
+      totalPages?:
+        type: integer
+        format: int32
+      webServiceMessages?:
+        type: array
+        items:
+          type: WebServiceMessage
+    description: WebServiceMessages
+  WebServiceNumberContextLookupRequest:
+    type: object
+    properties:
+      links?:
+        type: array
+        items:
+          type: Link
+      numbers?:
+        type: array
+        items:
+          type: string
+    description: WebServiceNumberContextLookupRequest
+  WebServiceNumberContextLookupResponse:
+    type: object
+    properties:
+      links?:
+        type: array
+        items:
+          type: Link
+      number?:
+        type: string
+      numberValid?:
+        type: boolean
+    description: WebServiceNumberContextLookupResponse
+  WebServiceSendSmsRequest:
+    type: object
+    properties:
+      campaign?:
+        type: string
+      dataField?:
+        type: string
+      dateToSend?:
+        type: datetime
+      message?:
+        type: string
+      recipientNumber?:
+        type: string
+    description: WebServiceSendSmsRequest
+  WebServiceSendSmsRequests:
+    type: object
+    properties:
+      defaultDateToSend?:
+        type: datetime
+      messagesPerMinute?:
+        type: integer
+        format: int32
+      sendSmsRequests?:
+        type: array
+        items:
+          type: WebServiceSendSmsRequest
+    description: WebServiceSendSmsRequests
+  WebServiceSendSmsResponse:
+    type: object
+    properties:
+      error?:
+        type: string
+      messageId?:
+        type: string
+    description: WebServiceSendSmsResponse
+  WebServiceSendSmsResponses:
+    type: object
+    properties:
+      sendSmsResponses?:
+        type: array
+        items:
+          type: WebServiceSendSmsResponse
+    description: WebServiceSendSmsResponses
+  WebServiceTemplate:
+    type: object
+    properties:
+      data?:
+        type: string
+      links?:
+        type: array
+        items:
+          type: Link
+      name?:
+        type: string
+      templateId?:
+        type: integer
+        format: int64
+    description: WebServiceTemplate
+  WebServiceTemplates:
+    type: object
+    properties:
+      links?:
+        type: array
+        items:
+          type: Link
+      webServiceTemplates?:
+        type: array
+        items:
+          type: WebServiceTemplate
+    description: WebServiceTemplates
+  WebServiceTransferCreditsRequest:
+    type: object
+    properties:
+      numberOfCreditsToTransfer?:
+        type: integer
+        format: int32
+      transferFromEmailAddress?:
+        type: string
+      transferToEmailAddress?:
+        type: string
+    description: request
+  WebServiceUser:
+    type: object
+    properties:
+      company?:
+        type: string
+      contactNumber?:
+        type: string
+      emailAddress?:
+        type: string
+      firstName?:
+        type: string
+      lastName?:
+        type: string
+      password?:
+        type: string
+      userId?:
+        type: integer
+        format: int64
+    description: request
+  WebServiceUsers:
+    type: object
+    properties:
+      webServiceUserList?:
+        type: array
+        items:
+          type: WebServiceUser
+    description: WebServiceUsers
+/api:
+  /rest:
+    /v1:
+      /account:
+        /balance:
+          get:
+            description: Returns your account's credit balance
+            displayName: balance
+            responses:
+              200:
+                description: Success
+                body:
+                  application/json:
+                    type: WebServiceAccount
+                  application/xml:
+                    type: WebServiceAccount
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /transfer:
+          post:
+            description: 'Transfers credits between two users in the same team. The
+              <i>account email address</i> fields as well as the <i>number of credits
+              to transfer</i> are required. '
+            displayName: transfer
+            body:
+              application/json: WebServiceTransferCreditsRequest
+              application/xml: WebServiceTransferCreditsRequest
+            responses:
+              200:
+                description: Description was not specified
+              201:
+                description: Created
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /user:
+          /{userId}:
+            uriParameters:
+              userId:
+                type: integer
+                description: userId
+                displayName: userId
+                format: int64
+            get:
+              description: Gets a user from a given user id
+              displayName: getUser
+              responses:
+                200:
+                  description: OK
+                  body:
+                    application/json:
+                      type: WebServiceUser
+                    application/xml:
+                      type: WebServiceUser
+                401:
+                  description: Unauthorized
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+            post:
+              description: Updates a sub-account in your team. The following fields can be updated <i>firstname, lastname, contact number</i> and <i>password.</i>
+              displayName: update
+              body:
+                application/json: WebServiceUser
+                application/xml: WebServiceUser
+              responses:
+                200:
+                  description: Description was not specified
+                  body:
+                    application/json:
+                      type: WebServiceUser
+                    application/xml:
+                      type: WebServiceUser
+                201:
+                  description: Created
+                401:
+                  description: Unauthorized
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+          get:
+            description: Find a user for a particular email address
+            displayName: search
+            queryParameters:
+              searchEmail:
+                type: string
+                description: search by email address
+                displayName: searchEmail
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceUsers
+                  application/xml:
+                    type: WebServiceUsers
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          put:
+            description: Creates a new sub-account in your team. The following fields are required <i>firstname, lastname, email address, contact number</i> and <i>password.</i>
+            displayName: create
+            body:
+              application/json: WebServiceUser
+              application/xml: WebServiceUser
+            responses:
+              200:
+                description: Description was not specified
+                body:
+                  application/json:
+                    type: WebServiceUser
+                  application/xml:
+                    type: WebServiceUser
+              201:
+                description: Created
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+      /contacts:
+        /all:
+          get:
+            description: Returns all contacts
+            displayName: all
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceContacts
+                  application/xml:
+                    type: WebServiceContacts
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /create:
+          post:
+            description: Creates a  contact
+            displayName: create
+            body:
+              application/json: WebServiceContact
+              application/xml: WebServiceContact
+            responses:
+              200:
+                description: No response was specified
+                body:
+                  application/json:
+                    type: WebServiceContact
+                  application/xml:
+                    type: WebServiceContact
+              201:
+                description: Created
+                body:
+                  application/json:
+                    type: WebServiceContact
+                  application/xml:
+                    type: WebServiceContact
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /{contactId}:
+          uriParameters:
+            contactId:
+              type: string
+              description: contactId
+              displayName: contactId
+          /addFromGroup:
+            /{groupId}:
+              uriParameters:
+                groupId:
+                  type: string
+                  description: groupId
+                  displayName: groupId
+              get:
+                description: Remove a contact from a group
+                displayName: removeFromGroup
+                responses:
+                  200:
+                    description: OK
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+              post:
+                description: Remove a contact from a group
+                displayName: removeFromGroup
+                responses:
+                  200:
+                    description: Description was not specified
+                  201:
+                    description: Created
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+          /addToGroup:
+            /{groupId}:
+              uriParameters:
+                groupId:
+                  type: string
+                  description: groupId
+                  displayName: groupId
+              get:
+                description: Add a contact to a group
+                displayName: addToGroup
+                responses:
+                  200:
+                    description: OK
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+              post:
+                description: Add a contact to a group
+                displayName: addToGroup
+                responses:
+                  200:
+                    description: Description was not specified
+                  201:
+                    description: Created
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+          get:
+            description: Returns details for a single contact
+            displayName: get
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceContact
+                  application/xml:
+                    type: WebServiceContact
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          delete:
+            description: Deletes a  contact
+            displayName: delete
+            responses:
+              200:
+                description: Description was not specified
+              204:
+                description: No Content
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+          post:
+            description: Updates a  contact
+            displayName: update
+            body:
+              application/json: WebServiceContact
+              application/xml: WebServiceContact
+            responses:
+              200:
+                description: Description was not specified
+                body:
+                  application/json:
+                    type: WebServiceContact
+                  application/xml:
+                    type: WebServiceContact
+              201:
+                description: Created
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+      /context:
+        /lookup:
+          get:
+            description: Returns context information for a single provided
+            displayName: lookup
+            body:
+              application/json:
+                type: string
+                description: requests
+              application/xml:
+                type: string
+                description: requests
+            responses:
+              200:
+                description: Success
+                body:
+                  application/json:
+                    type: WebServiceNumberContextLookupResponse
+                  application/xml:
+                    type: WebServiceNumberContextLookupResponse
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          post:
+            description: Returns context information for a single provided
+            displayName: lookup
+            body:
+              application/json:
+                type: string
+                description: requests
+              application/xml:
+                type: string
+                description: requests
+            responses:
+              200:
+                description: Success
+                body:
+                  application/json:
+                    type: WebServiceNumberContextLookupResponse
+                  application/xml:
+                    type: WebServiceNumberContextLookupResponse
+              201:
+                description: Created
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+      /groups:
+        /all:
+          get:
+            description: Returns all groups
+            displayName: all
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceGroups
+                  application/xml:
+                    type: WebServiceGroups
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /create:
+          post:
+            description: Create a  group
+            displayName: create
+            body:
+              application/json:
+                type: string
+                description: requests
+              application/xml:
+                type: string
+                description: requests
+            responses:
+              200:
+                description: No response was specified
+                body:
+                  application/json:
+                    type: WebServiceGroup
+                  application/xml:
+                    type: WebServiceGroup
+              201:
+                description: Created
+                body:
+                  application/json:
+                    type: WebServiceGroup
+                  application/xml:
+                    type: WebServiceGroup
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /{groupId}:
+          uriParameters:
+            groupId:
+              type: string
+              description: groupId
+              displayName: groupId
+          /addContact:
+            /{contactId}:
+              uriParameters:
+                contactId:
+                  type: string
+                  description: contactId
+                  displayName: contactId
+              get:
+                description: Add a contact to a group
+                displayName: addContact
+                responses:
+                  200:
+                    description: OK
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+              post:
+                description: Add a contact to a group
+                displayName: addContact
+                responses:
+                  200:
+                    description: Description was not specified
+                  201:
+                    description: Created
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+          /removeContact:
+            /{contactId}:
+              uriParameters:
+                contactId:
+                  type: string
+                  description: contactId
+                  displayName: contactId
+              get:
+                description: Remove a contact from a group
+                displayName: removeContact
+                responses:
+                  200:
+                    description: OK
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+              post:
+                description: Remove a contact from a group
+                displayName: removeContact
+                responses:
+                  200:
+                    description: Description was not specified
+                  201:
+                    description: Created
+                  401:
+                    description: Unauthorized
+                  403:
+                    description: Forbidden
+                  404:
+                    description: Not Found
+          get:
+            description: Returns details for a single group
+            displayName: get
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceGroup
+                  application/xml:
+                    type: WebServiceGroup
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          delete:
+            description: Deletes a  group
+            displayName: delete
+            responses:
+              200:
+                description: Description was not specified
+              204:
+                description: No Content
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+          post:
+            description: Update a  group
+            displayName: update
+            body:
+              application/json:
+                type: string
+                description: requests
+              application/xml:
+                type: string
+                description: requests
+            responses:
+              200:
+                description: Description was not specified
+                body:
+                  application/json:
+                    type: WebServiceGroup
+                  application/xml:
+                    type: WebServiceGroup
+              201:
+                description: Created
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+      /messages:
+        /all:
+          get:
+            description: Returns all messages
+            displayName: all
+            queryParameters:
+              pageSize?:
+                type: integer
+                description: number of elements to return at a time
+                displayName: pageSize
+                default: 100
+                format: int32
+              page?:
+                type: integer
+                description: page number
+                displayName: page
+                default: 1
+                format: int32
+              type?:
+                type: string
+                description: filter by message type
+                displayName: type
+                enum:
+                - OUTBOUND
+                - INBOUND
+              status?:
+                type: string
+                description: filter by message status
+                displayName: status
+                enum:
+                - SCHEDULED
+                - UNKNOWN
+                - SENT
+                - FAILED
+                - FAILED_REFUNDED
+                - FAILED_OPTOUT
+                - DELIVERED
+                - RECEIVED
+              fromDateTimeSent?:
+                type: datetime
+                description: 'date format: yyyyMMdd'
+                displayName: fromDateTimeSent
+              toDateTimeSent?:
+                type: datetime
+                description: 'date format: yyyyMMdd'
+                displayName: toDateTimeSent
+              fromDateTimeReceived?:
+                type: datetime
+                description: 'date format: yyyyMMdd'
+                displayName: fromDateTimeReceived
+              toDateTimeReceived?:
+                type: datetime
+                description: 'date format: yyyyMMdd'
+                displayName: toDateTimeReceived
+              fromNumber?:
+                type: string
+                description: phone number the message was sent from
+                displayName: fromNumber
+              toNumber?:
+                type: string
+                description: phone number the message was sent to
+                displayName: toNumber
+              message?:
+                type: string
+                description: search matching message text
+                displayName: message
+              campaign?:
+                type: string
+                description: search by campaign
+                displayName: campaign
+              dataField?:
+                type: string
+                description: search by data field
+                displayName: dataField
+              deleted?:
+                type: boolean
+                description: return only deleted / not deleted messages
+                displayName: deleted
+              read?:
+                type: boolean
+                description: return only read / unread messages (inbox messages only)
+                displayName: read
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceMessages
+                  application/xml:
+                    type: WebServiceMessages
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /{messageId}:
+          uriParameters:
+            messageId:
+              type: string
+              description: messageId
+              displayName: messageId
+          /markRead:
+            post:
+              description: Marks a  message as read
+              displayName: markRead
+              responses:
+                200:
+                  description: Description was not specified
+                  body:
+                    application/json:
+                      type: WebServiceMessage
+                    application/xml:
+                      type: WebServiceMessage
+                201:
+                  description: Created
+                401:
+                  description: Unauthorized
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+            put:
+              description: Marks a  message as read
+              displayName: markRead
+              responses:
+                200:
+                  description: Description was not specified
+                  body:
+                    application/json:
+                      type: WebServiceMessage
+                    application/xml:
+                      type: WebServiceMessage
+                201:
+                  description: Created
+                401:
+                  description: Unauthorized
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+          /markUnread:
+            post:
+              description: Marks a  message as unread
+              displayName: markUnread
+              responses:
+                200:
+                  description: Description was not specified
+                  body:
+                    application/json:
+                      type: WebServiceMessage
+                    application/xml:
+                      type: WebServiceMessage
+                201:
+                  description: Created
+                401:
+                  description: Unauthorized
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+            put:
+              description: Marks a  message as unread
+              displayName: markUnread
+              responses:
+                200:
+                  description: Description was not specified
+                  body:
+                    application/json:
+                      type: WebServiceMessage
+                    application/xml:
+                      type: WebServiceMessage
+                201:
+                  description: Created
+                401:
+                  description: Unauthorized
+                403:
+                  description: Forbidden
+                404:
+                  description: Not Found
+          get:
+            description: Returns details for a single message
+            displayName: get
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceMessage
+                  application/xml:
+                    type: WebServiceMessage
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          delete:
+            description: Deletes a  message
+            displayName: delete
+            responses:
+              200:
+                description: Description was not specified
+              204:
+                description: No Content
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+      /sms:
+        /send:
+          get:
+            description: Returns an example of the data to POST to send a single message.
+            displayName: send
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceSendSmsRequest
+                  application/xml:
+                    type: WebServiceSendSmsRequest
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          post:
+            description: Sends a single message. The <i>recipientNumber</i> and <i>message</i> fields are required. All other fields are optional.
+            displayName: send
+            body:
+              application/json:
+                type: string
+                description: requests
+              application/xml:
+                type: string
+                description: requests
+            responses:
+              200:
+                description: Description was not specified
+                body:
+                  application/json:
+                    type: WebServiceSendSmsResponse
+                  application/xml:
+                    type: WebServiceSendSmsResponse
+              201:
+                description: Created
+              400:
+                description: Validation error</br></br>Code and message:<ul><li>2 - Invalid mobile number</li><li>3 - Message cannot be empty</li></ul>
+                body:
+                  application/json:
+                    type: RestErrorDTO
+                  application/xml:
+                    type: RestErrorDTO
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /send-bulk:
+          get:
+            description: Returns an example of the data to POST to send multiple messages in one transaction.
+            displayName: send-bulk
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceSendSmsRequests
+                  application/xml:
+                    type: WebServiceSendSmsRequests
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          post:
+            description: Send multiple messages in one transaction.
+            displayName: send-bulk
+            body:
+              application/json:
+                type: string
+                description: requests
+              application/xml:
+                type: string
+                description: requests
+            responses:
+              200:
+                description: Description was not specified
+                body:
+                  application/json:
+                    type: WebServiceSendSmsResponses
+                  application/xml:
+                    type: WebServiceSendSmsResponses
+              201:
+                description: Created
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /send-url-parameters:
+          get:
+            description: Send a single message using URL parameters.The <i>recipientNumber</i> and <i>message</i> parameters are required. All other parameters are optional.
+            displayName: send-url-parameters
+            queryParameters:
+              recipientNumber:
+                type: string
+                description: the phone number of the recipient to send to
+                displayName: recipientNumber
+              message:
+                type: string
+                description: the message to send
+                displayName: message
+              dateToSend?:
+                type: datetime
+                description: 'date format: yyyyMMddHHmm'
+                displayName: dateToSend
+              campaign?:
+                type: string
+                description: optional campaign name
+                displayName: campaign
+              dataField?:
+                type: string
+                description: optional extra data
+                displayName: dataField
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: string
+                  application/xml:
+                    type: string
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          post:
+            description: Send a single message using URL parameters.The <i>recipientNumber</i> and <i>message</i> parameters are required. All other parameters are optional.
+            displayName: send-url-parameters
+            queryParameters:
+              recipientNumber:
+                type: string
+                description: the phone number of the recipient to send to
+                displayName: recipientNumber
+              message:
+                type: string
+                description: the message to send
+                displayName: message
+              dateToSend?:
+                type: datetime
+                description: 'date format: yyyyMMddHHmm'
+                displayName: dateToSend
+              campaign?:
+                type: string
+                description: optional campaign name
+                displayName: campaign
+              dataField?:
+                type: string
+                description: optional extra data
+                displayName: dataField
+            responses:
+              200:
+                description: Description was not specified
+                body:
+                  application/json:
+                    type: string
+                  application/xml:
+                    type: string
+              201:
+                description: Created
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+      /templates:
+        /all:
+          get:
+            description: Returns all templates
+            displayName: all
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceTemplates
+                  application/xml:
+                    type: WebServiceTemplates
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+        /{templateId}:
+          uriParameters:
+            templateId:
+              type: integer
+              description: templateId
+              displayName: templateId
+              format: int64
+          get:
+            description: Returns details for a single template
+            displayName: get
+            responses:
+              200:
+                description: OK
+                body:
+                  application/json:
+                    type: WebServiceTemplate
+                  application/xml:
+                    type: WebServiceTemplate
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden
+              404:
+                description: Not Found
+          delete:
+            description: Deletes a  template
+            displayName: delete
+            responses:
+              200:
+                description: Description was not specified
+              204:
+                description: No Content
+              401:
+                description: Unauthorized
+              403:
+                description: Forbidden

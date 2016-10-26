@@ -1,0 +1,132 @@
+#%RAML 1.0
+title: EPS APIs
+version: 1.0.0
+baseUri: epscass.prd-prsn.com
+description: Access to the Pearson OpenClass API
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  DeliveryBean:
+    type: object
+    properties:
+      responseHeaders?:
+        type: object
+        properties:
+          //:
+            type: string
+      uri?:
+        type: string
+      uris?:
+        type: object
+        properties:
+          //:
+            type: array
+            items:
+              type: string
+  InstitutionBean:
+    type: object
+    properties:
+      config?:
+        type: object
+        properties:
+          //:
+            type: string
+      delivery?:
+        type: DeliveryBean
+      enabled?:
+        type: boolean
+      filestoreId?:
+        type: string
+      name?:
+        type: string
+      password?:
+        type: string
+      secondaryUrls?:
+        type: array
+        items:
+          type: string
+      timeZone?:
+        type: string
+      uniqueId?:
+        type: integer
+        format: int64
+      url?:
+        type: string
+  SearchBeanInstitutionBean:
+    type: object
+    properties:
+      available?:
+        type: integer
+        format: int64
+      length?:
+        type: integer
+        format: int32
+      results?:
+        type: array
+        items:
+          type: InstitutionBean
+      start?:
+        type: integer
+        format: int64
+      warnings?:
+        type: array
+        items:
+          type: string
+/api:
+  /institution:
+    /{uniqueId}:
+      uriParameters:
+        uniqueId:
+          type: integer
+          description: The intitution unique id
+          displayName: uniqueId
+          format: int64
+      get:
+        description: ''
+        displayName: Get an institution
+        headers:
+          correlation-id?:
+            type: string
+            displayName: correlation-id
+        responses:
+          200:
+            description: successful operation
+            body:
+              application/json;charset=UTF-8:
+                type: InstitutionBean
+    get:
+      description: ''
+      displayName: List institution
+      headers:
+        correlation-id?:
+          type: string
+          displayName: correlation-id
+      responses:
+        200:
+          description: successful operation
+          body:
+            application/json;charset=UTF-8:
+              type: SearchBeanInstitutionBean
+  /version:
+    get:
+      description: ''
+      displayName: Get the server version
+      headers:
+        correlation-id?:
+          type: string
+          displayName: correlation-id
+      responses:
+        200:
+          description: successful operation
+/health:
+  get:
+    description: ''
+    displayName: Get health
+    headers:
+      correlation-id?:
+        type: string
+        displayName: correlation-id
+    responses:
+      200:
+        description: successful operation

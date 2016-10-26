@@ -1,0 +1,1064 @@
+{
+  "name" : "API Gurus RAML mirror",
+  "title" : "Registry",
+  "version" : "v1",
+  "apis" : [ {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  }, {
+    "name" : null,
+    "org" : null,
+    "version" : null,
+    "description" : null,
+    "icon" : null,
+    "location" : null,
+    "kind" : null
+  } ],
+  "libraries" : [ ],
+  "includes" : [ ]
+}

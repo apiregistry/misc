@@ -1,0 +1,439 @@
+#%RAML 1.0
+title: Transportation Laws and Incentives
+version: 0.1.0
+baseUri: developer.nrel.gov/api/transportation-incentives-laws
+description: Query our database of State and Federal Laws and Incentives for Alternative Fuels
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api_key:
+    type: Pass Through
+types:
+  Category:
+    type: object
+    properties:
+      category_type:
+        type: string
+        description: The type of category. (E.g. tech, incentive, regulation, user)
+      code:
+        type: string
+        description: The code used to identify the category
+      title:
+        type: string
+        description: The full name of the category
+    description: A category that the law applies to
+  CategoryResults:
+    type: object
+    properties:
+      inputs:
+        type: object
+        description: The parameters that were passed to the api call
+      metadata:
+        type: Metadata
+        description: The api version number, and the count of categories returned
+      result:
+        type: array
+        description: The array of law categories returned
+        items:
+          type: FullCategory
+  FullCategory:
+    type: object
+    properties:
+      category_type:
+        type: string
+        description: The type of category. (E.g. tech, incentive, regulation, user)
+      code:
+        type: string
+        description: The code used to identify the category
+      help_text?:
+        type: string
+        description: A short description of what the law category encompasses
+      sort_order:
+        type: string
+        description: The sort order for the categories
+      title:
+        type: string
+        description: The full name of the category
+  Law:
+    type: object
+    properties:
+      agency?:
+        type: string
+        description: The agency with primary responsibility for federal incentives/regulations.
+      amended_date?:
+        type: datetime
+        description: The date the incentive/law/regulation was updated through new legislation or rulemaking.
+      archived_date?:
+        type: datetime
+        description: The date that an incentive/law/regulation is no longer relevant to the database. This may include longstanding Executive Orders or laws requiring legislative studies that have been completed.
+      categories:
+        type: array
+        description: The various law categories that apply to this law
+        items:
+          type: Category
+      contacts?:
+        type: array
+        description: The contacts for the given law, returned only if the parameter poc is true
+        items:
+          type: Poc
+      enacted_date?:
+        type: datetime
+        description: The date the enacting legislation (if applicable) was signed into law.
+      expired_date?:
+        type: datetime
+        description: The date the incentive/law/regulation is set to end.
+      id:
+        type: integer
+        description: A unique identifier for this specific incentive/law/regulation.
+      is_recent?:
+        type: boolean
+        description: The true or false value used to distinguish between recent federal executive actions (TRUE) and active incentives/laws/regulations (FALSE).
+      plaintext:
+        type: string
+        description: Description of the incentive/law/regulation, including applicable legislative references, in <a href="https://guides.github.com/features/mastering-markdown/">markdown formatting</a>
+      recent_update_or_new?:
+        type: string
+        description: An indicator if the last significant update was an update or the laws creation.
+      references:
+        type: array
+        description: The URL associated with any bill or legislative reference included in the description.
+        items:
+          type: LawReference
+      repealed_date?:
+        type: datetime
+        description: The date legislation is enacted or a rulemaking is finalized to repeal the incentive/law/regulation.
+      seq_num?:
+        type: integer
+        description: The numerical value assigned to a description to show the order in which it is displayed online within a jurisdiction (state).
+      significant_update_date?:
+        type: datetime
+        description: When the last significant update to the law was made.
+      state:
+        type: string
+        description: The state in which the incentive/law/regulation was enacted and is active.
+      text:
+        type: string
+        description: Description of the incentive/law/regulation, including applicable legislative references, html formated.
+      title:
+        type: string
+        description: The brief title assigned to the incentive/law/regulation description.
+      topics:
+        type: array
+        description: 'For local incentive/regulation descriptions, the category that
+          the incentive/regulation falls under, described below: Infrastructure Requirements,
+          Vehicle Purchase and Infrastructure Development Incentives, Fuel Use Incentives,
+          Parking Incentives, Technical Assistance, Vehicle Acquisition Requirements,
+          Promotion Initiatives, Idle Reduction Requirements, Renewable Fuels Mandates
+          and Standards'
+        items:
+          type: LawTopics
+      type:
+        type: string
+        description: 'The category that the incentive/law/regulation falls under,
+          described below: -State Incentives, -Laws and Regulations, -Utility/Private
+          Incentives'
+      types:
+        type: array
+        description: The types that apply to this law
+        items:
+          type: LawType
+    description: This is a Law
+  LawReference:
+    type: object
+    properties:
+      description:
+        type: string
+        description: The context of the reference
+      url:
+        type: string
+        description: The url linking to the reference.
+    description: The URL associated with any bill or legislative reference included in the description.
+  LawResult:
+    type: object
+    properties:
+      inputs:
+        type: object
+        description: The parameters that were passed to the api call
+      metadata:
+        type: Metadata
+        description: The api version number
+      result:
+        type: Law
+        description: The law requested
+  LawTopics:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The database id of the law topic
+      sort_order:
+        type: integer
+        description: The sort order of the law topic
+      title:
+        type: string
+        description: The name of the law topic
+    description: 'For local incentive/regulation descriptions, the category that the
+      incentive/regulation falls under, described below: Infrastructure Requirements,
+      Vehicle Purchase and Infrastructure Development Incentives, Fuel Use Incentives,
+      Parking Incentives, Technical Assistance, Vehicle Acquisition Requirements,
+      Promotion Initiatives, Idle Reduction Requirements, Renewable Fuels Mandates
+      and Standards'
+  LawType:
+    type: object
+    properties:
+      code:
+        type: string
+        description: The code used to identify the law type
+      id:
+        type: integer
+        description: The id of the law type
+      title:
+        type: string
+        description: The name of the law type
+    description: 'The category that the incentive/law/regulation falls under, described
+      below: -State Incentives, -Laws and Regulations, -Utility/Private Incentives'
+  LawsResponse:
+    type: object
+    properties:
+      inputs:
+        type: object
+        description: The parameters that were passed to the api call
+      metadata:
+        type: Metadata
+        description: The api version number, and the count of laws returned
+      result:
+        type: array
+        description: The array of laws returned
+        items:
+          type: Law
+  Metadata:
+    type: object
+    properties:
+      count?:
+        type: integer
+        description: If the request returns an array of results, this is the number of results returned in the array
+      version:
+        type: string
+        description: This is the version of the api
+    description: The identifying metadata.
+  Poc:
+    type: object
+    properties:
+      agency?:
+        type: string
+        description: The agency that the contact represents
+      email?:
+        type: string
+        description: The contacts email address
+      fax?:
+        type: string
+        description: The contacts fax number
+      name:
+        type: string
+        description: The name of the contact
+      state:
+        type: string
+        description: The state in which the contact is based ('US' for Federal laws and 'DC' for the District of Columbia)
+      telephone?:
+        type: string
+        description: The contacts phone number
+      title?:
+        type: string
+        description: The job title of the contact
+      web_page?:
+        type: string
+        description: The contacts webpage
+  PocResults:
+    type: object
+    properties:
+      inputs:
+        type: object
+        description: The parameters that were passed to the api call
+      metadata:
+        type: Metadata
+        description: The api version number, and the count of contacts returned
+      result:
+        type: array
+        description: The array of Points of Contacts for the state requested
+        items:
+          type: Poc
+/v1.{output_format}:
+  uriParameters:
+    output_format:
+      type: string
+      description: Response format
+      displayName: output_format
+      default: json
+      enum:
+      - json
+      - xml
+      - csv
+  get:
+    displayName: Return a full list of laws and incentives that match your query.
+    queryParameters:
+      limit?:
+        type: integer
+        description: Limit the number of laws returned
+        displayName: limit
+        default: 10
+      jurisdiction?:
+        type: string
+        description: Return laws for the given Jurisdiction. Jurisdiction must be given as a two character state code (eg, 'CO' for Colorado). A single jurisdiction, or a comma-separate list of multiple jurisdiction, may be given.  Use the code 'US' for federal laws and the code 'DC' for Washington D.C.
+        displayName: jurisdiction
+      technology?:
+        type: string
+        description: 'Search by the technology type. A single type, or a comma-separate
+          list of multiple types, may be given. Values and what they stand for are
+          as follows: ''BIOD'' for Biodiesel, ''ETH'' for Ethanol, ''NG'' for Natural
+          Gas, ''LPG'' for Propane (LPG), ''HY'' for Hydrogen Fuel Cells, ''EFFEC''
+          for Fuel Economy / Efficiency, ''IR'' for Idle Reduction, ''ELEC'' for EVs,
+          ''HEV'' for HEVs, ''PHEV'' for PHEVs, ''OTHER'' for Other, ''AFTMKTCONV''
+          for Aftermarket Conversions, and ''NEVS'' for NEVs'
+        displayName: technology
+      incentive_type?:
+        type: string
+        description: 'Search by the incentive type. A single type, or a comma-separate
+          list of multiple types, may be given. Values and what they stand for are
+          as follows: ''GNT'' for Grants, ''TAX'' for Tax Incentives, ''LOANS'' for
+          Loans and Leases, ''RBATE'' for Rebates, ''EXEM'' for Exemptions, and ''OTHER''
+          for Other.'
+        displayName: incentive_type
+      regulation_type?:
+        type: string
+        description: 'Search by the regulation type. A single type, or a comma-separate
+          list of multiple types, may be given. Values and what they stand for are
+          as follows: ''REGIS'' for Registration / Licensing, ''STD'' for Fuel Production
+          / Quality, ''DREST'' for Driving / Idling, ''REQ'' for Acquisition / Fuel
+          Use, ''FUEL'' for Fuel Taxes, ''RFS'' for Renewable Fuel Standard / Mandate,
+          ''OTHER'' for Other, ''AIRQEMISSIONS'' for Air Quality / Emissions, and
+          ''CCEINIT'' for Climate Change / Energy Initiatives'
+        displayName: regulation_type
+      user_type?:
+        type: string
+        description: 'Search by the user type. A single type, or a comma-separate
+          list of multiple types, may be given. Values and what they stand for are
+          as follows: ''IND'' for Vehicle Owner/Driver, ''FLEET'' for Fleet Purchaser/Manager,
+          ''STATION'' for Fueling / TSE Infrastructure Owner, ''AFP'' for Alternative
+          Fuel Producer, ''AFS'' for Alternative Fuel Dealer, ''PURCH'' for Alternative
+          Fuel Purchaser, ''MAN'' for AFV Manufacturer/Retrofitter, and ''OTHER''
+          for Other'
+        displayName: user_type
+      poc?:
+        type: boolean
+        description: Include points of contacts in the return value.
+        displayName: poc
+        default: false
+      recent?:
+        type: boolean
+        description: Return only recently added or updated laws and incentives
+        displayName: recent
+        default: false
+      expired?:
+        type: boolean
+        description: Show only expired, repealed or archived laws and incentives.
+        displayName: expired
+        default: false
+      law_type?:
+        type: string
+        description: 'Search by the law type. A single type, or a comma-separate list
+          of multiple types, may be given. Values are as follows: ''STATEINC'' for
+          State Incentives, ''UPINC '' for Utility/Private Incentives, ''LAWREG''
+          for Laws and Regulations, ''INC'' for Incentives, ''PROG'' for Programs,
+          ''LUP'' for Last Updated, ''OVIEW'' for Overview, and ''HILITE'' for Highlights'
+        displayName: law_type
+      keyword?:
+        type: string
+        description: Search laws by keyword in title or text.
+        displayName: keyword
+      local?:
+        type: boolean
+        description: Show only local examples of laws and incentives.
+        displayName: local
+        default: false
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: LawsResponse
+/v1:
+  /category-list.{output_format}:
+    uriParameters:
+      output_format:
+        type: string
+        description: Response format
+        displayName: output_format
+        default: json
+        enum:
+        - json
+        - xml
+    get:
+      displayName: Return the law categories for a given category type.
+      queryParameters:
+        type?:
+          type: string
+          description: Search by the category type.
+          displayName: type
+          enum:
+          - tech
+          - user
+          - regulation
+          - incentive
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: CategoryResults
+  /pocs.{output_format}:
+    uriParameters:
+      output_format:
+        type: string
+        description: Response format
+        displayName: output_format
+        default: json
+        enum:
+        - json
+        - xml
+    get:
+      displayName: Get the points of contact for a given jurisdiction.
+      queryParameters:
+        jurisdiction:
+          type: string
+          description: Return the points of contact for the given Jurisdiction. Jurisdiction must be given as a two character state code (eg, 'CO' for Colorado). A single jurisdiction, or a comma-separate list of multiple jurisdiction, may be given.  Use the code 'US' for federal laws and the code 'DC' for Washington D.C.
+          displayName: jurisdiction
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: PocResults
+  /{id}.{output_format}:
+    uriParameters:
+      output_format:
+        type: string
+        description: Response format
+        displayName: output_format
+        default: json
+        enum:
+        - json
+        - xml
+      id:
+        type: integer
+        description: The id of the law that you are searching
+        displayName: id
+    get:
+      displayName: Fetch the details of a specific law given the law's ID.
+      queryParameters:
+        poc?:
+          type: boolean
+          description: Include points of contacts in the return value.
+          displayName: poc
+          default: false
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: LawResult

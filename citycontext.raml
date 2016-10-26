@@ -1,0 +1,181 @@
+#%RAML 1.0
+title: City Context
+version: 1.0.0
+baseUri: api.citycontext.com/v1
+description: 'City Context provides a straightforward API to access UK Open Data:
+  crime statistics, schools, demographics and more.'
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  user_key:
+    type: Pass Through
+types:
+  Location:
+    type: object
+    properties:
+      lat:
+        type: number
+        format: float
+      lon:
+        type: number
+        format: float
+      withinLondonCCZ?:
+        type: boolean
+        description: Boolean flag indicating whether this point is located within London's Congestion Charge zone
+    description: Latitude, Longitude and other info related to the given point
+  PointInfo:
+    type: object
+    properties:
+      location:
+        type: Location
+      lsoa?:
+        type: object
+        properties:
+          crimes?:
+            type: object
+          name?:
+            type: string
+          population?:
+            type: object
+            properties:
+              householdResidents?:
+                type: integer
+              allUsualResidents?:
+                type: integer
+              personsPerHectare?:
+                type: integer
+              communalEstablishmentResidents?:
+                type: integer
+              households?:
+                type: integer
+              personsPerHousehold?:
+                type: integer
+        description: Statistics for lower layer super output areas (LSOA)
+      parks:
+        type: array
+        description: Parks within 1km of the point of interest, sorted by descending area
+        items:
+          type: object
+          properties:
+            distanceMeters?:
+              type: integer
+            areaSqm?:
+              type: integer
+            centroid?:
+              type: object
+            name?:
+              type: string
+      schools:
+        type: array
+        description: Schools within 1km of the point of interest, sorted by ascending distance from the POI
+        items:
+          type: object
+          properties:
+            phase?:
+              type: string
+            typeOfEstablishment?:
+              type: string
+            urn?:
+              type: integer
+              description: Unique school identifier
+            distanceMeters?:
+              type: integer
+            lastInpectionUrl?:
+              type: string
+              description: URL to the last inspection report
+            lastInspectionDate?:
+              type: datetime
+              description: Date of the last Ofsted inspection
+            location?:
+              type: object
+            qualityOfTeaching?:
+              type: integer
+              description: Quality of teaching grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)
+            schoolName?:
+              type: string
+            overallEffectiveness?:
+              type: integer
+              description: Overall effectiveness grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)
+            leadershipAndManagement?:
+              type: integer
+              description: Leadership and management grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)
+    description: Contextual information around a given point
+  Usage:
+    type: object
+    properties:
+      allowance?:
+        type: integer
+      period:
+        type: string
+      periodEnd:
+        type: datetime
+      periodStart:
+        type: datetime
+      plan:
+        type: string
+      usage:
+        type: integer
+    description: User plan monthly API quota and usage
+/@{lat},{lon}:
+  uriParameters:
+    lat:
+      type: number
+      description: Latitude
+      displayName: lat
+      format: float
+    lon:
+      type: number
+      description: Longitude
+      displayName: lon
+      format: float
+  get:
+    displayName: Query by coordinates (SRID 4326 - decimal degrees)
+    queryParameters:
+      school_search_radius?:
+        type: integer
+        description: Search radius for schools, in metres, between 100 and 4000
+        displayName: school_search_radius
+      park_search_radius?:
+        type: integer
+        description: Search radius for parks, in metres, between 100 and 2000
+        displayName: park_search_radius
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: PointInfo
+/postcodes:
+  /{postcode}:
+    uriParameters:
+      postcode:
+        type: string
+        description: Postcode
+        displayName: postcode
+    get:
+      displayName: Query by postcode
+      queryParameters:
+        school_search_radius?:
+          type: integer
+          description: Search radius for schools, in metres, between 100 and 4000
+          displayName: school_search_radius
+        park_search_radius?:
+          type: integer
+          description: Search radius for parks, in metres, between 100 and 2000
+          displayName: park_search_radius
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: PointInfo
+/usage:
+  get:
+    displayName: Get usage in current month
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Usage

@@ -1,0 +1,663 @@
+#%RAML 1.0
+title: VAT API
+version: '1'
+baseUri: vatapi.com/v1
+description: A developer friendly API to help your business achieve VAT compliance
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  Apikey:
+    type: Pass Through
+types:
+  Convert_Price:
+    type: object
+    properties:
+      country_code:
+        type: string
+        description: The 2 digit country code
+      country_rate:
+        type: string
+        description: The country_rate
+      price_excl_vat:
+        type: integer
+        description: The price excluding VAT
+      price_incl_vat:
+        type: integer
+        description: The price including VAT
+      rate:
+        type: integer
+        description: The rate % for the country_rate
+      status:
+        type: integer
+        description: Response code
+      vat:
+        type: integer
+        description: The total amount of VAT applied
+  Country_Code_Check:
+    type: object
+    properties:
+      country:
+        type: string
+        description: The country name
+      country_code:
+        type: string
+        description: The 2 digit country code
+      rates:
+        type: Country_Rates
+        description: An array of the EU VAT rates for that country
+      status:
+        type: integer
+        description: Response code
+      vat_applies:
+        type: string
+        description: TRUE or FALSE, depending if country is within the EU.
+  Country_Data:
+    type: object
+    properties:
+      country:
+        type: string
+        description: The country name
+      rates:
+        type: Country_Rates
+        description: An array of the rates for the country
+  Country_Rates:
+    type: object
+    properties:
+      parking:
+        type: parking
+        description: The type of rate
+      reduced:
+        type: reduced
+        description: The type of rate
+      reduced_alt:
+        type: reduced_alt
+        description: The type of rate
+      standard:
+        type: standard
+        description: The type of rate
+      super_reduced:
+        type: super_reduced
+        description: The type of rate
+  Create_Invoice:
+    type: object
+    properties:
+      invoice:
+        type: Invoice_Array
+        description: The new invoice object
+      status:
+        type: integer
+        description: Response code
+  Currency_Conversion:
+    type: object
+    properties:
+      amount_from?:
+        type: string
+        description: The amount you are converting from
+      amount_to?:
+        type: string
+        description: The result amount you have converted to
+      currency_from:
+        type: string
+        description: The currency code you are converting from
+      currency_to:
+        type: integer
+        description: The currency code you are converting to
+      rate:
+        type: string
+        description: The rate according to HMRC at time of sale
+      status:
+        type: integer
+        description: Response code
+  IP_Check:
+    type: object
+    properties:
+      country:
+        type: string
+        description: The country name
+      country_code:
+        type: string
+        description: The 2 digit country code
+      rates:
+        type: Country_Rates
+        description: An array of the EU VAT rates for that country
+      status:
+        type: integer
+        description: Response code
+      vat_applies:
+        type: string
+        description: TRUE or FALSE, depending if country is within the EU.
+  Invoice_Array:
+    type: object
+    properties:
+      business_address:
+        type: string
+        description: Your business address
+      business_name:
+        type: string
+        description: Your business name
+      conversion_rate?:
+        type: integer
+        description: The rate of conversion at time of supply
+      currency_code:
+        type: string
+        description: 3 character currency code for invoice
+      currency_code_conversion?:
+        type: string
+        description: 3 character currency code to be converted from original transaction currency
+      customer_address?:
+        type: string
+        description: Your customers address
+      customer_name?:
+        type: string
+        description: Your customers name or trading name
+      customer_vat_number?:
+        type: string
+        description: Customers VAT number
+      date:
+        type: string
+        description: The date the invoice was issued
+      discount_rate?:
+        type: integer
+        description: The discount rate per item
+      discount_total:
+        type: integer
+        description: Total amount of discount
+      invoice_number:
+        type: integer
+        description: A sequential invoice number
+      invoice_url:
+        type: string
+        description: A perminant URL to your VAT invoice
+      items:
+        type: array
+        description: An array of your invoice items
+        items:
+          type: Invoice_Items
+      logo_url?:
+        type: string
+        description: A URL to your logo image. Must be SSL hosted. https://sslimagehost.com is recommended
+      notes?:
+        type: string
+        description: Any notes attached to the invoice
+      subtotal:
+        type: integer
+        description: Total amount excluding VAT
+      tax_point:
+        type: string
+        description: (or 'time of supply') if this is different from the invoice date
+      total:
+        type: integer
+        description: Total amount of including VAT
+      type:
+        type: string
+        description: The type of invoice. Either 'sale' or 'refund'
+      vat_number:
+        type: string
+        description: Your VAT number
+      vat_total:
+        type: integer
+        description: Total amount of VAT
+  Invoice_Data:
+    type: object
+    properties:
+      business_address:
+        type: string
+        description: Your business address
+      business_name:
+        type: string
+        description: Your business name
+      conversion_rate?:
+        type: integer
+        description: The rate of conversion at time of supply
+      currency_code:
+        type: string
+        description: 3 character currency code for invoice
+      currency_code_conversion?:
+        type: string
+        description: 3 character currency code to be converted from original transaction currency
+      customer_address?:
+        type: string
+        description: Your customers address
+      customer_name?:
+        type: string
+        description: Your customers name or trading name
+      customer_vat_number?:
+        type: string
+        description: Optional customers VAT number
+      date?:
+        type: string
+        description: The date the invoice was issued
+      discount_rate?:
+        type: string
+        description: The discount rate per item
+      items:
+        type: array
+        description: An array of your invoice items
+        items:
+          type: Invoice_Items
+      notes?:
+        type: string
+        description: Add a note to the invoice.
+      price_type?:
+        type: string
+        description: Optional, if the price is including VAT set the type to 'incl'. Otherwise the default is assumed as excluding VAT already, 'excl'
+      tax_point?:
+        type: string
+        description: (or 'time of supply') if this is different from the invoice date
+      type:
+        type: string
+        description: The type of invoice. Either 'sale' or 'refund'
+      vat_number:
+        type: string
+        description: Your VAT number
+      zero_rated?:
+        type: string
+        description: To Zero-Rate the VAT, set to true.
+    description: Enter invoice data as JSON
+  Invoice_Items:
+    type: object
+    properties:
+      description:
+        type: string
+        description: The item line description
+      price_each:
+        type: integer
+        description: The price of the individual item (Ex VAT)
+      quantity:
+        type: integer
+        description: The quantity of the item
+      vat_rate:
+        type: integer
+        description: The VAT rate at which the item is charged
+  Retrieve_Invoice:
+    type: object
+    properties:
+      invoice:
+        type: Retrieve_Invoice_Array
+        description: The invoice array
+      status:
+        type: string
+        description: Response code
+  Retrieve_Invoice_Array:
+    type: object
+    properties:
+      business_address:
+        type: string
+        description: Your business address
+      business_name:
+        type: string
+        description: Your business name
+      conversion_rate?:
+        type: integer
+        description: The rate of conversion at time of supply
+      currency_code:
+        type: string
+        description: 3 character currency code for invoice
+      currency_code_conversion?:
+        type: string
+        description: 3 character currency code to be converted from original transaction currency
+      customer_address?:
+        type: string
+        description: Your customers address
+      customer_name?:
+        type: string
+        description: Your customers name or trading name
+      customer_vat_number?:
+        type: string
+        description: Optional, customers VAT number
+      date:
+        type: string
+        description: The date the invoice was issued
+      discount_rate?:
+        type: integer
+        description: The discount rate per item
+      discount_total:
+        type: integer
+        description: Total amount of discount
+      id:
+        type: integer
+        description: The invoice ID
+      invoice_url:
+        type: string
+        description: A perminant URL to your VAT invoice
+      items:
+        type: array
+        description: An array of your invoice items
+        items:
+          type: Invoice_Items
+      logo_url?:
+        type: string
+        description: A URL to your logo image. Must be SSL hosted. https://sslimagehost.com is recommended
+      notes?:
+        type: string
+        description: Any notes attached to the invoice
+      price_type?:
+        type: string
+        description: Optional, if the price is including VAT set the type to 'incl'. Otherwise the default is assumed as excluding VAT already, 'excl'
+      subtotal:
+        type: integer
+        description: Total amount excluding VAT
+      tax_point:
+        type: string
+        description: (or 'time of supply') if this is different from the invoice date
+      total:
+        type: integer
+        description: Total amount of including VAT
+      type:
+        type: string
+        description: The type of invoice. Either 'sale' or 'refund'
+      vat_number:
+        type: string
+        description: Your VAT number
+      vat_total:
+        type: integer
+        description: Total amount of VAT
+      zero_rated?:
+        type: string
+        description: To Zero-Rate the VAT, set to true.
+  Update_Invoice:
+    type: object
+    properties:
+      invoice:
+        type: Retrieve_Invoice_Array
+        description: The invoice array
+      status:
+        type: string
+        description: Response code
+  Update_Invoice_Array:
+    type: object
+    properties:
+      business_address:
+        type: string
+        description: Your business address
+      business_name:
+        type: string
+        description: Your business name
+      conversion_rate?:
+        type: integer
+        description: The rate of conversion at time of supply
+      currency_code:
+        type: string
+        description: 3 character currency code for invoice
+      currency_code_conversion?:
+        type: string
+        description: 3 character currency code to be converted from original transaction currency
+      customer_address?:
+        type: string
+        description: Your customers address
+      customer_name?:
+        type: string
+        description: Your customers name or trading name
+      customervat_number:
+        type: string
+        description: Customers VAT number
+      date?:
+        type: string
+        description: The date the invoice was issued
+      discount_rate?:
+        type: string
+        description: The discount rate per item
+      items:
+        type: array
+        description: An array of your invoice items
+        items:
+          type: Invoice_Items
+      logo_url?:
+        type: string
+        description: A URL to your logo image. Must be SSL hosted. https://sslimagehost.com is recommended
+      notes?:
+        type: string
+        description: Add a note to the invoice.
+      tax_point?:
+        type: string
+        description: (or 'time of supply') if this is different from the invoice date
+      type:
+        type: string
+        description: The type of invoice. Either 'sale' or 'refund'
+      vat_number?:
+        type: string
+        description: Your VAT number
+    description: Enter invoice data as JSON
+  Vat_Rates:
+    type: object
+    properties:
+      countries:
+        type: array
+        description: An array of the EU VAT countries and their respective rates
+        items:
+          type: Vat_Rates_Countries
+      status:
+        type: integer
+        description: Response code
+  Vat_Rates_Countries:
+    type: object
+    properties:
+      country_code:
+        type: Country_Data
+        description: The 2 digit country code
+  parking:
+    type: object
+    properties:
+      applies_to:
+        type: string
+        description: The type of goods the rate applies to
+      value:
+        type: integer
+        description: The % VAT rate
+  reduced:
+    type: object
+    properties:
+      applies_to:
+        type: string
+        description: The type of goods the rate applies to
+      value:
+        type: integer
+        description: The % VAT rate
+  reduced_alt:
+    type: object
+    properties:
+      applies_to:
+        type: string
+        description: The type of goods the rate applies to
+      value:
+        type: integer
+        description: The % VAT rate
+  standard:
+    type: object
+    properties:
+      value:
+        type: integer
+        description: The % VAT rate
+  super_reduced:
+    type: object
+    properties:
+      applies_to:
+        type: string
+        description: The type of goods the rate applies to
+      value:
+        type: integer
+        description: The % VAT rate
+/country-code-check:
+  get:
+    displayName: Retrieve a countries VAT rates by its 2 digit country code
+    queryParameters:
+      code:
+        type: string
+        description: The 2 digit country code
+        displayName: code
+    headers:
+      Response-Type?:
+        type: string
+        description: The default response type is application/json if you would like to receive an XML response then set this to XML
+        displayName: Response-Type
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Country_Code_Check
+/currency-conversion:
+  get:
+    displayName: Convert a currency
+    queryParameters:
+      currency_from:
+        type: string
+        description: The currency code you are converting from
+        displayName: currency_from
+      currency_to:
+        type: string
+        description: The currency code you are converting to
+        displayName: currency_to
+      amount?:
+        type: integer
+        description: Optional, an amount you are wanting to convert. Leave blank to just get the current rate
+        displayName: amount
+    headers:
+      Response-Type?:
+        type: string
+        description: The default response type is application/json if you would like to receive an XML response then set this to XML
+        displayName: Response-Type
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Currency_Conversion
+/invoice:
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: Enter the invoice id
+        displayName: id
+    get:
+      displayName: Retrieve an invoice
+      headers:
+        Response-Type?:
+          type: string
+          description: The default response type is application/json if you would like to receive an XML response then set this to XML
+          displayName: Response-Type
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Retrieve_Invoice
+    delete:
+      displayName: Delete an invoice
+      headers:
+        Response-Type?:
+          type: string
+          description: The default response type is application/json if you would like to receive an XML response then set this to XML
+          displayName: Response-Type
+      responses:
+        200:
+          description: No response was specified
+    put:
+      displayName: Update an existing invoice
+      headers:
+        Response-Type?:
+          type: string
+          description: The default response type is application/json if you would like to receive an XML response then set this to XML
+          displayName: Response-Type
+      responses:
+        200:
+          description: No response was specified
+          body:
+            application/json:
+              type: Update_Invoice
+  post:
+    displayName: Create a VAT invoice
+    headers:
+      Response-Type?:
+        type: string
+        description: The default response type is application/json if you would like to receive an XML response then set this to XML
+        displayName: Response-Type
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Create_Invoice
+/ip-check:
+  get:
+    displayName: Retrieve a countries VAT rates from an IP address
+    queryParameters:
+      address:
+        type: string
+        description: The IP address to search against
+        displayName: address
+    headers:
+      Response-Type?:
+        type: string
+        description: The default response type is application/json if you would like to receive an XML response then set this to XML
+        displayName: Response-Type
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: IP_Check
+/vat-number-check:
+  get:
+    description: <p>We highly recommend if you are able, to check a VAT number on your end first to save wasted API lookups. It maybe that your customer has simply entered the wrong format. <a href='http://www.braemoor.co.uk/software/vat.shtml' target='_blank'>Heres a client side way to check the format using Javascript</a></p>
+    displayName: Validate a VAT number
+    queryParameters:
+      vatid:
+        type: string
+        description: The VAT number to validate
+        displayName: vatid
+    headers:
+      Response-Type?:
+        type: string
+        description: The default response type is application/json if you would like to receive an XML response then set this to XML
+        displayName: Response-Type
+    responses:
+      200:
+        description: No response was specified
+/vat-price:
+  get:
+    displayName: Convert a price to or from VAT price.
+    queryParameters:
+      code:
+        type: string
+        description: The 2 digit country code
+        displayName: code
+      country_rate?:
+        type: string
+        description: 'The VAT rate to get the price for. Default: standard'
+        displayName: country_rate
+      price:
+        type: integer
+        description: The price you want converting
+        displayName: price
+      type?:
+        type: string
+        description: Optional, if the price is including VAT set the type to 'incl'. Otherwise the default is assumed as excluding VAT already, 'excl'
+        displayName: type
+    headers:
+      Response-Type?:
+        type: string
+        description: The default response type is application/json if you would like to receive an XML response then set this to XML
+        displayName: Response-Type
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Convert_Price
+/vat-rates:
+  get:
+    displayName: Retrieve all current EU VAT rates
+    headers:
+      Response-Type?:
+        type: string
+        description: The default response type is application/json if you would like to receive an XML response then set this to XML
+        displayName: Response-Type
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: Vat_Rates

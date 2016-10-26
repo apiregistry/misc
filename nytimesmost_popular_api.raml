@@ -1,0 +1,394 @@
+#%RAML 1.0
+title: Most Popular
+version: 2.0.0
+baseUri: api.nytimes.com/svc/mostpopular/v2
+description: Get lists of NYT Articles based on shares, emails, and views.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  api-key:
+    type: Pass Through
+types:
+  GeoFacet:
+    type: string
+    enum:
+    - ''
+  Article:
+    type: object
+    properties:
+      abstract?:
+        type: string
+      byline?:
+        type: string
+      column?:
+        type: string
+      des_facet?:
+        type: object
+      geo_facet?:
+        type: GeoFacet
+      org_facet?:
+        type: object
+      per_facet?:
+        type: object
+      published_date?:
+        type: string
+      section?:
+        type: string
+      source?:
+        type: string
+      title?:
+        type: string
+      url?:
+        type: string
+  ArticleWithCountType:
+    type: object
+    properties:
+      abstract?:
+        type: string
+      byline?:
+        type: string
+      column?:
+        type: string
+      count_type?:
+        type: string
+      des_facet?:
+        type: object
+      geo_facet?:
+        type: GeoFacet
+      media?:
+        type: array
+        items:
+          type: object
+          properties:
+            copyright?:
+              type: string
+            media-metadata?:
+              type: object
+              properties:
+                format?:
+                  type: string
+                width?:
+                  type: integer
+                url?:
+                  type: string
+                height?:
+                  type: integer
+            subtype?:
+              type: string
+            caption?:
+              type: string
+            type?:
+              type: string
+      org_facet?:
+        type: object
+      per_facet?:
+        type: object
+      published_date?:
+        type: string
+      section?:
+        type: string
+      source?:
+        type: string
+      title?:
+        type: string
+      url?:
+        type: string
+/mostemailed:
+  /{section}:
+    uriParameters:
+      section:
+        type: string
+        description: "Limits the results by one or more sections. You can use\n`all-sections`\
+          \ or one or more section names seperated by semicolons. See `viewed/sections.json`\
+          \ call to get a list of sections. \n"
+        displayName: section
+        enum:
+        - Arts
+        - Automobiles
+        - Blogs
+        - Books
+        - Business Day
+        - Education
+        - Fashion & Style
+        - Food
+        - Health
+        - Job Market
+        - Magazine
+        - membercenter
+        - Movies
+        - Multimedia
+        - N.Y.%20%2F%20Region
+        - NYT Now
+        - Obituaries
+        - Open
+        - Opinion
+        - Public Editor
+        - Real Estate
+        - Science
+        - Sports
+        - Style
+        - Sunday Review
+        - T Magazine
+        - Technology
+        - The Upshot
+        - Theater
+        - Times Insider
+        - !!binary |-
+          VG9kYXnDosKAwplzIFBhcGVy
+        - Travel
+        - U.S.
+        - World
+        - Your Money
+        - all-sections
+    /{time-period}.json:
+      uriParameters:
+        time-period:
+          type: string
+          description: Number of days `1 | 7 | 30 ` corresponds to a day, a week, or a month of content.
+          displayName: time-period
+          enum:
+          - '1'
+          - '7'
+          - '30'
+      get:
+        description: ''
+        displayName: Most Emailed by Section & Time Period
+        responses:
+          200:
+            description: An array of Articles
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: ArticleWithCountType
+                  num_results?:
+                    type: integer
+                  status?:
+                    type: string
+              application/xml:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: ArticleWithCountType
+                  num_results?:
+                    type: integer
+                  status?:
+                    type: string
+          400:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                  errors?:
+                    type: array
+                    items:
+                      type: string
+                  status?:
+                    type: string
+              application/xml:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                  errors?:
+                    type: array
+                    items:
+                      type: string
+                  status?:
+                    type: string
+          403:
+            description: ''
+            body:
+              application/json:
+                type: object
+              application/xml:
+                type: object
+/mostshared:
+  /{section}:
+    uriParameters:
+      section:
+        type: string
+        description: "Limits the results by one or more sections. You can use\n`all-sections`\
+          \ or one or more section names seperated by semicolons. See `viewed/sections.json`\
+          \ call to get a list of sections. \n"
+        displayName: section
+        enum:
+        - Arts
+        - Automobiles
+        - Blogs
+        - Books
+        - Business Day
+        - Education
+        - Fashion & Style
+        - Food
+        - Health
+        - Job Market
+        - Magazine
+        - membercenter
+        - Movies
+        - Multimedia
+        - N.Y.%20%2F%20Region
+        - NYT Now
+        - Obituaries
+        - Open
+        - Opinion
+        - Public Editor
+        - Real Estate
+        - Science
+        - Sports
+        - Style
+        - Sunday Review
+        - T Magazine
+        - Technology
+        - The Upshot
+        - Theater
+        - Times Insider
+        - !!binary |-
+          VG9kYXnDosKAwplzIFBhcGVy
+        - Travel
+        - U.S.
+        - World
+        - Your Money
+        - all-sections
+    /{time-period}.json:
+      uriParameters:
+        time-period:
+          type: string
+          description: Number of days `1 | 7 | 30 ` corresponds to a day, a week, or a month of content.
+          displayName: time-period
+          enum:
+          - '1'
+          - '7'
+          - '30'
+      get:
+        description: ''
+        displayName: Most Shared by Section & Time Period
+        responses:
+          200:
+            description: An array of Articles
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: Article
+                  num_results?:
+                    type: integer
+                  status?:
+                    type: string
+          400:
+            description: ''
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                  errors?:
+                    type: array
+                    items:
+                      type: string
+                  status?:
+                    type: string
+/mostviewed:
+  /{section}:
+    uriParameters:
+      section:
+        type: string
+        description: "Limits the results by one or more sections. You can use\n`all-sections`\
+          \ or one or more section names seperated by semicolons. See `viewed/sections.json`\
+          \ call to get a list of sections. \n"
+        displayName: section
+        enum:
+        - Arts
+        - Automobiles
+        - Blogs
+        - Books
+        - Business Day
+        - Education
+        - Fashion & Style
+        - Food
+        - Health
+        - Job Market
+        - Magazine
+        - membercenter
+        - Movies
+        - Multimedia
+        - N.Y.%20%2F%20Region
+        - NYT Now
+        - Obituaries
+        - Open
+        - Opinion
+        - Public Editor
+        - Real Estate
+        - Science
+        - Sports
+        - Style
+        - Sunday Review
+        - T Magazine
+        - Technology
+        - The Upshot
+        - Theater
+        - Times Insider
+        - !!binary |-
+          VG9kYXnDosKAwplzIFBhcGVy
+        - Travel
+        - U.S.
+        - World
+        - Your Money
+        - all-sections
+    /{time-period}.json:
+      uriParameters:
+        time-period:
+          type: string
+          description: Number of days `1 | 7 | 30 ` corresponds to a day, a week, or a month of content.
+          displayName: time-period
+          enum:
+          - '1'
+          - '7'
+          - '30'
+      get:
+        description: ''
+        displayName: Most Viewed by Section & Time Period
+        responses:
+          200:
+            description: An array of Articles
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: Article
+                  num_results?:
+                    type: integer
+                  status?:
+                    type: string

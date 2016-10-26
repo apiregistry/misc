@@ -1,0 +1,148 @@
+#%RAML 1.0
+title: Refuge Restrooms
+version: v1
+baseUri: www.refugerestrooms.org/api
+description: REFUGE is a web application that seeks to provide safe restroom access for transgender, intersex, and gender nonconforming individuals.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/v1:
+  /restrooms.json:
+    get:
+      displayName: Get all restroom records ordered by date descending.
+      queryParameters:
+        page?:
+          type: integer
+          description: Page offset to fetch.
+          displayName: page
+        per_page?:
+          type: integer
+          description: Number of results to return per page.
+          displayName: per_page
+        offset?:
+          type: integer
+          description: Pad a number of results.
+          displayName: offset
+        ada?:
+          type: boolean
+          description: Only return restrooms that are ADA accessible.
+          displayName: ada
+        unisex?:
+          type: boolean
+          description: Only return restrooms that are unisex.
+          displayName: unisex
+      responses:
+        200:
+          description: No response was specified
+  /restrooms:
+    /by_date.json:
+      get:
+        displayName: Search for restroom records updated or created on or after a given date
+        queryParameters:
+          page?:
+            type: integer
+            description: Page offset to fetch.
+            displayName: page
+          per_page?:
+            type: integer
+            description: Number of results to return per page.
+            displayName: per_page
+          offset?:
+            type: integer
+            description: Pad a number of results.
+            displayName: offset
+          ada?:
+            type: boolean
+            description: Only return restrooms that are ADA accessible.
+            displayName: ada
+          unisex?:
+            type: boolean
+            description: Only return restrooms that are unisex.
+            displayName: unisex
+          updated?:
+            type: boolean
+            description: Return restroom records updated (rather than created) since given date
+            displayName: updated
+          day:
+            type: integer
+            description: Day
+            displayName: day
+          month:
+            type: integer
+            description: Month
+            displayName: month
+          year:
+            type: integer
+            description: Year
+            displayName: year
+        responses:
+          200:
+            description: No response was specified
+    /by_location.json:
+      get:
+        displayName: Search by location.
+        queryParameters:
+          page?:
+            type: integer
+            description: Page offset to fetch.
+            displayName: page
+          per_page?:
+            type: integer
+            description: Number of results to return per page.
+            displayName: per_page
+          offset?:
+            type: integer
+            description: Pad a number of results.
+            displayName: offset
+          ada?:
+            type: boolean
+            description: Only return restrooms that are ADA accessible.
+            displayName: ada
+          unisex?:
+            type: boolean
+            description: Only return restrooms that are unisex.
+            displayName: unisex
+          lat:
+            type: number
+            description: latitude
+            displayName: lat
+            format: float
+          lng:
+            type: number
+            description: longitude
+            displayName: lng
+            format: float
+        responses:
+          200:
+            description: No response was specified
+    /search.json:
+      get:
+        displayName: Perform full-text search of restroom records.
+        queryParameters:
+          page?:
+            type: integer
+            description: Page offset to fetch.
+            displayName: page
+          per_page?:
+            type: integer
+            description: Number of results to return per page.
+            displayName: per_page
+          offset?:
+            type: integer
+            description: Pad a number of results.
+            displayName: offset
+          ada?:
+            type: boolean
+            description: Only return restrooms that are ADA accessible.
+            displayName: ada
+          unisex?:
+            type: boolean
+            description: Only return restrooms that are unisex.
+            displayName: unisex
+          query:
+            type: string
+            description: Your search query.
+            displayName: query
+        responses:
+          200:
+            description: No response was specified

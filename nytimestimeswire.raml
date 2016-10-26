@@ -1,0 +1,220 @@
+#%RAML 1.0
+title: Times Newswire
+version: 3.0.0
+baseUri: api.nytimes.com/svc/news/v3/content
+description: With the Times Newswire API, you can get links and metadata for Times articles and blog posts as soon as they are published on NYTimes.com. The Times Newswire API provides an up-to-the-minute stream of published items.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  apikey:
+    type: Pass Through
+types:
+  Article:
+    type: object
+    properties:
+      abstract?:
+        type: string
+      blog_name?:
+        type: string
+      byline?:
+        type: string
+      created_date?:
+        type: string
+      des_facet?:
+        type: array
+        items:
+          type: string
+      geo_facet?:
+        type: array
+        items:
+          type: string
+      headline?:
+        type: string
+      item_type?:
+        type: string
+      kicker?:
+        type: string
+      material_type_facet?:
+        type: string
+      multimedia?:
+        type: array
+        items:
+          type: object
+          properties:
+            copyright?:
+              type: string
+            subtype?:
+              type: string
+            format?:
+              type: string
+            width?:
+              type: integer
+            caption?:
+              type: string
+            type?:
+              type: string
+            url?:
+              type: string
+            height?:
+              type: integer
+      org_facet?:
+        type: string
+      per_facet?:
+        type: array
+        items:
+          type: string
+      published_date?:
+        type: string
+      related_urls?:
+        type: array
+        items:
+          type: object
+          properties:
+            suggested_link_text?:
+              type: string
+            url?:
+              type: string
+      section?:
+        type: string
+      short_url?:
+        type: string
+      source?:
+        type: string
+      subsection?:
+        type: string
+      thumbnail_standard?:
+        type: string
+      title?:
+        type: string
+      updated_date?:
+        type: string
+      url?:
+        type: string
+/content.json:
+  get:
+    queryParameters:
+      url:
+        type: string
+        description: The complete URL of a specific news item, URL-encoded or backslash-escaped
+        displayName: url
+    responses:
+      200:
+        description: An array of Articles
+        body:
+          application/json:
+            type: object
+            properties:
+              copyright?:
+                type: string
+              results?:
+                type: array
+                items:
+                  type: Article
+              num_results?:
+                type: integer
+              status?:
+                type: string
+/{source}:
+  uriParameters:
+    source:
+      type: string
+      description: |
+        Limits the set of items by originating source
+
+        all = items from both The New York Times and The International New York Times
+        nyt = New York Times items only
+        iht = International New York Times items only
+      displayName: source
+      enum:
+      - all
+      - nyt
+      - iht
+  /{section}.json:
+    uriParameters:
+      section:
+        type: string
+        description: |
+          Limits the set of items by one or more sections
+          all | One or more section names, separated by semicolons
+
+           To get all sections, specify all. To get a particular section or sections, use the section names returned by this request:
+           http://api.nytimes.com/svc/news/v3/content/section-list.json
+        displayName: section
+    get:
+      queryParameters:
+        limit?:
+          type: integer
+          description: Limits the number of results, between 1 and 20
+          displayName: limit
+          default: 20
+        offset?:
+          type: integer
+          description: Sets the starting point of the result set
+          displayName: offset
+          default: 0
+      responses:
+        200:
+          description: An array of Articles
+          body:
+            application/json:
+              type: object
+              properties:
+                copyright?:
+                  type: string
+                results?:
+                  type: array
+                  items:
+                    type: Article
+                num_results?:
+                  type: integer
+                status?:
+                  type: string
+  /{section}:
+    uriParameters:
+      section:
+        type: string
+        description: |
+          Limits the set of items by one or more sections
+          all | One or more section names, separated by semicolons
+
+           To get all sections, specify all. To get a particular section or sections, use the section names returned by this request:
+           http://api.nytimes.com/svc/news/v3/content/section-list.json
+        displayName: section
+    /{time-period}.json:
+      uriParameters:
+        time-period:
+          type: integer
+          description: Limits the set of items by time published, integer in number of hours
+          displayName: time-period
+      get:
+        queryParameters:
+          limit?:
+            type: integer
+            description: Limits the number of results, between 1 and 20
+            displayName: limit
+            default: 20
+          offset?:
+            type: integer
+            description: Sets the starting point of the result set
+            displayName: offset
+            default: 0
+        responses:
+          200:
+            description: An array of Articles
+            body:
+              application/json:
+                type: object
+                properties:
+                  copyright?:
+                    type: string
+                  results?:
+                    type: array
+                    items:
+                      type: Article
+                  num_results?:
+                    type: integer
+                  status?:
+                    type: string

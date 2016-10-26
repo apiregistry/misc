@@ -1,0 +1,2428 @@
+#%RAML 1.0
+title: reverb
+version: '2.0'
+baseUri: reverb.com/api
+description: reverb
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  oauth2:
+    type: OAuth 2.0
+    settings:
+      authorizationGrants:
+      - authorization_code
+      authorizationUri: https://reverb.com/oauth/authorize
+      accessTokenUri: https://reverb.com/oauth/token
+      scopes:
+      - update_listings
+      - write
+/accounts:
+  post:
+    description: Create an account.
+    displayName: Create an account.
+    body:
+      application/json:
+        type: object
+        properties:
+          email:
+            type: string
+            description: Email address.
+          first_name:
+            type: string
+            description: First Name
+          last_name:
+            type: string
+            description: Last Name
+          newsletter_opt_in?:
+            type: boolean
+            description: Subscribe to gear deals by email
+          password:
+            type: string
+            description: Password (at least 8 characters).
+        description: the content of the request
+    responses:
+      500:
+        description: Unexpected error
+/addresses:
+  /{address_id}:
+    uriParameters:
+      address_id:
+        type: string
+        displayName: address_id
+    delete:
+      description: Delete an existing address in your address book
+      displayName: Delete an existing address in your address book
+      responses:
+        500:
+          description: Unexpected error
+    put:
+      description: Update an existing address in your address book
+      displayName: Update an existing address in your address book
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: See all addresses in your address book
+    displayName: See all addresses in your address book
+    responses:
+      500:
+        description: Unexpected error
+  post:
+    description: Create a new address in your address book
+    displayName: Create a new address in your address book
+    body:
+      application/json:
+        type: object
+        properties:
+          email:
+            type: string
+            description: Email address.
+          first_name:
+            type: string
+            description: First Name
+          last_name:
+            type: string
+            description: Last Name
+          newsletter_opt_in?:
+            type: boolean
+            description: Subscribe to gear deals by email
+          password:
+            type: string
+            description: Password (at least 8 characters).
+        description: the content of the request
+    responses:
+      500:
+        description: Unexpected error
+/articles:
+  /featured:
+    get:
+      description: See featured Reverb blog posts
+      displayName: See featured Reverb blog posts
+      responses:
+        500:
+          description: Unexpected error
+  /{slug}:
+    uriParameters:
+      slug:
+        type: string
+        displayName: slug
+    /related-listings:
+      get:
+        description: Find listings related to an article
+        displayName: Find listings related to an article
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Display a single article
+      displayName: Display a single article
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: See all Reverb blog posts
+    displayName: See all Reverb blog posts
+    queryParameters:
+      exclude_featured?:
+        type: integer
+        description: Number of featured articles to exclude
+        displayName: exclude_featured
+    responses:
+      500:
+        description: Unexpected error
+/auth:
+  /email:
+    post:
+      description: Login by email/password
+      displayName: Login by email/password
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error
+  /facebook:
+    post:
+      description: Login by facebook token
+      displayName: Login by facebook token
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error
+  /forgot_password:
+    post:
+      description: Send a password reset email
+      displayName: Send a password reset email
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error
+  /logout:
+    put:
+      description: Logout (primarily for mobile clients)
+      displayName: Logout (primarily for mobile clients)
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error
+/autosuggest:
+  get:
+    description: Autosuggest terms for searches
+    displayName: Autosuggest terms for searches
+    responses:
+      500:
+        description: Unexpected error
+/cart:
+  /move_to_watch_list:
+    /{cart_item_id}:
+      uriParameters:
+        cart_item_id:
+          type: string
+          displayName: cart_item_id
+      post:
+        description: Remove a cart item and add it to watch list
+        displayName: Remove a cart item and add it to watch list
+        responses:
+          500:
+            description: Unexpected error
+  /{cart_item_id}:
+    uriParameters:
+      cart_item_id:
+        type: string
+        displayName: cart_item_id
+    put:
+      description: Update cart item details
+      displayName: Update cart item details
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error
+  /{product_id}:
+    uriParameters:
+      product_id:
+        type: string
+        displayName: product_id
+    delete:
+      description: Remove a product from the cart
+      displayName: Remove a product from the cart
+      responses:
+        500:
+          description: Unexpected error
+    post:
+      description: Add product to the cart
+      displayName: Add product to the cart
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: Get all cart items
+    displayName: Get all cart items
+    responses:
+      500:
+        description: Unexpected error
+/categories:
+  /{product_type}:
+    uriParameters:
+      product_type:
+        type: string
+        displayName: product_type
+    /{category}:
+      uriParameters:
+        category:
+          type: string
+          displayName: category
+      get:
+        description: Get subcategory details
+        displayName: Get subcategory details
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Get category details
+      displayName: Get category details
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: List of supported product categories
+    displayName: List of supported product categories
+    responses:
+      500:
+        description: Unexpected error
+/collections:
+  /{slug}:
+    uriParameters:
+      slug:
+        type: string
+        displayName: slug
+    get:
+      description: Collection details
+      displayName: Collection details
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: List of curated collections
+    displayName: List of curated collections
+    responses:
+      500:
+        description: Unexpected error
+/comparison_shopping:
+  /{slug}:
+    uriParameters:
+      slug:
+        type: string
+        displayName: slug
+    get:
+      description: Show comparison shopping page
+      displayName: Show comparison shopping page
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: Find comparison shopping pages
+    displayName: Find comparison shopping pages
+    queryParameters:
+      query?:
+        type: string
+        description: Search string to find comparison shopping pages
+        displayName: query
+    responses:
+      500:
+        description: Unexpected error
+/conversations:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        displayName: id
+    /offer:
+      post:
+        description: Make an offer to the other participant in the conversation
+        displayName: Make an offer to the other participant in the conversation
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+/feedback:
+  /{feedback_id}:
+    uriParameters:
+      feedback_id:
+        type: string
+        displayName: feedback_id
+    get:
+      description: Feedback details
+      displayName: Feedback details
+      responses:
+        500:
+          description: Unexpected error
+/handpicked:
+  /{slug}:
+    uriParameters:
+      slug:
+        type: string
+        displayName: slug
+    get:
+      description: Get results from a handpicked collection
+      displayName: Get results from a handpicked collection
+      queryParameters:
+        query?:
+          type: string
+          description: Search query.
+          displayName: query
+        auction_price_max?:
+          type: number
+          description: Maximum current auction price
+          displayName: auction_price_max
+          format: float
+        category?:
+          type: string
+          description: Category slug from /api/categories
+          displayName: category
+        product_type?:
+          type: string
+          description: Product type slug from /api/categories
+          displayName: product_type
+        condition?:
+          type: string
+          description: 'Condition: new,used,all'
+          displayName: condition
+        decade?:
+          type: string
+          description: 'Decade: e.g. 1970s, early 70s'
+          displayName: decade
+        finish?:
+          type: string
+          description: Visual finish of the item, common for guitars
+          displayName: finish
+        handmade?:
+          type: boolean
+          description: Handmade items only
+          displayName: handmade
+        item_city?:
+          type: string
+          description: City where item is located
+          displayName: item_city
+        item_country?:
+          type: string
+          description: Country code where item is located
+          displayName: item_country
+        item_state?:
+          type: string
+          description: State or region code where item is located
+          displayName: item_state
+        make?:
+          type: string
+          description: Make(s)/brand of item (e.g. Fender). Can take a single value or an array.
+          displayName: make
+        model?:
+          type: string
+          description: Model of item (e.g. Stratocaster)
+          displayName: model
+        must_not?:
+          type: string
+          description: Search term negation. If you want to exclude a term, add it here
+          displayName: must_not
+        price_max?:
+          type: number
+          description: Maximum price of search results (USD)
+          displayName: price_max
+          format: float
+        price_min?:
+          type: number
+          description: Minimum price of search results (USD)
+          displayName: price_min
+          format: float
+        year_max?:
+          type: integer
+          description: Maximum year of manufacture
+          displayName: year_max
+        year_min?:
+          type: integer
+          description: Minumum year of manufacture
+          displayName: year_min
+        accepts_gift_cards?:
+          type: boolean
+          description: If true, include only items that accept gift cards
+          displayName: accepts_gift_cards
+        preferred_seller?:
+          type: boolean
+          description: If true, include only items by Reverb Preferred Sellers
+          displayName: preferred_seller
+        shop?:
+          type: string
+          description: Slug of shop to search
+          displayName: shop
+        shop_id?:
+          type: string
+          description: ID of shop to search
+          displayName: shop_id
+        listing_type?:
+          type: string
+          description: 'Type of listing: auction,make_an_offer,buy_it_now'
+          displayName: listing_type
+        ships_to?:
+          type: string
+          description: Limit search to items that ship to this country code
+          displayName: ships_to
+        exclude_auctions?:
+          type: boolean
+          description: If true, exclude auctions
+          displayName: exclude_auctions
+        accepts_payment_plans?:
+          type: boolean
+          description: If true, only show items that can be purchased with a payment plan
+          displayName: accepts_payment_plans
+        watchers_count_min?:
+          type: integer
+          description: Minimum number of watchers (used to find popular items)
+          displayName: watchers_count_min
+        page?:
+          type: integer
+          displayName: page
+          default: 1
+        per_page?:
+          type: integer
+          displayName: per_page
+          default: 24
+      responses:
+        500:
+          description: Unexpected error
+/listings:
+  /all:
+    get:
+      description: All listings including used, handmade, and brand new
+      displayName: All listings including used, handmade, and brand new
+      queryParameters:
+        query?:
+          type: string
+          description: Search query.
+          displayName: query
+        auction_price_max?:
+          type: number
+          description: Maximum current auction price
+          displayName: auction_price_max
+          format: float
+        category?:
+          type: string
+          description: Category slug from /api/categories
+          displayName: category
+        product_type?:
+          type: string
+          description: Product type slug from /api/categories
+          displayName: product_type
+        condition?:
+          type: string
+          description: 'Condition: new,used,all'
+          displayName: condition
+        decade?:
+          type: string
+          description: 'Decade: e.g. 1970s, early 70s'
+          displayName: decade
+        finish?:
+          type: string
+          description: Visual finish of the item, common for guitars
+          displayName: finish
+        handmade?:
+          type: boolean
+          description: Handmade items only
+          displayName: handmade
+        item_city?:
+          type: string
+          description: City where item is located
+          displayName: item_city
+        item_country?:
+          type: string
+          description: Country code where item is located
+          displayName: item_country
+        item_state?:
+          type: string
+          description: State or region code where item is located
+          displayName: item_state
+        make?:
+          type: string
+          description: Make(s)/brand of item (e.g. Fender). Can take a single value or an array.
+          displayName: make
+        model?:
+          type: string
+          description: Model of item (e.g. Stratocaster)
+          displayName: model
+        must_not?:
+          type: string
+          description: Search term negation. If you want to exclude a term, add it here
+          displayName: must_not
+        price_max?:
+          type: number
+          description: Maximum price of search results (USD)
+          displayName: price_max
+          format: float
+        price_min?:
+          type: number
+          description: Minimum price of search results (USD)
+          displayName: price_min
+          format: float
+        year_max?:
+          type: integer
+          description: Maximum year of manufacture
+          displayName: year_max
+        year_min?:
+          type: integer
+          description: Minumum year of manufacture
+          displayName: year_min
+        accepts_gift_cards?:
+          type: boolean
+          description: If true, include only items that accept gift cards
+          displayName: accepts_gift_cards
+        preferred_seller?:
+          type: boolean
+          description: If true, include only items by Reverb Preferred Sellers
+          displayName: preferred_seller
+        shop?:
+          type: string
+          description: Slug of shop to search
+          displayName: shop
+        shop_id?:
+          type: string
+          description: ID of shop to search
+          displayName: shop_id
+        listing_type?:
+          type: string
+          description: 'Type of listing: auction,make_an_offer,buy_it_now'
+          displayName: listing_type
+        ships_to?:
+          type: string
+          description: Limit search to items that ship to this country code
+          displayName: ships_to
+        exclude_auctions?:
+          type: boolean
+          description: If true, exclude auctions
+          displayName: exclude_auctions
+        accepts_payment_plans?:
+          type: boolean
+          description: If true, only show items that can be purchased with a payment plan
+          displayName: accepts_payment_plans
+        watchers_count_min?:
+          type: integer
+          description: Minimum number of watchers (used to find popular items)
+          displayName: watchers_count_min
+        page?:
+          type: integer
+          displayName: page
+          default: 1
+        per_page?:
+          type: integer
+          displayName: per_page
+          default: 24
+      responses:
+        500:
+          description: Unexpected error
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        displayName: id
+    /offer:
+      post:
+        description: Make an offer to the seller of a listing
+        displayName: Make an offer to the seller of a listing
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+  /{listing_id}:
+    uriParameters:
+      listing_id:
+        type: string
+        displayName: listing_id
+    /bump:
+      /{budget_type}:
+        uriParameters:
+          budget_type:
+            type: string
+            displayName: budget_type
+        post:
+          description: Bump a listing
+          displayName: Bump a listing
+          responses:
+            500:
+              description: Unexpected error
+      get:
+        description: View available bump tiers and stats for a listing
+        displayName: View available bump tiers and stats for a listing
+        responses:
+          500:
+            description: Unexpected error
+    /conversations:
+      post:
+        description: Start a conversation with a seller
+        displayName: Start a conversation with a seller
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+    /sales:
+      get:
+        description: See all sales that include a listing.
+        displayName: See all sales that include a listing.
+        responses:
+          500:
+            description: Unexpected error
+  /{slug}:
+    uriParameters:
+      slug:
+        type: string
+        displayName: slug
+    /edit:
+      get:
+        description: Edit listing.
+        displayName: Edit listing.
+        responses:
+          500:
+            description: Unexpected error
+    /flag:
+      post:
+        description: Flag a listing for inappropriate content or fraud
+        displayName: Flag a listing for inappropriate content or fraud
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Listing details
+      displayName: Listing details
+      responses:
+        500:
+          description: Unexpected error
+    delete:
+      description: Delete a draft listing. Cannot be used on non-drafts.
+      displayName: Delete a draft listing. Cannot be used on non-drafts.
+      responses:
+        500:
+          description: Unexpected error
+    put:
+      description: Update a listing
+      displayName: Update a listing
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: Default search of listings includes only used & handmade. Add a filter to view all listings or use the /listings/all endpoint.
+    displayName: Default search of listings includes only used & handmade. Add a filter to view all listings or use the /listings/all endpoint.
+    queryParameters:
+      query?:
+        type: string
+        description: Search query.
+        displayName: query
+      auction_price_max?:
+        type: number
+        description: Maximum current auction price
+        displayName: auction_price_max
+        format: float
+      category?:
+        type: string
+        description: Category slug from /api/categories
+        displayName: category
+      product_type?:
+        type: string
+        description: Product type slug from /api/categories
+        displayName: product_type
+      condition?:
+        type: string
+        description: 'Condition: new,used,all'
+        displayName: condition
+      decade?:
+        type: string
+        description: 'Decade: e.g. 1970s, early 70s'
+        displayName: decade
+      finish?:
+        type: string
+        description: Visual finish of the item, common for guitars
+        displayName: finish
+      handmade?:
+        type: boolean
+        description: Handmade items only
+        displayName: handmade
+      item_city?:
+        type: string
+        description: City where item is located
+        displayName: item_city
+      item_country?:
+        type: string
+        description: Country code where item is located
+        displayName: item_country
+      item_state?:
+        type: string
+        description: State or region code where item is located
+        displayName: item_state
+      make?:
+        type: string
+        description: Make(s)/brand of item (e.g. Fender). Can take a single value or an array.
+        displayName: make
+      model?:
+        type: string
+        description: Model of item (e.g. Stratocaster)
+        displayName: model
+      must_not?:
+        type: string
+        description: Search term negation. If you want to exclude a term, add it here
+        displayName: must_not
+      price_max?:
+        type: number
+        description: Maximum price of search results (USD)
+        displayName: price_max
+        format: float
+      price_min?:
+        type: number
+        description: Minimum price of search results (USD)
+        displayName: price_min
+        format: float
+      year_max?:
+        type: integer
+        description: Maximum year of manufacture
+        displayName: year_max
+      year_min?:
+        type: integer
+        description: Minumum year of manufacture
+        displayName: year_min
+      accepts_gift_cards?:
+        type: boolean
+        description: If true, include only items that accept gift cards
+        displayName: accepts_gift_cards
+      preferred_seller?:
+        type: boolean
+        description: If true, include only items by Reverb Preferred Sellers
+        displayName: preferred_seller
+      shop?:
+        type: string
+        description: Slug of shop to search
+        displayName: shop
+      shop_id?:
+        type: string
+        description: ID of shop to search
+        displayName: shop_id
+      listing_type?:
+        type: string
+        description: 'Type of listing: auction,make_an_offer,buy_it_now'
+        displayName: listing_type
+      ships_to?:
+        type: string
+        description: Limit search to items that ship to this country code
+        displayName: ships_to
+      exclude_auctions?:
+        type: boolean
+        description: If true, exclude auctions
+        displayName: exclude_auctions
+      accepts_payment_plans?:
+        type: boolean
+        description: If true, only show items that can be purchased with a payment plan
+        displayName: accepts_payment_plans
+      watchers_count_min?:
+        type: integer
+        description: Minimum number of watchers (used to find popular items)
+        displayName: watchers_count_min
+      page?:
+        type: integer
+        displayName: page
+        default: 1
+      per_page?:
+        type: integer
+        displayName: per_page
+        default: 24
+    responses:
+      500:
+        description: Unexpected error
+  post:
+    description: Create a listing
+    displayName: Create a listing
+    body:
+      application/json:
+        type: object
+        properties:
+          email:
+            type: string
+            description: Email address.
+          first_name:
+            type: string
+            description: First Name
+          last_name:
+            type: string
+            description: Last Name
+          newsletter_opt_in?:
+            type: boolean
+            description: Subscribe to gear deals by email
+          password:
+            type: string
+            description: Password (at least 8 characters).
+        description: the content of the request
+    responses:
+      500:
+        description: Unexpected error
+/my:
+  /account:
+    get:
+      description: Get account details
+      displayName: Get account details
+      responses:
+        500:
+          description: Unexpected error
+  /conversations:
+    /{conversation_id}:
+      uriParameters:
+        conversation_id:
+          type: string
+          displayName: conversation_id
+      /messages:
+        post:
+          description: Send a message
+          displayName: Send a message
+          body:
+            application/json:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address.
+                first_name:
+                  type: string
+                  description: First Name
+                last_name:
+                  type: string
+                  description: Last Name
+                newsletter_opt_in?:
+                  type: boolean
+                  description: Subscribe to gear deals by email
+                password:
+                  type: string
+                  description: Password (at least 8 characters).
+              description: the content of the request
+          responses:
+            500:
+              description: Unexpected error
+    /{id}:
+      uriParameters:
+        id:
+          type: string
+          displayName: id
+      get:
+        description: Display conversation details with messages in natural time order (oldest to newest)
+        displayName: Display conversation details with messages in natural time order (oldest to newest)
+        responses:
+          500:
+            description: Unexpected error
+      put:
+        description: Mark a conversation read/unread
+        displayName: Mark a conversation read/unread
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Get a list of your conversations
+      displayName: Get a list of your conversations
+      queryParameters:
+        search?:
+          type: string
+          description: Query string to search conversations by
+          displayName: search
+        unread_only?:
+          type: boolean
+          description: Show unread conversations only
+          displayName: unread_only
+        page?:
+          type: integer
+          displayName: page
+          default: 1
+        per_page?:
+          type: integer
+          displayName: per_page
+          default: 24
+      responses:
+        500:
+          description: Unexpected error
+    post:
+      description: Start a conversation
+      displayName: Start a conversation
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error
+  /counts:
+    get:
+      description: Get your actionable status counts
+      displayName: Get your actionable status counts
+      responses:
+        500:
+          description: Unexpected error
+  /feed:
+    get:
+      description: Get listings from your feed
+      displayName: Get listings from your feed
+      responses:
+        500:
+          description: Unexpected error
+  /feedback:
+    /received:
+      get:
+        description: List of received feedback
+        displayName: List of received feedback
+        responses:
+          500:
+            description: Unexpected error
+    /sent:
+      get:
+        description: List of sent feedback
+        displayName: List of sent feedback
+        responses:
+          500:
+            description: Unexpected error
+  /follows:
+    /brands:
+      /{slug}:
+        uriParameters:
+          slug:
+            type: string
+            displayName: slug
+        get:
+          description: Follow status for a brand
+          displayName: Follow status for a brand
+          responses:
+            500:
+              description: Unexpected error
+        delete:
+          description: Unfollow a brand
+          displayName: Unfollow a brand
+          responses:
+            500:
+              description: Unexpected error
+        post:
+          description: Follow a brand
+          displayName: Follow a brand
+          responses:
+            500:
+              description: Unexpected error
+    /categories:
+      /{category}:
+        uriParameters:
+          category:
+            type: string
+            displayName: category
+        /{subcategory}:
+          uriParameters:
+            subcategory:
+              type: string
+              displayName: subcategory
+          get:
+            description: Follow status for a subcategory
+            displayName: Follow status for a subcategory
+            responses:
+              500:
+                description: Unexpected error
+          delete:
+            description: Unfollow a subcategory
+            displayName: Unfollow a subcategory
+            responses:
+              500:
+                description: Unexpected error
+          post:
+            description: Follow a subcategory
+            displayName: Follow a subcategory
+            responses:
+              500:
+                description: Unexpected error
+      /{slug}:
+        uriParameters:
+          slug:
+            type: string
+            displayName: slug
+        get:
+          description: Follow status for a category
+          displayName: Follow status for a category
+          responses:
+            500:
+              description: Unexpected error
+        delete:
+          description: Unfollow a category
+          displayName: Unfollow a category
+          responses:
+            500:
+              description: Unexpected error
+        post:
+          description: Follow a category
+          displayName: Follow a category
+          responses:
+            500:
+              description: Unexpected error
+    /collections:
+      /{slug}:
+        uriParameters:
+          slug:
+            type: string
+            displayName: slug
+        get:
+          description: Follow status for a collection
+          displayName: Follow status for a collection
+          responses:
+            500:
+              description: Unexpected error
+        delete:
+          description: Unfollow a collection
+          displayName: Unfollow a collection
+          responses:
+            500:
+              description: Unexpected error
+        post:
+          description: Follow a collection
+          displayName: Follow a collection
+          responses:
+            500:
+              description: Unexpected error
+    /handpicked:
+      /{slug}:
+        uriParameters:
+          slug:
+            type: string
+            displayName: slug
+        get:
+          description: Follow status for a handpicked collection
+          displayName: Follow status for a handpicked collection
+          responses:
+            500:
+              description: Unexpected error
+        delete:
+          description: Unfollow a handpicked collection
+          displayName: Unfollow a handpicked collection
+          responses:
+            500:
+              description: Unexpected error
+        post:
+          description: Follow a handpicked collection
+          displayName: Follow a handpicked collection
+          responses:
+            500:
+              description: Unexpected error
+    /search:
+      get:
+        description: Follow status for a search
+        displayName: Follow status for a search
+        responses:
+          500:
+            description: Unexpected error
+      post:
+        description: Follow a search
+        displayName: Follow a search
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+    /shops:
+      /{slug}:
+        uriParameters:
+          slug:
+            type: string
+            displayName: slug
+        get:
+          description: Follow status for a shop
+          displayName: Follow status for a shop
+          responses:
+            500:
+              description: Unexpected error
+        delete:
+          description: Unfollow a shop
+          displayName: Unfollow a shop
+          responses:
+            500:
+              description: Unexpected error
+        post:
+          description: Follow a shop
+          displayName: Follow a shop
+          responses:
+            500:
+              description: Unexpected error
+    /{follow_id}:
+      uriParameters:
+        follow_id:
+          type: string
+          displayName: follow_id
+      delete:
+        description: Delete a follow
+        displayName: Delete a follow
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: See what the user is following
+      displayName: See what the user is following
+      responses:
+        500:
+          description: Unexpected error
+  /listings:
+    /drafts:
+      get:
+        description: Retrieve a list your draft listings
+        displayName: Retrieve a list your draft listings
+        responses:
+          500:
+            description: Unexpected error
+    /negotiations:
+      get:
+        description: Get a list of active negotiations as a seller
+        displayName: Get a list of active negotiations as a seller
+        queryParameters:
+          page?:
+            type: integer
+            displayName: page
+            default: 1
+          per_page?:
+            type: integer
+            displayName: per_page
+            default: 24
+        responses:
+          500:
+            description: Unexpected error
+    /{slug}:
+      uriParameters:
+        slug:
+          type: string
+          displayName: slug
+      /state:
+        /end:
+          put:
+            description: End a listing
+            displayName: End a listing
+            body:
+              application/json:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: Email address.
+                  first_name:
+                    type: string
+                    description: First Name
+                  last_name:
+                    type: string
+                    description: Last Name
+                  newsletter_opt_in?:
+                    type: boolean
+                    description: Subscribe to gear deals by email
+                  password:
+                    type: string
+                    description: Password (at least 8 characters).
+                description: the content of the request
+            responses:
+              500:
+                description: Unexpected error
+    get:
+      description: Retrieve a list of live listings for the seller. To search all listings specify state=all
+      displayName: Retrieve a list of live listings for the seller. To search all listings specify state=all
+      queryParameters:
+        state?:
+          type: string
+          description: 'Available: ["all", "draft", "ended", "live", "ordered", "sold_out",
+            "suspended", "seller_unavailable"]. Defaults to ''live'''
+          displayName: state
+      responses:
+        500:
+          description: Unexpected error
+  /lists:
+    get:
+      description: Get a list of your lists (wishlist, watch list, etc)
+      displayName: Get a list of your lists (wishlist, watch list, etc)
+      responses:
+        500:
+          description: Unexpected error
+  /negotiations:
+    /buying:
+      get:
+        description: Get a list of active negotiations as a buyer
+        displayName: Get a list of active negotiations as a buyer
+        queryParameters:
+          page?:
+            type: integer
+            displayName: page
+            default: 1
+          per_page?:
+            type: integer
+            displayName: per_page
+            default: 24
+        responses:
+          500:
+            description: Unexpected error
+    /{id}:
+      uriParameters:
+        id:
+          type: string
+          displayName: id
+      /accept:
+        post:
+          description: Accept an offer
+          displayName: Accept an offer
+          body:
+            application/json:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address.
+                first_name:
+                  type: string
+                  description: First Name
+                last_name:
+                  type: string
+                  description: Last Name
+                newsletter_opt_in?:
+                  type: boolean
+                  description: Subscribe to gear deals by email
+                password:
+                  type: string
+                  description: Password (at least 8 characters).
+              description: the content of the request
+          responses:
+            500:
+              description: Unexpected error
+      /counter:
+        post:
+          description: Counter an offer
+          displayName: Counter an offer
+          body:
+            application/json:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address.
+                first_name:
+                  type: string
+                  description: First Name
+                last_name:
+                  type: string
+                  description: Last Name
+                newsletter_opt_in?:
+                  type: boolean
+                  description: Subscribe to gear deals by email
+                password:
+                  type: string
+                  description: Password (at least 8 characters).
+              description: the content of the request
+          responses:
+            500:
+              description: Unexpected error
+      /decline:
+        post:
+          description: Decline an offer
+          displayName: Decline an offer
+          body:
+            application/json:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address.
+                first_name:
+                  type: string
+                  description: First Name
+                last_name:
+                  type: string
+                  description: Last Name
+                newsletter_opt_in?:
+                  type: boolean
+                  description: Subscribe to gear deals by email
+                password:
+                  type: string
+                  description: Password (at least 8 characters).
+              description: the content of the request
+          responses:
+            500:
+              description: Unexpected error
+      get:
+        description: Get offer details
+        displayName: Get offer details
+        responses:
+          500:
+            description: Unexpected error
+  /orders:
+    /awaiting_feedback:
+      get:
+        description: List of orders that need feedback
+        displayName: List of orders that need feedback
+        responses:
+          500:
+            description: Unexpected error
+    /buying:
+      /all:
+        get:
+          description: Returns all orders, newest first.
+          displayName: Returns all orders, newest first.
+          responses:
+            500:
+              description: Unexpected error
+      /buying_history:
+        /{seller_id}:
+          uriParameters:
+            seller_id:
+              type: string
+              displayName: seller_id
+          get:
+            description: See previous orders from a seller
+            displayName: See previous orders from a seller
+            responses:
+              500:
+                description: Unexpected error
+      /unpaid:
+        get:
+          description: Returns unpaid orders, newest first.
+          displayName: Returns unpaid orders, newest first.
+          responses:
+            500:
+              description: Unexpected error
+      /{id}:
+        uriParameters:
+          id:
+            type: string
+            displayName: id
+        /mark_received:
+          post:
+            description: Marks an order as received by the buyer
+            displayName: Marks an order as received by the buyer
+            responses:
+              500:
+                description: Unexpected error
+        get:
+          description: Returns order details for a buyer
+          displayName: Returns order details for a buyer
+          responses:
+            500:
+              description: Unexpected error
+    /selling:
+      /all:
+        get:
+          description: Get all seller orders, newest first.
+          displayName: Get all seller orders, newest first.
+          queryParameters:
+            created_start_date?:
+              type: string
+              description: 'Filter by date created in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: created_start_date
+            created_end_date?:
+              type: string
+              description: 'Filter by date created in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: created_end_date
+            updated_start_date?:
+              type: string
+              description: 'Filter by date modified in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: updated_start_date
+            updated_end_date?:
+              type: string
+              description: 'Filter by date modified in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: updated_end_date
+            page?:
+              type: integer
+              displayName: page
+              default: 1
+            per_page?:
+              type: integer
+              displayName: per_page
+              default: 24
+          responses:
+            500:
+              description: Unexpected error
+      /awaiting_shipment:
+        get:
+          description: Get seller orders awaiting shipment, newest first.
+          displayName: Get seller orders awaiting shipment, newest first.
+          queryParameters:
+            created_start_date?:
+              type: string
+              description: 'Filter by date created in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: created_start_date
+            created_end_date?:
+              type: string
+              description: 'Filter by date created in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: created_end_date
+            updated_start_date?:
+              type: string
+              description: 'Filter by date modified in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: updated_start_date
+            updated_end_date?:
+              type: string
+              description: 'Filter by date modified in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: updated_end_date
+            page?:
+              type: integer
+              displayName: page
+              default: 1
+            per_page?:
+              type: integer
+              displayName: per_page
+              default: 24
+          responses:
+            500:
+              description: Unexpected error
+      /buyer_history:
+        /{buyer_id}:
+          uriParameters:
+            buyer_id:
+              type: string
+              displayName: buyer_id
+          get:
+            description: See previous orders from buyer
+            displayName: See previous orders from buyer
+            responses:
+              500:
+                description: Unexpected error
+      /unpaid:
+        get:
+          description: Get unpaid seller orders, newest first.
+          displayName: Get unpaid seller orders, newest first.
+          queryParameters:
+            created_start_date?:
+              type: string
+              description: 'Filter by date created in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: created_start_date
+            created_end_date?:
+              type: string
+              description: 'Filter by date created in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: created_end_date
+            updated_start_date?:
+              type: string
+              description: 'Filter by date modified in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: updated_start_date
+            updated_end_date?:
+              type: string
+              description: 'Filter by date modified in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+              displayName: updated_end_date
+            page?:
+              type: integer
+              displayName: page
+              default: 1
+            per_page?:
+              type: integer
+              displayName: per_page
+              default: 24
+          responses:
+            500:
+              description: Unexpected error
+      /{id}:
+        uriParameters:
+          id:
+            type: string
+            displayName: id
+        /mark_picked_up:
+          post:
+            description: Marks an order as picked up
+            displayName: Marks an order as picked up
+            body:
+              application/json:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: Email address.
+                  first_name:
+                    type: string
+                    description: First Name
+                  last_name:
+                    type: string
+                    description: Last Name
+                  newsletter_opt_in?:
+                    type: boolean
+                    description: Subscribe to gear deals by email
+                  password:
+                    type: string
+                    description: Password (at least 8 characters).
+                description: the content of the request
+            responses:
+              500:
+                description: Unexpected error
+        /ship:
+          post:
+            description: Marks an order as shipped
+            displayName: Marks an order as shipped
+            body:
+              application/json:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: Email address.
+                  first_name:
+                    type: string
+                    description: First Name
+                  last_name:
+                    type: string
+                    description: Last Name
+                  newsletter_opt_in?:
+                    type: boolean
+                    description: Subscribe to gear deals by email
+                  password:
+                    type: string
+                    description: Password (at least 8 characters).
+                description: the content of the request
+            responses:
+              500:
+                description: Unexpected error
+        get:
+          description: Returns order details for a seller
+          displayName: Returns order details for a seller
+          responses:
+            500:
+              description: Unexpected error
+  /payments:
+    /selling:
+      /{id}:
+        uriParameters:
+          id:
+            type: string
+            displayName: id
+        get:
+          description: Get payment
+          displayName: Get payment
+          responses:
+            500:
+              description: Unexpected error
+      get:
+        description: Get payments
+        displayName: Get payments
+        queryParameters:
+          page?:
+            type: integer
+            displayName: page
+            default: 1
+          per_page?:
+            type: integer
+            displayName: per_page
+            default: 24
+          created_start_date?:
+            type: string
+            description: 'Filter by date created in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+            displayName: created_start_date
+          created_end_date?:
+            type: string
+            description: 'Filter by date created in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+            displayName: created_end_date
+          updated_start_date?:
+            type: string
+            description: 'Filter by date modified in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+            displayName: updated_start_date
+          updated_end_date?:
+            type: string
+            description: 'Filter by date modified in ISO8601 format - e.g: 2015-04-09T10:52:23-00:00'
+            displayName: updated_end_date
+          order_id?:
+            type: string
+            description: Look up payments by order id
+            displayName: order_id
+        responses:
+          500:
+            description: Unexpected error
+  /viewed_listings:
+    get:
+      description: Get a list of your recently viewed listings.
+      displayName: Get a list of your recently viewed listings.
+      responses:
+        500:
+          description: Unexpected error
+  /wishlist:
+    /{id}:
+      uriParameters:
+        id:
+          type: string
+          displayName: id
+      delete:
+        description: Remove a listing from your wishlist
+        displayName: Remove a listing from your wishlist
+        responses:
+          500:
+            description: Unexpected error
+      put:
+        description: Add a listing to your wishlist
+        displayName: Add a listing to your wishlist
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Get a list of wishlisted items
+      displayName: Get a list of wishlisted items
+      responses:
+        500:
+          description: Unexpected error
+/orders:
+  /{order_id}:
+    uriParameters:
+      order_id:
+        type: string
+        displayName: order_id
+    /feedback:
+      /buyer:
+        get:
+          description: Feedback details for an order's buyer
+          displayName: Feedback details for an order's buyer
+          responses:
+            500:
+              description: Unexpected error
+        post:
+          description: Add feedback about an order's buyer
+          displayName: Add feedback about an order's buyer
+          body:
+            application/json:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address.
+                first_name:
+                  type: string
+                  description: First Name
+                last_name:
+                  type: string
+                  description: Last Name
+                newsletter_opt_in?:
+                  type: boolean
+                  description: Subscribe to gear deals by email
+                password:
+                  type: string
+                  description: Password (at least 8 characters).
+              description: the content of the request
+          responses:
+            500:
+              description: Unexpected error
+      /seller:
+        get:
+          description: Feedback details for an order's seller
+          displayName: Feedback details for an order's seller
+          responses:
+            500:
+              description: Unexpected error
+        post:
+          description: Add feedback about an order's seller
+          displayName: Add feedback about an order's seller
+          body:
+            application/json:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address.
+                first_name:
+                  type: string
+                  description: First Name
+                last_name:
+                  type: string
+                  description: Last Name
+                newsletter_opt_in?:
+                  type: boolean
+                  description: Subscribe to gear deals by email
+                password:
+                  type: string
+                  description: Password (at least 8 characters).
+              description: the content of the request
+          responses:
+            500:
+              description: Unexpected error
+/payment_methods:
+  get:
+    description: Get list of payment methods
+    displayName: Get list of payment methods
+    responses:
+      500:
+        description: Unexpected error
+/priceguide:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        displayName: id
+    /transactions:
+      /summary:
+        get:
+          description: Get a summary of transactions for a given price guide
+          displayName: Get a summary of transactions for a given price guide
+          queryParameters:
+            number_of_months?:
+              type: integer
+              displayName: number_of_months
+              default: 3
+            condition?:
+              type: string
+              displayName: condition
+              default: used
+          responses:
+            500:
+              description: Unexpected error
+      get:
+        description: Get a list of paginated transactions for a price guide.
+        displayName: Get a list of paginated transactions for a price guide.
+        queryParameters:
+          condition?:
+            type: string
+            displayName: condition
+            default: used
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Retrieve a Price Guide
+      displayName: Retrieve a Price Guide
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: Search the Price Guide
+    displayName: Search the Price Guide
+    queryParameters:
+      query?:
+        type: string
+        description: Search query.
+        displayName: query
+    responses:
+      500:
+        description: Unexpected error
+/products:
+  /reviews:
+    /{id}:
+      uriParameters:
+        id:
+          type: string
+          displayName: id
+      get:
+        description: View a review
+        displayName: View a review
+        responses:
+          500:
+            description: Unexpected error
+      put:
+        description: Update a review
+        displayName: Update a review
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+  /{slug}:
+    uriParameters:
+      slug:
+        type: string
+        displayName: slug
+    /reviews:
+      get:
+        description: View reviews of a product
+        displayName: View reviews of a product
+        responses:
+          500:
+            description: Unexpected error
+      post:
+        description: Create a review
+        displayName: Create a review
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+/sales:
+  /reverb:
+    get:
+      description: View upcoming and live Reverb official sales.
+      displayName: View upcoming and live Reverb official sales.
+      responses:
+        500:
+          description: Unexpected error
+  /seller:
+    get:
+      description: View your created sales.
+      displayName: View your created sales.
+      responses:
+        500:
+          description: Unexpected error
+  /{sale_id}:
+    uriParameters:
+      sale_id:
+        type: string
+        displayName: sale_id
+    /listings:
+      delete:
+        description: Remove a listing from a sale
+        displayName: Remove a listing from a sale
+        queryParameters:
+          listing_ids?:
+            type: array
+            description: Listing IDs to be removed from the sale.
+            displayName: listing_ids
+            items:
+              type: string
+        responses:
+          500:
+            description: Unexpected error
+      post:
+        description: Add listings to a sale
+        displayName: Add listings to a sale
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+/shipping:
+  /providers:
+    get:
+      description: List of supported shipping providers
+      displayName: List of supported shipping providers
+      responses:
+        500:
+          description: Unexpected error
+  /regions:
+    get:
+      description: Get a list of shipping regions
+      displayName: Get a list of shipping regions
+      responses:
+        500:
+          description: Unexpected error
+/shop:
+  /payment_methods:
+    /direct_checkout:
+      get:
+        description: Get direct checkout settings
+        displayName: Get direct checkout settings
+        responses:
+          500:
+            description: Unexpected error
+      delete:
+        description: Disable direct checkout as an accepted payment method
+        displayName: Disable direct checkout as an accepted payment method
+        responses:
+          500:
+            description: Unexpected error
+      post:
+        description: Add direct checkout account
+        displayName: Add direct checkout account
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+    /paypal:
+      get:
+        description: Get your paypal profile
+        displayName: Get your paypal profile
+        responses:
+          500:
+            description: Unexpected error
+      delete:
+        description: Disable paypal as an accepted payment method
+        displayName: Disable paypal as an accepted payment method
+        responses:
+          500:
+            description: Unexpected error
+      post:
+        description: Add paypal account
+        displayName: Add paypal account
+        body:
+          application/json:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email address.
+              first_name:
+                type: string
+                description: First Name
+              last_name:
+                type: string
+                description: Last Name
+              newsletter_opt_in?:
+                type: boolean
+                description: Subscribe to gear deals by email
+              password:
+                type: string
+                description: Password (at least 8 characters).
+            description: the content of the request
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Get accepted payment methods
+      displayName: Get accepted payment methods
+      responses:
+        500:
+          description: Unexpected error
+  /stats:
+    /activity:
+      get:
+        description: Get shop activity for a particular time period
+        displayName: Get shop activity for a particular time period
+        queryParameters:
+          start_time?:
+            type: string
+            description: 'Filter by date in ISO8601 format - e.g: 2015-04-09T10:52:23-05:00'
+            displayName: start_time
+          end_time?:
+            type: string
+            description: 'Filter by date in ISO8601 format - e.g: 2015-04-09T10:52:23-05:00'
+            displayName: end_time
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Get listings stats
+      displayName: Get listings stats
+      responses:
+        500:
+          description: Unexpected error
+  /vacation:
+    get:
+      description: Returns shop vacation status
+      displayName: Returns shop vacation status
+      responses:
+        500:
+          description: Unexpected error
+    delete:
+      description: Disable vacation mode. All listings will be re-enabled.
+      displayName: Disable vacation mode. All listings will be re-enabled.
+      responses:
+        500:
+          description: Unexpected error
+    post:
+      description: Enable vacation mode. All listings will be unavailable until vacation mode is turned off.
+      displayName: Enable vacation mode. All listings will be unavailable until vacation mode is turned off.
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: Get your own shop details
+    displayName: Get your own shop details
+    responses:
+      500:
+        description: Unexpected error
+  put:
+    description: Update your shop profile
+    displayName: Update your shop profile
+    body:
+      application/json:
+        type: object
+        properties:
+          email:
+            type: string
+            description: Email address.
+          first_name:
+            type: string
+            description: First Name
+          last_name:
+            type: string
+            description: Last Name
+          newsletter_opt_in?:
+            type: boolean
+            description: Subscribe to gear deals by email
+          password:
+            type: string
+            description: Password (at least 8 characters).
+        description: the content of the request
+    responses:
+      500:
+        description: Unexpected error
+/shops:
+  /{slug}:
+    uriParameters:
+      slug:
+        type: string
+        displayName: slug
+    /feedback:
+      /buyer:
+        get:
+          description: Get seller's feedback as a buyer
+          displayName: Get seller's feedback as a buyer
+          responses:
+            500:
+              description: Unexpected error
+      /seller:
+        get:
+          description: Get seller's feedback as a seller
+          displayName: Get seller's feedback as a seller
+          responses:
+            500:
+              description: Unexpected error
+      get:
+        description: Get seller's feedback
+        displayName: Get seller's feedback
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Get details on a shop.
+      displayName: Get details on a shop.
+      responses:
+        500:
+          description: Unexpected error
+/wants:
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        displayName: id
+    delete:
+      description: Unmark an item wanted. Returns 204.
+      displayName: Unmark an item wanted. Returns 204.
+      responses:
+        500:
+          description: Unexpected error
+    put:
+      description: Mark an item wanted. Returns 204 on success or 412 on failure.
+      displayName: Mark an item wanted. Returns 204 on success or 412 on failure.
+      responses:
+        500:
+          description: Unexpected error
+  get:
+    description: A list of wanted items by the user
+    displayName: A list of wanted items by the user
+    responses:
+      500:
+        description: Unexpected error
+/webhooks:
+  /registrations:
+    /{id}:
+      uriParameters:
+        id:
+          type: string
+          displayName: id
+      get:
+        description: Get details of a webhook registration
+        displayName: Get details of a webhook registration
+        responses:
+          500:
+            description: Unexpected error
+      delete:
+        description: Remove a webhook
+        displayName: Remove a webhook
+        responses:
+          500:
+            description: Unexpected error
+    get:
+      description: Get webhook registrations
+      displayName: Get webhook registrations
+      responses:
+        500:
+          description: Unexpected error
+    post:
+      description: Register a webhook
+      displayName: Register a webhook
+      body:
+        application/json:
+          type: object
+          properties:
+            email:
+              type: string
+              description: Email address.
+            first_name:
+              type: string
+              description: First Name
+            last_name:
+              type: string
+              description: Last Name
+            newsletter_opt_in?:
+              type: boolean
+              description: Subscribe to gear deals by email
+            password:
+              type: string
+              description: Password (at least 8 characters).
+          description: the content of the request
+      responses:
+        500:
+          description: Unexpected error

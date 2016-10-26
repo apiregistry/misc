@@ -1,0 +1,102 @@
+#%RAML 1.0
+title: Tradeworks
+version: '1.0'
+baseUri: devui.magick.nu/rest
+description: |-
+  Authentication is required to access all methods of the API. Enter username and password.
+                  Credentials are automatically set as you type.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  SVSTradingAccountDTO:
+    type: object
+    properties:
+      country?:
+        type: string
+      email?:
+        type: string
+      forename?:
+        type: string
+      lastName?:
+        type: string
+      password?:
+        type: string
+      phoneNumber?:
+        type: string
+      title?:
+        type: string
+  TradingAccount:
+    type: object
+    properties:
+      brokerServer?:
+        type: string
+      magickUsername?:
+        type: string
+      password?:
+        type: string
+      username?:
+        type: string
+  UserDTO:
+    type: object
+    properties:
+      affiliateId?:
+        type: string
+      email?:
+        type: string
+      firstName?:
+        type: string
+      lastName?:
+        type: string
+      password?:
+        type: string
+      subscriptionType?:
+        type: string
+      username?:
+        type: string
+/svstradingAccounts:
+  post:
+    displayName: Create a new Trading Account
+    body:
+      application/json: SVSTradingAccountDTO
+    responses:
+      200:
+        description: No response was specified
+/tradingAccounts:
+  post:
+    displayName: Add a Trading Account
+    body:
+      application/json: TradingAccount
+    responses:
+      200:
+        description: No response was specified
+/users:
+  /email:
+    /{email}:
+      uriParameters:
+        email:
+          type: string
+          displayName: email
+      get:
+        displayName: Check if email is available
+        responses:
+          200:
+            description: No response was specified
+  /username:
+    /{username}:
+      uriParameters:
+        username:
+          type: string
+          displayName: username
+      get:
+        displayName: Check if username is available
+        responses:
+          200:
+            description: No response was specified
+  post:
+    displayName: Create a new Tradeworks User
+    body:
+      application/json: UserDTO
+    responses:
+      200:
+        description: No response was specified

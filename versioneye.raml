@@ -1,0 +1,595 @@
+#%RAML 1.0
+title: VersionEye
+version: v2
+baseUri: www.versioneye.com/api
+description: VersionEye is a cross-platform search engine for free/libre/open source software libraries.
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+/v2:
+  /github:
+    /hook:
+      /{project_id}:
+        uriParameters:
+          project_id:
+            type: string
+            description: Project ID
+            displayName: project_id
+        post:
+          description: |
+            <p>This endpoint is registered as service hook on GitHub. It triggers a project re-parse on each git push.</p>
+          displayName: github service hook
+          responses:
+            200:
+              description: No response was specified
+    /sync:
+      get:
+        description: |2+
+
+          <p>Reimports ALL GitHub Repositories. This Endpoint fetches meta information to all
+          repositories in your GitHub account. Meta information such as repo name, branches and
+          supported project files.</p>
+
+          <p>This endpoint works asynchronously and returns a status code. The status code is either
+          <strong>running</strong> or <strong>done</strong>.</p>
+
+        displayName: re-load github data
+        responses:
+          200:
+            description: No response was specified
+    /{repo_key}:
+      uriParameters:
+        repo_key:
+          type: string
+          description: encoded repo name with optional branch info.
+          displayName: repo_key
+      get:
+        description: !!binary |-
+          CjxwPlRoaXMgRW5kcG9pbnQgcmV0dXJucyBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBhIEdpdEh1YiByZXBvc2l0b3J5LjwvcD4KCjxwPkR1ZSB0aGUgbGltaXRzIG9mIG91ciBjdXJyZW50IEFQSSBmcmFtZXdvcmssIHRoZSByZXBvIGtleSBoYXMgdG8gYmUKZW5jb2RlZCBhcyB1cmwtc2FmZSBzdHJpbmcuIFRoYXQgbWVhbnMgYWxsIMOiwoDCmC/DosKAwpkgaGFzIHRvIGJlIHJlcGxhY2VkIHdpdGgKY29sb25zIMOiwoDCmDrDosKAwpkgYW5kIMOiwoDCmC7DosKAwpkgaGFzIHRvIGJlIHJlcGxhY2VkIHdpdGggw6LCgMKYfsOiwoDCmS48L3A+Cgo8cD5Gb3IgZXhhbXBsZSwgIHJlcG9zaXRvcnkgd2l0aCBmdWxsbmFtZSA8Y29kZT52ZXJzaW9uZXllL3ZleWU8L2NvZGU+IGhhcyB0byB0cmFuc2Zvcm1lZAp0byA8Y29kZT52ZXJzaW9uZXllOnZleWU8L2NvZGU+LjwvcD4KCg==
+        displayName: shows the detailed information for the repository
+        responses:
+          200:
+            description: No response was specified
+      delete:
+        description: !!binary |-
+          CjxwPlRoaXMgRW5kcG9pbnQgZGVsZXRlcyBhIHByb2plY3Qgb24gVmVyc2lvbkV5ZSE8L3A+Cgo8cD5EdWUgdGhlIGxpbWl0cyBvZiBvdXIgY3VycmVudCBBUEkgZnJhbWV3b3JrLCB0aGUgcmVwbyBrZXkgaGFzIHRvIGJlCmVuY29kZWQgYXMgdXJsLXNhZmUgc3RyaW5nLiBUaGF0IG1lYW5zIGFsbCDDosKAwpgvw6LCgMKZIGhhcyB0byBiZSByZXBsYWNlZCB3aXRoCmNvbG9ucyDDosKAwpg6w6LCgMKZIGFuZCDDosKAwpguw6LCgMKZIGhhcyB0byBiZSByZXBsYWNlZCB3aXRoIMOiwoDCmH7DosKAwpkuPC9wPgoKPHA+Rm9yIGV4YW1wbGUsICByZXBvc2l0b3J5IHdpdGggZnVsbG5hbWUgPGNvZGU+dmVyc2lvbmV5ZS92ZXllPC9jb2RlPiBoYXMgdG8gdHJhbnNmb3JtZWQKdG8gPGNvZGU+dmVyc2lvbmV5ZTp2ZXllPC9jb2RlPi48L3A+Cgo=
+        displayName: remove imported project
+        queryParameters:
+          branch?:
+            type: string
+            description: the name of the branch
+            displayName: branch
+        responses:
+          200:
+            description: No response was specified
+      post:
+        description: !!binary |-
+          CjxwPlVzZSB0aGlzIEVuZHBvaW50IHRvIGltcG9ydCBhIHByb2plY3QgZmlsZSBmcm9tIEdpdEh1Yi4gVGhpcyB3aWxsIGNyZWF0ZSBhIG5ldyBwcm9qZWN0IG9uIFZlcnNpb25FeWUuPC9wPgoKPHA+RHVlIHRoZSBsaW1pdHMgb2Ygb3VyIGN1cnJlbnQgQVBJIGZyYW1ld29yaywgdGhlIHJlcG8ga2V5IGhhcyB0byBiZQplbmNvZGVkIGFzIHVybC1zYWZlIHN0cmluZy4gVGhhdCBtZWFucyBhbGwgw6LCgMKYL8OiwoDCmSBoYXMgdG8gYmUgcmVwbGFjZWQgd2l0aApjb2xvbnMgw6LCgMKYOsOiwoDCmSBhbmQgw6LCgMKYLsOiwoDCmSBoYXMgdG8gYmUgcmVwbGFjZWQgd2l0aCDDosKAwph+w6LCgMKZLjwvcD4KCjxwPkZvciBleGFtcGxlLCAgcmVwb3NpdG9yeSB3aXRoIGZ1bGxuYW1lIDxjb2RlPnZlcnNpb25leWUvdmV5ZTwvY29kZT4gaGFzIHRvIHRyYW5zZm9ybWVkCnRvIDxjb2RlPnZlcnNpb25leWU6dmV5ZTwvY29kZT4uPC9wPgoK
+        displayName: imports project file from github
+        responses:
+          200:
+            description: No response was specified
+    get:
+      description: |2+
+
+        <p>This endpoint shows all imported repositories from your Github account.</p>
+
+        <p>This enpoint expects that you have a GitHub account connected and the token
+        is still valid. If that is not the case please visit <strong>https://www.versioneye.com/settings/connect</strong>.
+        to update your GitHub credentials.</p>
+
+        <p>If it shows no or old data, then you can use the <code>github/sync</code> endpoint
+        to update your account with the current meta data from GitHub.</p>
+
+      displayName: lists your's github repos
+      queryParameters:
+        lang?:
+          type: string
+          description: Filter by language
+          displayName: lang
+        private?:
+          type: boolean
+          description: Filter by visibility
+          displayName: private
+        org_name?:
+          type: string
+          description: Filter by name of organization
+          displayName: org_name
+        org_type?:
+          type: string
+          description: Filter by type of organization
+          displayName: org_type
+        page?:
+          type: string
+          description: Number of page
+          displayName: page
+        only_imported?:
+          type: boolean
+          description: Show only imported repositories
+          displayName: only_imported
+      responses:
+        200:
+          description: No response was specified
+  /me:
+    /comments:
+      get:
+        displayName: shows comments of authorized user
+        queryParameters:
+          page?:
+            type: integer
+            description: page number for pagination
+            displayName: page
+        responses:
+          200:
+            description: No response was specified
+    /favorites:
+      get:
+        displayName: shows the packages you are following
+        queryParameters:
+          page?:
+            type: integer
+            description: page number for pagination
+            displayName: page
+        responses:
+          200:
+            description: No response was specified
+    /notifications:
+      get:
+        description: |2+
+
+          <p>This Endpoint returns the 30 latest notifications.</p>
+
+          <p>If there are new versions out there for software packages you follow directly on VersionEye, then
+          each new version is a new <strong>notification</strong> for your account.</p>
+
+        displayName: shows unread notifications of authorized user
+        responses:
+          200:
+            description: No response was specified
+    get:
+      description: |2+
+
+        <p>On Swagger, you can create session by adding additional parameter :api_key.</p>
+
+      displayName: shows profile of authorized user
+      responses:
+        200:
+          description: No response was specified
+  /organisations:
+    /{orga_name}:
+      uriParameters:
+        orga_name:
+          type: string
+          displayName: orga_name
+      /inventory:
+        get:
+          description: |2+
+
+            <p>Find a detailed description here: https://github.com/versioneye/versioneye-api/blob/master/docs/api/v2/organisation.md</p>
+
+          displayName: Returns the inventory list of the organisation
+          queryParameters:
+            team_name?:
+              type: string
+              description: Filter by team name
+              displayName: team_name
+            language?:
+              type: string
+              description: Filter by programming language
+              displayName: language
+            project_version?:
+              type: string
+              description: Filter down by project version
+              displayName: project_version
+            post_filter?:
+              type: string
+              description: Post processing filter. Possible values are 'ALL', 'duplicates_only', 'show_duplicates'
+              displayName: post_filter
+          responses:
+            200:
+              description: No response was specified
+  /products:
+    /search:
+      /{q}:
+        uriParameters:
+          q:
+            type: string
+            description: Query string. At least 2 characters.
+            displayName: q
+        get:
+          description: !!binary |-
+            CjxwPlRoaXMgcmVzb3VyY2UgcmV0dXJucyBzYW1lIHJlc3VsdHMgYXMgb3VyIHdlYiBhcHBsaWNhdGlvbi4gQnV0IHlvdSBnZXQgaXQgYXMgSlNPTiBvYmplY3RzIC0KdGhlIHJlc3VsdCBpcyBhbiBKU09OIGFycmF5IG9mIHByb2R1Y3Qgb2JqZWN0cy48L3A+Cgo8cD5XaGVuIHRoZXJlw6LCgMKZcyBubyBtYXRjaCBmb3IgdGhlIHF1ZXJ5LCB0aGUgcmVzdWx0IGFycmF5IHdpbGwgYmUgZW1wdHkuPC9wPgoK
+          displayName: search packages
+          queryParameters:
+            lang?:
+              type: string
+              description: "Filter results by programming languages;\n           \
+                \                       For filtering multiple languages submit a\
+                \ comma separated list of language strings.\n                    \
+                \            "
+              displayName: lang
+            g?:
+              type: string
+              description: Filter by GroupID. This is Java/Maven specific
+              displayName: g
+            page?:
+              type: integer
+              description: Specify page for paging
+              displayName: page
+          responses:
+            200:
+              description: No response was specified
+    /{lang}:
+      uriParameters:
+        lang:
+          type: string
+          description: '"Name of programming language"'
+          displayName: lang
+      /{prod_key}:
+        uriParameters:
+          prod_key:
+            type: string
+            description: '"Encoded product key, replace all `/` and `.`'
+            displayName: prod_key
+        /follow:
+          get:
+            description: |2+
+
+              <p>Please replace all slashes <code>/</code> through colons <code>:</code> and all dots <code>.</code> through <code>~</code>!</p>
+
+              <p>Example: The clojure package <code>yummy.json/json</code> has to be transformed to  <code>yummy~json:json</code>.</p>
+
+              <h4 id="notes-about-status-codes">Notes about status codes</h4>
+
+              <p>This resource will returns the status code 404 if there is no product
+              for the given prod_key.</p>
+
+            displayName: check your following status
+            responses:
+              200:
+                description: No response was specified
+          delete:
+            description: |2+
+
+              <p>Please replace all slashes <code>/</code> through colons <code>:</code> and all dots <code>.</code> through <code>~</code>!</p>
+
+              <p>Example: The clojure package <code>yummy.json/json</code> has to be transformed to  <code>yummy~json:json</code>.</p>
+
+              <h4 id="response-codes">Response codes</h4>
+
+              <ul>
+                <li>400 - bad request; you used wrong product key;</li>
+                <li>401 - unauthorized - please append api_key</li>
+                <li>403 - forbidden; you are not authorized; or just missed api_key;</li>
+              </ul>
+
+            displayName: unfollow given software package
+            responses:
+              200:
+                description: No response was specified
+          post:
+            description: |2+
+
+              <p>Please replace all slashes <code>/</code> through colons <code>:</code> and all dots <code>.</code> through <code>~</code>!</p>
+
+              <p>Example: The clojure package <code>yummy.json/json</code> has to be transformed to  <code>yummy~json:json</code>.</p>
+
+              <h4 id="notes-about-status-codes">Notes about status codes</h4>
+
+              <p>It will respond 404, when you are using wrong product key or encode it uncorrectly.</p>
+
+            displayName: follow your favorite software package
+            responses:
+              200:
+                description: No response was specified
+        /references:
+          get:
+            description: |2+
+
+              <p>It returns the references of a package.</p>
+
+              <p>Please replace all slashes <code>/</code> through colons <code>:</code> and all dots <code>.</code> through <code>~</code>!</p>
+
+              <p>Example: The clojure package <code>yummy.json/json</code> has to be transformed to  <code>yummy~json:json</code>.</p>
+
+              <h4 id="notes-about-status-codes">Notes about status codes</h4>
+
+              <p>This resource will return the status code 404 if there is no product for
+              the given prod_key or the product has 0 references.</p>
+
+            displayName: references
+            queryParameters:
+              page?:
+                type: integer
+                description: Page for paging
+                displayName: page
+            responses:
+              200:
+                description: No response was specified
+        /versions:
+          get:
+            description: |2+
+
+              <p>Please replace all slashes <code>/</code> through colons <code>:</code> and all dots <code>.</code> through <code>~</code>!</p>
+
+              <p>Example: The clojure package <code>yummy.json/json</code> has to be transformed to  <code>yummy~json:json</code>.</p>
+
+              <h4 id="notes-about-status-codes">Notes about status codes</h4>
+
+              <ul>
+                <li>
+                  <p>API returns 404, when the product with given product key doesnt exists.</p>
+                </li>
+                <li>
+                  <p>Response 302 means that you didnt encode prod_key correctly.* (Replace all dots &amp; slashes ) *</p>
+                </li>
+              </ul>
+
+            displayName: list versions of a package
+            responses:
+              200:
+                description: No response was specified
+        /{prod_version}:
+          uriParameters:
+            prod_version:
+              type: string
+              description: ' product version '
+              displayName: prod_version
+          /scm_changes:
+            post:
+              description: |2+
+
+                <p>This resource can parse a changelog.xml from the maven-changelog-plugin, assign
+                it to a specific artifact and display the changelog infos on the product page.</p>
+
+                <p>Please replace all slashes <code>/</code> through colons <code>:</code> and all dots <code>.</code> through <code>~</code>!</p>
+
+                <p>Example: The clojure package <code>yummy.json/json</code> has to be transformed to  <code>yummy~json:json</code>.</p>
+
+                <h4 id="notes-about-status-codes">Notes about status codes</h4>
+
+                <p>It will respond 404, when you are using wrong product key or encode it uncorrectly.</p>
+
+              displayName: upload scm changelogs to an artifact
+              responses:
+                200:
+                  description: No response was specified
+        get:
+          description: |2+
+
+            <p>Please replace all slashes <code>/</code> through colons <code>:</code> and all dots <code>.</code> through <code>~</code>!</p>
+
+            <p>Example: The clojure package <code>yummy.json/json</code> has to be transformed to  <code>yummy~json:json</code>.</p>
+
+            <h4 id="notes-about-status-codes">Notes about status codes</h4>
+
+            <ul>
+              <li>
+                <p>API returns 404, when the product with given product key doesnt exists.</p>
+              </li>
+              <li>
+                <p>Response 302 means that you didnt encode prod_key correctly.* (Replace all dots &amp; slashes ) *</p>
+              </li>
+            </ul>
+
+          displayName: detailed information for specific package
+          queryParameters:
+            prod_version?:
+              type: string
+              description: '"Version string"'
+              displayName: prod_version
+          responses:
+            200:
+              description: No response was specified
+  /projects:
+    /{group_id}:
+      uriParameters:
+        group_id:
+          type: string
+          description: GroupId of the parent project
+          displayName: group_id
+      /{artifact_id}:
+        uriParameters:
+          artifact_id:
+            type: string
+            description: ArtifactId of the parent project
+            displayName: artifact_id
+        /merge_ga:
+          /{child_id}:
+            uriParameters:
+              child_id:
+                type: string
+                description: Project ID of the child
+                displayName: child_id
+            get:
+              description: !!binary |-
+                CjxwPlRoaXMgZW5kcG9pbnQgbWVyZ2VzIGEgcHJvamVjdCAoY2hpbGRfaWQpIGludG8gYW5vdGhlciBwcm9qZWN0IChncm91cF9pZC9hcnRpZmFjdF9pZCkuClRoaXMgZW5kcG9pbnQgaXMgc3BlY2lhbGx5IGZvciBNYXZlbiBiYXNlZCBwcm9qZWN0cyEKVG8gdXNlIHRoaXMgcmVzb3VyY2UgeW91IG5lZWQgZWl0aGVyIGFuIGFjdGl2ZSBzZXNzaW9uIG9yIHlvdSBoYXZlIHRvIGFwcGVuZAp5b3VyIEFQSSBLZXkgdG8gdGhlIFVSTCBhcyBwYXJhbWV0ZXIuIEZvciBleGFtcGxlOiDDosKAwpw/YXBpX2tleT02NjZfeW91cl9hcGlfa2V5XzY2NsOiwoDCnTwvcD4KCg==
+              displayName: merge a project into another one
+              responses:
+                200:
+                  description: No response was specified
+    /{parent_id}:
+      uriParameters:
+        parent_id:
+          type: string
+          description: Project ID of the parent
+          displayName: parent_id
+      /merge:
+        /{child_id}:
+          uriParameters:
+            child_id:
+              type: string
+              description: Project ID of the child
+              displayName: child_id
+          get:
+            description: !!binary |-
+              CjxwPlRoaXMgZW5kcG9pbnQgbWVyZ2VzIGEgcHJvamVjdCAoY2hpbGRfaWQpIGludG8gYW5vdGhlciBwcm9qZWN0IChwYXJlbnRfaWQpLgpUbyB1c2UgdGhpcyByZXNvdXJjZSB5b3UgbmVlZCBlaXRoZXIgYW4gYWN0aXZlIHNlc3Npb24gb3IgeW91IGhhdmUgdG8gYXBwZW5kCnlvdXIgQVBJIEtleSB0byB0aGUgVVJMIGFzIHBhcmFtZXRlci4gRm9yIGV4YW1wbGU6IMOiwoDCnD9hcGlfa2V5PTY2Nl95b3VyX2FwaV9rZXlfNjY2w6LCgMKdPC9wPgoK
+            displayName: merge a project into another one
+            responses:
+              200:
+                description: No response was specified
+      /unmerge:
+        /{child_id}:
+          uriParameters:
+            child_id:
+              type: string
+              description: Project ID of the child
+              displayName: child_id
+          get:
+            description: !!binary |-
+              CjxwPlRoaXMgZW5kcG9pbnQgdW5tZXJnZXMgYSBwcm9qZWN0IChjaGlsZF9pZCkgZnJvbSBhbm90aGVyIHByb2plY3QgKHBhcmVudF9pZCkuIEl0IG1ha2VzIHRoZQpjaGlsbGQgYWdhaW4gYSBzZXBhcmF0ZSBwcm9qZWN0IQpUbyB1c2UgdGhpcyByZXNvdXJjZSB5b3UgbmVlZCBlaXRoZXIgYW4gYWN0aXZlIHNlc3Npb24gb3IgeW91IGhhdmUgdG8gYXBwZW5kCnlvdXIgQVBJIEtleSB0byB0aGUgVVJMIGFzIHBhcmFtZXRlci4gRm9yIGV4YW1wbGU6IMOiwoDCnD9hcGlfa2V5PTY2Nl95b3VyX2FwaV9rZXlfNjY2w6LCgMKdPC9wPgoK
+            displayName: unmerge a project
+            responses:
+              200:
+                description: No response was specified
+    /{project_key}:
+      uriParameters:
+        project_key:
+          type: string
+          description: Project ID
+          displayName: project_key
+      /licenses:
+        get:
+          description: !!binary |-
+            CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+          displayName: get grouped view of licences for dependencies
+          responses:
+            200:
+              description: No response was specified
+      get:
+        description: |
+          <p>It shows detailed info of your project.</p>
+        displayName: shows the project's information
+        responses:
+          200:
+            description: No response was specified
+      delete:
+        description: !!binary |-
+          CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+        displayName: delete given project
+        responses:
+          200:
+            description: No response was specified
+      post:
+        description: !!binary |-
+          CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+        displayName: update project with new file
+        responses:
+          200:
+            description: No response was specified
+    get:
+      description: !!binary |-
+        CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+      displayName: list of projects
+      queryParameters:
+        orga_name?:
+          type: string
+          description: The name of the organisation the project is assigned to.
+          displayName: orga_name
+        team_name?:
+          type: string
+          description: The name of the team in the organisation this project is assigned to.
+          displayName: team_name
+      responses:
+        200:
+          description: No response was specified
+    post:
+      description: !!binary |-
+        CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+      displayName: upload project file and create a new project
+      responses:
+        200:
+          description: No response was specified
+  /security:
+    get:
+      displayName: Security Vulnerabilities
+      queryParameters:
+        language:
+          type: string
+          description: Filter by programming languages
+          displayName: language
+        prod_key?:
+          type: string
+          description: prod_key of the package
+          displayName: prod_key
+        page?:
+          type: integer
+          description: Specify page for paging
+          displayName: page
+        asc_sort?:
+          type: string
+          description: Asc sort by value
+          displayName: asc_sort
+        desc_sort?:
+          type: string
+          description: Desc sort by value
+          displayName: desc_sort
+      responses:
+        200:
+          description: No response was specified
+  /services:
+    /ping:
+      get:
+        displayName: Answers to request with basic pong.
+        responses:
+          200:
+            description: No response was specified
+  /sessions:
+    get:
+      description: |+
+        <p>If current user has active session, then this
+                        method will return 200 with short user profile.
+                        For othercase, it will return error message with status code 401.</p>
+
+      displayName: returns session info for authorized users
+      responses:
+        200:
+          description: No response was specified
+    delete:
+      description: !!binary |-
+        PHA+Q2xvc2UgY3VycmVudCBzZXNzaW9uLiBJdMOiwoDCmXMgdmVyeSBoYW5keSBtZXRob2Qgd2hlbiB5b3UgcmUtZ2VuZXJhdGVkCiAgICAgICAgICAgICAgICAgIHlvdXIgY3VycmVudCBBUEkta2V5LjwvcD4K
+      displayName: delete current session aka log out.
+      responses:
+        200:
+          description: No response was specified
+    post:
+      description: |
+        <p>You need to append your api_key to request.</p>
+      displayName: creates new sessions
+      responses:
+        200:
+          description: No response was specified
+  /users:
+    /{username}:
+      uriParameters:
+        username:
+          type: string
+          description: username
+          displayName: username
+      /comments:
+        get:
+          displayName: shows user's comments
+          queryParameters:
+            page?:
+              type: integer
+              description: pagination number
+              displayName: page
+          responses:
+            200:
+              description: No response was specified
+      /favorites:
+        get:
+          displayName: shows user's favorite packages
+          queryParameters:
+            page?:
+              type: integer
+              description: Pagination number
+              displayName: page
+          responses:
+            200:
+              description: No response was specified
+      get:
+        displayName: shows profile of given user_id
+        responses:
+          200:
+            description: No response was specified

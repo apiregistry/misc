@@ -1,0 +1,415 @@
+#%RAML 1.0
+title: Jirafe Events
+version: 2.0.0
+baseUri: event.jirafe.com/v2
+description: API endpoins for sending Jirafe events
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  oauth2_accessCode:
+    type: OAuth 2.0
+    settings:
+      authorizationGrants:
+      - authorization_code
+      authorizationUri: https://account.jirafe.com/oauth2/auth_token
+      accessTokenUri: https://account.jirafe.com/oauth2/code
+      scopes:
+      - write
+  oauth2_implicit:
+    type: OAuth 2.0
+    settings:
+      authorizationGrants:
+      - implicit
+      authorizationUri: https://account.jirafe.com/oauth2/authorize
+      accessTokenUri: https://account.jirafe.com/oauth2/authorize
+      scopes:
+      - write
+types:
+  Attribute:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      value:
+        type: string
+  BaseProduct:
+    type: object
+    properties:
+      code?:
+        type: string
+      id?:
+        type: string
+      name?:
+        type: string
+  Batch:
+    type: object
+    properties:
+      cart?:
+        type: array
+        items:
+          type: Cart
+      category?:
+        type: array
+        items:
+          type: Category
+      customer?:
+        type: array
+        items:
+          type: Customer
+      employee?:
+        type: array
+        items:
+          type: object
+      order?:
+        type: array
+        items:
+          type: Order
+      product?:
+        type: array
+        items:
+          type: Product
+    description: batch json of events
+  Cart:
+    type: object
+    properties:
+      cart_id?:
+        type: string
+      change_date:
+        type: datetime
+      cookies?:
+        type: object
+      create_date:
+        type: datetime
+      currency:
+        type: string
+      customer:
+        type: Customer
+      id:
+        type: string
+      items:
+        type: array
+        items:
+          type: CartItem
+      previous_items?:
+        type: array
+        items:
+          type: CartItem
+      subtotal:
+        type: number
+      total:
+        type: number
+      total_discounts:
+        type: number
+      total_payment_cost:
+        type: number
+      total_shipping:
+        type: number
+      total_tax:
+        type: number
+      visit?:
+        type: Visit
+    description: cart json for the event
+  CartItem:
+    type: object
+    properties:
+      cart_item_number:
+        type: string
+      change_date:
+        type: datetime
+      create_date:
+        type: datetime
+      discount_price:
+        type: number
+      id:
+        type: string
+      price:
+        type: number
+      product:
+        type: Product
+      quantity:
+        type: integer
+  Catalog:
+    type: object
+    properties:
+      id:
+        type: string
+      name?:
+        type: string
+      version_id?:
+        type: string
+  Category:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    description: category json for the event
+  Customer:
+    type: object
+    properties:
+      active_flag?:
+        type: boolean
+      change_date:
+        type: datetime
+      company?:
+        type: string
+      cookies?:
+        type: object
+      create_date:
+        type: datetime
+      department?:
+        type: string
+      email?:
+        type: string
+      first_name?:
+        type: string
+      id:
+        type: string
+      last_name?:
+        type: string
+      marketing_opt_in?:
+        type: boolean
+      name?:
+        type: string
+      phone?:
+        type: string
+      position?:
+        type: string
+    description: customer json for the event
+  Order:
+    type: object
+    properties:
+      cart_id?:
+        type: string
+      change_date:
+        type: datetime
+      create_date:
+        type: datetime
+      currency:
+        type: string
+      customer:
+        type: Customer
+      items:
+        type: array
+        items:
+          type: OrderItem
+      order_date:
+        type: datetime
+      order_number:
+        type: string
+      previous_items?:
+        type: array
+        items:
+          type: OrderItem
+      status:
+        type: string
+        enum:
+        - accepted
+      subtotal:
+        type: number
+      total:
+        type: number
+      total_discounts:
+        type: number
+      total_payment_cost:
+        type: number
+      total_shipping:
+        type: number
+      total_tax:
+        type: number
+  OrderCancelled:
+    type: object
+    properties:
+      cancel_date:
+        type: datetime
+      order_number:
+        type: string
+      status:
+        type: string
+        enum:
+        - cancelled
+    description: order json for the event
+  OrderItem:
+    type: object
+    properties:
+      change_date:
+        type: datetime
+      create_date:
+        type: datetime
+      discount_price:
+        type: number
+      id:
+        type: string
+      order_item_number:
+        type: string
+      price:
+        type: number
+      product:
+        type: Product
+      quantity:
+        type: integer
+      status:
+        type: string
+        enum:
+        - accepted
+        - cancelled
+  ParentCategory:
+    type: object
+    properties:
+      id:
+        type: string
+  Product:
+    type: object
+    properties:
+      ancestors?:
+        type: array
+        items:
+          type: string
+      attributes?:
+        type: array
+        items:
+          type: Attribute
+      base_product?:
+        type: BaseProduct
+      brand?:
+        type: string
+      catalog?:
+        type: Catalog
+      categories?:
+        type: array
+        items:
+          type: Category
+      change_date:
+        type: datetime
+      code:
+        type: string
+      create_date:
+        type: datetime
+      id:
+        type: string
+      images?:
+        type: array
+        items:
+          type: object
+      is_order:
+        type: boolean
+      is_sku:
+        type: boolean
+      name?:
+        type: string
+      rating?:
+        type: number
+      urls?:
+        type: Url
+      vendors?:
+        type: array
+        items:
+          type: Vendor
+    description: product json for the event
+  Url:
+    type: object
+    properties:
+      admin?:
+        type: string
+      store?:
+        type: string
+  Vendor:
+    type: object
+    properties:
+      id?:
+        type: string
+      name?:
+        type: string
+  Visit:
+    type: object
+    properties:
+      last_pageview_id:
+        type: string
+      pageview_id:
+        type: string
+      visit_id:
+        type: string
+      visitor_id:
+        type: string
+/{siteId}:
+  uriParameters:
+    siteId:
+      type: string
+      description: ID site to send the event
+      displayName: siteId
+  /batch:
+    post:
+      displayName: Send a batch for the given site
+      responses:
+        200:
+          description: No response was specified
+        400:
+          description: validation
+        403:
+          description: authorization
+        503:
+          description: unknown
+  /cart:
+    post:
+      displayName: Send a cart for the given site
+      responses:
+        200:
+          description: No response was specified
+        400:
+          description: validation
+        403:
+          description: authorization
+        503:
+          description: unknown
+  /category:
+    post:
+      displayName: Send a category for the given site
+      responses:
+        200:
+          description: No response was specified
+        400:
+          description: validation
+        403:
+          description: authorization
+        503:
+          description: unknown
+  /customer:
+    post:
+      displayName: Send a customer for the given site
+      responses:
+        200:
+          description: No response was specified
+        400:
+          description: validation
+        403:
+          description: authorization
+        503:
+          description: unknown
+  /order:
+    post:
+      displayName: Send a order for the given site
+      responses:
+        200:
+          description: No response was specified
+        400:
+          description: validation
+        403:
+          description: authorization
+        503:
+          description: unknown
+  /product:
+    post:
+      displayName: Send a product for the given site
+      responses:
+        200:
+          description: No response was specified
+        400:
+          description: validation
+        403:
+          description: authorization
+        503:
+          description: unknown

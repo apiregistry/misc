@@ -1,0 +1,641 @@
+#%RAML 1.0
+title: Mailsquad
+version: '0.9'
+baseUri: api.inboxroute.com/api
+description: MailSquad offers an affordable and super easy way to create, send and track delightful emails.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  mqApiKey:
+    type: Pass Through
+types:
+  Contact:
+    type: object
+    properties:
+      _id?:
+        type: string
+        description: Unique 16 characters ID
+      clientid?:
+        type: string
+        description: Unique 16 characters ID of the client owner
+      confirmed?:
+        type: datetime
+        description: Date+time subscriber confirmed his/her list opt-in
+      email?:
+        type: string
+        description: Email address
+      fullname?:
+        type: string
+        description: |
+          Full name (Last name, First Name) of the subscriber
+      ip?:
+        type: string
+        description: Subscriber's IP address when he/she confirmed list opt-in
+      lang?:
+        type: string
+        description: "ISO 639-1 language code of the subscriber. When lang is one\
+          \ the supported system language, all communication\nwill be in this language.\
+          \ \n"
+      listid?:
+        type: string
+        description: Unique 16 characters ID of the list owner
+      status?:
+        type: integer
+        description: |
+          Status (
+            1- Active,
+            2- Unconfirmed,
+            3- Unsubscribed,
+            4- Deleted,
+            5- Cleaned because of hard bounce or spam complaint)
+  ContactAdd:
+    type: object
+    properties:
+      confirmed?:
+        type: datetime
+        description: Date+time subscriber confirmed his/her list opt-in
+      email:
+        type: string
+        description: Email address
+      ip?:
+        type: string
+        description: Subscriber's IP address when he/she confirmed list opt-in
+      listid:
+        type: string
+        description: Unique 16 characters ID of the list owner
+      status?:
+        type: integer
+        description: |
+          Status (
+            1- Active,
+            2- Unconfirmed,
+            3- Unsubscribed,
+            4- Deleted,
+            5- Cleaned because of hard bounce or spam complaint)
+  ContactCustomFieldSchema:
+    type: object
+    properties:
+      key:
+        type: string
+        description: equivalent to html form input name attribute
+      label:
+        type: string
+        description: User friendly label describing the field
+      required?:
+        type: boolean
+        description: Is field required
+      type:
+        type: integer
+        description: |
+          Type (
+            1- String / text free form
+            2- Numeric / integer or decimal
+            3- Date / ISO 8601 format (YYYY/MM/DD)
+          )
+  ContactList:
+    type: object
+    properties:
+      _id?:
+        type: string
+        description: Unique 16 characters ID
+      clientid?:
+        type: string
+        description: Unique 16 characters ID of the client owner
+      created?:
+        type: datetime
+      customfields?:
+        type: array
+        description: Array of ContactCustomFieldSchema
+        items:
+          type: ContactCustomFieldSchema
+      eventcustomizations?:
+        type: array
+        description: Array of ContactListEventCustomization
+        items:
+          type: ContactListEventCustomization
+      name?:
+        type: string
+        description: Name of the contact list
+  ContactListEventCustomization:
+    type: object
+    properties:
+      redirecturl?:
+        type: string
+        description: full url of the destination landing page
+      type:
+        type: integer
+        description: |
+          Type (
+            1- Subscribe confirmation request landing page
+            2- Subscribe opt-in landing page
+            3- Unsubscribe confirmation landing page
+          )
+  ContactListPage:
+    type: object
+    properties:
+      page?:
+        type: array
+        description: Array of ContactList for that page
+        items:
+          type: ContactList
+      total?:
+        type: integer
+        description: Total number of items in query
+  ContactListUpdate:
+    type: object
+    properties:
+      customfields?:
+        type: array
+        description: Array of ContactCustomFieldSchema
+        items:
+          type: ContactCustomFieldSchema
+      eventcustomizations?:
+        type: array
+        description: Array of ContactListEventCustomization
+        items:
+          type: ContactListEventCustomization
+      name?:
+        type: string
+        description: Name of the contact list
+    description: Contact list properties to update
+  ContactPage:
+    type: object
+    properties:
+      page?:
+        type: array
+        description: Array of Contact for that page
+        items:
+          type: Contact
+      total?:
+        type: integer
+        description: Total number of items in query
+  ContactUpdate:
+    type: object
+    properties:
+      confirmed?:
+        type: datetime
+        description: Date+time subscriber confirmed his/her list opt-in
+      email?:
+        type: string
+        description: Email address
+      ip?:
+        type: string
+        description: Subscriber's IP address when he/she confirmed list opt-in
+      status?:
+        type: integer
+        description: |
+          Status (
+            1- Active,
+            2- Unconfirmed,
+            3- Unsubscribed,
+            4- Deleted,
+            5- Cleaned because of hard bounce or spam complaint)
+    description: Contact properties to update
+  NewId:
+    type: object
+    properties:
+      _id?:
+        type: string
+        description: The created ressource id
+  SubscriptionRequest:
+    type: object
+    properties:
+      confirmed?:
+        type: datetime
+        description: Date-time when subscriber opted-in. Required if singleoptin is true.
+      email:
+        type: string
+        description: Email address of the subscriber
+      fullname?:
+        type: string
+        description: |
+          Full name (Last name, First Name) of the subscriber
+      ip?:
+        type: string
+        description: Origin Ip of the subscriber when he/she opted-in. Required if singleoptin is true.
+      lang?:
+        type: string
+        description: |
+          ISO 639-1 language code of the subscriber. When lang is one the supported system language, all communication
+          will be in this language.
+      singleoptin?:
+        type: boolean
+        description: |
+          If true, no email will be sent asking user subscription confirmation. In that case, you must provide
+          the confirmation date (confirmed) and origin ip (ip) manually.
+    description: Subscription request
+/contacts:
+  /lists:
+    /{listid}:
+      uriParameters:
+        listid:
+          type: string
+          description: Unique 16 characters ID of the contact list
+          displayName: listid
+      delete:
+        description: Delete an existing contact list
+        responses:
+          200:
+            description: Empty response
+          401:
+            description: Invalid api key or key does not have access to this ressource
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classification?:
+                      type: string
+                      description: Type of error (AccesDenied)
+                    message?:
+                      type: string
+                      description: Human readable description of the error
+          404:
+            description: The requested resource was not found
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classification?:
+                      type: string
+                      description: Type of error (Object not found)
+                    message?:
+                      type: string
+                      description: Human readable description of the error
+      put:
+        description: Update an existing contact list
+        body:
+          application/json: ContactListUpdate
+        responses:
+          200:
+            description: Empty response
+          401:
+            description: Invalid api key or key does not have access to this ressource
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classification?:
+                      type: string
+                      description: Type of error (AccesDenied)
+                    message?:
+                      type: string
+                      description: Human readable description of the error
+          404:
+            description: The requested resource was not found
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classification?:
+                      type: string
+                      description: Type of error (Object not found)
+                    message?:
+                      type: string
+                      description: Human readable description of the error
+          422:
+            description: The request parameters were invalid
+            body:
+              application/json:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classification?:
+                      type: string
+                      description: Type of error (ValidationError)
+                    message?:
+                      type: string
+                      description: Human readable description of the error
+    get:
+      description: Get a paged result of contact lists.
+      queryParameters:
+        offset?:
+          type: integer
+          description: Skip that many records
+          displayName: offset
+        limit?:
+          type: integer
+          description: Maximum number of items in page
+          displayName: limit
+        sort?:
+          type: string
+          description: Property to sort by. Append '-' for descending order.
+          displayName: sort
+      responses:
+        200:
+          description: Page object
+          body:
+            application/json:
+              type: ContactListPage
+        401:
+          description: Invalid api key or key does not have access to this ressource
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (AccesDenied)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+        404:
+          description: The requested resource was not found
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (Object not found)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+        422:
+          description: The request parameters were invalid
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (ValidationError)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+    post:
+      description: Add a new contact list
+      body:
+        application/json: ContactListUpdate
+      responses:
+        200:
+          description: Page object
+          body:
+            application/json:
+              type: NewId
+        401:
+          description: Invalid api key or key does not have access to this ressource
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (AccesDenied)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+        422:
+          description: The request parameters were invalid
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (ValidationError)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+  /{contactid}:
+    uriParameters:
+      contactid:
+        type: string
+        description: Unique 16 characters ID of the contact
+        displayName: contactid
+    delete:
+      description: Delete an existing contact
+      responses:
+        200:
+          description: Empty response
+        401:
+          description: Invalid api key or key does not have access to this ressource
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (AccesDenied)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+        404:
+          description: The requested resource was not found
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (Object not found)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+    put:
+      description: Update an existing contact
+      body:
+        application/json: ContactUpdate
+      responses:
+        200:
+          description: Empty response
+        401:
+          description: Invalid api key or key does not have access to this ressource
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (AccesDenied)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+        404:
+          description: The requested resource was not found
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (Object not found)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+        422:
+          description: The request parameters were invalid
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (ValidationError)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+  get:
+    description: Get a paged result of contacts from a list
+    queryParameters:
+      listid?:
+        type: string
+        description: Unique 16 characters ID of the contact list to get contacts of
+        displayName: listid
+      offset?:
+        type: integer
+        description: Skip that many records
+        displayName: offset
+      limit?:
+        type: integer
+        description: Maximum number of items in page
+        displayName: limit
+      sort?:
+        type: string
+        description: Property to sort by. Append '-' for descending order.
+        displayName: sort
+    responses:
+      200:
+        description: Page object
+        body:
+          application/json:
+            type: ContactPage
+      401:
+        description: Invalid api key or key does not have access to this ressource
+        body:
+          application/json:
+            type: array
+            items:
+              type: object
+              properties:
+                classification?:
+                  type: string
+                  description: Type of error (AccesDenied)
+                message?:
+                  type: string
+                  description: Human readable description of the error
+      404:
+        description: The requested resource was not found
+        body:
+          application/json:
+            type: array
+            items:
+              type: object
+              properties:
+                classification?:
+                  type: string
+                  description: Type of error (Object not found)
+                message?:
+                  type: string
+                  description: Human readable description of the error
+      422:
+        description: The request parameters were invalid
+        body:
+          application/json:
+            type: array
+            items:
+              type: object
+              properties:
+                classification?:
+                  type: string
+                  description: Type of error (ValidationError)
+                message?:
+                  type: string
+                  description: Human readable description of the error
+/subscription:
+  /{listid}:
+    uriParameters:
+      listid:
+        type: string
+        description: Unique 16 characters ID of the contact list
+        displayName: listid
+    post:
+      description: |
+        Subscribe an email address to a list. This api call has the same behavior as
+        a regular subscribe form. However, single opt-in is allowed for system integration
+        purposes.
+
+        - If email address does not exist, a new contact will be added to the list.
+        - If email address exists custom fields will be updated and status will be put
+          to unconfirmed or active depending of singleoptin value.
+        - If current status if Active, this operation will only update the custom fields.
+        - If singleoptin is true, no email confirmation will be sent. In that case,
+          you must provide the subscribe's origin ip and confirmation date-time.
+      body:
+        application/json: SubscriptionRequest
+      responses:
+        204:
+          description: Empty response
+        401:
+          description: Invalid api key or key does not have access to this ressource
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (AccesDenied)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+        404:
+          description: The requested resource was not found
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (Object not found)
+                  message?:
+                    type: string
+                    description: Human readable description of the error
+        422:
+          description: The request parameters were invalid
+          body:
+            application/json:
+              type: array
+              items:
+                type: object
+                properties:
+                  classification?:
+                    type: string
+                    description: Type of error (ValidationError)
+                  message?:
+                    type: string
+                    description: Human readable description of the error

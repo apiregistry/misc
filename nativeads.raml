@@ -1,0 +1,280 @@
+#%RAML 1.0
+title: Native Ads Publisher
+version: 1.0.0
+baseUri: api.nativeads.com
+description: |
+  This is a Native Ads Publisher API it provides same functionality as Native Ads Publisher Account GUI.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  authResponse:
+    type: object
+    properties:
+      success?:
+        type: boolean
+      token?:
+        type: string
+  modelError:
+    type: object
+    properties:
+      errors?:
+        type: array
+        items:
+          type: string
+      success?:
+        type: boolean
+  reportsDailyItem:
+    type: object
+    properties:
+      clicks?:
+        type: string
+      cpc?:
+        type: string
+      ctr?:
+        type: string
+      date?:
+        type: string
+      earnings?:
+        type: string
+      impressions?:
+        type: string
+      net_ecpm?:
+        type: string
+      rpm?:
+        type: string
+  reportsDailyResponse:
+    type: object
+    properties:
+      items?:
+        type: array
+        items:
+          type: reportsDailyItem
+      success?:
+        type: boolean
+      total_count?:
+        type: integer
+      totals?:
+        type: totals
+  reportsWebsiteItem:
+    type: object
+    properties:
+      clicks?:
+        type: string
+      cpc?:
+        type: string
+      ctr?:
+        type: string
+      date?:
+        type: string
+      earnings?:
+        type: string
+      impressions?:
+        type: string
+      net_ecpm?:
+        type: string
+      rpm?:
+        type: string
+  reportsWebsiteResponse:
+    type: object
+    properties:
+      items?:
+        type: array
+        items:
+          type: reportsWebsiteItem
+      success?:
+        type: boolean
+      total_count?:
+        type: integer
+      totals?:
+        type: totals
+  reportsWidgetItem:
+    type: object
+    properties:
+      campaign?:
+        type: string
+        description: widget name
+      campaign_id?:
+        type: string
+        description: widget id
+      clicks?:
+        type: string
+      cpc?:
+        type: string
+      ctr?:
+        type: string
+      earnings?:
+        type: string
+      impressions?:
+        type: string
+      net_ecpm?:
+        type: string
+      rpm?:
+        type: string
+  reportsWidgetResponse:
+    type: object
+    properties:
+      items?:
+        type: array
+        items:
+          type: reportsWidgetItem
+      success?:
+        type: boolean
+      total_count?:
+        type: integer
+      totals?:
+        type: totals
+  totals:
+    type: object
+    properties:
+      total_clicks?:
+        type: string
+      total_cpc?:
+        type: string
+      total_ctr?:
+        type: string
+      total_earnings?:
+        type: string
+      total_impressions?:
+        type: string
+      total_net_ecpm?:
+        type: string
+      total_rpm?:
+        type: string
+/auth:
+  /default:
+    /login:
+      post:
+        description: Returns Native Ads Publisher API token
+        responses:
+          200:
+            description: authentication response
+            body:
+              application/json:
+                type: authResponse
+          400:
+            description: error message
+            body:
+              application/json:
+                type: modelError
+/publisher:
+  /reports:
+    /daily:
+      get:
+        description: Returns publisher statistics split by date
+        queryParameters:
+          token:
+            type: string
+            description: Native Ads Publisher API authentication token
+            displayName: token
+          startDate:
+            type: datetime
+            description: start date in format YYYY-MM-DD
+            displayName: startDate
+          endDate:
+            type: datetime
+            description: end date in format YYYY-MM-DD
+            displayName: endDate
+          limit:
+            type: integer
+            description: maximum number of results per page
+            displayName: limit
+            default: 100
+            format: int32
+          page:
+            type: integer
+            description: page number
+            displayName: page
+            default: 1
+            format: int32
+        responses:
+          200:
+            description: report response
+            body:
+              application/json:
+                type: reportsDailyResponse
+          400:
+            description: error message
+            body:
+              application/json:
+                type: modelError
+    /website:
+      get:
+        description: Returns publisher statistics split by website
+        queryParameters:
+          token:
+            type: string
+            description: Native Ads Publisher API authentication token
+            displayName: token
+          startDate:
+            type: datetime
+            description: start date in format YYYY-MM-DD
+            displayName: startDate
+          endDate:
+            type: datetime
+            description: end date in format YYYY-MM-DD
+            displayName: endDate
+          limit:
+            type: integer
+            description: maximum number of results per page
+            displayName: limit
+            default: 100
+            format: int32
+          page:
+            type: integer
+            description: page number
+            displayName: page
+            default: 1
+            format: int32
+        responses:
+          200:
+            description: report response
+            body:
+              application/json:
+                type: reportsWebsiteResponse
+          400:
+            description: authentication error
+            body:
+              application/json:
+                type: modelError
+    /widget:
+      get:
+        description: Returns publisher statistics split by widget
+        queryParameters:
+          token:
+            type: string
+            description: Native Ads Publisher API authentication token
+            displayName: token
+          startDate:
+            type: datetime
+            description: start date in format YYYY-MM-DD
+            displayName: startDate
+          endDate:
+            type: datetime
+            description: end date in format YYYY-MM-DD
+            displayName: endDate
+          limit:
+            type: integer
+            description: maximum number of results per page
+            displayName: limit
+            default: 100
+            format: int32
+          page:
+            type: integer
+            description: page number
+            displayName: page
+            default: 1
+            format: int32
+        responses:
+          200:
+            description: report response
+            body:
+              application/json:
+                type: reportsWidgetResponse
+          400:
+            description: authentication error
+            body:
+              application/json:
+                type: modelError

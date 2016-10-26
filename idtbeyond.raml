@@ -1,0 +1,446 @@
+#%RAML 1.0
+title: Active Documentation for /v1
+version: 1.1.7
+baseUri: api.idtbeyond.com/v1
+description: Our active docs provide the ability to test out your account and to see the responses to your queries. The services are RESTful, and are accessed using standard HTTP methods over a secure HTTPS channel. Requests and responses are currently sent in JSON format, and have a base URL of /v1.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+types:
+  Topups:
+    type: object
+    properties:
+      amount?:
+        type: integer
+        description: The amount, in cents, of the product you are purchasing. '500' = $5.00
+      carrier_code?:
+        type: string
+        description: Name of the mobile carrier. 'Claro'
+      client_transaction_id?:
+        type: string
+        description: UNIQUE 15 char ID you use to track topups. 'trans0123456789'
+      country_code?:
+        type: string
+        description: 2-digit code of the country in ISO 3166 format. 'GT'
+      mobile_number?:
+        type: string
+        description: Mobile number to topup. VALIDATE prior to submission. '50231234567'
+      plan?:
+        type: string
+        description: The Application plan being used. Case-sensitive. 'Sandbox' or 'Production'
+      product_code?:
+        type: string
+        description: Optional code to distinguish one particular product from another. '76560'
+      terminal_id?:
+        type: string
+        description: ID for the Terminal used to perform the topup. 'Kiosk 5'
+    description: Topups details
+  TopupsReports:
+    type: object
+    properties:
+      client_transaction_id?:
+        type: string
+        description: The UNIQUE 15 char ID used to track topups. 'trans0123456789'
+      date_from?:
+        type: string
+        description: The beginning date of the search IN YYYY-MM-DD format (America/New_York timezone). Not used in query by to_service_number. '2016-01-28'
+      date_to?:
+        type: string
+        description: The ending date of the search IN YYYY-MM-DD format (America/New_York timezone). Not used in query by to_service_number. '2016-01-28'
+      to_service_number?:
+        type: string
+        description: Enter the to_service_number returned in the response to track the current transaction status. '0123456789'
+      type_of_report?:
+        type: string
+        description: The type of query you would like to search by.
+    description: Topups reports request details
+  TopupsReversal:
+    type: object
+    properties:
+      client_transaction_id?:
+        type: string
+        description: UNIQUE 15 char ID you use to track topups. 'trans0123456789'
+      to_service_number?:
+        type: string
+        description: UNIQUE IDT transaction number found in the response of a successful topup request. '0123456789'
+    description: Topups details
+/iatu:
+  /balance:
+    get:
+      description: Returns a JSON of the account balance.
+      displayName: Account balance
+      headers:
+        x-idt-beyond-app-id:
+          type: string
+          description: Application ID you would like to use
+          displayName: x-idt-beyond-app-id
+          default: APP_ID
+        x-idt-beyond-app-key:
+          type: string
+          description: Application KEY you would like to use
+          displayName: x-idt-beyond-app-key
+          default: APP_KEY
+      responses:
+        200:
+          description: Successful balance JSON response
+  /charges:
+    /reports:
+      /all:
+        get:
+          description: Returns charges by date range.
+          displayName: List of account charges in JSON
+          queryParameters:
+            date_from:
+              type: string
+              description: The beginning date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_from
+              default: '2016-01-28'
+            date_to:
+              type: string
+              description: The ending date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_to
+              default: '2016-01-28'
+          headers:
+            x-idt-beyond-app-id:
+              type: string
+              description: Application ID you would like to use
+              displayName: x-idt-beyond-app-id
+              default: APP_ID
+            x-idt-beyond-app-key:
+              type: string
+              description: Application KEY you would like to use
+              displayName: x-idt-beyond-app-key
+              default: APP_KEY
+          responses:
+            200:
+              description: Successful charges JSON response
+      /all.csv:
+        get:
+          description: Returns charges by date range in CSV.
+          displayName: List of account charges in CSV
+          queryParameters:
+            date_from:
+              type: string
+              description: The beginning date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_from
+              default: '2016-01-28'
+            date_to:
+              type: string
+              description: The ending date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_to
+              default: '2016-01-28'
+          headers:
+            x-idt-beyond-app-id:
+              type: string
+              description: Application ID you would like to use
+              displayName: x-idt-beyond-app-id
+              default: APP_ID
+            x-idt-beyond-app-key:
+              type: string
+              description: Application KEY you would like to use
+              displayName: x-idt-beyond-app-key
+              default: APP_KEY
+          responses:
+            200:
+              description: Successful charges CSV response
+  /number-validator:
+    get:
+      description: Checks to verify if the phone number is valid for the country supplied.
+      displayName: Mobile number validation
+      queryParameters:
+        country_code:
+          type: string
+          description: 2-digit code of the country in ISO 3166 format. 'BR'
+          displayName: country_code
+          default: BR
+        mobile_number:
+          type: string
+          description: The mobile number you would like to validate. '5521983115555'
+          displayName: mobile_number
+          default: '5521983115555'
+      headers:
+        x-idt-beyond-app-id:
+          type: string
+          description: Application ID you would like to use
+          displayName: x-idt-beyond-app-id
+          default: APP_ID
+        x-idt-beyond-app-key:
+          type: string
+          description: Application KEY you would like to use
+          displayName: x-idt-beyond-app-key
+          default: APP_KEY
+      responses:
+        200:
+          description: Local value response
+  /products:
+    /promotions:
+      get:
+        description: Returns a JSON of the current promotions.
+        displayName: Current promotions
+        headers:
+          x-idt-beyond-app-id:
+            type: string
+            description: Application ID you would like to use
+            displayName: x-idt-beyond-app-id
+            default: APP_ID
+          x-idt-beyond-app-key:
+            type: string
+            description: Application KEY you would like to use
+            displayName: x-idt-beyond-app-key
+            default: APP_KEY
+        responses:
+          200:
+            description: Successful Promotions JSON response
+    /reports:
+      /all:
+        get:
+          description: Returns a JSON list of products, ranges, and their commissions percentages.
+          displayName: Get a list of products in JSON format
+          headers:
+            x-idt-beyond-app-id:
+              type: string
+              description: Application ID you would like to use
+              displayName: x-idt-beyond-app-id
+              default: APP_ID
+            x-idt-beyond-app-key:
+              type: string
+              description: Application KEY you would like to use
+              displayName: x-idt-beyond-app-key
+              default: APP_KEY
+          responses:
+            200:
+              description: Products JSON response
+      /all.csv:
+        get:
+          description: Returns a CSV of products, ranges, and their commissions percentages.
+          displayName: Get a list of products in CSV format
+          headers:
+            x-idt-beyond-app-id:
+              type: string
+              description: Application ID you would like to use
+              displayName: x-idt-beyond-app-id
+              default: APP_ID
+            x-idt-beyond-app-key:
+              type: string
+              description: Application KEY you would like to use
+              displayName: x-idt-beyond-app-key
+              default: APP_KEY
+          responses:
+            200:
+              description: Products CSV response
+      /local-value:
+        get:
+          description: Returns a CSV of products, ranges, and their commissions percentages.
+          displayName: Get the estimated Local Value of a product
+          queryParameters:
+            country_code:
+              type: string
+              description: 2-digit code of the country in ISO 3166 format. 'GT'
+              displayName: country_code
+              default: GT
+            carrier_code:
+              type: string
+              description: Name of the mobile carrier. 'Claro'
+              displayName: carrier_code
+              default: Claro
+            amount:
+              type: integer
+              description: This is the amount, in cents, of the product you are purchasing. '500' = $5.00
+              displayName: amount
+              default: 500
+            currency_code:
+              type: string
+              description: The currency code (ISO 4217) on the product you are querying. 'USD'
+              displayName: currency_code
+              default: USD
+          headers:
+            x-idt-beyond-app-id:
+              type: string
+              description: Application ID you would like to use
+              displayName: x-idt-beyond-app-id
+              default: APP_ID
+            x-idt-beyond-app-key:
+              type: string
+              description: Application KEY you would like to use
+              displayName: x-idt-beyond-app-key
+              default: APP_KEY
+          responses:
+            200:
+              description: Local value response
+  /topups:
+    /reports:
+      /all:
+        get:
+          description: Returns topups by date range.
+          displayName: List of account topups in JSON
+          queryParameters:
+            date_from:
+              type: string
+              description: The beginning date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_from
+              default: '2016-01-28'
+            date_to:
+              type: string
+              description: The ending date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_to
+              default: '2016-01-28'
+          headers:
+            x-idt-beyond-app-id:
+              type: string
+              description: Application ID you would like to use
+              displayName: x-idt-beyond-app-id
+              default: APP_ID
+            x-idt-beyond-app-key:
+              type: string
+              description: Application KEY you would like to use
+              displayName: x-idt-beyond-app-key
+              default: APP_KEY
+          responses:
+            200:
+              description: Successful topups JSON response
+      /all.csv:
+        get:
+          description: Returns topups by date range in CSV.
+          displayName: List of account topups in CSV
+          queryParameters:
+            date_from:
+              type: string
+              description: The beginning date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_from
+              default: '2016-01-28'
+            date_to:
+              type: string
+              description: The ending date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_to
+              default: '2016-01-28'
+          headers:
+            x-idt-beyond-app-id:
+              type: string
+              description: Application ID you would like to use
+              displayName: x-idt-beyond-app-id
+              default: APP_ID
+            x-idt-beyond-app-key:
+              type: string
+              description: Application KEY you would like to use
+              displayName: x-idt-beyond-app-key
+              default: APP_KEY
+          responses:
+            200:
+              description: Successful topups CSV response
+      /totals:
+        get:
+          description: Returns topups totals by date range.
+          displayName: Summary of account topups in JSON
+          queryParameters:
+            date_from:
+              type: string
+              description: The beginning date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_from
+              default: '2016-01-28'
+            date_to:
+              type: string
+              description: The ending date of the search IN YYYY-MM-DD format (America/New_York timezone). '2016-01-28'
+              displayName: date_to
+              default: '2016-01-28'
+          headers:
+            x-idt-beyond-app-id:
+              type: string
+              description: Application ID you would like to use
+              displayName: x-idt-beyond-app-id
+              default: APP_ID
+            x-idt-beyond-app-key:
+              type: string
+              description: Application KEY you would like to use
+              displayName: x-idt-beyond-app-key
+              default: APP_KEY
+          responses:
+            200:
+              description: Successful topups JSON response
+      post:
+        description: Search topups transactions, by date, with client_transaction_id or to_service_number. Use 'client_transaction_id' to search by transaction number, or 'to_service_number' to get transaction status.
+        displayName: Search topups transactions
+        headers:
+          x-idt-beyond-app-id:
+            type: string
+            description: Application ID you would like to use
+            displayName: x-idt-beyond-app-id
+            default: APP_ID
+          x-idt-beyond-app-key:
+            type: string
+            description: Application KEY you would like to use
+            displayName: x-idt-beyond-app-key
+            default: APP_KEY
+        body:
+          application/json: TopupsReports
+        responses:
+          200:
+            description: Successful topups JSON response
+    /reverse:
+      post:
+        description: Occasionally, a carrier will not be able to successfully complete a topup request. In this case, we will attempt to automatically reverse the transaction for you, and return the money into your account. In the case when this is not possible, you may need to request a reverse on the transaction that has a status of 'transaction_status' 'notredeemed'.
+        displayName: Reversal of a Topup
+        headers:
+          x-idt-beyond-app-id:
+            type: string
+            description: Application ID you would like to use
+            displayName: x-idt-beyond-app-id
+            default: APP_ID
+          x-idt-beyond-app-key:
+            type: string
+            description: Application KEY you would like to use
+            displayName: x-idt-beyond-app-key
+            default: APP_KEY
+        body:
+          application/json: TopupsReversal
+        responses:
+          200:
+            description: Successful charges JSON response
+    post:
+      description: Submits an IATU transaction request.
+      displayName: Topup a mobile phone
+      headers:
+        x-idt-beyond-app-id:
+          type: string
+          description: Application ID you would like to use
+          displayName: x-idt-beyond-app-id
+          default: APP_ID
+        x-idt-beyond-app-key:
+          type: string
+          description: Application KEY you would like to use
+          displayName: x-idt-beyond-app-key
+          default: APP_KEY
+      body:
+        application/json: Topups
+      responses:
+        201:
+          description: The transaction has been completed successfully.
+        202:
+          description: The transaction has been received, but the final status is unknown. Please query by the client_transaction_id to get the current status of the transaction.
+        400:
+          description: Invalid ID supplied
+        404:
+          description: X not found
+        405:
+          description: Validation exception
+        500:
+          description: There is an error in your transaction. Please check the error code contained in the result for more information.
+/status:
+  get:
+    description: Returns a JSON of the API status.
+    displayName: Status check
+    headers:
+      x-idt-beyond-app-id:
+        type: string
+        description: Application ID you would like to use
+        displayName: x-idt-beyond-app-id
+        default: APP_ID
+      x-idt-beyond-app-key:
+        type: string
+        description: Application KEY you would like to use
+        displayName: x-idt-beyond-app-key
+        default: APP_KEY
+    responses:
+      200:
+        description: Successful status JSON response
