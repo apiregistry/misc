@@ -1,0 +1,128 @@
+#%RAML 1.0
+title: Top Stories V1
+version: 1.0.0
+baseUri: api.nytimes.com/svc/topstories/v1
+description: Deprecated.  The Top Stories API provides JSON and JSONP lists of articles and associated images by section.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  apikey:
+    type: Pass Through
+types:
+  Article:
+    type: object
+    properties:
+      abstract?:
+        type: string
+      byline?:
+        type: string
+      created_date?:
+        type: string
+      des_facet?:
+        type: array
+        items:
+          type: string
+      geo_facet?:
+        type: array
+        items:
+          type: string
+      item_type?:
+        type: string
+      kicker?:
+        type: string
+      material_type_facet?:
+        type: string
+      multimedia?:
+        type: array
+        items:
+          type: object
+          properties:
+            copyright?:
+              type: string
+            subtype?:
+              type: string
+            format?:
+              type: string
+            width?:
+              type: integer
+            caption?:
+              type: string
+            type?:
+              type: string
+            url?:
+              type: string
+            height?:
+              type: integer
+      org_facet?:
+        type: string
+      per_facet?:
+        type: array
+        items:
+          type: string
+      published_date?:
+        type: string
+      section?:
+        type: string
+      subsection?:
+        type: string
+      title?:
+        type: string
+      updated_date?:
+        type: string
+      url?:
+        type: string
+/{section}.{format}:
+  uriParameters:
+    section:
+      type: string
+      description: The section the story appears in.
+      displayName: section
+      enum:
+      - home
+      - world
+      - national
+      - politics
+      - nyregion
+      - business
+      - opinion
+      - technology
+      - science
+      - health
+      - sports
+      - arts
+      - fashion
+      - dining
+      - travel
+      - magazine
+      - realestate
+    format:
+      type: string
+      description: if this is JSONP or JSON
+      displayName: format
+      enum:
+      - json
+      - jsonp
+  get:
+    description: |
+      The Top Stories API provides JSON and JSONP lists of articles and associated images by section.
+    displayName: Top Stories
+    queryParameters:
+      callback?:
+        type: string
+        description: |
+          The name of the function the API call results will be passed to. Required when using JSONP. This parameter has only one valid value: callback=callbackTopStories
+        displayName: callback
+    responses:
+      200:
+        description: An array of articles
+        body:
+          application/json:
+            type: object
+            properties:
+              results?:
+                type: array
+                items:
+                  type: Article
