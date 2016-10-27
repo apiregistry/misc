@@ -83,36 +83,35 @@ types:
           type: string
           description: The user Id
           displayName: userId
-      /:
-        get:
-          displayName: Validate that the code typed by user and the code sent are identical
-          queryParameters:
-            appId:
-              type: string
-              description: Application Id
-              displayName: appId
-            appSecret:
-              type: string
-              description: Application Secret
-              displayName: appSecret
-            phoneNumber:
-              type: string
-              description: Phone number provided by the user
-              displayName: phoneNumber
-            validationCode:
-              type: string
-              description: The validation code the user filled in
-              displayName: validationCode
-          responses:
-            200:
-              description: Description was not specified
-              body:
-                application/json:
-                  type: SmsValidationResponse
-            400:
-              description: Description was not specified
-            401:
-              description: Description was not specified
+      get:
+        displayName: Validate that the code typed by user and the code sent are identical
+        queryParameters:
+          appId:
+            type: string
+            description: Application Id
+            displayName: appId
+          appSecret:
+            type: string
+            description: Application Secret
+            displayName: appSecret
+          phoneNumber:
+            type: string
+            description: Phone number provided by the user
+            displayName: phoneNumber
+          validationCode:
+            type: string
+            description: The validation code the user filled in
+            displayName: validationCode
+        responses:
+          200:
+            description: Description was not specified
+            body:
+              application/json:
+                type: SmsValidationResponse
+          400:
+            description: Description was not specified
+          401:
+            description: Description was not specified
   /verify:
     post:
       displayName: Post sms validation request
@@ -153,45 +152,44 @@ types:
         type: string
         description: User Id given by provider (e.g. Facebook Id)
         displayName: userId
-    /:
-      get:
-        displayName: Get Score and Significance for existing user
-        queryParameters:
-          appId:
-            type: string
-            description: Application Id received when registered
-            displayName: appId
-          appSecret:
-            type: string
-            description: |2-
+    get:
+      displayName: Get Score and Significance for existing user
+      queryParameters:
+        appId:
+          type: string
+          description: Application Id received when registered
+          displayName: appId
+        appSecret:
+          type: string
+          description: |2-
 
-              Application secret received when registered
-            displayName: appSecret
-          token:
-            type: string
-            description: Social network user token
-            displayName: token
-        responses:
-          200:
-            description: Description was not specified
-            body:
-              application/json:
-                type: UserValidationResponse
-          401:
-            description: Description was not specified
-          404:
-            description: Description was not specified
-      post:
-        displayName: Post a new / existing user for validation
-        responses:
-          200:
-            description: No response was specified
-          202:
-            description: Description was not specified
-          401:
-            description: Description was not specified
-          404:
-            description: Description was not specified
+            Application secret received when registered
+          displayName: appSecret
+        token:
+          type: string
+          description: Social network user token
+          displayName: token
+      responses:
+        200:
+          description: Description was not specified
+          body:
+            application/json:
+              type: UserValidationResponse
+        401:
+          description: Description was not specified
+        404:
+          description: Description was not specified
+    post:
+      displayName: Post a new / existing user for validation
+      responses:
+        200:
+          description: No response was specified
+        202:
+          description: Description was not specified
+        401:
+          description: Description was not specified
+        404:
+          description: Description was not specified
 /vfv:
   post:
     displayName: Setup video validation for specific user, and get global unique identifier (guid) to launch widget with

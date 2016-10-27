@@ -4125,18 +4125,17 @@ types:
           type: string
           displayName: pid
       /franchises:
-        /:
-          get:
-            description: Get raw brand franchises
-            displayName: Get raw brand franchise
-            responses:
-              200:
-                description: Nitro response
-                body:
-                  application/json:
-                    type: nitro
-                  application/xml:
-                    type: nitro
+        get:
+          description: Get raw brand franchises
+          displayName: Get raw brand franchise
+          responses:
+            200:
+              description: Nitro response
+              body:
+                application/json:
+                  type: nitro
+                application/xml:
+                  type: nitro
       get:
         description: Get raw brand
         displayName: Get raw brand
@@ -4155,44 +4154,41 @@ types:
           type: string
           displayName: pid
       /ancestors:
-        /:
-          get:
-            description: Get raw ancestors
-            displayName: Get raw ancestors
-            responses:
-              200:
-                description: Nitro response
-                body:
-                  application/json:
-                    type: nitro
-                  application/xml:
-                    type: nitro
+        get:
+          description: Get raw ancestors
+          displayName: Get raw ancestors
+          responses:
+            200:
+              description: Nitro response
+              body:
+                application/json:
+                  type: nitro
+                application/xml:
+                  type: nitro
       /formats:
-        /:
-          get:
-            description: Get raw formats
-            displayName: Get raw formats
-            responses:
-              200:
-                description: Nitro response
-                body:
-                  application/json:
-                    type: nitro
-                  application/xml:
-                    type: nitro
+        get:
+          description: Get raw formats
+          displayName: Get raw formats
+          responses:
+            200:
+              description: Nitro response
+              body:
+                application/json:
+                  type: nitro
+                application/xml:
+                  type: nitro
       /genre_groups:
-        /:
-          get:
-            description: Get raw genre groups
-            displayName: Get raw genre groups
-            responses:
-              200:
-                description: Nitro response
-                body:
-                  application/json:
-                    type: nitro
-                  application/xml:
-                    type: nitro
+        get:
+          description: Get raw genre groups
+          displayName: Get raw genre groups
+          responses:
+            200:
+              description: Nitro response
+              body:
+                application/json:
+                  type: nitro
+                application/xml:
+                  type: nitro
       get:
         description: Get raw episode
         displayName: Get raw episode

@@ -10570,25 +10570,6 @@ types:
         400:
           description: Server rejection
 /webhooks:
-  /:
-    put:
-      displayName: updateWebhooks()
-      queryParameters:
-        key:
-          type: string
-          description: <a href="https://trello.com/1/appKey/generate"  target="_blank">Generate your application key</a>
-          displayName: key
-          default: undefined
-        token:
-          type: string
-          description: <a href="https://trello.com/docs/gettingstarted/index.html#getting-a-token-from-a-user"  target="_blank">Getting a token from a user</a>
-          displayName: token
-          default: undefined
-      responses:
-        200:
-          description: Success
-        400:
-          description: Server rejection
   /{idWebhook}:
     uriParameters:
       idWebhook:
@@ -10753,6 +10734,24 @@ types:
           description: Server rejection
   post:
     displayName: addWebhooks()
+    queryParameters:
+      key:
+        type: string
+        description: <a href="https://trello.com/1/appKey/generate"  target="_blank">Generate your application key</a>
+        displayName: key
+        default: undefined
+      token:
+        type: string
+        description: <a href="https://trello.com/docs/gettingstarted/index.html#getting-a-token-from-a-user"  target="_blank">Getting a token from a user</a>
+        displayName: token
+        default: undefined
+    responses:
+      200:
+        description: Success
+      400:
+        description: Server rejection
+  put:
+    displayName: updateWebhooks()
     queryParameters:
       key:
         type: string

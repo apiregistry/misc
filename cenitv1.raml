@@ -312,27 +312,6 @@ types:
             application/json:
               type: connection_role
   /data_type:
-    /:
-      get:
-        description: Returns a list of data types you've previously created. The data types are returned in sorted order, with the most recent DataType appearing first.
-        displayName: Returns a list of data types
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: array
-                items:
-                  type: data_type
-      post:
-        description: Creates or updates the specified data type by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-        displayName: Create or update a data type
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: data_type
     /{id}:
       uriParameters:
         id:
@@ -358,28 +337,27 @@ types:
             description: OK
           404:
             description: Item not found
+    get:
+      description: Returns a list of data types you've previously created. The data types are returned in sorted order, with the most recent DataType appearing first.
+      displayName: Returns a list of data types
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: data_type
+    post:
+      description: Creates or updates the specified data type by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+      displayName: Create or update a data type
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: data_type
   /flow:
-    /:
-      get:
-        description: Returns a list of flows you've previously created. The flows are returned in sorted order, with the most recent flow appearing first.
-        displayName: Returns a list of flows
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: array
-                items:
-                  type: flow
-      post:
-        description: Creates or updates the specified flow. Any parameters not provided will be left unchanged.
-        displayName: Create or update a flow
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: flow
     /{id}:
       uriParameters:
         id:
@@ -405,28 +383,27 @@ types:
             description: OK
           404:
             description: Item not found
+    get:
+      description: Returns a list of flows you've previously created. The flows are returned in sorted order, with the most recent flow appearing first.
+      displayName: Returns a list of flows
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: flow
+    post:
+      description: Creates or updates the specified flow. Any parameters not provided will be left unchanged.
+      displayName: Create or update a flow
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: flow
   /namespace:
-    /:
-      get:
-        description: Returns a list of namespaces you've previously created. The namespaces are returned in sorted order, with the most recent namespace appearing first.
-        displayName: Returns a list of namespaces
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: array
-                items:
-                  type: namespace
-      post:
-        description: Creates or updates the specified namespace. Any parameters not provided will be left unchanged.
-        displayName: Create or update a namespace
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: namespace
     /{id}:
       uriParameters:
         id:
@@ -452,28 +429,27 @@ types:
             description: OK
           404:
             description: Item not found
+    get:
+      description: Returns a list of namespaces you've previously created. The namespaces are returned in sorted order, with the most recent namespace appearing first.
+      displayName: Returns a list of namespaces
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: namespace
+    post:
+      description: Creates or updates the specified namespace. Any parameters not provided will be left unchanged.
+      displayName: Create or update a namespace
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: namespace
   /observer:
-    /:
-      get:
-        description: Returns a list of events you've previously created. The events are returned in sorted order, with the most recent event appearing first.
-        displayName: Returns a list of events
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: array
-                items:
-                  type: observer
-      post:
-        description: Creates or updates the specified event observer. Any parameters not provided will be left unchanged.
-        displayName: Create or update an event
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: observer
     /{id}:
       uriParameters:
         id:
@@ -499,28 +475,27 @@ types:
             description: OK
           404:
             description: Item not found
+    get:
+      description: Returns a list of events you've previously created. The events are returned in sorted order, with the most recent event appearing first.
+      displayName: Returns a list of events
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: observer
+    post:
+      description: Creates or updates the specified event observer. Any parameters not provided will be left unchanged.
+      displayName: Create or update an event
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: observer
   /scheduler:
-    /:
-      get:
-        description: Returns a list of schedulers you've previously created. The schedulers are returned in sorted order, with the most recent scheduler appearing first.
-        displayName: Returns a list of schedulers
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: array
-                items:
-                  type: scheduler
-      post:
-        description: Creates or updates the specified scheduler. Any parameters not provided will be left unchanged.
-        displayName: Create or update an scheduler
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: scheduler
     /{id}:
       uriParameters:
         id:
@@ -546,28 +521,27 @@ types:
             description: OK
           404:
             description: Item not found
+    get:
+      description: Returns a list of schedulers you've previously created. The schedulers are returned in sorted order, with the most recent scheduler appearing first.
+      displayName: Returns a list of schedulers
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: scheduler
+    post:
+      description: Creates or updates the specified scheduler. Any parameters not provided will be left unchanged.
+      displayName: Create or update an scheduler
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: scheduler
   /schema:
-    /:
-      get:
-        description: Returns a list of schemas you've previously created. The schemas are returned in sorted order, with the most recent schema appearing first.
-        displayName: Returns a list of schemas
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: array
-                items:
-                  type: schema
-      post:
-        description: Creates or updates the specified schema. Any parameters not provided will be left unchanged.
-        displayName: Create or update an schema
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: schema
     /{id}:
       uriParameters:
         id:
@@ -593,28 +567,27 @@ types:
             description: OK
           404:
             description: Item not found
+    get:
+      description: Returns a list of schemas you've previously created. The schemas are returned in sorted order, with the most recent schema appearing first.
+      displayName: Returns a list of schemas
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: schema
+    post:
+      description: Creates or updates the specified schema. Any parameters not provided will be left unchanged.
+      displayName: Create or update an schema
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: schema
   /translator:
-    /:
-      get:
-        description: Returns a list of translators you've previously created. The translators are returned in sorted order, with the most recent translator appearing first.
-        displayName: Returns a list of translators
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: array
-                items:
-                  type: translator
-      post:
-        description: Creates or updates the specified translator. Any parameters not provided will be left unchanged.
-        displayName: Create or update a translator
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: translator
     /{id}:
       uriParameters:
         id:
@@ -640,28 +613,27 @@ types:
             description: OK
           404:
             description: Item not found
+    get:
+      description: Returns a list of translators you've previously created. The translators are returned in sorted order, with the most recent translator appearing first.
+      displayName: Returns a list of translators
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: translator
+    post:
+      description: Creates or updates the specified translator. Any parameters not provided will be left unchanged.
+      displayName: Create or update a translator
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: translator
   /webhook:
-    /:
-      get:
-        description: Returns a list of webhooks you've previously created. The webhooks are returned in sorted order, with the most recent webhook appearing first.
-        displayName: Returns a list of webhooks
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: array
-                items:
-                  type: webhook
-      post:
-        description: Creates or updates the specified webhook. Any parameters not provided will be left unchanged.
-        displayName: Create or update a webhook
-        responses:
-          200:
-            description: OK
-            body:
-              application/json:
-                type: webhook
     /{id}:
       uriParameters:
         id:
@@ -687,3 +659,23 @@ types:
             description: OK
           404:
             description: Item not found
+    get:
+      description: Returns a list of webhooks you've previously created. The webhooks are returned in sorted order, with the most recent webhook appearing first.
+      displayName: Returns a list of webhooks
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: array
+              items:
+                type: webhook
+    post:
+      description: Creates or updates the specified webhook. Any parameters not provided will be left unchanged.
+      displayName: Create or update a webhook
+      responses:
+        200:
+          description: OK
+          body:
+            application/json:
+              type: webhook

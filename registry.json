@@ -251,14 +251,6 @@
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/data3_0.raml",
     "kind" : null
   }, {
-    "name" : "Data2CRM.API",
-    "org" : "Data2crm",
-    "version" : "1",
-    "description" : "<p>Make use of our in-depth documentation to get more information about the various functions of the service. Those willing to explore the mechanics of Data2CRM.API can test it in live regime using the short code samples.</p><p>Select CRM: <span id=\"docs-select-crm\" style=\"font-weight: bold\">Loading... please wait</span></p><p>Here are the API access keys:<br><b>X-API2CRM-USERKEY</b>: <span id=\"docs-user-key\">e2a6379ab878ae7e58119d4ec842bf9c926e05b5</span><br><b>X-API2CRM-CRMKEY</b>: <span id=\"docs-crm-key\">7ae5b17008fb414d84981191cf3b66a476ef8bef</span></p><p id=\"docs-crm-access\">The CRM access details are:<br><b>URL</b>: <a id=\"docs-crm-url\" href=\"https://login.salesforce.com/\" target=\"_blank\">https://login.salesforce.com/</a><br><b>E-mail / Username</b>: <span id=\"docs-crm-username\">developers.data2crm.api+1@magneticone.com</span><br><b>Password</b>: <span id=\"docs-crm-password\">data2crmapi123</span></p>",
-    "icon" : "http://favicon.yandex.net/favicon/www.data2crm.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/data2crm1.raml",
-    "kind" : null
-  }, {
     "name" : "DatumBox",
     "org" : "Datumbox",
     "version" : "1.0",
@@ -304,7 +296,7 @@
     "version" : "1.1.35 (2016-09-27 10:12:23 6a47e74011281b2aae7dc415)",
     "description" : "A simple and elegant way to explore cancer data",
     "icon" : "http://favicon.yandex.net/favicon/firebrowse.org",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/firebrowse1_1_35_(2016-09-27_10:12:23_6a47e74011281b2aae7dc415).raml",
+    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/firebrowse1_1_35_(2016-09-27_10_12_23_6a47e74011281b2aae7dc415).raml",
     "kind" : null
   }, {
     "name" : "Furkot Trips",
@@ -345,14 +337,6 @@
     "description" : "Sandbox API",
     "icon" : "http://favicon.yandex.net/favicon/getsandbox.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/getsandboxv1.raml",
-    "kind" : null
-  }, {
-    "name" : "Getty Images",
-    "org" : "Gettyimages",
-    "version" : "3.0",
-    "description" : "Build applications using the world's most powerful imagery",
-    "icon" : "http://favicon.yandex.net/favicon/www.gettyimages.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/gettyimages3_0.raml",
     "kind" : null
   }, {
     "name" : "GitHub",
@@ -843,14 +827,6 @@
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/reactome1_0.raml",
     "kind" : null
   }, {
-    "name" : "Rebilly",
-    "org" : "Rebilly",
-    "version" : "2.1",
-    "description" : null,
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/rebilly2_1.raml",
-    "kind" : null
-  }, {
     "name" : "Refuge Restrooms",
     "org" : "Refugerestrooms",
     "version" : "v1",
@@ -889,30 +865,6 @@
     "description" : "ScrapeWebsiteEmail is a service that exposes an api to fetch e-mails from a website.",
     "icon" : "http://favicon.yandex.net/favicon/raml.org",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/scrapewebsite0_1.raml",
-    "kind" : null
-  }, {
-    "name" : "Semantria",
-    "org" : "Semantria",
-    "version" : "4.0",
-    "description" : "Semantria applies Text and Sentiment Analysis to tweets, facebook posts, surveys, reviews or enterprise content.",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/semantria4_0.raml",
-    "kind" : null
-  }, {
-    "name" : "SendGrid v3",
-    "org" : "Sendgrid",
-    "version" : "3.0",
-    "description" : null,
-    "icon" : "http://favicon.yandex.net/favicon/sendgrid.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/sendgrid3_0.raml",
-    "kind" : null
-  }, {
-    "name" : "SimplyRETS",
-    "org" : "Simplyrets",
-    "version" : "1.0.0",
-    "description" : "The SimplyRETS API is an exciting step towards making it easier for\ndevelopers and real estate agents to build something awesome with\nreal estate data!\n\nThe documentation below makes live requests to our API using the\ntrial data. To get set up with the API using live MLS data, you\nmust have RETS credentials from your MLS, which you can then use to\ncreate an app with SimplyRETS. For more information on that\nprocess, please see our [FAQ](https://simplyrets.com/faq), [Getting\nStarted](https://simplyrets.com/blog/getting-set-up.html) page, or\n[contact us](https://simplyrets.com/\\#home-contact).\n\nBelow you'll find the API endpoints, query parameters, response bodies,\nand other information about using the SimplyRETS API. You can run\nqueries by clicking the 'Try it Out' button at the bottom of each\nsection.\n\n### Authentication\nThe SimplyRETS API uses Basic Authentication. When you create an\napp, you'll get a set of API credentials to access your\nlistings. If you're trying out the test data, you can use\n`simplyrets:simplyrets` for connecting to the API.\n\n### Media Types\nThe SimplyRETS API uses the `Accept` header to allow clients to\ncontrol media types (content versions). We maintain backwards\ncompatibility with API clients by allowing them to specify a\ncontent version. We highly recommend setting and explicity media\ntype when your application reaches production. Both the structure\nand content of our API response bodies is subject to change so we\ncan add new features while respecting the stability of applications\nwhich have already been developed.\n\nTo always use the latest SimplyRETS content version, simply use\n`application/json` in your application `Accept` header.\n\nIf you want to pin your clients media type to a specific version,\nyou can use the vendor-specific SimplyRETS media type, e.g.\n`application/vnd.simplyrets-v0.1+json\"`\n\nTo view all valid content-types for making an `OPTIONS`, make a\nrequest to the SimplyRETS api root\n\n`curl -XOPTIONS -u simplyrets:simplyrets https://api.simplyrets.com/`\n\nThe default media types used in our API responses may change in the\nfuture. If you're building an application and care about the\nstability of the API, be sure to request a specific media type in the\nAccept header as shown in the examples below.\n\nThe wordpress plugin automatically sets the `Accept` header for the\ncompatible SimplyRETS media types.\n\n### Pagination\n\nTo paginate through listings, start your query with these\nparameters: 'limit=500&lastId=0'. The 'lastId' is the important\npart, you can use any limit up to 500. When you receive the\nresponse from the API with the results, check the 'Link' header for\nthe 'next' link. That link is pre-built to access the next 'page'\nof listings. Alternatively, you can use the last listing's 'mlsId'\nfrom the previous request and use that in the next query. For\nexample:\n\nFirst query:\n\ncurl -u username:password 'https://api.simplyrets.com/properties?limit=500&lastId=0'\n\nIf the 'mlsId' in the last listing of the results is '1234567', then the next query will be:\n\ncurl -u username:password 'https://api.simplyrets.com/properties?limit=500&lastId=1234567'\n\n...and so one until you have reached the final page of listings.\n\nThere a few pieces of useful information about each request stored\nin the HTTP Headers:\n\n- `X-Total-Count` shows you the total amount of listings that match\n  your current query.\n- `Link` contains pre-built pagination links for accessing the next\n'page' of listings that match your query.\n\n### RETS Vendor Compliance\n\nMany RETS vendors have strict requirements for showing disclaimers\nwith specific information embedded. For example, in many areas it's\nrequired to show the time of the last listing refresh inside the\ndisclaimer.\n\nThe timestamp of the last listing refresh timestamp can be found in\none of two spots:\n\n- The `X-SimplyRETS-LastUpdate` header from `GET /properties` or `GET /properties/{mlsId}`\n\n- Calling the API root `/` or properties api endpoint `/properties`\n  with an OPTIONS request\n\n  - `OPTIONS /`\n\n    Using this route, you can see the timestamp for all RETS\n    vendors associated with your account.\n\n  - `OPTIONS /properties`\n",
-    "icon" : "http://favicon.yandex.net/favicon/simplyrets.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/simplyrets1_0_0.raml",
     "kind" : null
   }, {
     "name" : "Slack",

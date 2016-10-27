@@ -590,80 +590,6 @@ types:
         404:
           description: Not Found
 /identifiers:
-  /:
-    post:
-      description: Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
-      displayName: Analyse the post identifiers over the different species
-      queryParameters:
-        interactors?:
-          type: boolean
-          description: Include interactors
-          displayName: interactors
-          default: false
-        pageSize?:
-          type: integer
-          description: pathways per page
-          displayName: pageSize
-          default: 20
-          format: int32
-        page?:
-          type: integer
-          description: page number
-          displayName: page
-          default: 1
-          format: int32
-        sortBy?:
-          type: string
-          description: how to sort the result
-          displayName: sortBy
-          default: ENTITIES_PVALUE
-          enum:
-          - NAME
-          - TOTAL_ENTITIES
-          - TOTAL_INTERACTORS
-          - TOTAL_REACTIONS
-          - FOUND_ENTITIES
-          - FOUND_INTERACTORS
-          - FOUND_REACTIONS
-          - ENTITIES_RATIO
-          - ENTITIES_PVALUE
-          - ENTITIES_FDR
-          - REACTIONS_RATIO
-        order?:
-          type: string
-          description: specifies the order
-          displayName: order
-          default: ASC
-          enum:
-          - ASC
-          - DESC
-        resource?:
-          type: string
-          description: the resource to sort
-          displayName: resource
-          default: TOTAL
-          enum:
-          - TOTAL
-          - UNIPROT
-          - ENSEMBL
-          - CHEBI
-          - MIRBASE
-          - NCBI_PROTEIN
-          - EMBL
-          - COMPOUND
-      body:
-        text/plain:
-          type: string
-          description: 'A comma separated list with the identifiers of the pathways
-            of interest (NOTE: is plain text, not json)'
-      responses:
-        200:
-          description: No response was specified
-          body:
-            application/json:
-              type: AnalysisResult
-        400:
-          description: Bad request
   /form:
     /projection:
       post:
@@ -1060,6 +986,79 @@ types:
           description: Unsupported Media Type (only 'text/plain')
         422:
           description: The provided URL is not processable
+  post:
+    description: Use page and pageSize to reduce the amount of data retrieved. Use sortBy and order to sort the result by your preferred option. The resource field will filter the results to show only those corresponding to the preferred molecule type (TOTAL includes all the different molecules type)
+    displayName: Analyse the post identifiers over the different species
+    queryParameters:
+      interactors?:
+        type: boolean
+        description: Include interactors
+        displayName: interactors
+        default: false
+      pageSize?:
+        type: integer
+        description: pathways per page
+        displayName: pageSize
+        default: 20
+        format: int32
+      page?:
+        type: integer
+        description: page number
+        displayName: page
+        default: 1
+        format: int32
+      sortBy?:
+        type: string
+        description: how to sort the result
+        displayName: sortBy
+        default: ENTITIES_PVALUE
+        enum:
+        - NAME
+        - TOTAL_ENTITIES
+        - TOTAL_INTERACTORS
+        - TOTAL_REACTIONS
+        - FOUND_ENTITIES
+        - FOUND_INTERACTORS
+        - FOUND_REACTIONS
+        - ENTITIES_RATIO
+        - ENTITIES_PVALUE
+        - ENTITIES_FDR
+        - REACTIONS_RATIO
+      order?:
+        type: string
+        description: specifies the order
+        displayName: order
+        default: ASC
+        enum:
+        - ASC
+        - DESC
+      resource?:
+        type: string
+        description: the resource to sort
+        displayName: resource
+        default: TOTAL
+        enum:
+        - TOTAL
+        - UNIPROT
+        - ENSEMBL
+        - CHEBI
+        - MIRBASE
+        - NCBI_PROTEIN
+        - EMBL
+        - COMPOUND
+    body:
+      text/plain:
+        type: string
+        description: 'A comma separated list with the identifiers of the pathways
+          of interest (NOTE: is plain text, not json)'
+    responses:
+      200:
+        description: No response was specified
+        body:
+          application/json:
+            type: AnalysisResult
+      400:
+        description: Bad request
 /species:
   /homoSapiens:
     /{species}:

@@ -15,12 +15,11 @@ uses:
           description: 'Weather station to compare, values: cnareanl|cmsap|boyaenderrocat|areopuertopalma'
           displayName: stationName
           default: cnarenal
-      /:
-        get:
-          description: Get forecast and realtime information for known points<br/>None
-          responses:
-            200:
-              description: No response was specified
+      get:
+        description: Get forecast and realtime information for known points<br/>None
+        responses:
+          200:
+            description: No response was specified
   /getAemetStation:
     /{stationName}:
       uriParameters:
@@ -36,12 +35,11 @@ uses:
             description: 'Period of time to get the data. Options: lastdata lastday'
             displayName: period
             default: lastdata
-        /:
-          get:
-            description: Get data from the aemet stations<br/>None
-            responses:
-              200:
-                description: No response was specified
+        get:
+          description: Get data from the aemet stations<br/>None
+          responses:
+            200:
+              description: No response was specified
   /getForecastPoints:
     /{yatchclubid}:
       uriParameters:
@@ -78,40 +76,38 @@ uses:
             displayName: longitude
             default: 2.74
             format: float
-        /:
-          get:
-            description: Get timeseries forecast information<br/>None
-            queryParameters:
-              inittime?:
-                type: string
-                description: initial date for the forecast ISO string YYYY-MM-DDTHH:mm:SS.SZ
-                displayName: inittime
-              endtime?:
-                type: string
-                description: end date for the forecast ISO string YYYY-MM-DDTHH:mm:SS.SZ
-                displayName: endtime
-              days?:
-                type: integer
-                description: optional number of days in string. Will be added to init forecast date
-                displayName: days
-                format: int32
-              hours?:
-                type: integer
-                description: optional number of hours in string. Will be added to init forecast date
-                displayName: hours
-                format: int32
-              weather:
-                type: string
-                description: ' Comma separated values for the weather parameteres
-                  temperature,rain,wind_u,wind_v,gust,pressure,cloud,humidity&wave=height,direction,period'
-                displayName: weather
-              wave?:
-                type: string
-                description: ' Comma separated values for the wave parameteres height,direction,period'
-                displayName: wave
-            responses:
-              200:
-                description: No response was specified
+        get:
+          description: Get timeseries forecast information<br/>None
+          queryParameters:
+            inittime?:
+              type: string
+              description: initial date for the forecast ISO string YYYY-MM-DDTHH:mm:SS.SZ
+              displayName: inittime
+            endtime?:
+              type: string
+              description: end date for the forecast ISO string YYYY-MM-DDTHH:mm:SS.SZ
+              displayName: endtime
+            days?:
+              type: integer
+              description: optional number of days in string. Will be added to init forecast date
+              displayName: days
+              format: int32
+            hours?:
+              type: integer
+              description: optional number of hours in string. Will be added to init forecast date
+              displayName: hours
+              format: int32
+            weather:
+              type: string
+              description: ' Comma separated values for the weather parameteres temperature,rain,wind_u,wind_v,gust,pressure,cloud,humidity&wave=height,direction,period'
+              displayName: weather
+            wave?:
+              type: string
+              description: ' Comma separated values for the wave parameteres height,direction,period'
+              displayName: wave
+          responses:
+            200:
+              description: No response was specified
   /getSocibWeatherStation:
     /{stationName}:
       uriParameters:
@@ -128,12 +124,11 @@ uses:
               lastday'
             displayName: period
             default: lastdata
-        /:
-          get:
-            description: Get data from the socib bahia de palma buoy<br/>None
-            responses:
-              200:
-                description: No response was specified
+        get:
+          description: Get data from the socib bahia de palma buoy<br/>None
+          responses:
+            200:
+              description: No response was specified
   /getWeatherDisplay:
     /{stationName}:
       uriParameters:
@@ -142,22 +137,20 @@ uses:
           description: 'currently: ''cnarenal''|''campastilla'' | ''cncg'''
           displayName: stationName
           default: cnarenal
-      /:
-        get:
-          description: Get data from the weather display software<br/>None
-          queryParameters:
-            period:
-              type: string
-              description: Period of time to get the data latestdata|latesthour|latestday|dailylog
-              displayName: period
-              default: latestdata
-          responses:
-            200:
-              description: No response was specified
-  /getWebCams:
-    /:
       get:
-        description: Get forecast and realtime information for known points<br/>None
+        description: Get data from the weather display software<br/>None
+        queryParameters:
+          period:
+            type: string
+            description: Period of time to get the data latestdata|latesthour|latestday|dailylog
+            displayName: period
+            default: latestdata
         responses:
           200:
             description: No response was specified
+  /getWebCams:
+    get:
+      description: Get forecast and realtime information for known points<br/>None
+      responses:
+        200:
+          description: No response was specified

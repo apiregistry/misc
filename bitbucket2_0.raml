@@ -5120,23 +5120,6 @@ types:
           type: string
           displayName: linker_key
       /values:
-        /:
-          get:
-            description: ''
-            responses:
-              500:
-                description: Unexpected error.
-                body:
-                  application/json:
-                    type: error
-          delete:
-            description: ''
-            responses:
-              500:
-                description: Unexpected error.
-                body:
-                  application/json:
-                    type: error
         get:
           description: ''
           responses:
@@ -8704,150 +8687,6 @@ types:
           the team or the `UUID` of the team (surrounded by curly-braces (`{}`)).
         displayName: owner
     /projects:
-      /:
-        get:
-          description: ''
-          responses:
-            200:
-              description: A paginated list of projects that belong to the specified team.
-              body:
-                application/json:
-                  type: paginated_projects
-            403:
-              description: The requesting user isn't authorized to read the list of projects for the specified team.
-              body:
-                application/json:
-                  type: error
-            404:
-              description: A team doesn't exist at this location.
-              body:
-                application/json:
-                  type: error
-        post:
-          description: |-
-            Creates a new project.
-
-            Note that the avatar has to be embedded as either a data-url
-            or a URL to an external image as shown in the examples below:
-
-            ```
-            $ body=$(cat << EOF
-            {
-                "name": "Mars Project",
-                "key": "MARS",
-                "description": "Software for colonizing mars.",
-                "links": {
-                    "avatar": {
-                        "href": "data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/..."
-                    }
-                },
-                "is_private": false
-            }
-            EOF
-            )
-            $ curl -H "Content-Type: application/json" \
-                   -X POST \
-                   -d "$body" \
-                   https://api.bitbucket.org/2.0/teams/teams-in-space/projects/ | jq .
-            {
-              // Serialized project document
-            }
-            ```
-
-            or even:
-
-            ```
-            $ body=$(cat << EOF
-            {
-                "name": "Mars Project",
-                "key": "MARS",
-                "description": "Software for colonizing mars.",
-                "links": {
-                    "avatar": {
-                        "href": "http://i.imgur.com/72tRx4w.gif"
-                    }
-                },
-                "is_private": false
-            }
-            EOF
-            )
-            $ curl -H "Content-Type: application/json" \
-                   -X POST \
-                   -d "$body" \
-                   https://api.bitbucket.org/2.0/teams/teams-in-space/projects/ | jq .
-            {
-              // Serialized project document
-            }
-            ```
-          body:
-            application/json:
-              type: object
-              properties:
-                created_on?:
-                  type: datetime
-                display_name?:
-                  type: string
-                links?:
-                  type: object
-                  properties:
-                    followers?:
-                      type: object
-                      properties:
-                        href?:
-                          type: string
-                    repositories?:
-                      type: object
-                      properties:
-                        href?:
-                          type: string
-                    following?:
-                      type: object
-                      properties:
-                        href?:
-                          type: string
-                    self?:
-                      type: object
-                      properties:
-                        href?:
-                          type: string
-                    html?:
-                      type: object
-                      properties:
-                        href?:
-                          type: string
-                    avatar?:
-                      type: object
-                      properties:
-                        href?:
-                          type: string
-                username?:
-                  type: string
-                  pattern: ^[a-zA-Z0-9_\-]+$
-                uuid?:
-                  type: string
-                website?:
-                  type: string
-              description: The contents of the new comment.
-          responses:
-            201:
-              description: A new project has been created.
-              headers:
-                Location?:
-                  type: string
-                  description: The location of the newly created project
-              body:
-                application/json:
-                  type: project
-            403:
-              description: The requesting user isn't authorized to create the project.
-              body:
-                application/json:
-                  type: error
-            404:
-              description: A team doesn't exist at this location.
-              body:
-                application/json:
-                  type: error
       /{project_key}:
         uriParameters:
           project_key:
@@ -8993,6 +8832,149 @@ types:
               body:
                 application/json:
                   type: error
+      get:
+        description: ''
+        responses:
+          200:
+            description: A paginated list of projects that belong to the specified team.
+            body:
+              application/json:
+                type: paginated_projects
+          403:
+            description: The requesting user isn't authorized to read the list of projects for the specified team.
+            body:
+              application/json:
+                type: error
+          404:
+            description: A team doesn't exist at this location.
+            body:
+              application/json:
+                type: error
+      post:
+        description: |-
+          Creates a new project.
+
+          Note that the avatar has to be embedded as either a data-url
+          or a URL to an external image as shown in the examples below:
+
+          ```
+          $ body=$(cat << EOF
+          {
+              "name": "Mars Project",
+              "key": "MARS",
+              "description": "Software for colonizing mars.",
+              "links": {
+                  "avatar": {
+                      "href": "data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/..."
+                  }
+              },
+              "is_private": false
+          }
+          EOF
+          )
+          $ curl -H "Content-Type: application/json" \
+                 -X POST \
+                 -d "$body" \
+                 https://api.bitbucket.org/2.0/teams/teams-in-space/projects/ | jq .
+          {
+            // Serialized project document
+          }
+          ```
+
+          or even:
+
+          ```
+          $ body=$(cat << EOF
+          {
+              "name": "Mars Project",
+              "key": "MARS",
+              "description": "Software for colonizing mars.",
+              "links": {
+                  "avatar": {
+                      "href": "http://i.imgur.com/72tRx4w.gif"
+                  }
+              },
+              "is_private": false
+          }
+          EOF
+          )
+          $ curl -H "Content-Type: application/json" \
+                 -X POST \
+                 -d "$body" \
+                 https://api.bitbucket.org/2.0/teams/teams-in-space/projects/ | jq .
+          {
+            // Serialized project document
+          }
+          ```
+        body:
+          application/json:
+            type: object
+            properties:
+              created_on?:
+                type: datetime
+              display_name?:
+                type: string
+              links?:
+                type: object
+                properties:
+                  followers?:
+                    type: object
+                    properties:
+                      href?:
+                        type: string
+                  repositories?:
+                    type: object
+                    properties:
+                      href?:
+                        type: string
+                  following?:
+                    type: object
+                    properties:
+                      href?:
+                        type: string
+                  self?:
+                    type: object
+                    properties:
+                      href?:
+                        type: string
+                  html?:
+                    type: object
+                    properties:
+                      href?:
+                        type: string
+                  avatar?:
+                    type: object
+                    properties:
+                      href?:
+                        type: string
+              username?:
+                type: string
+                pattern: ^[a-zA-Z0-9_\-]+$
+              uuid?:
+                type: string
+              website?:
+                type: string
+            description: The contents of the new comment.
+        responses:
+          201:
+            description: A new project has been created.
+            headers:
+              Location?:
+                type: string
+                description: The location of the newly created project
+            body:
+              application/json:
+                type: project
+          403:
+            description: The requesting user isn't authorized to create the project.
+            body:
+              application/json:
+                type: error
+          404:
+            description: A team doesn't exist at this location.
+            body:
+              application/json:
+                type: error
   /{username}:
     uriParameters:
       username:

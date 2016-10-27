@@ -6061,31 +6061,6 @@ types:
                   application/json:
                     type: error-response
   /carts:
-    /:
-      post:
-        description: Creates an empty cart and quote for a guest.
-        responses:
-          200:
-            description: 200 Success.
-            body:
-              application/json:
-                type: integer
-                description: Cart ID.
-          400:
-            description: 400 Bad Request
-            body:
-              application/json:
-                type: error-response
-          401:
-            description: 401 Unauthorized
-            body:
-              application/json:
-                type: error-response
-          500:
-            description: Unexpected error
-            body:
-              application/json:
-                type: error-response
     /licence:
       get:
         description: Lists active checkout agreements.
@@ -7466,6 +7441,30 @@ types:
               body:
                 application/json:
                   type: error-response
+    post:
+      description: Creates an empty cart and quote for a guest.
+      responses:
+        200:
+          description: 200 Success.
+          body:
+            application/json:
+              type: integer
+              description: Cart ID.
+        400:
+          description: 400 Bad Request
+          body:
+            application/json:
+              type: error-response
+        401:
+          description: 401 Unauthorized
+          body:
+            application/json:
+              type: error-response
+        500:
+          description: Unexpected error
+          body:
+            application/json:
+              type: error-response
   /categories:
     /attributes:
       /{attributeCode}:
@@ -10279,25 +10278,6 @@ types:
                 application/json:
                   type: error-response
   /invoices:
-    /:
-      post:
-        description: Performs persist operations for a specified invoice.
-        responses:
-          200:
-            description: 200 Success.
-            body:
-              application/json:
-                type: sales-data-invoice-interface
-          401:
-            description: 401 Unauthorized
-            body:
-              application/json:
-                type: error-response
-          500:
-            description: Unexpected error
-            body:
-              application/json:
-                type: error-response
     /comments:
       post:
         description: Performs persist operations for a specified invoice comment.
@@ -10465,6 +10445,24 @@ types:
           body:
             application/json:
               type: error-response
+    post:
+      description: Performs persist operations for a specified invoice.
+      responses:
+        200:
+          description: 200 Success.
+          body:
+            application/json:
+              type: sales-data-invoice-interface
+        401:
+          description: 401 Unauthorized
+          body:
+            application/json:
+              type: error-response
+        500:
+          description: Unexpected error
+          body:
+            application/json:
+              type: error-response
   /modules:
     get:
       description: Returns an array of enabled modules
@@ -10532,25 +10530,6 @@ types:
                 application/json:
                   type: error-response
   /orders:
-    /:
-      post:
-        description: Performs persist operations for a specified order.
-        responses:
-          200:
-            description: 200 Success.
-            body:
-              application/json:
-                type: sales-data-order-interface
-          401:
-            description: 401 Unauthorized
-            body:
-              application/json:
-                type: error-response
-          500:
-            description: Unexpected error
-            body:
-              application/json:
-                type: error-response
     /create:
       put:
         description: Performs persist operations for a specified order.
@@ -10861,6 +10840,24 @@ types:
           body:
             application/json:
               type: sales-data-order-search-result-interface
+        401:
+          description: 401 Unauthorized
+          body:
+            application/json:
+              type: error-response
+        500:
+          description: Unexpected error
+          body:
+            application/json:
+              type: error-response
+    post:
+      description: Performs persist operations for a specified order.
+      responses:
+        200:
+          description: 200 Success.
+          body:
+            application/json:
+              type: sales-data-order-interface
         401:
           description: 401 Unauthorized
           body:
@@ -12619,25 +12616,6 @@ types:
             application/json:
               type: error-response
   /shipment:
-    /:
-      post:
-        description: Performs persist operations for a specified shipment.
-        responses:
-          200:
-            description: 200 Success.
-            body:
-              application/json:
-                type: sales-data-shipment-interface
-          401:
-            description: 401 Unauthorized
-            body:
-              application/json:
-                type: error-response
-          500:
-            description: Unexpected error
-            body:
-              application/json:
-                type: error-response
     /track:
       /{id}:
         uriParameters:
@@ -12781,6 +12759,24 @@ types:
             body:
               application/json:
                 type: error-response
+    post:
+      description: Performs persist operations for a specified shipment.
+      responses:
+        200:
+          description: 200 Success.
+          body:
+            application/json:
+              type: sales-data-shipment-interface
+        401:
+          description: 401 Unauthorized
+          body:
+            application/json:
+              type: error-response
+        500:
+          description: Unexpected error
+          body:
+            application/json:
+              type: error-response
   /shipments:
     get:
       description: !!binary |-
@@ -12832,38 +12828,37 @@ types:
               type: error-response
   /stockItems:
     /lowStock:
-      /:
-        get:
-          description: Retrieves a list of SKU's with low inventory qty
-          queryParameters:
-            scopeId:
-              type: integer
-              displayName: scopeId
-            qty:
-              type: number
-              displayName: qty
-            currentPage?:
-              type: integer
-              displayName: currentPage
-            pageSize?:
-              type: integer
-              displayName: pageSize
-          responses:
-            200:
-              description: 200 Success.
-              body:
-                application/json:
-                  type: catalog-inventory-data-stock-status-collection-interface
-            401:
-              description: 401 Unauthorized
-              body:
-                application/json:
-                  type: error-response
-            500:
-              description: Unexpected error
-              body:
-                application/json:
-                  type: error-response
+      get:
+        description: Retrieves a list of SKU's with low inventory qty
+        queryParameters:
+          scopeId:
+            type: integer
+            displayName: scopeId
+          qty:
+            type: number
+            displayName: qty
+          currentPage?:
+            type: integer
+            displayName: currentPage
+          pageSize?:
+            type: integer
+            displayName: pageSize
+        responses:
+          200:
+            description: 200 Success.
+            body:
+              application/json:
+                type: catalog-inventory-data-stock-status-collection-interface
+          401:
+            description: 401 Unauthorized
+            body:
+              application/json:
+                type: error-response
+          500:
+            description: Unexpected error
+            body:
+              application/json:
+                type: error-response
     /{productSku}:
       uriParameters:
         productSku:
