@@ -2,8 +2,13 @@
 title: Medium.com - Unofficial API Spec
 version: 1.0.0
 baseUri: api.medium.com/v1
-description: !!binary |-
-  TWVkaXVtw6LCgMKZcyB1bm9mZmljaWFsIEFQSSBkb2N1bWVudGF0aW9uIHVzaW5nIE9wZW5BUEkgc3BlY2lmaWNhdGlvbi4KCiMgT2ZmaWNpYWwgQVBJCk9mZmljaWFsIEFQSSBkb2N1bWVudCBjYW4gYWxzbyBiZSB2aWV3ZWQgZm9yIG1vc3QgdXAgdG8gZGF0ZSBBUEkgc3BlYyBhdCBbaHR0cHM6Ly9naXRodWIuY29tL01lZGl1bS9tZWRpdW0tYXBpLWRvY3NdKGh0dHBzOi8vZ2l0aHViLmNvbS9NZWRpdW0vbWVkaXVtLWFwaS1kb2NzKS4KCkRldmVsb3BlciBCbG9nIC0gW1dlbGNvbWUgdG8gdGhlIE1lZGl1bSBBUEldKGh0dHBzOi8vbWVkaXVtLmNvbS9ibG9nL3dlbGNvbWUtdG8tdGhlLW1lZGl1bS1hcGktMzQxOGY5NTY1NTIpCg==
+description: |
+  Mediumâs unofficial API documentation using OpenAPI specification.
+
+  # Official API
+  Official API document can also be viewed for most up to date API spec at [https://github.com/Medium/medium-api-docs](https://github.com/Medium/medium-api-docs).
+
+  Developer Blog - [Welcome to the Medium API](https://medium.com/blog/welcome-to-the-medium-api-3418f956552)
 mediaType:
 - application/json
 uses:
@@ -12,8 +17,7 @@ uses:
 securitySchemes:
   OauthSecurity:
     type: OAuth 2.0
-    description: !!binary |-
-      Rmlyc3QgeW91IG11c3QgcmVnaXN0ZXIgYW4gYXBwbGljYXRpb24gb24gTWVkaXVtLiBUaGVuIHdlIHdpbGwgc3VwcGx5IHlvdSBhIGNsaWVudElkIGFuZCBhIGNsaWVudFNlY3JldCB3aXRoIHdoaWNoIHlvdSBtYXkgYWNjZXNzIE1lZGl1bcOiwoDCmXMgQVBJLiBFYWNoIGludGVncmF0aW9uIHNob3VsZCBoYXZlIGl0cyBvd24gY2xpZW50SWQgYW5kIGNsaWVudFNlY3JldC4gVGhlIGNsaWVudFNlY3JldCBzaG91bGQgYmUgdHJlYXRlZCBsaWtlIGEgcGFzc3dvcmQgYW5kIHN0b3JlZCBzZWN1cmVseS4=
+    description: First you must register an application on Medium. Then we will supply you a clientId and a clientSecret with which you may access Mediumâs API. Each integration should have its own clientId and clientSecret. The clientSecret should be treated like a password and stored securely.
     settings:
       authorizationGrants:
       - authorization_code
@@ -106,12 +110,10 @@ types:
           type: string
       title:
         type: string
-        description: !!binary |-
-          VGhlIHRpdGxlIG9mIHRoZSBwb3N0LiBOb3RlIHRoYXQgdGhpcyB0aXRsZSBpcyB1c2VkIGZvciBTRU8gYW5kIHdoZW4gcmVuZGVyaW5nIHRoZSBwb3N0IGFzIGEgbGlzdGluZywgYnV0IHdpbGwgbm90IGFwcGVhciBpbiB0aGUgYWN0dWFsIHBvc3TDosKAwpRmb3IgdGhhdCwgdGhlIHRpdGxlIG11c3QgYmUgc3BlY2lmaWVkIGluIHRoZSBjb250ZW50IGZpZWxkIGFzIHdlbGwuIFRpdGxlcyBsb25nZXIgdGhhbiAxMDAgY2hhcmFjdGVycyB3aWxsIGJlIGlnbm9yZWQuIEluIHRoYXQgY2FzZSwgYSB0aXRsZSB3aWxsIGJlIHN5bnRoZXNpemVkIGZyb20gdGhlIGZpcnN0IGNvbnRlbnQgaW4gdGhlIHBvc3Qgd2hlbiBpdCBpcyBwdWJsaXNoZWQu
+        description: The title of the post. Note that this title is used for SEO and when rendering the post as a listing, but will not appear in the actual postâfor that, the title must be specified in the content field as well. Titles longer than 100 characters will be ignored. In that case, a title will be synthesized from the first content in the post when it is published.
     example:
       canonicalUrl: http://jamietalbot.com/posts/liverpool-fc
-      content: !!binary |-
-        PGgxPkxpdmVycG9vbCBGQzwvaDE+PHA+WW91w6LCgMKZbGwgbmV2ZXIgd2FsayBhbG9uZS48L3A+
+      content: <h1>Liverpool FC</h1><p>Youâll never walk alone.</p>
       contentFormat: html
       publishStatus: public
       tags:
@@ -126,8 +128,7 @@ types:
     properties:
       authorId?:
         type: string
-        description: !!binary |-
-          VGhlIHVzZXJJZCBvZiB0aGUgcG9zdMOiwoDCmXMgYXV0aG9y
+        description: The userId of the postâs author
       canonicalUrl?:
         type: string
         description: The canonical URL of the post. If canonicalUrl was not specified in the creation of the post, this field will not be present.
@@ -155,18 +156,15 @@ types:
         description: The publish status of the post.
       publishedAt?:
         type: datetime
-        description: !!binary |-
-          VGhlIHBvc3TDosKAwplzIHB1Ymxpc2hlZCBkYXRlLiBJZiBjcmVhdGVkIGFzIGEgZHJhZnQsIHRoaXMgZmllbGQgd2lsbCBub3QgYmUgcHJlc2VudC4=
+        description: The postâs published date. If created as a draft, this field will not be present.
       tags?:
         type: array
-        description: !!binary |-
-          VGhlIHBvc3TDosKAwplzIHRhZ3M=
+        description: The postâs tags
         items:
           type: string
       title?:
         type: string
-        description: !!binary |-
-          VGhlIHBvc3TDosKAwplzIHRpdGxl
+        description: The postâs title
       url?:
         type: string
         description: The URL of the post on Medium
@@ -198,16 +196,13 @@ types:
         description: A unique identifier for the publication.
       imageUrl?:
         type: string
-        description: !!binary |-
-          VGhlIFVSTCB0byB0aGUgcHVibGljYXRpb27DosKAwplzIGltYWdlL2xvZ28=
+        description: The URL to the publicationâs image/logo
       name?:
         type: string
-        description: !!binary |-
-          VGhlIHB1YmxpY2F0aW9uw6LCgMKZcyBuYW1lIG9uIE1lZGl1bS4=
+        description: The publicationâs name on Medium.
       url?:
         type: string
-        description: !!binary |-
-          VGhlIFVSTCB0byB0aGUgcHVibGljYXRpb27DosKAwplzIGhvbWVwYWdl
+        description: The URL to the publicationâs homepage
     description: Publications provide a way for authors to work collaboratively within a common narrative framework, brand or point of view.
     example:
       description: What is this thing and how does it work?
@@ -231,8 +226,7 @@ types:
         imageUrl: https://cdn-images-1.medium.com/fit/c/200/200/0*ae1jbP_od0W6EulE.jpeg
         name: About Medium
         url: https://medium.com/about
-      - description: !!binary |-
-          TWVkaXVtw6LCgMKZcyBEZXZlbG9wZXIgcmVzb3VyY2Vz
+      - description: Mediumâs Developer resources
         id: b45573563f5a
         imageUrl: https://cdn-images-1.medium.com/fit/c/200/200/1*ccokMT4VXmDDO1EoQQHkzg@2x.png
         name: Developers
@@ -246,20 +240,16 @@ types:
         description: A unique identifier for the user.
       imageUrl?:
         type: string
-        description: !!binary |-
-          VGhlIFVSTCB0byB0aGUgdXNlcsOiwoDCmXMgYXZhdGFyIG9uIE1lZGl1bQ==
+        description: The URL to the userâs avatar on Medium
       name?:
         type: string
-        description: !!binary |-
-          VGhlIHVzZXLDosKAwplzIG5hbWUgb24gTWVkaXVtLg==
+        description: The userâs name on Medium.
       url?:
         type: string
-        description: !!binary |-
-          VGhlIFVSTCB0byB0aGUgdXNlcsOiwoDCmXMgcHJvZmlsZSBvbiBNZWRpdW0=
+        description: The URL to the userâs profile on Medium
       username?:
         type: string
-        description: !!binary |-
-          VGhlIHVzZXLDosKAwplzIHVzZXJuYW1lIG9uIE1lZGl1bS4=
+        description: The userâs username on Medium.
     example:
       id: 5303d74c64f66366f00cb9b2a94f3251bf5
       imageUrl: https://images.medium.com/0*fkfQiTzT7TlUGGyI.png
@@ -334,8 +324,7 @@ types:
           401:
             description: The `accessToken` is invalid or has been revoked.
           403:
-            description: !!binary |-
-              VGhlIGBwdWJsaWNhdGlvbklkYCBpbiByZXF1ZXN0IHBhdGggZG9lc27DosKAwpl0IHBvaW50IHRvIGEgcHVibGljYXRpb24gdGhhdCB0aGUgdXNlciBjYW4gcHVibGlzaCBpbnRvLg==
+            description: The `publicationId` in request path doesnât point to a publication that the user can publish into.
 /users:
   /{authorId}:
     uriParameters:
@@ -345,8 +334,7 @@ types:
         displayName: authorId
     /posts:
       post:
-        description: !!binary |-
-          Q3JlYXRlcyBhIHBvc3Qgb24gdGhlIGF1dGhlbnRpY2F0ZWQgdXNlcsOiwoDCmXMgcHJvZmlsZS4=
+        description: Creates a post on the authenticated userâs profile.
         displayName: Create User Post
         body:
           application/json: Post

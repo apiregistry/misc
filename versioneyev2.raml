@@ -44,15 +44,33 @@ uses:
           description: encoded repo name with optional branch info.
           displayName: repo_key
       get:
-        description: !!binary |-
-          CjxwPlRoaXMgRW5kcG9pbnQgcmV0dXJucyBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBhIEdpdEh1YiByZXBvc2l0b3J5LjwvcD4KCjxwPkR1ZSB0aGUgbGltaXRzIG9mIG91ciBjdXJyZW50IEFQSSBmcmFtZXdvcmssIHRoZSByZXBvIGtleSBoYXMgdG8gYmUKZW5jb2RlZCBhcyB1cmwtc2FmZSBzdHJpbmcuIFRoYXQgbWVhbnMgYWxsIMOiwoDCmC/DosKAwpkgaGFzIHRvIGJlIHJlcGxhY2VkIHdpdGgKY29sb25zIMOiwoDCmDrDosKAwpkgYW5kIMOiwoDCmC7DosKAwpkgaGFzIHRvIGJlIHJlcGxhY2VkIHdpdGggw6LCgMKYfsOiwoDCmS48L3A+Cgo8cD5Gb3IgZXhhbXBsZSwgIHJlcG9zaXRvcnkgd2l0aCBmdWxsbmFtZSA8Y29kZT52ZXJzaW9uZXllL3ZleWU8L2NvZGU+IGhhcyB0byB0cmFuc2Zvcm1lZAp0byA8Y29kZT52ZXJzaW9uZXllOnZleWU8L2NvZGU+LjwvcD4KCg==
+        description: |2+
+
+          <p>This Endpoint returns detailed information about a GitHub repository.</p>
+
+          <p>Due the limits of our current API framework, the repo key has to be
+          encoded as url-safe string. That means all â/â has to be replaced with
+          colons â:â and â.â has to be replaced with â~â.</p>
+
+          <p>For example,  repository with fullname <code>versioneye/veye</code> has to transformed
+          to <code>versioneye:veye</code>.</p>
+
         displayName: shows the detailed information for the repository
         responses:
           200:
             description: No response was specified
       delete:
-        description: !!binary |-
-          CjxwPlRoaXMgRW5kcG9pbnQgZGVsZXRlcyBhIHByb2plY3Qgb24gVmVyc2lvbkV5ZSE8L3A+Cgo8cD5EdWUgdGhlIGxpbWl0cyBvZiBvdXIgY3VycmVudCBBUEkgZnJhbWV3b3JrLCB0aGUgcmVwbyBrZXkgaGFzIHRvIGJlCmVuY29kZWQgYXMgdXJsLXNhZmUgc3RyaW5nLiBUaGF0IG1lYW5zIGFsbCDDosKAwpgvw6LCgMKZIGhhcyB0byBiZSByZXBsYWNlZCB3aXRoCmNvbG9ucyDDosKAwpg6w6LCgMKZIGFuZCDDosKAwpguw6LCgMKZIGhhcyB0byBiZSByZXBsYWNlZCB3aXRoIMOiwoDCmH7DosKAwpkuPC9wPgoKPHA+Rm9yIGV4YW1wbGUsICByZXBvc2l0b3J5IHdpdGggZnVsbG5hbWUgPGNvZGU+dmVyc2lvbmV5ZS92ZXllPC9jb2RlPiBoYXMgdG8gdHJhbnNmb3JtZWQKdG8gPGNvZGU+dmVyc2lvbmV5ZTp2ZXllPC9jb2RlPi48L3A+Cgo=
+        description: |2+
+
+          <p>This Endpoint deletes a project on VersionEye!</p>
+
+          <p>Due the limits of our current API framework, the repo key has to be
+          encoded as url-safe string. That means all â/â has to be replaced with
+          colons â:â and â.â has to be replaced with â~â.</p>
+
+          <p>For example,  repository with fullname <code>versioneye/veye</code> has to transformed
+          to <code>versioneye:veye</code>.</p>
+
         displayName: remove imported project
         queryParameters:
           branch?:
@@ -63,8 +81,17 @@ uses:
           200:
             description: No response was specified
       post:
-        description: !!binary |-
-          CjxwPlVzZSB0aGlzIEVuZHBvaW50IHRvIGltcG9ydCBhIHByb2plY3QgZmlsZSBmcm9tIEdpdEh1Yi4gVGhpcyB3aWxsIGNyZWF0ZSBhIG5ldyBwcm9qZWN0IG9uIFZlcnNpb25FeWUuPC9wPgoKPHA+RHVlIHRoZSBsaW1pdHMgb2Ygb3VyIGN1cnJlbnQgQVBJIGZyYW1ld29yaywgdGhlIHJlcG8ga2V5IGhhcyB0byBiZQplbmNvZGVkIGFzIHVybC1zYWZlIHN0cmluZy4gVGhhdCBtZWFucyBhbGwgw6LCgMKYL8OiwoDCmSBoYXMgdG8gYmUgcmVwbGFjZWQgd2l0aApjb2xvbnMgw6LCgMKYOsOiwoDCmSBhbmQgw6LCgMKYLsOiwoDCmSBoYXMgdG8gYmUgcmVwbGFjZWQgd2l0aCDDosKAwph+w6LCgMKZLjwvcD4KCjxwPkZvciBleGFtcGxlLCAgcmVwb3NpdG9yeSB3aXRoIGZ1bGxuYW1lIDxjb2RlPnZlcnNpb25leWUvdmV5ZTwvY29kZT4gaGFzIHRvIHRyYW5zZm9ybWVkCnRvIDxjb2RlPnZlcnNpb25leWU6dmV5ZTwvY29kZT4uPC9wPgoK
+        description: |2+
+
+          <p>Use this Endpoint to import a project file from GitHub. This will create a new project on VersionEye.</p>
+
+          <p>Due the limits of our current API framework, the repo key has to be
+          encoded as url-safe string. That means all â/â has to be replaced with
+          colons â:â and â.â has to be replaced with â~â.</p>
+
+          <p>For example,  repository with fullname <code>versioneye/veye</code> has to transformed
+          to <code>versioneye:veye</code>.</p>
+
         displayName: imports project file from github
         responses:
           200:
@@ -197,8 +224,13 @@ uses:
             description: Query string. At least 2 characters.
             displayName: q
         get:
-          description: !!binary |-
-            CjxwPlRoaXMgcmVzb3VyY2UgcmV0dXJucyBzYW1lIHJlc3VsdHMgYXMgb3VyIHdlYiBhcHBsaWNhdGlvbi4gQnV0IHlvdSBnZXQgaXQgYXMgSlNPTiBvYmplY3RzIC0KdGhlIHJlc3VsdCBpcyBhbiBKU09OIGFycmF5IG9mIHByb2R1Y3Qgb2JqZWN0cy48L3A+Cgo8cD5XaGVuIHRoZXJlw6LCgMKZcyBubyBtYXRjaCBmb3IgdGhlIHF1ZXJ5LCB0aGUgcmVzdWx0IGFycmF5IHdpbGwgYmUgZW1wdHkuPC9wPgoK
+          description: |2+
+
+            <p>This resource returns same results as our web application. But you get it as JSON objects -
+            the result is an JSON array of product objects.</p>
+
+            <p>When thereâs no match for the query, the result array will be empty.</p>
+
           displayName: search packages
           queryParameters:
             lang?:
@@ -402,8 +434,13 @@ uses:
                 description: Project ID of the child
                 displayName: child_id
             get:
-              description: !!binary |-
-                CjxwPlRoaXMgZW5kcG9pbnQgbWVyZ2VzIGEgcHJvamVjdCAoY2hpbGRfaWQpIGludG8gYW5vdGhlciBwcm9qZWN0IChncm91cF9pZC9hcnRpZmFjdF9pZCkuClRoaXMgZW5kcG9pbnQgaXMgc3BlY2lhbGx5IGZvciBNYXZlbiBiYXNlZCBwcm9qZWN0cyEKVG8gdXNlIHRoaXMgcmVzb3VyY2UgeW91IG5lZWQgZWl0aGVyIGFuIGFjdGl2ZSBzZXNzaW9uIG9yIHlvdSBoYXZlIHRvIGFwcGVuZAp5b3VyIEFQSSBLZXkgdG8gdGhlIFVSTCBhcyBwYXJhbWV0ZXIuIEZvciBleGFtcGxlOiDDosKAwpw/YXBpX2tleT02NjZfeW91cl9hcGlfa2V5XzY2NsOiwoDCnTwvcD4KCg==
+              description: |2+
+
+                <p>This endpoint merges a project (child_id) into another project (group_id/artifact_id).
+                This endpoint is specially for Maven based projects!
+                To use this resource you need either an active session or you have to append
+                your API Key to the URL as parameter. For example: â?api_key=666_your_api_key_666â</p>
+
               displayName: merge a project into another one
               responses:
                 200:
@@ -422,8 +459,12 @@ uses:
               description: Project ID of the child
               displayName: child_id
           get:
-            description: !!binary |-
-              CjxwPlRoaXMgZW5kcG9pbnQgbWVyZ2VzIGEgcHJvamVjdCAoY2hpbGRfaWQpIGludG8gYW5vdGhlciBwcm9qZWN0IChwYXJlbnRfaWQpLgpUbyB1c2UgdGhpcyByZXNvdXJjZSB5b3UgbmVlZCBlaXRoZXIgYW4gYWN0aXZlIHNlc3Npb24gb3IgeW91IGhhdmUgdG8gYXBwZW5kCnlvdXIgQVBJIEtleSB0byB0aGUgVVJMIGFzIHBhcmFtZXRlci4gRm9yIGV4YW1wbGU6IMOiwoDCnD9hcGlfa2V5PTY2Nl95b3VyX2FwaV9rZXlfNjY2w6LCgMKdPC9wPgoK
+            description: |2+
+
+              <p>This endpoint merges a project (child_id) into another project (parent_id).
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: â?api_key=666_your_api_key_666â</p>
+
             displayName: merge a project into another one
             responses:
               200:
@@ -436,8 +477,13 @@ uses:
               description: Project ID of the child
               displayName: child_id
           get:
-            description: !!binary |-
-              CjxwPlRoaXMgZW5kcG9pbnQgdW5tZXJnZXMgYSBwcm9qZWN0IChjaGlsZF9pZCkgZnJvbSBhbm90aGVyIHByb2plY3QgKHBhcmVudF9pZCkuIEl0IG1ha2VzIHRoZQpjaGlsbGQgYWdhaW4gYSBzZXBhcmF0ZSBwcm9qZWN0IQpUbyB1c2UgdGhpcyByZXNvdXJjZSB5b3UgbmVlZCBlaXRoZXIgYW4gYWN0aXZlIHNlc3Npb24gb3IgeW91IGhhdmUgdG8gYXBwZW5kCnlvdXIgQVBJIEtleSB0byB0aGUgVVJMIGFzIHBhcmFtZXRlci4gRm9yIGV4YW1wbGU6IMOiwoDCnD9hcGlfa2V5PTY2Nl95b3VyX2FwaV9rZXlfNjY2w6LCgMKdPC9wPgoK
+            description: |2+
+
+              <p>This endpoint unmerges a project (child_id) from another project (parent_id). It makes the
+              chilld again a separate project!
+              To use this resource you need either an active session or you have to append
+              your API Key to the URL as parameter. For example: â?api_key=666_your_api_key_666â</p>
+
             displayName: unmerge a project
             responses:
               200:
@@ -450,8 +496,11 @@ uses:
           displayName: project_key
       /licenses:
         get:
-          description: !!binary |-
-            CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+          description: |2+
+
+            <p>To use this resource you need either an active session or you have to append
+            your API Key to the URL as parameter. For example: â?api_key=666_your_api_key_666â</p>
+
           displayName: get grouped view of licences for dependencies
           responses:
             200:
@@ -464,22 +513,31 @@ uses:
           200:
             description: No response was specified
       delete:
-        description: !!binary |-
-          CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+        description: |2+
+
+          <p>To use this resource you need either an active session or you have to append
+          your API Key to the URL as parameter. For example: â?api_key=666_your_api_key_666â</p>
+
         displayName: delete given project
         responses:
           200:
             description: No response was specified
       post:
-        description: !!binary |-
-          CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+        description: |2+
+
+          <p>To use this resource you need either an active session or you have to append
+          your API Key to the URL as parameter. For example: â?api_key=666_your_api_key_666â</p>
+
         displayName: update project with new file
         responses:
           200:
             description: No response was specified
     get:
-      description: !!binary |-
-        CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+      description: |2+
+
+        <p>To use this resource you need either an active session or you have to append
+        your API Key to the URL as parameter. For example: â?api_key=666_your_api_key_666â</p>
+
       displayName: list of projects
       queryParameters:
         orga_name?:
@@ -494,8 +552,11 @@ uses:
         200:
           description: No response was specified
     post:
-      description: !!binary |-
-        CjxwPlRvIHVzZSB0aGlzIHJlc291cmNlIHlvdSBuZWVkIGVpdGhlciBhbiBhY3RpdmUgc2Vzc2lvbiBvciB5b3UgaGF2ZSB0byBhcHBlbmQKeW91ciBBUEkgS2V5IHRvIHRoZSBVUkwgYXMgcGFyYW1ldGVyLiBGb3IgZXhhbXBsZTogw6LCgMKcP2FwaV9rZXk9NjY2X3lvdXJfYXBpX2tleV82NjbDosKAwp08L3A+Cgo=
+      description: |2+
+
+        <p>To use this resource you need either an active session or you have to append
+        your API Key to the URL as parameter. For example: â?api_key=666_your_api_key_666â</p>
+
       displayName: upload project file and create a new project
       responses:
         200:
@@ -546,8 +607,9 @@ uses:
         200:
           description: No response was specified
     delete:
-      description: !!binary |-
-        PHA+Q2xvc2UgY3VycmVudCBzZXNzaW9uLiBJdMOiwoDCmXMgdmVyeSBoYW5keSBtZXRob2Qgd2hlbiB5b3UgcmUtZ2VuZXJhdGVkCiAgICAgICAgICAgICAgICAgIHlvdXIgY3VycmVudCBBUEkta2V5LjwvcD4K
+      description: |
+        <p>Close current session. Itâs very handy method when you re-generated
+                          your current API-key.</p>
       displayName: delete current session aka log out.
       responses:
         200:

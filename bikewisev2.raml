@@ -22,8 +22,13 @@ uses:
           200:
             description: No response was specified
     get:
-      description: !!binary |-
-        CjxwPklmIHlvdcOiwoDCmWQgbGlrZSBtb3JlIGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGJpa2UgaW5jaWRlbnRzLCB1c2UgdGhpcyBlbmRwb2ludC4gRm9yIG1hcHBpbmcsIDxjb2RlPmxvY2F0aW9uczwvY29kZT4gaXMgcHJvYmFibHkgYSBiZXR0ZXIgYmV0LjwvcD4KCjxwPjxzdHJvbmc+Tm90ZXMgb24gbG9jYXRpb24gc2VhcmNoaW5nPC9zdHJvbmc+OiA8YnIgLz4KLSA8Y29kZT5wcm94aW1pdHk8L2NvZGU+IGFjY2VwdHMgYW4gaXAgYWRkcmVzcywgYW4gYWRkcmVzcywgemlwY29kZSwgY2l0eSwgb3IgbGF0aXR1ZGUsbG9uZ2l0dWRlIC0gaS5lLiA8Y29kZT43MC4yMTAuMTMzLjg3PC9jb2RlPiwgPGNvZGU+MjEwIE5XIDExdGggQXZlLCBQb3J0bGFuZCwgT1I8L2NvZGU+LCA8Y29kZT42MDY0NzwvY29kZT4sIDxjb2RlPkNoaWNhZ28sIElMPC9jb2RlPiwgYW5kIDxjb2RlPjQ1LjUyMTcyOCwtMTIyLjY3MzI2PC9jb2RlPiBhcmUgYWxsIGFjY2VwdGFibGU8YnIgLz4KLSA8Y29kZT5wcm94aW1pdHlfc3F1YXJlPC9jb2RlPiBzZXRzIHRoZSBsZW5ndGggb2YgdGhlIHNpZGVzIG9mIHRoZSBzcXVhcmUgdG8gZmluZCBtYXRjaGVzIGluc2lkZSBvZi4gVGhlIHNxdWFyZSBpcyBjZW50ZXJlZCBvbiB0aGUgbG9jYXRpb24gc3BlY2lmaWVkIGJ5IDxjb2RlPnByb3hpbWl0eTwvY29kZT4uIEl0IGRlZmF1bHRzIHRvIDEwMC48L3A+Cg==
+      description: |2
+
+        <p>If youâd like more detailed information about bike incidents, use this endpoint. For mapping, <code>locations</code> is probably a better bet.</p>
+
+        <p><strong>Notes on location searching</strong>: <br />
+        - <code>proximity</code> accepts an ip address, an address, zipcode, city, or latitude,longitude - i.e. <code>70.210.133.87</code>, <code>210 NW 11th Ave, Portland, OR</code>, <code>60647</code>, <code>Chicago, IL</code>, and <code>45.521728,-122.67326</code> are all acceptable<br />
+        - <code>proximity_square</code> sets the length of the sides of the square to find matches inside of. The square is centered on the location specified by <code>proximity</code>. It defaults to 100.</p>
       displayName: Paginated incidents matching parameters
       queryParameters:
         page?:
@@ -141,15 +146,37 @@ uses:
             format: int32
           all?:
             type: boolean
-            description: !!binary |-
-              PHA+R2l2ZSDDosKAwphlbSBhbGwgdG8gbWUuIFdpbGwgaWdub3JlIGxpbWl0PC9wPgo=
+            description: |
+              <p>Give âem all to me. Will ignore limit</p>
             displayName: all
         responses:
           200:
             description: No response was specified
     get:
-      description: !!binary |-
-        PHA+PHN0cm9uZz5UaGlzIGVuZHBvaW50IGJlaGF2ZXMgZXhhY3RseSBsaWtlPC9zdHJvbmc+IDxjb2RlPmluY2lkZW50czwvY29kZT4sIGJ1dCByZXR1cm5zIGEgdmFsaWQgZ2VvanNvbiA8Y29kZT5GZWF0dXJlQ29sbGVjdGlvbjwvY29kZT4gdGhhdCBsb29rcyBsaWtlIHRoaXM6PC9wPgoKPHByZT48Y29kZT57CiAgdHlwZTogIkZlYXR1cmVDb2xsZWN0aW9uIiwKICBmZWF0dXJlczogWwogICAgewogICAgICB0eXBlOiAiRmVhdHVyZSIsCiAgICAgIHByb3BlcnRpZXM6IHsKICAgICAgaWQ6IDQ0NzQxOTksCiAgICAgIHR5cGU6ICJUaGVmdCIsCiAgICAgIG9jY3VycmVkX2F0OiAxNDI4NTM2OTM3CiAgICB9LAogICAgICBnZW9tZXRyeTogewogICAgICB0eXBlOiAiUG9pbnQiLAogICAgICBjb29yZGluYXRlczogWyAtMTIyLjYyNDQxNzcsIDQ1LjUxNjQzODYgXQogICAgfQogIH0KfQo8L2NvZGU+PC9wcmU+Cgo8cD5JdCBkb2VzbsOiwoDCmXQgcGFnaW5hdGUuIElmIHlvdSBwYXNzIHRoZSA8Y29kZT5hbGw8L2NvZGU+IHBhcmFtZXRlciBpdCByZXR1cm5zIGFsbCBtYXRjaGVzICh3aGljaCBjYW4gYmUgYmlnLCAmZ3Q7IDRtYiksIG90aGVyd2lzZSBpdCByZXR1cm5zIHRoZSAxMDAgbW9zdCByZWNlbnQuPC9wPgoKPHA+PHN0cm9uZz5HbyBmb3J0aCBhbmQgbWFrZSBtYXBzITwvc3Ryb25nPjwvcD4K
+      description: |
+        <p><strong>This endpoint behaves exactly like</strong> <code>incidents</code>, but returns a valid geojson <code>FeatureCollection</code> that looks like this:</p>
+
+        <pre><code>{
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              properties: {
+              id: 4474199,
+              type: "Theft",
+              occurred_at: 1428536937
+            },
+              geometry: {
+              type: "Point",
+              coordinates: [ -122.6244177, 45.5164386 ]
+            }
+          }
+        }
+        </code></pre>
+
+        <p>It doesnât paginate. If you pass the <code>all</code> parameter it returns all matches (which can be big, &gt; 4mb), otherwise it returns the 100 most recent.</p>
+
+        <p><strong>Go forth and make maps!</strong></p>
       displayName: Unpaginated geojson response
       queryParameters:
         occurred_before?:
@@ -201,8 +228,8 @@ uses:
           format: int32
         all?:
           type: boolean
-          description: !!binary |-
-            PHA+R2l2ZSDDosKAwphlbSBhbGwgdG8gbWUuIFdpbGwgaWdub3JlIGxpbWl0PC9wPgo=
+          description: |
+            <p>Give âem all to me. Will ignore limit</p>
           displayName: all
       responses:
         200:

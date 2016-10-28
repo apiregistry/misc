@@ -1100,8 +1100,7 @@ types:
           displayName: id
           format: int64
       delete:
-        description: !!binary |-
-          RGVsZXRlcyB0aGUgZ2l2ZW4gc2VyaWVzIElEIGZyb20gdGhlIHVzZXLDosKAwplzIGZhdm9yaXRlw6LCgMKZcyBsaXN0IGFuZCByZXR1cm5zIHRoZSB1cGRhdGVkIGxpc3Qu
+        description: Deletes the given series ID from the userâs favoriteâs list and returns the updated list.
         responses:
           200:
             description: List of user favorites.
@@ -1124,8 +1123,7 @@ types:
               application/json:
                 type: Conflict
       put:
-        description: !!binary |-
-          QWRkcyB0aGUgc3VwcGxpZWQgc2VyaWVzIElEIHRvIHRoZSB1c2Vyw6LCgMKZcyBmYXZvcml0ZcOiwoDCmXMgbGlzdCBhbmQgcmV0dXJucyB0aGUgdXBkYXRlZCBsaXN0Lg==
+        description: Adds the supplied series ID to the userâs favoriteâs list and returns the updated list.
         responses:
           200:
             description: List of user favorites.

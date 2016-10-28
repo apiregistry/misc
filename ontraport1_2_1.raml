@@ -593,8 +593,7 @@ types:
               type: Response
   /saveorupdate:
     post:
-      description: !!binary |-
-        VGhpcyB3aWxsIGNyZWF0ZSBhbiBPYmplY3Qgd2l0aCB0aGUgZ2l2ZW4gZGF0YSBvciB3aWxsIG1lcmdlIHdpdGggYW4gT2JqZWN0IGluIHRoZSBkYXRhYmFzZSBpZiB0aGUgdW5pcXVlIGZpZWxkIG1hdGNoZXMgYW5vdGhlciBPYmplY3TDosKAwplzLiBPYmplY3QgdHlwZSBpcyBhIHJlcXVpcmVkIHBhcmFtZXRlciwgYnV0IG90aGVyIHBhcmFtZXRlcnMgYXJlIG9wdGlvbmFsIGFuZCBkZXBlbmQgb24gdGhlIE9iamVjdCB0eXBlLiBXZSBoYXZlIHByb3ZpZGVkIG9wdGlvbmFsIHBhcmFtZXRlcnMgYXMgZXhhbXBsZXMgZm9yIHVwZGF0aW5nIGEgQ29udGFjdC4gV2hlbiB1c2luZyB0aGlzIGluIHlvdXIgYXBwbGljYXRpb24sIGFsbCBpbnZhbGlkIHBhcmFtZXRlcnMgd2lsbCBiZSBpZ25vcmVkLg==
+      description: This will create an Object with the given data or will merge with an Object in the database if the unique field matches another Objectâs. Object type is a required parameter, but other parameters are optional and depend on the Object type. We have provided optional parameters as examples for updating a Contact. When using this in your application, all invalid parameters will be ignored.
       displayName: Create or Merge an Object
       responses:
         200:

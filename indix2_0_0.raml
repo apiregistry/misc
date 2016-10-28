@@ -11,8 +11,8 @@ uses:
   /brands:
     get:
       description: <p>Lists all brands, along with their IDs, matching query term. Does not support wildcards. Limit is 10 results per query. This API does not consume any credits.
-      displayName: !!binary |-
-        U2VhcmNoIEJyYW5kcyAtIExpc3RzIGFsbCBicmFuZHMgYWxvbmcgd2l0aCB0aGVpciBJRHMgLSBDcmVkaXRzOiDDo8KAwoAw
+      displayName: 'Search Brands - Lists all brands along with their IDs - Credits:
+        ã0'
       queryParameters:
         q:
           type: string
@@ -40,8 +40,7 @@ uses:
         /download:
           get:
             description: API downloads the products as a file. This API does not consume any credits.
-            displayName: !!binary |-
-              QVNFIEJ1bGsgLSBEb3dubG9hZCB0aGUgcHJvZHVjdHMgYXMgYSBmaWxlIC0gQ3JlZGl0czogw6PCgMKAMA==
+            displayName: 'ASE Bulk - Download the products as a file - Credits: ã0'
             queryParameters:
               app_id:
                 type: string
@@ -56,8 +55,7 @@ uses:
                 description: Response
         get:
           description: API returns the status  of  the bulk  Job. This API does not consume any credits.
-          displayName: !!binary |-
-            QVNFIEJ1bGsgLSBHZXQgam9iIHN0YXR1cyAtIENyZWRpdHM6IMOjwoDCgDA=
+          displayName: 'ASE Bulk - Get job status - Credits: ã0'
           queryParameters:
             app_id:
               type: string
@@ -80,8 +78,7 @@ uses:
         /download:
           get:
             description: API downloads the products as a file. This API does not consume any credits.
-            displayName: !!binary |-
-              QnVsayAtIERvd25sb2FkIHRoZSBwcm9kdWN0cyBhcyBhIGZpbGUgLSBDcmVkaXRzOiDDo8KAwoAw
+            displayName: 'Bulk - Download the products as a file - Credits: ã0'
             queryParameters:
               app_id:
                 type: string
@@ -96,8 +93,7 @@ uses:
                 description: Response
         get:
           description: API returns the status  of  the bulk  Job. This API does not consume any credits.
-          displayName: !!binary |-
-            QnVsayAtIEdldCBqb2Igc3RhdHVzIC0gQ3JlZGl0czogw6PCgMKAMA==
+          displayName: 'Bulk - Get job status - Credits: ã0'
           queryParameters:
             app_id:
               type: string
@@ -115,16 +111,15 @@ uses:
       /lookup:
         post:
           description: This operation returns the catalog premium information for the specified product across all the stores where it is sold at. This consumes 18 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIGNhdGFsb2cgcHJlbWl1bSBpbmZvcm1hdGlvbiBmb3IgYSBwcm9kdWN0IC0gQ3JlZGl0czogw6PCgMKAbiB4IDE4
+          displayName: 'Bulk Product Details - Returns catalog premium information
+            for a product - Credits: ãn x 18'
           body:
             multipart/form-data:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 file:
                   type: file
@@ -147,16 +142,16 @@ uses:
       /products:
         post:
           description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 18 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggdGhlaXIgY2F0YWxvZyBpbmZvIGFjcm9zcyBzdG9yZXMgLSBDcmVkaXRzOiDDo8KAwoBuIHggMTg=
+          displayName: 'Bulk Search Products - Retrieves a list of products matching
+            a variety of query parameters with their catalog info across stores -
+            Credits: ãn x 18'
           body:
             application/x-www-form-urlencoded:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 storeId?:
                   type: array
@@ -251,13 +246,12 @@ uses:
             displayName: mpid
         get:
           description: <p>This operation returns the catalog premium information for the specified product across all the stores where it is sold at. This consumes 18 credits.
-          displayName: !!binary |-
-            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBjYXRhbG9nIHByZW1pdW0gaW5mb3JtYXRpb24gZm9yIGEgcHJvZHVjdCAtIENyZWRpdHM6IMOjwoDCgDE4
+          displayName: 'Product Details - Returns catalog premium information for
+            a product - Credits: ã18'
           queryParameters:
             countryCode:
               type: string
-              description: !!binary |-
-                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
               displayName: countryCode
             pageNumber?:
               type: string
@@ -276,13 +270,13 @@ uses:
               description: Response
       get:
         description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 18 credits per product returned.
-        displayName: !!binary |-
-          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIHRoZWlyIGNhdGFsb2cgaW5mbyBhY3Jvc3Mgc3RvcmVzIC0gQ3JlZGl0czogw6PCgMKAbiB4IDE4
+        displayName: 'Search Products - Retrieves a list of products matching a variety
+          of query parameters with their catalog info across stores - Credits: ãn
+          x 18'
         queryParameters:
           countryCode:
             type: string
-            description: !!binary |-
-              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
             displayName: countryCode
           q?:
             type: string
@@ -409,16 +403,15 @@ uses:
       /lookup:
         post:
           description: This operation returns the catalog standard information for the specified product across all the stores where it is sold at. This consumes 18 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIGNhdGFsb2cgc3RhbmRhcmQgaW5mb3JtYXRpb24gZm9yIGEgcHJvZHVjdCAtIENyZWRpdHM6IMOjwoDCgG4geCAxOA==
+          displayName: 'Bulk Product Details - Returns catalog standard information
+            for a product - Credits: ãn x 18'
           body:
             multipart/form-data:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 file:
                   type: file
@@ -441,16 +434,16 @@ uses:
       /products:
         post:
           description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 18 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggdGhlaXIgYWdncmVnYXRlZCBjYXRhbG9nIGluZm8gLSBDcmVkaXRzOiDDo8KAwoBuIHggMTg=
+          displayName: 'Bulk Search Products - Retrieves a list of products matching
+            a variety of query parameters with their aggregated catalog info - Credits:
+            ãn x 18'
           body:
             application/x-www-form-urlencoded:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 storeId?:
                   type: array
@@ -545,13 +538,12 @@ uses:
             displayName: mpid
         get:
           description: <p>This operation returns the catalog standard information for the specified product across all the stores where it is sold at. This consumes 18 credits.
-          displayName: !!binary |-
-            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBjYXRhbG9nIHN0YW5kYXJkIGluZm9ybWF0aW9uIGZvciBhIHByb2R1Y3QgLSBDcmVkaXRzOiDDo8KAwoAxOA==
+          displayName: 'Product Details - Returns catalog standard information for
+            a product - Credits: ã18'
           queryParameters:
             countryCode:
               type: string
-              description: !!binary |-
-                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
               displayName: countryCode
             pageNumber?:
               type: string
@@ -570,13 +562,12 @@ uses:
               description: Response
       get:
         description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 18 credits per product returned.
-        displayName: !!binary |-
-          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIHRoZWlyIGFnZ3JlZ2F0ZWQgY2F0YWxvZyBpbmZvIC0gQ3JlZGl0czogw6PCgMKAbiB4IDE4
+        displayName: 'Search Products - Retrieves a list of products matching a variety
+          of query parameters with their aggregated catalog info - Credits: ãn x 18'
         queryParameters:
           countryCode:
             type: string
-            description: !!binary |-
-              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
             displayName: countryCode
           q?:
             type: string
@@ -701,8 +692,8 @@ uses:
   /categories:
     get:
       description: <p>Lists all categories along with their IDs and ancestry. This API does not consume any credits.
-      displayName: !!binary |-
-        RXhwb3J0IENhdGVnb3JpZXMgLSBMaXN0cyBhbGwgY2F0ZWdvcmllcyBhbG9uZyB3aXRoIHRoZWlyIElEcyBhbmQgcGF0aCAtIENyZWRpdHM6IMOjwoDCgDA=
+      displayName: 'Export Categories - Lists all categories along with their IDs
+        and path - Credits: ã0'
       queryParameters:
         app_id:
           type: string
@@ -720,16 +711,15 @@ uses:
       /lookup:
         post:
           description: This operation returns the offers premium information for the specified product across all the stores where it is sold at. This consumes 4 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIG9mZmVycyBwcmVtaXVtIGluZm9ybWF0aW9uIGZvciBhIHByb2R1Y3QgLSBDcmVkaXRzOiDDo8KAwoBuIHggNA==
+          displayName: 'Bulk Product Details - Returns offers premium information
+            for a product - Credits: ãn x 4'
           body:
             multipart/form-data:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 file:
                   type: file
@@ -752,16 +742,16 @@ uses:
       /products:
         post:
           description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 4 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggb2ZmZXJzIGluZm8gYWNyb3NzIHN0b3JlcyAtIENyZWRpdHM6IMOjwoDCgG4geCA0
+          displayName: 'Bulk Search Products - Retrieves a list of products matching
+            a variety of query parameters with offers info across stores - Credits:
+            ãn x 4'
           body:
             application/x-www-form-urlencoded:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 storeId?:
                   type: array
@@ -856,13 +846,12 @@ uses:
             displayName: mpid
         get:
           description: <p>This operation returns the offers premium information for the specified product across all the stores where it is sold at. This consumes 4 credits.
-          displayName: !!binary |-
-            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBvZmZlcnMgcHJlbWl1bSBpbmZvcm1hdGlvbiBmb3IgYSBwcm9kdWN0IC0gQ3JlZGl0czogw6PCgMKANA==
+          displayName: 'Product Details - Returns offers premium information for a
+            product - Credits: ã4'
           queryParameters:
             countryCode:
               type: string
-              description: !!binary |-
-                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
               displayName: countryCode
             pageNumber?:
               type: string
@@ -881,13 +870,12 @@ uses:
               description: Response
       get:
         description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 4 credits per product returned.
-        displayName: !!binary |-
-          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIG9mZmVycyBpbmZvIGFjcm9zcyBzdG9yZXMgLSBDcmVkaXRzOiDDo8KAwoBuIHggNA==
+        displayName: 'Search Products - Retrieves a list of products matching a variety
+          of query parameters with offers info across stores - Credits: ãn x 4'
         queryParameters:
           countryCode:
             type: string
-            description: !!binary |-
-              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
             displayName: countryCode
           q?:
             type: string
@@ -1014,16 +1002,15 @@ uses:
       /lookup:
         post:
           description: This operation returns the offers standard information for the specified product from a single storeId. This consumes 4 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIG9mZmVycyBzdGFuZGFyZCBpbmZvcm1hdGlvbiBmb3IgYSBwcm9kdWN0IGZyb20gYSBzaW5nbGUgc3RvcmVJZCAtIENyZWRpdHM6IMOjwoDCgG4geCA0
+          displayName: 'Bulk Product Details - Returns offers standard information
+            for a product from a single storeId - Credits: ãn x 4'
           body:
             multipart/form-data:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 file:
                   type: file
@@ -1046,16 +1033,16 @@ uses:
       /products:
         post:
           description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 4 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggb2ZmZXJzIGluZm8gZnJvbSBhIHN0b3JlIC0gQ3JlZGl0czogw6PCgMKAbiB4IDQ=
+          displayName: 'Bulk Search Products - Retrieves a list of products matching
+            a variety of query parameters with offers info from a store - Credits:
+            ãn x 4'
           body:
             application/x-www-form-urlencoded:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 storeId?:
                   type: array
@@ -1150,13 +1137,12 @@ uses:
             displayName: mpid
         get:
           description: <p>This operation returns the offers standard information for the specified product from a single storeId. This consumes 4 credits.
-          displayName: !!binary |-
-            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBvZmZlcnMgc3RhbmRhcmQgaW5mb3JtYXRpb24gZm9yIGEgcHJvZHVjdCBmcm9tIGEgc2luZ2xlIHN0b3JlSWQgLSBDcmVkaXRzOiDDo8KAwoA0
+          displayName: 'Product Details - Returns offers standard information for
+            a product from a single storeId - Credits: ã4'
           queryParameters:
             countryCode:
               type: string
-              description: !!binary |-
-                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
               displayName: countryCode
             storeId:
               type: string
@@ -1179,13 +1165,12 @@ uses:
               description: Response
       get:
         description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 4 credits per product returned.
-        displayName: !!binary |-
-          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIG9mZmVycyBpbmZvIGZyb20gYSBzdG9yZSAtIENyZWRpdHM6IMOjwoDCgG4geCA0
+        displayName: 'Search Products - Retrieves a list of products matching a variety
+          of query parameters with offers info from a store - Credits: ãn x 4'
         queryParameters:
           countryCode:
             type: string
-            description: !!binary |-
-              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
             displayName: countryCode
           q?:
             type: string
@@ -1308,8 +1293,8 @@ uses:
     /suggestions:
       get:
         description: <p>Lists all search suggestions matching the query term. Does not support wildcards. Limit 100 results per query. This API does not consume any credits.
-        displayName: !!binary |-
-          U2VhcmNoIFN1Z2dlc3Rpb25zIC0gTGlzdHMgYWxsIHByb2R1Y3Qgc2VhcmNoIHN1Z2dlc3Rpb25zIC0gQ3JlZGl0czogw6PCgMKAMA==
+        displayName: 'Search Suggestions - Lists all product search suggestions -
+          Credits: ã0'
         queryParameters:
           countryCode:
             type: string
@@ -1333,8 +1318,8 @@ uses:
   /stores:
     get:
       description: <p>Lists all stores, along with their IDs, matching the query term. Does not support wildcards. Limit 10 results per query. This API does not consume any credits.
-      displayName: !!binary |-
-        U2VhcmNoIFN0b3JlcyAtIExpc3RzIGFsbCBzdG9yZXMgYWxvbmcgd2l0aCB0aGVpciBJRHMgLSBDcmVkaXRzOiDDo8KAwoAw
+      displayName: 'Search Stores - Lists all stores along with their IDs - Credits:
+        ã0'
       queryParameters:
         q:
           type: string
@@ -1356,16 +1341,15 @@ uses:
       /lookup:
         post:
           description: This operation returns the summary information for the specified product. This consumes 2 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIHN1bW1hcnkgaW5mb3JtYXRpb24gZm9yIGEgcHJvZHVjdCAtIENyZWRpdHM6IMOjwoDCgG4geCAy
+          displayName: 'Bulk Product Details - Returns summary information for a product
+            - Credits: ãn x 2'
           body:
             multipart/form-data:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 file:
                   type: file
@@ -1388,16 +1372,16 @@ uses:
       /products:
         post:
           description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 2 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggdGhlaXIgc3VtbWFyeSBpbmZvIC0gQ3JlZGl0czogw6PCgMKAbiB4IDI=
+          displayName: 'Bulk Search Products - Retrieves a list of products matching
+            a variety of query parameters with their summary info - Credits: ãn x
+            2'
           body:
             application/x-www-form-urlencoded:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 storeId?:
                   type: array
@@ -1492,13 +1476,12 @@ uses:
             displayName: mpid
         get:
           description: <p>This operation returns the summary information for the specified product. This consumes 2 credits.
-          displayName: !!binary |-
-            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBzdW1tYXJ5IGluZm9ybWF0aW9uIGZvciBhIHByb2R1Y3QgLSBDcmVkaXRzOiDDo8KAwoAy
+          displayName: 'Product Details - Returns summary information for a product
+            - Credits: ã2'
           queryParameters:
             countryCode:
               type: string
-              description: !!binary |-
-                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
               displayName: countryCode
             app_id:
               type: string
@@ -1513,13 +1496,12 @@ uses:
               description: Response
       get:
         description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 2 credits per product returned.
-        displayName: !!binary |-
-          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIHRoZWlyIHN1bW1hcnkgaW5mbyAtIENyZWRpdHM6IMOjwoDCgG4geCAy
+        displayName: 'Search Products - Retrieves a list of products matching a variety
+          of query parameters with their summary info - Credits: ãn x 2'
         queryParameters:
           countryCode:
             type: string
-            description: !!binary |-
-              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
             displayName: countryCode
           q?:
             type: string
@@ -1646,16 +1628,15 @@ uses:
       /ase:
         post:
           description: Used  to  get a set of  exact and close matches for a given set of  query parameters. You must  include <b>productTitle</b> as a parameter. This consumes 25 credits per product returned.
-          displayName: !!binary |-
-            QVNFIFVuaXZlcnNhbCBCdWxrIC0gUmV0dXJucyBhIHNldCBvZiAgZXhhY3QgYW5kIGNsb3NlIG1hdGNoZXMgLSBDcmVkaXRzOiDDo8KAwoBuIHggMjU=
+          displayName: 'ASE Universal Bulk - Returns a set of  exact and close matches
+            - Credits: ãn x 25'
           body:
             multipart/form-data:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 file:
                   type: file
@@ -1679,16 +1660,15 @@ uses:
       /lookup:
         post:
           description: This operation returns the complete information for the specified product across all the stores where it is sold at. This consumes 22 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBQcm9kdWN0IERldGFpbHMgLSBSZXR1cm5zIGNvbXBsZXRlIGluZm9ybWF0aW9uIGZvciBhIHByb2R1Y3QgLSBDcmVkaXRzOiDDo8KAwoBuIHggMjI=
+          displayName: 'Bulk Product Details - Returns complete information for a
+            product - Credits: ãn x 22'
           body:
             multipart/form-data:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 file:
                   type: file
@@ -1711,16 +1691,16 @@ uses:
       /products:
         post:
           description: Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 22 credits per product returned.
-          displayName: !!binary |-
-            QnVsayBTZWFyY2ggUHJvZHVjdHMgLSBSZXRyaWV2ZXMgYSBsaXN0IG9mIHByb2R1Y3RzIG1hdGNoaW5nIGEgdmFyaWV0eSBvZiBxdWVyeSBwYXJhbWV0ZXJzIHdpdGggdGhlaXIgb2ZmZXJzIGFuZCBjYXRhbG9nIGluZm8gYWNyb3NzIHN0b3JlcyAtIENyZWRpdHM6IMOjwoDCgG4geCAyMg==
+          displayName: 'Bulk Search Products - Retrieves a list of products matching
+            a variety of query parameters with their offers and catalog info across
+            stores - Credits: ãn x 22'
           body:
             application/x-www-form-urlencoded:
               type: object
               properties:
                 countryCode:
                   type: string
-                  description: !!binary |-
-                    TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+                  description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
                   displayName: countryCode
                 storeId?:
                   type: array
@@ -1815,13 +1795,12 @@ uses:
             displayName: mpid
         get:
           description: <p>This operation returns the complete information for the specified product across all the stores where it is sold at. This consumes 22 credits.
-          displayName: !!binary |-
-            UHJvZHVjdCBEZXRhaWxzIC0gUmV0dXJucyBjb21wbGV0ZSBpbmZvcm1hdGlvbiBmb3IgYSBwcm9kdWN0IC0gQ3JlZGl0czogw6PCgMKAMjI=
+          displayName: 'Product Details - Returns complete information for a product
+            - Credits: ã22'
           queryParameters:
             countryCode:
               type: string
-              description: !!binary |-
-                TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+              description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
               displayName: countryCode
             pageNumber?:
               type: string
@@ -1840,13 +1819,13 @@ uses:
               description: Response
       get:
         description: <p>Returns a collection of products matching a specified query, along with a variety of statistics about the query results. Requires at least one of query, url, upc, mpn, sku, brandId, storeId, or categoryId. This consumes 22 credits per product returned.
-        displayName: !!binary |-
-          U2VhcmNoIFByb2R1Y3RzIC0gUmV0cmlldmVzIGEgbGlzdCBvZiBwcm9kdWN0cyBtYXRjaGluZyBhIHZhcmlldHkgb2YgcXVlcnkgcGFyYW1ldGVycyB3aXRoIHRoZWlyIG9mZmVycyBhbmQgY2F0YWxvZyBpbmZvIGFjcm9zcyBzdG9yZXMgLSBDcmVkaXRzOiDDo8KAwoBuIHggMjI=
+        displayName: 'Search Products - Retrieves a list of products matching a variety
+          of query parameters with their offers and catalog info across stores - Credits:
+          ãn x 22'
         queryParameters:
           countryCode:
             type: string
-            description: !!binary |-
-              TGltaXRzIHJlc3VsdHMgdG8gcHJvZHVjdHMgb2YgdGhlIGdlb2dyYXBoeSB3aXRoIHRoaXMgY29kZS4gQXZhaWxhYmxlIHZhbHVlcyAnVVMnLCAnR0InLCAnSU4nLCAnQ0EnLCAnU0cnIGFuZCAnQVUnLiBJZiB0aGUgdXNlciBkb2VzbsOiwoDCmXQgcGFzcyBhIHZhbHVlLCB0aGUgZGVmYXVsdCBvcHRpb24gcmV0dXJucyB0aGUgVVMgY291bnRyeUNvZGUgZGF0YQ==
+            description: Limits results to products of the geography with this code. Available values 'US', 'GB', 'IN', 'CA', 'SG' and 'AU'. If the user doesnât pass a value, the default option returns the US countryCode data
             displayName: countryCode
           q?:
             type: string

@@ -3250,8 +3250,7 @@ types:
     properties:
       force:
         type: boolean
-        description: !!binary |-
-          Qm9vbGVhbiBpbmRpY2F0aW5nIHdoZXRoZXIgdG8gZm9yY2UgdGhlIHVwZGF0ZSBvciB0byBtYWtlIHN1cmUgdGhlIHVwZGF0ZSBpcyBhIGZhc3QtZm9yd2FyZCB1cGRhdGUuIFRoZSBkZWZhdWx0IGlzIGZhbHNlLCBzbyBsZWF2aW5nIHRoaXMgb3V0IG9yIHNldHRpbmcgaXQgdG8gZmFsc2Ugd2lsbCBtYWtlIHN1cmUgeW91w6LCgMKZcmUgbm90IG92ZXJ3cml0aW5nIHdvcmsu
+        description: Boolean indicating whether to force the update or to make sure the update is a fast-forward update. The default is false, so leaving this out or setting it to false will make sure youâre not overwriting work.
       sha:
         type: string
         description: String of the SHA1 value to set this reference to.
@@ -5332,8 +5331,7 @@ types:
             description: String of the email of the author of the tag.
       type:
         type: string
-        description: !!binary |-
-          U3RyaW5nIG9mIHRoZSB0eXBlIG9mIHRoZSBvYmplY3Qgd2XDosKAwplyZSB0YWdnaW5nLiBOb3JtYWxseSB0aGlzIGlzIGEgY29tbWl0IGJ1dCBpdCBjYW4gYWxzbyBiZSBhIHRyZWUgb3IgYSBibG9iLg==
+        description: String of the type of the object weâre tagging. Normally this is a commit but it can also be a tree or a blob.
   team:
     type: object
     properties:
@@ -5531,8 +5529,9 @@ types:
         description: 'ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ'
       email?:
         type: string
-        description: !!binary |-
-          Tm90ZTogVGhlIHJldHVybmVkIGVtYWlsIGlzIHRoZSB1c2Vyw6LCgMKZcyBwdWJsaWNseSB2aXNpYmxlIGVtYWlsIGFkZHJlc3MgKG9yIG51bGwgaWYgdGhlIHVzZXIgaGFzIG5vdCBzcGVjaWZpZWQgYSBwdWJsaWMgZW1haWwgYWRkcmVzcyBpbiB0aGVpciBwcm9maWxlKS4=
+        description: 'Note: The returned email is the userâs publicly visible email
+          address (or null if the user has not specified a public email address in
+          their profile).'
       followers?:
         type: integer
       following?:

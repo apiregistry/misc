@@ -485,8 +485,7 @@ securitySchemes:
             displayName: offset
           sort-order?:
             type: string
-            description: !!binary |-
-              VGhlIGRlZmF1bHQgaXMgQVNDIChhc2NlbmRpbmcpLiBUaGUgc29ydC1vcmRlciBwYXJhbWV0ZXIgaXMgdXNlZCB3aXRoIHRoZSBzb3J0LWJ5IHBhcmFtZXRlciDDosKAwpQgZm9yIGRldGFpbHMsIHNlZSBlYWNoIHJlcXVlc3QgdHlwZS4=
+            description: The default is ASC (ascending). The sort-order parameter is used with the sort-by parameter â for details, see each request type.
             displayName: sort-order
             enum:
             - ASC
@@ -599,13 +598,11 @@ securitySchemes:
         displayName: isbn
       title?:
         type: string
-        description: !!binary |-
-          WW91w6LCgMKZbGwgbmVlZCB0byBlbnRlciB0aGUgZnVsbCB0aXRsZSBvZiB0aGUgYm9vay4gU3BhY2VzIGluIHRoZSB0aXRsZSB3aWxsIGJlIGNvbnZlcnRlZCBpbnRvIHRoZSBjaGFyYWN0ZXJzICUyMC4=
+        description: Youâll need to enter the full title of the book. Spaces in the title will be converted into the characters %20.
         displayName: title
       author?:
         type: string
-        description: !!binary |-
-          WW91w6LCgMKZbGwgbmVlZCB0byBlbnRlciB0aGUgYXV0aG9yw6LCgMKZcyBmaXJzdCBhbmQgbGFzdCBuYW1lLCBzZXBhcmF0ZWQgYnkgYSBzcGFjZS4gVGhpcyBzcGFjZSB3aWxsIGJlIGNvbnZlcnRlZCBpbnRvIHRoZSBjaGFyYWN0ZXJzICUyMC4=
+        description: Youâll need to enter the authorâs first and last name, separated by a space. This space will be converted into the characters %20.
         displayName: author
       api-key?:
         type: string

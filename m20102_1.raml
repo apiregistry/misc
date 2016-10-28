@@ -6537,8 +6537,7 @@ types:
                   type: error-response
       /payment-methods:
         get:
-          description: !!binary |-
-            TGlzdHMgYXZhaWxhYmxlIHBheW1lbnQgbWV0aG9kcyBmb3IgYSBzcGVjaWZpZWQgc2hvcHBpbmcgY2FydC4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gIFNlZSBodHRwOi8vZGV2ZG9jcy5tYWdlbnRvLmNvbS9jb2RlbGlua3MvYXR0cmlidXRlcy5odG1sI1BheW1lbnRNZXRob2RNYW5hZ2VtZW50SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+          description: Lists available payment methods for a specified shopping cart. This call returns an array of objects, but detailed information about each objectâs attributes might not be included.  See http://devdocs.magento.com/codelinks/attributes.html#PaymentMethodManagementInterface to determine which call to use to get detailed information about all attributes for an object.
           responses:
             200:
               description: 200 Success.
@@ -6787,8 +6786,7 @@ types:
                 type: error-response
     /search:
       get:
-        description: !!binary |-
-          RW5hYmxlcyBhZG1pbmlzdHJhdGl2ZSB1c2VycyB0byBsaXN0IGNhcnRzIHRoYXQgbWF0Y2ggc3BlY2lmaWVkIHNlYXJjaCBjcml0ZXJpYS4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gIFNlZSBodHRwOi8vZGV2ZG9jcy5tYWdlbnRvLmNvbS9jb2RlbGlua3MvYXR0cmlidXRlcy5odG1sI0NhcnRSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+        description: Enables administrative users to list carts that match specified search criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included.  See http://devdocs.magento.com/codelinks/attributes.html#CartRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -7208,8 +7206,7 @@ types:
                   type: error-response
       /payment-methods:
         get:
-          description: !!binary |-
-            TGlzdHMgYXZhaWxhYmxlIHBheW1lbnQgbWV0aG9kcyBmb3IgYSBzcGVjaWZpZWQgc2hvcHBpbmcgY2FydC4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gIFNlZSBodHRwOi8vZGV2ZG9jcy5tYWdlbnRvLmNvbS9jb2RlbGlua3MvYXR0cmlidXRlcy5odG1sI1BheW1lbnRNZXRob2RNYW5hZ2VtZW50SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+          description: Lists available payment methods for a specified shopping cart. This call returns an array of objects, but detailed information about each objectâs attributes might not be included.  See http://devdocs.magento.com/codelinks/attributes.html#PaymentMethodManagementInterface to determine which call to use to get detailed information about all attributes for an object.
           responses:
             200:
               description: 200 Success.
@@ -8387,8 +8384,7 @@ types:
                 type: error-response
     /search:
       get:
-        description: !!binary |-
-          UmV0cmlldmUgYSBjb3Vwb24gdXNpbmcgdGhlIHNwZWNpZmllZCBzZWFyY2ggY3JpdGVyaWEuIFRoaXMgY2FsbCByZXR1cm5zIGFuIGFycmF5IG9mIG9iamVjdHMsIGJ1dCBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBlYWNoIG9iamVjdMOiwoDCmXMgYXR0cmlidXRlcyBtaWdodCBub3QgYmUgaW5jbHVkZWQuIFNlZSBodHRwOi8vZGV2ZG9jcy5tYWdlbnRvLmNvbS9jb2RlbGlua3MvYXR0cmlidXRlcy5odG1sI0NvdXBvblJlcG9zaXRvcnlJbnRlcmZhY2UgdG8gZGV0ZXJtaW5lIHdoaWNoIGNhbGwgdG8gdXNlIHRvIGdldCBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBhbGwgYXR0cmlidXRlcyBmb3IgYW4gb2JqZWN0Lg==
+        description: Retrieve a coupon using the specified search criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#CouponRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -8670,8 +8666,7 @@ types:
               type: error-response
   /creditmemos:
     get:
-      description: !!binary |-
-        TGlzdHMgY3JlZGl0IG1lbW9zIHRoYXQgbWF0Y2ggc3BlY2lmaWVkIHNlYXJjaCBjcml0ZXJpYS4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gU2VlIGh0dHA6Ly9kZXZkb2NzLm1hZ2VudG8uY29tL2NvZGVsaW5rcy9hdHRyaWJ1dGVzLmh0bWwjQ3JlZGl0bWVtb1JlcG9zaXRvcnlJbnRlcmZhY2UgdG8gZGV0ZXJtaW5lIHdoaWNoIGNhbGwgdG8gdXNlIHRvIGdldCBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBhbGwgYXR0cmlidXRlcyBmb3IgYW4gb2JqZWN0Lg==
+      description: Lists credit memos that match specified search criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#CreditmemoRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
       queryParameters:
         searchCriteria[filterGroups][][filters][][field]?:
           type: string
@@ -8776,8 +8771,7 @@ types:
                 type: error-response
     /search:
       get:
-        description: !!binary |-
-          UmV0cmlldmUgY3VzdG9tZXIgZ3JvdXBzLiBUaGUgbGlzdCBvZiBncm91cHMgY2FuIGJlIGZpbHRlcmVkIHRvIGV4Y2x1ZGUgdGhlIE5PVF9MT0dHRURfSU4gZ3JvdXAgdXNpbmcgdGhlIGZpcnN0IHBhcmFtZXRlciBhbmQvb3IgaXQgY2FuIGJlIGZpbHRlcmVkIGJ5IHRheCBjbGFzcy4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gU2VlIGh0dHA6Ly9kZXZkb2NzLm1hZ2VudG8uY29tL2NvZGVsaW5rcy9hdHRyaWJ1dGVzLmh0bWwjR3JvdXBSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+        description: Retrieve customer groups. The list of groups can be filtered to exclude the NOT_LOGGED_IN group using the first parameter and/or it can be filtered by tax class. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#GroupRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -9155,8 +9149,7 @@ types:
                 type: error-response
     /search:
       get:
-        description: !!binary |-
-          UmV0cmlldmUgY3VzdG9tZXJzIHdoaWNoIG1hdGNoIGEgc3BlY2lmaWVkIGNyaXRlcmlhLiBUaGlzIGNhbGwgcmV0dXJucyBhbiBhcnJheSBvZiBvYmplY3RzLCBidXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgZWFjaCBvYmplY3TDosKAwplzIGF0dHJpYnV0ZXMgbWlnaHQgbm90IGJlIGluY2x1ZGVkLiBTZWUgaHR0cDovL2RldmRvY3MubWFnZW50by5jb20vY29kZWxpbmtzL2F0dHJpYnV0ZXMuaHRtbCNDdXN0b21lclJlcG9zaXRvcnlJbnRlcmZhY2UgdG8gZGV0ZXJtaW5lIHdoaWNoIGNhbGwgdG8gdXNlIHRvIGdldCBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBhbGwgYXR0cmlidXRlcyBmb3IgYW4gb2JqZWN0Lg==
+        description: Retrieve customers which match a specified criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#CustomerRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -9539,8 +9532,7 @@ types:
     /attribute-sets:
       /list:
         get:
-          description: !!binary |-
-            UmV0cmlldmUgbGlzdCBvZiBBdHRyaWJ1dGUgU2V0cyBUaGlzIGNhbGwgcmV0dXJucyBhbiBhcnJheSBvZiBvYmplY3RzLCBidXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgZWFjaCBvYmplY3TDosKAwplzIGF0dHJpYnV0ZXMgbWlnaHQgbm90IGJlIGluY2x1ZGVkLiBTZWUgaHR0cDovL2RldmRvY3MubWFnZW50by5jb20vY29kZWxpbmtzL2F0dHJpYnV0ZXMuaHRtbCNBdHRyaWJ1dGVTZXRSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+          description: Retrieve list of Attribute Sets This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#AttributeSetRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
           queryParameters:
             searchCriteria[filterGroups][][filters][][field]?:
               type: string
@@ -10031,8 +10023,7 @@ types:
                   type: error-response
       /payment-methods:
         get:
-          description: !!binary |-
-            TGlzdCBhdmFpbGFibGUgcGF5bWVudCBtZXRob2RzIGZvciBhIHNwZWNpZmllZCBzaG9wcGluZyBjYXJ0LiBUaGlzIGNhbGwgcmV0dXJucyBhbiBhcnJheSBvZiBvYmplY3RzLCBidXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgZWFjaCBvYmplY3TDosKAwplzIGF0dHJpYnV0ZXMgbWlnaHQgbm90IGJlIGluY2x1ZGVkLiAgU2VlIGh0dHA6Ly9kZXZkb2NzLm1hZ2VudG8uY29tL2NvZGVsaW5rcy9hdHRyaWJ1dGVzLmh0bWwjR3Vlc3RQYXltZW50TWV0aG9kTWFuYWdlbWVudEludGVyZmFjZSB0byBkZXRlcm1pbmUgd2hpY2ggY2FsbCB0byB1c2UgdG8gZ2V0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGFsbCBhdHRyaWJ1dGVzIGZvciBhbiBvYmplY3Qu
+          description: List available payment methods for a specified shopping cart. This call returns an array of objects, but detailed information about each objectâs attributes might not be included.  See http://devdocs.magento.com/codelinks/attributes.html#GuestPaymentMethodManagementInterface to determine which call to use to get detailed information about all attributes for an object.
           responses:
             200:
               description: 200 Success.
@@ -10398,8 +10389,7 @@ types:
               application/json:
                 type: error-response
     get:
-      description: !!binary |-
-        TGlzdHMgaW52b2ljZXMgdGhhdCBtYXRjaCBzcGVjaWZpZWQgc2VhcmNoIGNyaXRlcmlhLiBUaGlzIGNhbGwgcmV0dXJucyBhbiBhcnJheSBvZiBvYmplY3RzLCBidXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgZWFjaCBvYmplY3TDosKAwplzIGF0dHJpYnV0ZXMgbWlnaHQgbm90IGJlIGluY2x1ZGVkLiBTZWUgaHR0cDovL2RldmRvY3MubWFnZW50by5jb20vY29kZWxpbmtzL2F0dHJpYnV0ZXMuaHRtbCNJbnZvaWNlUmVwb3NpdG9yeUludGVyZmFjZSB0byBkZXRlcm1pbmUgd2hpY2ggY2FsbCB0byB1c2UgdG8gZ2V0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGFsbCBhdHRyaWJ1dGVzIGZvciBhbiBvYmplY3Qu
+      description: Lists invoices that match specified search criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#InvoiceRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
       queryParameters:
         searchCriteria[filterGroups][][filters][][field]?:
           type: string
@@ -10575,8 +10565,7 @@ types:
                 application/json:
                   type: error-response
       get:
-        description: !!binary |-
-          TGlzdHMgb3JkZXIgaXRlbXMgdGhhdCBtYXRjaCBzcGVjaWZpZWQgc2VhcmNoIGNyaXRlcmlhLiBUaGlzIGNhbGwgcmV0dXJucyBhbiBhcnJheSBvZiBvYmplY3RzLCBidXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgZWFjaCBvYmplY3TDosKAwplzIGF0dHJpYnV0ZXMgbWlnaHQgbm90IGJlIGluY2x1ZGVkLiBTZWUgaHR0cDovL2RldmRvY3MubWFnZW50by5jb20vY29kZWxpbmtzL2F0dHJpYnV0ZXMuaHRtbCNPcmRlckl0ZW1SZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+        description: Lists order items that match specified search criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#OrderItemRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -10803,8 +10792,7 @@ types:
               application/json:
                 type: error-response
     get:
-      description: !!binary |-
-        TGlzdHMgb3JkZXJzIHRoYXQgbWF0Y2ggc3BlY2lmaWVkIHNlYXJjaCBjcml0ZXJpYS4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gU2VlIGh0dHA6Ly9kZXZkb2NzLm1hZ2VudG8uY29tL2NvZGVsaW5rcy9hdHRyaWJ1dGVzLmh0bWwjT3JkZXJSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+      description: Lists orders that match specified search criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#OrderRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
       queryParameters:
         searchCriteria[filterGroups][][filters][][field]?:
           type: string
@@ -12424,8 +12412,7 @@ types:
   /salesRules:
     /search:
       get:
-        description: !!binary |-
-          UmV0cmlldmUgc2FsZXMgcnVsZXMgdGhhdCBtYXRjaCB0ZSBzcGVjaWZpZWQgY3JpdGVyaWEuIFRoaXMgY2FsbCByZXR1cm5zIGFuIGFycmF5IG9mIG9iamVjdHMsIGJ1dCBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBlYWNoIG9iamVjdMOiwoDCmXMgYXR0cmlidXRlcyBtaWdodCBub3QgYmUgaW5jbHVkZWQuIFNlZSBodHRwOi8vZGV2ZG9jcy5tYWdlbnRvLmNvbS9jb2RlbGlua3MvYXR0cmlidXRlcy5odG1sI1J1bGVSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+        description: Retrieve sales rules that match te specified criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#RuleRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -12779,8 +12766,7 @@ types:
               type: error-response
   /shipments:
     get:
-      description: !!binary |-
-        TGlzdHMgc2hpcG1lbnRzIHRoYXQgbWF0Y2ggc3BlY2lmaWVkIHNlYXJjaCBjcml0ZXJpYS4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gU2VlIGh0dHA6Ly9kZXZkb2NzLm1hZ2VudG8uY29tL2NvZGVsaW5rcy9hdHRyaWJ1dGVzLmh0bWwjU2hpcG1lbnRSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+      description: Lists shipments that match specified search criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#ShipmentRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
       queryParameters:
         searchCriteria[filterGroups][][filters][][field]?:
           type: string
@@ -13018,8 +13004,7 @@ types:
   /taxClasses:
     /search:
       get:
-        description: !!binary |-
-          UmV0cmlldmUgdGF4IGNsYXNzZXMgd2hpY2ggbWF0Y2ggYSBzcGVjaWZpYyBjcml0ZXJpYS4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gU2VlIGh0dHA6Ly9kZXZkb2NzLm1hZ2VudG8uY29tL2NvZGVsaW5rcy9hdHRyaWJ1dGVzLmh0bWwjVGF4Q2xhc3NSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+        description: Retrieve tax classes which match a specific criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#TaxClassRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -13178,8 +13163,7 @@ types:
   /taxRates:
     /search:
       get:
-        description: !!binary |-
-          U2VhcmNoIFRheFJhdGVzIFRoaXMgY2FsbCByZXR1cm5zIGFuIGFycmF5IG9mIG9iamVjdHMsIGJ1dCBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBlYWNoIG9iamVjdMOiwoDCmXMgYXR0cmlidXRlcyBtaWdodCBub3QgYmUgaW5jbHVkZWQuIFNlZSBodHRwOi8vZGV2ZG9jcy5tYWdlbnRvLmNvbS9jb2RlbGlua3MvYXR0cmlidXRlcy5odG1sI1RheFJhdGVSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+        description: Search TaxRates This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#TaxRateRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -13330,8 +13314,7 @@ types:
   /taxRules:
     /search:
       get:
-        description: !!binary |-
-          U2VhcmNoIFRheFJ1bGVzIFRoaXMgY2FsbCByZXR1cm5zIGFuIGFycmF5IG9mIG9iamVjdHMsIGJ1dCBkZXRhaWxlZCBpbmZvcm1hdGlvbiBhYm91dCBlYWNoIG9iamVjdMOiwoDCmXMgYXR0cmlidXRlcyBtaWdodCBub3QgYmUgaW5jbHVkZWQuIFNlZSBodHRwOi8vZGV2ZG9jcy5tYWdlbnRvLmNvbS9jb2RlbGlua3MvYXR0cmlidXRlcy5odG1sI1RheFJ1bGVSZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+        description: Search TaxRules This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#TaxRuleRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
         queryParameters:
           searchCriteria[filterGroups][][filters][][field]?:
             type: string
@@ -13500,8 +13483,7 @@ types:
               application/json:
                 type: error-response
     get:
-      description: !!binary |-
-        TGlzdHMgdHJhbnNhY3Rpb25zIHRoYXQgbWF0Y2ggc3BlY2lmaWVkIHNlYXJjaCBjcml0ZXJpYS4gVGhpcyBjYWxsIHJldHVybnMgYW4gYXJyYXkgb2Ygb2JqZWN0cywgYnV0IGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IGVhY2ggb2JqZWN0w6LCgMKZcyBhdHRyaWJ1dGVzIG1pZ2h0IG5vdCBiZSBpbmNsdWRlZC4gU2VlIGh0dHA6Ly9kZXZkb2NzLm1hZ2VudG8uY29tL2NvZGVsaW5rcy9hdHRyaWJ1dGVzLmh0bWwjVHJhbnNhY3Rpb25SZXBvc2l0b3J5SW50ZXJmYWNlIHRvIGRldGVybWluZSB3aGljaCBjYWxsIHRvIHVzZSB0byBnZXQgZGV0YWlsZWQgaW5mb3JtYXRpb24gYWJvdXQgYWxsIGF0dHJpYnV0ZXMgZm9yIGFuIG9iamVjdC4=
+      description: Lists transactions that match specified search criteria. This call returns an array of objects, but detailed information about each objectâs attributes might not be included. See http://devdocs.magento.com/codelinks/attributes.html#TransactionRepositoryInterface to determine which call to use to get detailed information about all attributes for an object.
       queryParameters:
         searchCriteria[filterGroups][][filters][][field]?:
           type: string

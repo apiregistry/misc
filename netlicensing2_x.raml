@@ -2,8 +2,7 @@
 title: Labs64 NetLicensing RESTful API Test Center
 version: 2.x
 baseUri: go.netlicensing.io/core/v2/rest
-description: !!binary |-
-  VGhlIExhYnM2NCA8YSBocmVmPSdodHRwczovL3d3dy5sYWJzNjQuZGUvY29uZmx1ZW5jZS94L3B3Q28nIHRhcmdldD0nX2JsYW5rJz5OZXRMaWNlbnNpbmcgUkVTVGZ1bCBBUEk8L2E+IGdpdmVzIHlvdSBhY2Nlc3MgdG8gTmV0TGljZW5zaW5nw6LCgMKZcyBjb3JlIGZlYXR1cmVzLjxici8+PGJyLz48c3Ryb25nPkF1dGhlbnRpY2F0aW9uPC9zdHJvbmc+PGJyLz5Zb3UgYXV0aGVudGljYXRlIHRvIHRoZSBOZXRMaWNlbnNpbmcgQVBJIGJ5IHByb3ZpZGluZyB5b3VyIGFjY291bnQgY3JlZGVudGlhbHMgb3Igc2ltcGx5IHVzZSBvdXIgZGVtbyBhY2NvdW50IC0gPGNvZGU+ZGVtbzpkZW1vPC9jb2RlPjxici8+PGJyLz5GaW5kIG91dCBtb3JlIGFib3V0IExhYnM2NCBOZXRMaWNlbnNpbmcgYXQgPGEgaHJlZj0naHR0cDovL25ldGxpY2Vuc2luZy5pbycgdGFyZ2V0PSdfYmxhbmsnPm5ldGxpY2Vuc2luZy5pbzwvYT4=
+description: The Labs64 <a href='https://www.labs64.de/confluence/x/pwCo' target='_blank'>NetLicensing RESTful API</a> gives you access to NetLicensingâs core features.<br/><br/><strong>Authentication</strong><br/>You authenticate to the NetLicensing API by providing your account credentials or simply use our demo account - <code>demo:demo</code><br/><br/>Find out more about Labs64 NetLicensing at <a href='http://netlicensing.io' target='_blank'>netlicensing.io</a>
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
@@ -701,8 +700,7 @@ types:
         properties:
           productModuleNumber:
             type: string
-            description: !!binary |-
-              TnVtYmVyIG9mIHByb2R1Y3QgbW9kdWxlIHRvIMORwoFyZWF0ZSBsaWNlbnNlIHRlbXBsYXRlIG9iamVjdA==
+            description: Number of product module to Ñreate license template object
             displayName: productModuleNumber
           number:
             type: string
@@ -710,8 +708,7 @@ types:
             displayName: number
           name:
             type: string
-            description: !!binary |-
-              bGljZW5zZSB0ZW1wbGF0ZSBuYW1lIHRvIMORwoFyZWF0ZSBsaWNlbnNlIHRlbXBsYXRlIG9iamVjdA==
+            description: license template name to Ñreate license template object
             displayName: name
           active:
             type: boolean
