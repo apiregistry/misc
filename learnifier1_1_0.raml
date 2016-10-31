@@ -29,7 +29,7 @@ types:
     type: object
     properties:
       caller?:
-        type: string
+        type: commons.uuid
         description: The id of the user that initiated this operation
         example: 81590981-1e05-4fd5-aa15-15bc4b06cf7f
       clientNumber?:
@@ -61,24 +61,24 @@ types:
     type: object
     properties:
       email?:
-        type: string
+        type: commons.email
         description: The email of the user. If no user exists with the specified email a user will be created with default values and the specified email.
         example: user@example.com
       extid?:
         type: string
         description: An optional external id for the participation
       userid?:
-        type: string
+        type: commons.uuid
         example: 81590981-1e05-4fd5-aa15-15bc4b06cf7f
   AddProject:
     type: object
     properties:
       country?:
-        type: string
+        type: commons.countrycode
         description: The country code. Default value will be used if not specified
         example: SE
       createdBy?:
-        type: string
+        type: commons.uuid
         description: The id of the user that created the project. If the creator is not known this value can be *null* or not specified
         example: 8c102c8e-fabd-4c8a-b245-4d2d2f77fc4b
       designId:
@@ -149,13 +149,13 @@ types:
     type: object
     properties:
       uuid:
-        type: string
+        type: commons.uuid
         description: UUID of user to add to this group.
   AddUserResponse:
     type: object
     properties:
       userId?:
-        type: string
+        type: commons.uuid
         description: The user id
         example: 81590981-1e05-4fd5-aa15-15bc4b06cf7f
   Anonimous0:
@@ -218,7 +218,7 @@ types:
         type: datetime
         description: The time this entry was created
       createdBy?:
-        type: string
+        type: commons.uuid
         description: UUID of the user that created this entry.
       description?:
         type: string
@@ -233,7 +233,7 @@ types:
         type: datetime
         description: The time when this entry was locked or null
       lockedBy?:
-        type: string
+        type: commons.uuid
         description: UUID of the user that has locked this design
       lockedDesign:
         type: boolean
@@ -272,7 +272,7 @@ types:
         type: datetime
         description: Timestamp when group was created.
       createdBy?:
-        type: string
+        type: commons.uuid
         description: UUID of the user that created this group.
         example: 81590981-1e05-4fd5-aa15-15bc4b06cf7f
       id:
@@ -293,7 +293,7 @@ types:
         type: datetime
         description: Timestamp when group was last modified.
       updatedBy?:
-        type: string
+        type: commons.uuid
         description: UUID of the user that last updated this group.
         example: 81590981-1e05-4fd5-aa15-15bc4b06cf7f
   GroupId:
@@ -307,7 +307,7 @@ types:
     type: object
     properties:
       link?:
-        type: string
+        type: commons.url
         description: An full http url
         example: http://www.example.com/login/1234567890
   OrgUnit:
@@ -341,7 +341,7 @@ types:
     type: object
     properties:
       accessLink?:
-        type: string
+        type: commons.url
         description: 'A link to access this particular participation. The link requires
           the user to login. Users that access the platform the first time must set
           a password. This value is null if this participation is not activated. '
@@ -396,7 +396,7 @@ types:
         description: The id of the project this participation belongs to
         format: int64
       userId?:
-        type: string
+        type: commons.uuid
         description: The id of the user this participation belongs to
   ProductFailure:
     type: object
@@ -414,18 +414,18 @@ types:
     type: object
     properties:
       adminUrl?:
-        type: string
+        type: commons.url
         description: URL to the page where project administration can be done. Administrative access is still required when accessing the url.
         example: http://www.example.com/adminUrl/1234
       country?:
-        type: string
+        type: commons.countrycode
         description: The country code
         example: SE
       created?:
         type: datetime
         description: The timestamp when this project was created.
       createdBy?:
-        type: string
+        type: commons.uuid
         description: The id of the user that created the project. If the creator is not known this value is *null*
         example: 8c102c8e-fabd-4c8a-b245-4d2d2f77fc4b
       designId?:
@@ -477,7 +477,7 @@ types:
       roles?:
         type: TeamRole
       userid?:
-        type: string
+        type: commons.uuid
         description: The id of the user that created the project. If the creator is not known this value is *null*
         example: 81590981-1e05-4fd5-aa15-15bc4b06cf7f
   TeamRole:
@@ -486,13 +486,13 @@ types:
       name?:
         type: string
       roleid?:
-        type: string
+        type: commons.uuid
         example: 2afae00f-8357-4b56-94bb-44a3cf0b8ffa
   UpdateOrganizationUnit:
     type: object
     properties:
       caller?:
-        type: string
+        type: commons.uuid
         description: The id of the user that initiated this operation
         example: 81590981-1e05-4fd5-aa15-15bc4b06cf7f
       clientNumber?:
@@ -517,7 +517,7 @@ types:
     type: object
     properties:
       country?:
-        type: string
+        type: commons.countrycode
         description: The country code
         example: SE
       locale?:
@@ -576,7 +576,7 @@ types:
         description: The primary organization for the user. Must match the id of an Organization Unit.
         format: int64
       id?:
-        type: string
+        type: commons.uuid
         description: The id of the user this participation belongs to
         example: 81590981-1e05-4fd5-aa15-15bc4b06cf7f
       lastLogin?:
@@ -592,7 +592,7 @@ types:
       prefs?:
         type: UserPreferences
       primaryEmail?:
-        type: string
+        type: commons.email
         description: The primary email for this user. If the user has no email this value is *null*.
   UserGroup:
     type: object
@@ -625,14 +625,14 @@ types:
     type: object
     properties:
       uuid:
-        type: string
+        type: commons.uuid
         description: UUID of user to add to this group.
         example: aa7685cb-d47e-419e-8541-0d13cdcfe779
   UserParticipationInfo:
     type: object
     properties:
       accessLink?:
-        type: string
+        type: commons.url
         description: 'A link to access this particular participation. The link requires
           the user to login. Users that access the platform the first time must set
           a password. This value is null if this participation is not activated. '
@@ -702,7 +702,7 @@ types:
         - NEW
         - DISABLED
       projectThumbnail?:
-        type: string
+        type: commons.url
         description: An url to the project thumbnail. This url can be accessed by anyone.
         example: http://www.example.com/thumbnail.png
       projectUserTitle?:
@@ -1151,7 +1151,7 @@ types:
           /{uuid}:
             uriParameters:
               uuid:
-                type: string
+                type: commons.uuid
                 description: UUID of user to remove from group.
                 displayName: uuid
             delete:

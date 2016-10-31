@@ -509,10 +509,10 @@
   }, {
     "name" : "Queen",
     "org" : "Mondiamedia",
-    "version" : "2.15.0",
+    "version" : "2.15.1",
     "description" : "<p>This is the API for building Mondia-Media-Products, like Tops.</p><p>Every call need a valid client or user-token.</p><p><ol><li>Client-Token can be get at our Police-API</li><li>User-Token can be get through a login on a customer specific Life-Cycle-Service</li><li>UseCases regarding Login, Register, Subscribe (incl. Payment) will be done by the Life-Cycle-Service</li></ol></p>",
     "icon" : "http://favicon.yandex.net/favicon/www.mondiamedia.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/mondiamedia2_15_0.raml",
+    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/mondiamedia2_15_1.raml",
     "kind" : null
   }, {
     "name" : "Moon by Ai Weiwei & Olafur Eliasson",
@@ -745,6 +745,14 @@
     "description" : "Search for information on companies using a website or company name and get access to Company Data, News, Blog Posts, Competitor Lists and much more.",
     "icon" : "http://favicon.yandex.net/favicon/www.owler.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/owler1_0_0.raml",
+    "kind" : null
+  }, {
+    "name" : "Oxford Dictionaries",
+    "org" : "Oxforddictionaries",
+    "version" : "1.3.0",
+    "description" : null,
+    "icon" : "http://favicon.yandex.net/favicon/www.oxforddictionaries.com",
+    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/oxforddictionaries1_3_0.raml",
     "kind" : null
   }, {
     "name" : "Pandorabots AIaaS",

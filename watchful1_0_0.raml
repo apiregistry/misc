@@ -130,7 +130,7 @@ types:
         type: string
         description: Watchful secret word
       tags?:
-        type: string
+        type: commons.json
         description: JSON encoded array of tags for the site (e.g. [{<q>name</q>:<q>mytag</q>},{<q>name</q>:<q>anothertag</q>}])
       word_akeeba?:
         type: string
@@ -1079,7 +1079,7 @@ types:
         displayName: Install extension
         queryParameters:
           url:
-            type: string
+            type: commons.url
             description: URL to install the extension from
             displayName: url
         responses:

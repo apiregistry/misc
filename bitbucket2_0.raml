@@ -4539,6 +4539,9 @@ types:
             description: A unique identifier for the error for use in bug reports and support cases.
           message?:
             type: string
+      type:
+        type: string
+    description: Base type for most resource objects. It defines the common `type` element that identifies an object's type. It also identifies the element as Swagger's `discriminator`.
   group:
     type:
     - object

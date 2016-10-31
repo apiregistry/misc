@@ -13,7 +13,7 @@ types:
     type: object
     properties:
       href:
-        type: string
+        type: commons.url
         description: The corresponding link
       rel:
         type: string
@@ -61,13 +61,13 @@ types:
     type: object
     properties:
       startUrl:
-        type: string
+        type: commons.url
         description: The URL that can be used to start the session in a suitable browser. Valid only until the session has been finished
       supportKey:
         type: string
         description: Human readable support key
       uuid:
-        type: string
+        type: commons.uuid
         description: Canonical form of the [UUID](http://en.wikipedia.org/wiki/Universally_unique_identifier) uniquely identifying this session
   SessionDetails:
     type: object
@@ -77,7 +77,7 @@ types:
         description: Timestamp of when the session was created via API
         format: int64
       sessionDataDownloadUrl?:
-        type: string
+        type: commons.url
         description: Url of zip file containing session data like photos, notes or recording (if applicable)
       sessionDataDownloadUrlExpiration?:
         type: integer
@@ -129,22 +129,22 @@ types:
         - JOINED
         - FINISHED
       startUrl?:
-        type: string
+        type: commons.url
         description: The URL that can be used to start the session in a suitable browser. Valid only until the session has been finished
       supportKey:
         type: string
         description: Human readable support key
       technicianEmail?:
-        type: string
+        type: commons.email
         description: Email address of technician
       uuid:
-        type: string
+        type: commons.uuid
         description: Canonical form of the [UUID](http://en.wikipedia.org/wiki/Universally_unique_identifier) uniquely identifying this session
 /sessions:
   /{uuid}:
     uriParameters:
       uuid:
-        type: string
+        type: commons.uuid
         description: the uuid returned when creating the session.
         displayName: uuid
     get:
