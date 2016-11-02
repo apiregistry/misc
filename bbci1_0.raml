@@ -930,6 +930,8 @@ types:
             description: The depth to return child entities.
             displayName: initial_child_count
             default: 4
+            minimum: 1
+            maximum: 4
           sort:
             type: string
             description: The sort order of the results.
@@ -1376,6 +1378,7 @@ types:
         type: string
         description: The programme identifier.
         displayName: pid
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
     get:
       description: Get Clips
@@ -1411,6 +1414,7 @@ types:
         type: string
         description: The programme identifier.
         displayName: pid
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
     /prerolls:
       get:
@@ -1543,6 +1547,8 @@ types:
             description: The depth to return child entities.
             displayName: initial_child_count
             default: 4
+            minimum: 1
+            maximum: 4
           sort:
             type: string
             description: The sort order of the results.
@@ -1581,6 +1587,7 @@ types:
         type: string
         description: The programme identifier.
         displayName: pid
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
     /episodes:
       get:
@@ -1611,6 +1618,8 @@ types:
             description: The depth to return child entities.
             displayName: initial_child_count
             default: 4
+            minimum: 1
+            maximum: 4
           sort:
             type: string
             description: The sort order of the results.
@@ -1696,6 +1705,7 @@ types:
         type: string
         description: The programme identifier.
         displayName: pid
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
     /episodes:
       get:
@@ -1724,6 +1734,8 @@ types:
             description: The depth to return child entities.
             displayName: initial_child_count
             default: 4
+            minimum: 1
+            maximum: 4
         responses:
           200:
             description: Default response
@@ -1756,6 +1768,8 @@ types:
           description: The depth to return child entities.
           displayName: initial_child_count
           default: 4
+          minimum: 1
+          maximum: 4
       responses:
         200:
           description: Default response

@@ -50,12 +50,14 @@ types:
       parent?:
         type: number
         description: A Organization Unit id of the parent Organization Unit (optional).
+        example: 1234
   AddOrganizationUnitResponse:
     type: object
     properties:
       ouId?:
         type: integer
         description: The Organization Unit id
+        example: 12
         format: int64
   AddParticipant:
     type: object
@@ -125,6 +127,7 @@ types:
       homeOrg?:
         type: integer
         description: The primary organization for the user. Must match the id of an Organization Unit.
+        example: 1234
         format: int64
       locale?:
         type: string
@@ -144,6 +147,7 @@ types:
       parent?:
         type: integer
         description: Optional ID of parent group.
+        example: 1010
         format: int64
   AddUserGroupMember:
     type: object
@@ -302,6 +306,7 @@ types:
       groupId:
         type: integer
         description: ID of group.
+        example: 1010
         format: int64
   LoginLink:
     type: object
@@ -352,10 +357,12 @@ types:
       activitiesCompleted?:
         type: integer
         description: The number of activities completed
+        example: 3
         format: int64
       activitiesTotal?:
         type: integer
         description: The total number of activities
+        example: 5
         format: int64
       errorMessage?:
         type: string
@@ -513,6 +520,7 @@ types:
       parent?:
         type: number
         description: A Organization Unit id of the parent Organization Unit (optional).
+        example: 1234
   UpdateProject:
     type: object
     properties:
@@ -574,6 +582,7 @@ types:
       homeOrg?:
         type: integer
         description: The primary organization for the user. Must match the id of an Organization Unit.
+        example: 1234
         format: int64
       id?:
         type: commons.uuid
@@ -643,10 +652,12 @@ types:
       activitiesCompleted?:
         type: integer
         description: The number of activities completed
+        example: 3
         format: int64
       activitiesTotal?:
         type: integer
         description: The total number of activities
+        example: 5
         format: int64
       errorMessage?:
         type: string

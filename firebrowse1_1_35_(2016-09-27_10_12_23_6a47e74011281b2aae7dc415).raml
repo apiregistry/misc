@@ -95,6 +95,7 @@ uses:
               items:
                 type: integer
                 format: int32
+                minimum: 1
             page_size?:
               type: array
               description: Number of records per page of results.  Max is 2000.
@@ -102,6 +103,8 @@ uses:
               items:
                 type: integer
                 format: int32
+                maximum: 2000
+                minimum: 1
             sort_by?:
               type: string
               description: Which column in the results should be used for sorting paginated results?
@@ -183,6 +186,7 @@ uses:
               type: number
               description: Only return results with Q-value <= given threshold.
               displayName: q
+              maximum: 1
             page?:
               type: array
               description: 'Which page (slice) of entire results set should be returned. '
@@ -190,6 +194,7 @@ uses:
               items:
                 type: integer
                 format: int32
+                minimum: 1
             page_size?:
               type: array
               description: Number of records per page of results.  Max is 2000.
@@ -197,6 +202,8 @@ uses:
               items:
                 type: integer
                 format: int32
+                maximum: 2000
+                minimum: 1
             sort_by?:
               type: string
               description: Which column in the results should be used for sorting paginated results?
@@ -278,6 +285,7 @@ uses:
               type: number
               description: Only return results with Q-value <= given threshold.
               displayName: q
+              maximum: 1
             page?:
               type: array
               description: 'Which page (slice) of entire results set should be returned. '
@@ -285,6 +293,7 @@ uses:
               items:
                 type: integer
                 format: int32
+                minimum: 1
             page_size?:
               type: array
               description: Number of records per page of results.  Max is 2000.
@@ -292,6 +301,8 @@ uses:
               items:
                 type: integer
                 format: int32
+                maximum: 2000
+                minimum: 1
             sort_by?:
               type: string
               description: Which column in the results should be used for sorting paginated results?
@@ -392,6 +403,7 @@ uses:
               items:
                 type: integer
                 format: int32
+                minimum: 1
             page_size?:
               type: array
               description: Number of records per page of results.  Max is 2000.
@@ -399,6 +411,8 @@ uses:
               items:
                 type: integer
                 format: int32
+                maximum: 2000
+                minimum: 1
             sort_by?:
               type: string
               description: Which column in the results should be used for sorting paginated results?
@@ -498,6 +512,7 @@ uses:
               items:
                 type: integer
                 format: int32
+                minimum: 1
             page_size?:
               type: array
               description: Number of records per page of results.  Max is 2000.
@@ -505,6 +520,8 @@ uses:
               items:
                 type: integer
                 format: int32
+                maximum: 2000
+                minimum: 1
             sort_by?:
               type: string
               description: Which column in the results should be used for sorting paginated results?
@@ -594,6 +611,7 @@ uses:
           items:
             type: integer
             format: int32
+            minimum: 1
         page_size?:
           type: array
           description: Number of records per page of results.  Max is 2000.
@@ -601,6 +619,8 @@ uses:
           items:
             type: integer
             format: int32
+            maximum: 2000
+            minimum: 1
       responses:
         200:
           description: No response was specified
@@ -698,6 +718,7 @@ uses:
             items:
               type: integer
               format: int32
+              minimum: 1
           page_size?:
             type: array
             description: Number of records per page of results.  Max is 2000.
@@ -705,6 +726,8 @@ uses:
             items:
               type: integer
               format: int32
+              maximum: 2000
+              minimum: 1
           sort_by?:
             type: string
             description: Which column in the results should be used for sorting paginated results?
@@ -802,6 +825,7 @@ uses:
             type: number
             description: Only return results with Q-value <= given threshold.
             displayName: q
+            maximum: 1
           page?:
             type: array
             description: 'Which page (slice) of entire results set should be returned. '
@@ -809,6 +833,7 @@ uses:
             items:
               type: integer
               format: int32
+              minimum: 1
           page_size?:
             type: array
             description: Number of records per page of results.  Max is 2000.
@@ -816,6 +841,8 @@ uses:
             items:
               type: integer
               format: int32
+              maximum: 2000
+              minimum: 1
           sort_by?:
             type: string
             description: Which column in the results should be used for sorting paginated results?
@@ -989,6 +1016,7 @@ uses:
           items:
             type: integer
             format: int32
+            minimum: 1
         page_size?:
           type: array
           description: Number of records per page of results.  Max is 2000.
@@ -996,6 +1024,8 @@ uses:
           items:
             type: integer
             format: int32
+            maximum: 2000
+            minimum: 1
         sort_by?:
           type: string
           description: Which column in the results should be used for sorting paginated results?
@@ -1447,6 +1477,7 @@ uses:
           items:
             type: integer
             format: int32
+            minimum: 1
         page_size?:
           type: array
           description: Number of records per page of results.  Max is 2000.
@@ -1454,6 +1485,8 @@ uses:
           items:
             type: integer
             format: int32
+            maximum: 2000
+            minimum: 1
         sort_by?:
           type: string
           description: Which column in the results should be used for sorting paginated results?
@@ -1852,6 +1885,7 @@ uses:
           items:
             type: integer
             format: int32
+            minimum: 1
         page_size?:
           type: array
           description: Number of records per page of results.  Max is 2000.
@@ -1859,6 +1893,8 @@ uses:
           items:
             type: integer
             format: int32
+            maximum: 2000
+            minimum: 1
         sort_by?:
           type: string
           description: Which column in the results should be used for sorting paginated results?
@@ -3034,6 +3070,7 @@ uses:
           items:
             type: integer
             format: int32
+            minimum: 1
         page_size?:
           type: array
           description: Number of records per page of results.  Max is 2000.
@@ -3041,6 +3078,8 @@ uses:
           items:
             type: integer
             format: int32
+            maximum: 2000
+            minimum: 1
         sort_by?:
           type: string
           description: Which column in the results should be used for sorting paginated results?
@@ -3197,6 +3236,7 @@ uses:
           items:
             type: integer
             format: int32
+            minimum: 1
         page_size?:
           type: array
           description: Number of records per page of results.  Max is 2000.
@@ -3204,6 +3244,8 @@ uses:
           items:
             type: integer
             format: int32
+            maximum: 2000
+            minimum: 1
         sort_by?:
           type: string
           description: Which column in the results should be used for sorting paginated results?
@@ -3320,6 +3362,7 @@ uses:
           items:
             type: integer
             format: int32
+            minimum: 1
         page_size?:
           type: array
           description: Number of records per page of results.  Max is 2000.
@@ -3327,6 +3370,8 @@ uses:
           items:
             type: integer
             format: int32
+            maximum: 2000
+            minimum: 1
         sort_by?:
           type: string
           description: Which column in the results should be used for sorting paginated results?
@@ -3445,6 +3490,7 @@ uses:
           items:
             type: integer
             format: int32
+            minimum: 1
         page_size?:
           type: array
           description: Number of records per page of results.  Max is 2000.
@@ -3452,6 +3498,8 @@ uses:
           items:
             type: integer
             format: int32
+            maximum: 2000
+            minimum: 1
         sort_by?:
           type: string
           description: Which column in the results should be used for sorting paginated results?

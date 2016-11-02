@@ -95,9 +95,12 @@ types:
       normalizedScore:
         type: number
         description: The normalized score given for this tone. A number within the range 0-1.
+        maximum: 1
+        minimum: 0
       score:
         type: number
         description: The score given for this tone, based on lexical analysis. A positive number.
+        minimum: 0
       tone:
         type: string
         description: The name of the tone.

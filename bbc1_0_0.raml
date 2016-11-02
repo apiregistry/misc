@@ -2737,6 +2737,7 @@ types:
         displayName: descendants_of
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       media_set?:
         type: array
@@ -2749,11 +2750,13 @@ types:
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       territory?:
         type: string
         description: filter for availabilities in given territory
@@ -2821,6 +2824,7 @@ types:
         displayName: descendants_of
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       end_from?:
         type: datetime
@@ -2854,17 +2858,20 @@ types:
         displayName: item
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       page?:
         type: integer
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       people?:
         type: string
         description: filter for subset of broadcasts that have given contributor
@@ -2875,6 +2882,7 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       q?:
         type: string
@@ -2918,6 +2926,7 @@ types:
         displayName: version
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
     responses:
       200:
@@ -2972,16 +2981,19 @@ types:
         type: string
         description: filter for groups related to given programme or its descendants
         displayName: for_descendants_of
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       for_programme?:
         type: string
         description: filter for subset of groups directly related to a given programme
         displayName: for_programme
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       group?:
         type: string
         description: filter for subset of groups which belong to the given group pid
         displayName: group
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       group_type?:
         type: string
@@ -2996,23 +3008,27 @@ types:
         type: string
         description: filter for subset of groups which contain an entity with the given pid as a member
         displayName: member
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       page?:
         type: integer
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for groups by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -3020,6 +3036,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       pid?:
         type: array
@@ -3027,6 +3044,7 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       q?:
         type: string
@@ -3073,6 +3091,7 @@ types:
         type: string
         description: filter for images belonging to the given group (i.e. Gallery)
         displayName: group
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       image_type?:
         type: string
@@ -3088,28 +3107,33 @@ types:
         type: string
         description: filter for alternate images by entity PID
         displayName: is_alternate_image_for
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       is_image_for?:
         type: string
         description: filter for images by entity PID
         displayName: is_image_for
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       page?:
         type: integer
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for images by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -3117,6 +3141,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       pid?:
         type: array
@@ -3124,6 +3149,7 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       q?:
         type: string
@@ -3204,17 +3230,20 @@ types:
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for items by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -3222,6 +3251,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       people?:
         type: string
@@ -3233,11 +3263,13 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       programme?:
         type: string
         description: filter for subset of items that are part of the given programme
         displayName: programme
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       q?:
         type: string
@@ -3300,17 +3332,20 @@ types:
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for masterbrands by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -3318,6 +3353,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       q?:
         type: string
@@ -3370,17 +3406,20 @@ types:
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for people by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -3388,6 +3427,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       pid?:
         type: array
@@ -3395,6 +3435,7 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       programme?:
         type: string
@@ -3429,11 +3470,13 @@ types:
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       q?:
         type: string
         description: filter for subset of programmes matching supplied keyword/phrase (boolean operators permitted)
@@ -3561,6 +3604,7 @@ types:
         displayName: children_of
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       descendants_of?:
         type: array
@@ -3568,6 +3612,7 @@ types:
         displayName: descendants_of
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       duration?:
         type: string
@@ -3602,31 +3647,41 @@ types:
         type: string
         description: filter for subset of programmes which belong to the given group pid
         displayName: group
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       initial_letter?:
         type: string
         description: filter for subset of programmes with title beginning with initial letter librarian style (ignoring leading 'The', 'An' (Welsh), etc) 0-9 a-z
         displayName: initial_letter
+        maxLength: 1
+        minLength: 1
       initial_letter_end?:
         type: string
         description: Programmes with (librarian) titles whose initial letter is equal/before given letter. Use with initial_letter_start for a range
         displayName: initial_letter_end
+        maxLength: 1
+        minLength: 1
       initial_letter_start?:
         type: string
         description: Programmes with (librarian) titles whose initial letter is equal/after given letter. Use with initial_letter_end for range.
         displayName: initial_letter_start
+        maxLength: 1
+        minLength: 1
       initial_letter_strict?:
         type: array
         description: filter for subset of programmes with title beginning with initial letter
         displayName: initial_letter_strict
         items:
           type: string
+          maxLength: 1
+          minLength: 1
       item?:
         type: array
         description: filter for subset of programmes with linked to versions which have the given item pids
         displayName: item
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       master_brand?:
         type: array
@@ -3650,17 +3705,20 @@ types:
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for programmes by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -3668,6 +3726,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       payment_type?:
         type: string
@@ -3681,6 +3740,7 @@ types:
         type: string
         description: filter for subset of programmes with contributions by given people PID
         displayName: people
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       pid?:
         type: array
@@ -3688,6 +3748,7 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       promoted_for?:
         type: string
@@ -3726,6 +3787,7 @@ types:
         displayName: version
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
     responses:
       200:
@@ -3759,23 +3821,27 @@ types:
         type: string
         description: filter for subset of promotions belonging to a given context
         displayName: context
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       page?:
         type: integer
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for promotions by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -3783,6 +3849,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       pid?:
         type: array
@@ -3790,6 +3857,7 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       promoted_by?:
         type: array
@@ -3870,6 +3938,7 @@ types:
         displayName: descendants_of
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       end_from?:
         type: datetime
@@ -3895,6 +3964,7 @@ types:
         type: string
         description: filter for subset of broadcasts and webcasts that have programmes in the given group
         displayName: group
+        minLength: 8
         pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       id?:
         type: array
@@ -3914,23 +3984,27 @@ types:
         displayName: item
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       page?:
         type: integer
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for broadcasts and webcasts by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -3938,6 +4012,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       people?:
         type: string
@@ -3949,6 +4024,7 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       q?:
         type: string
@@ -3996,6 +4072,7 @@ types:
         displayName: version
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
     responses:
       200:
@@ -4050,17 +4127,20 @@ types:
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for services by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -4068,6 +4148,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       q?:
         type: string
@@ -4274,6 +4355,7 @@ types:
         displayName: descendants_of
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       media_set?:
         type: array
@@ -4286,17 +4368,20 @@ types:
         description: which page of results to return
         displayName: page
         default: 1
+        minimum: 1
       page_size?:
         type: integer
         description: number of results in each page
         displayName: page_size
         default: 10
+        maximum: 300
       partner_id?:
         type: array
         description: filter for versions by partner ID
         displayName: partner_id
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       partner_pid?:
         type: array
@@ -4304,6 +4389,7 @@ types:
         displayName: partner_pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
       payment_type?:
         type: string
@@ -4319,6 +4405,7 @@ types:
         displayName: pid
         items:
           type: string
+          minLength: 8
           pattern: ^([0-9,a-d,f-h,j-n,p-t,v-z]){8,}$
     responses:
       200:

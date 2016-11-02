@@ -17,9 +17,13 @@ types:
       lat:
         type: number
         format: float
+        maximum: 85
+        minimum: -85
       lon:
         type: number
         format: float
+        maximum: 180
+        minimum: -180
       withinLondonCCZ?:
         type: boolean
         description: Boolean flag indicating whether this point is located within London's Congestion Charge zone
@@ -92,14 +96,20 @@ types:
             qualityOfTeaching?:
               type: integer
               description: Quality of teaching grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)
+              maximum: 4
+              minimum: 1
             schoolName?:
               type: string
             overallEffectiveness?:
               type: integer
               description: Overall effectiveness grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)
+              maximum: 4
+              minimum: 1
             leadershipAndManagement?:
               type: integer
               description: Leadership and management grade in the last Ofsted report, from 1 (outstanding) to 4 (inadequate)
+              maximum: 4
+              minimum: 1
     description: Contextual information around a given point
   Usage:
     type: object

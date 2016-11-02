@@ -116,6 +116,7 @@ types:
       id:
         type: number
         description: Id of the item
+        minimum: 1
     description: Article
   IdsModel:
     type: object
@@ -292,11 +293,13 @@ types:
                 description: zero-based offset the request
                 displayName: offset
                 default: 0.0
+                minimum: 0
               limit?:
                 type: number
                 description: Number of items to be returned
                 displayName: limit
                 default: 10.0
+                minimum: 0
             responses:
               200:
                 description: ''
@@ -555,11 +558,13 @@ types:
             description: zero-based offset the request
             displayName: offset
             default: 0.0
+            minimum: 0
           limit?:
             type: number
             description: Number of items to be returned
             displayName: limit
             default: 10.0
+            minimum: 0
         responses:
           200:
             description: ''

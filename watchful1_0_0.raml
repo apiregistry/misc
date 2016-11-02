@@ -296,6 +296,7 @@ types:
         description: ID of audit that needs to be fetched
         displayName: id
         format: int64
+        minimum: 1
     get:
       description: Returns a audit based on ID
       displayName: Find audit by ID
@@ -344,11 +345,13 @@ types:
         description: Number of object to return (max 100, default 25)
         displayName: limit
         format: int64
+        minimum: 1
       limitstart?:
         type: integer
         description: Start of the return (default 0)
         displayName: limitstart
         format: int64
+        minimum: 0
       order?:
         type: string
         description: 'ORDER by this field separete by comas. Add + / - after field
@@ -409,6 +412,7 @@ types:
         description: ID of the extension
         displayName: id
         format: int64
+        minimum: 1
     /ignore:
       post:
         description: Set 'ignore updates' for a given extension / site_id
@@ -491,11 +495,13 @@ types:
         description: Number of object to return (max 100, default 25)
         displayName: limit
         format: int64
+        minimum: 1
       limitstart?:
         type: integer
         description: Start of the return (default 0)
         displayName: limitstart
         format: int64
+        minimum: 0
       order?:
         type: string
         description: 'ORDER by this field separete by comas. Add + / - after field
@@ -623,11 +629,13 @@ types:
           description: Number of object to return (max 100, default 25)
           displayName: limit
           format: int64
+          minimum: 1
         startid?:
           type: integer
           description: Start of the return (default 0)
           displayName: startid
           format: int64
+          minimum: 0
       responses:
         200:
           description: No response was specified
@@ -668,6 +676,7 @@ types:
         description: ID of log that needs to be deleted
         displayName: id
         format: int64
+        minimum: 1
     delete:
       description: Delete a specific log
       displayName: Delete a specific log
@@ -727,11 +736,13 @@ types:
         description: Number of object to return (max 100, default 25)
         displayName: limit
         format: int64
+        minimum: 1
       limitstart?:
         type: integer
         description: Start of the return (default 0)
         displayName: limitstart
         format: int64
+        minimum: 0
       order?:
         type: string
         description: 'ORDER by this field separete by comas. Add + / - after field
@@ -780,6 +791,7 @@ types:
           description: ID that needs to be fetched
           displayName: id
           format: int64
+          minimum: 1
       get:
         description: Returns a PDF report based on a site ID
         displayName: Returns a PDF report for a specific site
@@ -835,6 +847,7 @@ types:
           description: ID that needs to be fetched
           displayName: id
           format: int64
+          minimum: 1
       get:
         description: Returns a report based on a site ID
         displayName: Find sites by ID
@@ -904,6 +917,7 @@ types:
         description: ID that needs to be fetched
         displayName: id
         format: int64
+        minimum: 1
     /audits:
       get:
         description: Return audits for a specific website
@@ -918,11 +932,13 @@ types:
             description: Number of object to return (max 100, default 25)
             displayName: limit
             format: int64
+            minimum: 1
           limitstart?:
             type: integer
             description: Start of the return (default 0)
             displayName: limitstart
             format: int64
+            minimum: 0
           order?:
             type: string
             description: ORDER by this field
@@ -1052,11 +1068,13 @@ types:
             description: Number of object to return (max 100, default 25)
             displayName: limit
             format: int64
+            minimum: 1
           limitstart?:
             type: integer
             description: Start of the return (default 0)
             displayName: limitstart
             format: int64
+            minimum: 0
           order?:
             type: string
             description: ORDER by this field
@@ -1131,11 +1149,13 @@ types:
             description: Number of object to return (max 100, default 25)
             displayName: limit
             format: int64
+            minimum: 1
           limitstart?:
             type: integer
             description: Start of the return (default 0)
             displayName: limitstart
             format: int64
+            minimum: 0
           order?:
             type: string
             description: 'ORDER by this field separete by comas. Add + / - after field
@@ -1259,11 +1279,13 @@ types:
             description: Number of object to return (max 100, default 25)
             displayName: limit
             format: int64
+            minimum: 1
           limitstart?:
             type: integer
             description: Start of the return (default 0)
             displayName: limitstart
             format: int64
+            minimum: 0
           order?:
             type: string
             description: ORDER by this field
@@ -1491,11 +1513,13 @@ types:
         description: Number of objects to return (max 100, default 25)
         displayName: limit
         format: int64
+        minimum: 1
       limitstart?:
         type: integer
         description: Start of the return (default 0)
         displayName: limitstart
         format: int64
+        minimum: 0
       order?:
         type: string
         description: 'ORDER by this field separete by comas. Add + / - after field
@@ -1544,6 +1568,7 @@ types:
         description: ID of SSO User that needs to be fetched
         displayName: id
         format: int64
+        minimum: 1
     get:
       description: Returns a SSO User based on ID
       displayName: Find SSO User by ID
@@ -1662,6 +1687,7 @@ types:
         description: ID of tag that needs to be fetched
         displayName: id
         format: int64
+        minimum: 1
     /sites:
       get:
         description: Returns a list of sites based with a specific tag id
@@ -1714,11 +1740,13 @@ types:
             description: Number of object to return (max 100, default 25)
             displayName: limit
             format: int64
+            minimum: 1
           limitstart?:
             type: integer
             description: Start of the return (default 0)
             displayName: limitstart
             format: int64
+            minimum: 0
           order?:
             type: string
             description: 'ORDER by this field separete by comas. Add + / - after field
@@ -1825,11 +1853,13 @@ types:
         description: Number of object to return (max 100, default 25)
         displayName: limit
         format: int64
+        minimum: 1
       limitstart?:
         type: integer
         description: Start of the return (default 0)
         displayName: limitstart
         format: int64
+        minimum: 0
       order?:
         type: string
         description: 'ORDER by this field separete by comas. Add + / - after field
@@ -1876,6 +1906,7 @@ types:
         description: ID of version that needs to be fetched
         displayName: id
         format: int64
+        minimum: 1
     get:
       displayName: Find a version by ID
       queryParameters:

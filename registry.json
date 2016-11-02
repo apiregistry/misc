@@ -203,14 +203,6 @@
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/clarify1_1_0.raml",
     "kind" : null
   }, {
-    "name" : "ClickMeter",
-    "org" : "Clickmeter",
-    "version" : "v2",
-    "description" : "Api dashboard for ClickMeter API",
-    "icon" : "http://favicon.yandex.net/favicon/www.clickmeter.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/clickmeterv2.raml",
-    "kind" : null
-  }, {
     "name" : "The Consumer Financial Protection Bureau",
     "org" : "Consumerfinance",
     "version" : "1.0",
@@ -233,14 +225,6 @@
     "description" : "The Unified Taxonomic Information Service (UTIS) is the taxonomic backbone for the EU-BON project",
     "icon" : "http://favicon.yandex.net/favicon/cybertaxonomy.eu",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/cybertaxonomy1_0.raml",
-    "kind" : null
-  }, {
-    "name" : "Daisycon",
-    "org" : "Daisycon",
-    "version" : "1.0.0",
-    "description" : "The Daisycon API allows you to retrieve statistics and link materials, update transactions, subscribe to affiliate program, and a whole lot more!",
-    "icon" : "http://favicon.yandex.net/favicon/www.daisycon.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/daisycon1_0_0.raml",
     "kind" : null
   }, {
     "name" : "Regulations.gov",
@@ -369,14 +353,6 @@
     "description" : null,
     "icon" : "http://favicon.yandex.net/favicon/www.healthcare.gov",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/healthcare1_0_0.raml",
-    "kind" : null
-  }, {
-    "name" : "hetras Booking API Version 0",
-    "org" : "Hetras-certification",
-    "version" : "v0",
-    "description" : null,
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/hetras-certificationbookingv0.raml",
     "kind" : null
   }, {
     "name" : "hetras Hotel API Version 0",
@@ -737,14 +713,6 @@
     "description" : "Get the latest IRS data and most up to date charity information for your website or application",
     "icon" : "http://favicon.yandex.net/favicon/orghunter.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/orghunter1_0_0.raml",
-    "kind" : null
-  }, {
-    "name" : "Owler",
-    "org" : "Owler",
-    "version" : "1.0.0",
-    "description" : "Search for information on companies using a website or company name and get access to Company Data, News, Blog Posts, Competitor Lists and much more.",
-    "icon" : "http://favicon.yandex.net/favicon/www.owler.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/owler1_0_0.raml",
     "kind" : null
   }, {
     "name" : "Oxford Dictionaries",

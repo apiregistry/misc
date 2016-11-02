@@ -101,14 +101,19 @@ types:
         type: number
       total:
         type: number
+        minimum: 0
       total_discounts:
         type: number
+        minimum: 0
       total_payment_cost:
         type: number
+        minimum: 0
       total_shipping:
         type: number
+        minimum: 0
       total_tax:
         type: number
+        minimum: 0
       visit?:
         type: Visit
     description: cart json for the event
@@ -123,10 +128,12 @@ types:
         type: datetime
       discount_price:
         type: number
+        minimum: 0
       id:
         type: string
       price:
         type: number
+        minimum: 0
       product:
         type: Product
       quantity:
@@ -242,12 +249,14 @@ types:
         type: datetime
       discount_price:
         type: number
+        minimum: 0
       id:
         type: string
       order_item_number:
         type: string
       price:
         type: number
+        minimum: 0
       product:
         type: Product
       quantity:

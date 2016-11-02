@@ -63,6 +63,7 @@ types:
         type: integer
         description: Number of results to return (maximum=50)
         format: int32
+        maximum: 50
       search?:
         type: string
         description: Search Objects for this string
@@ -382,6 +383,7 @@ types:
       invoice_template:
         type: integer
         description: Invoice ID to use for this Transaction.
+        example: 1
       offer:
         type: Offer
       payer?:
@@ -653,6 +655,7 @@ types:
         description: Number of results to return (maximum=50)
         displayName: range
         format: int32
+        maximum: 50
       sort?:
         type: string
         description: Field used to sort results
@@ -739,6 +742,7 @@ types:
         description: Number of results to return (maximum=50)
         displayName: range
         format: int32
+        maximum: 50
       sort?:
         type: string
         description: Field used to sort results

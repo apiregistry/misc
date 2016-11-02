@@ -105,12 +105,15 @@ types:
       numAPIs:
         type: integer
         description: Number of APIs
+        minimum: 1
       numEndpoints:
         type: integer
         description: Total number of endpoints inside all specifications
+        minimum: 1
       numSpecs:
         type: integer
         description: Number of API specifications including different versions of the same API
+        minimum: 1
     description: List of basic metrics
     example:
       numAPIs: 238

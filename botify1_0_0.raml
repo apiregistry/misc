@@ -19,6 +19,7 @@ types:
     properties:
       config?:
         type: string
+        (extras.Readonly): true
       date_created?:
         type: datetime
       date_finished?:
@@ -30,21 +31,29 @@ types:
         type: datetime
       features?:
         type: string
+        (extras.Readonly): true
       id?:
         type: integer
         format: int64
+        (extras.Readonly): true
       name?:
         type: string
+        (extras.Readonly): true
       slug?:
         type: string
+        (extras.Readonly): true
       status?:
         type: string
+        (extras.Readonly): true
       url?:
         type: string
+        (extras.Readonly): true
       urls_done?:
         type: string
+        (extras.Readonly): true
       urls_in_queue?:
         type: string
+        (extras.Readonly): true
       user:
         type: User
   AnalysisDetail:
@@ -52,6 +61,7 @@ types:
     properties:
       config?:
         type: string
+        (extras.Readonly): true
       date_finished?:
         type: datetime
       date_last_modified?:
@@ -61,23 +71,31 @@ types:
         type: datetime
       failures?:
         type: string
+        (extras.Readonly): true
       features?:
         type: string
+        (extras.Readonly): true
       id?:
         type: integer
         format: int64
+        (extras.Readonly): true
       name?:
         type: string
+        (extras.Readonly): true
       red_button_domain?:
         type: string
       slug?:
         type: string
+        (extras.Readonly): true
       url?:
         type: string
+        (extras.Readonly): true
       urls_done?:
         type: string
+        (extras.Readonly): true
       urls_in_queue?:
         type: string
+        (extras.Readonly): true
       user:
         type: User
   CrawlStatistics:
@@ -120,19 +138,25 @@ types:
         format: int64
       date_created?:
         type: datetime
+        (extras.Readonly): true
       job_id?:
         type: string
+        (extras.Readonly): true
       job_status?:
         type: string
+        (extras.Readonly): true
       job_url?:
         type: string
+        (extras.Readonly): true
       nb_results?:
         type: integer
         format: int64
+        minimum: 0
       query:
         type: UrlsQuery
       results?:
         type: string
+        (extras.Readonly): true
   Default:
     type: object
   DefaultPayload:
@@ -178,6 +202,7 @@ types:
         type: ProjectSettingsSerializer
       date_created?:
         type: string
+        (extras.Readonly): true
       name:
         type: string
       slug:
@@ -191,6 +216,7 @@ types:
         type: object
       identifier?:
         type: string
+        (extras.Readonly): true
       name:
         type: string
   ProjectSettingsSerializer:
@@ -216,6 +242,8 @@ types:
       google_analytics_nb_days?:
         type: integer
         format: int64
+        maximum: 90
+        minimum: 1
       google_analytics_site_id?:
         type: integer
         format: int64
@@ -224,6 +252,7 @@ types:
         format: int64
       has_robots_txt?:
         type: string
+        (extras.Readonly): true
       header_settings:
         type: array
         items:
@@ -231,12 +260,15 @@ types:
       max_depth?:
         type: integer
         format: int64
+        minimum: 0
       max_nb_pages:
         type: integer
         format: int64
+        minimum: 1
       max_pages_per_sec?:
         type: integer
         format: int64
+        minimum: 1
       respect_nofollow?:
         type: boolean
       sitemaps:
@@ -304,14 +336,17 @@ types:
         type: string
       is_organization?:
         type: string
+        (extras.Readonly): true
       last_name?:
         type: string
       login?:
         type: string
+        (extras.Readonly): true
       status?:
         type: string
       url?:
         type: string
+        (extras.Readonly): true
 /analyses:
   /{username}:
     uriParameters:
@@ -465,14 +500,19 @@ types:
                             properties:
                               next?:
                                 type: string
+                                (extras.Readonly): true
                               previous?:
                                 type: string
+                                (extras.Readonly): true
                               size?:
                                 type: integer
+                                (extras.Readonly): true
                               count?:
                                 type: integer
+                                (extras.Readonly): true
                               page?:
                                 type: integer
+                                (extras.Readonly): true
                               results?:
                                 type: array
                                 items:
@@ -553,14 +593,19 @@ types:
                           properties:
                             next?:
                               type: string
+                              (extras.Readonly): true
                             previous?:
                               type: string
+                              (extras.Readonly): true
                             size?:
                               type: integer
+                              (extras.Readonly): true
                             count?:
                               type: integer
+                              (extras.Readonly): true
                             page?:
                               type: integer
+                              (extras.Readonly): true
                             results?:
                               type: array
                               items:
@@ -592,14 +637,19 @@ types:
                           properties:
                             next?:
                               type: string
+                              (extras.Readonly): true
                             previous?:
                               type: string
+                              (extras.Readonly): true
                             size?:
                               type: integer
+                              (extras.Readonly): true
                             count?:
                               type: integer
+                              (extras.Readonly): true
                             page?:
                               type: integer
+                              (extras.Readonly): true
                             results?:
                               type: array
                               items:
@@ -632,14 +682,19 @@ types:
                         properties:
                           next?:
                             type: string
+                            (extras.Readonly): true
                           previous?:
                             type: string
+                            (extras.Readonly): true
                           size?:
                             type: integer
+                            (extras.Readonly): true
                           count?:
                             type: integer
+                            (extras.Readonly): true
                           page?:
                             type: integer
+                            (extras.Readonly): true
                           results?:
                             type: array
                             items:
@@ -671,14 +726,19 @@ types:
                         properties:
                           next?:
                             type: string
+                            (extras.Readonly): true
                           previous?:
                             type: string
+                            (extras.Readonly): true
                           size?:
                             type: integer
+                            (extras.Readonly): true
                           count?:
                             type: integer
+                            (extras.Readonly): true
                           page?:
                             type: integer
+                            (extras.Readonly): true
                           results?:
                             type: array
                             items:
@@ -781,14 +841,19 @@ types:
                       properties:
                         next?:
                           type: string
+                          (extras.Readonly): true
                         previous?:
                           type: string
+                          (extras.Readonly): true
                         size?:
                           type: integer
+                          (extras.Readonly): true
                         count?:
                           type: integer
+                          (extras.Readonly): true
                         page?:
                           type: integer
+                          (extras.Readonly): true
                         results?:
                           type: array
                           items:
@@ -913,14 +978,19 @@ types:
                     properties:
                       next?:
                         type: string
+                        (extras.Readonly): true
                       previous?:
                         type: string
+                        (extras.Readonly): true
                       size?:
                         type: integer
+                        (extras.Readonly): true
                       count?:
                         type: integer
+                        (extras.Readonly): true
                       page?:
                         type: integer
+                        (extras.Readonly): true
                       results?:
                         type: array
                         items:
@@ -965,14 +1035,19 @@ types:
                 properties:
                   next?:
                     type: string
+                    (extras.Readonly): true
                   previous?:
                     type: string
+                    (extras.Readonly): true
                   size?:
                     type: integer
+                    (extras.Readonly): true
                   count?:
                     type: integer
+                    (extras.Readonly): true
                   page?:
                     type: integer
+                    (extras.Readonly): true
                   results?:
                     type: array
                     items:
@@ -1054,14 +1129,19 @@ types:
                   properties:
                     next?:
                       type: string
+                      (extras.Readonly): true
                     previous?:
                       type: string
+                      (extras.Readonly): true
                     size?:
                       type: integer
+                      (extras.Readonly): true
                     count?:
                       type: integer
+                      (extras.Readonly): true
                     page?:
                       type: integer
+                      (extras.Readonly): true
                     results?:
                       type: array
                       items:
@@ -1096,6 +1176,8 @@ types:
                 displayName: nb_analyses
                 default: 20
                 format: int32
+                minimum: 1
+                maximum: 20
             responses:
               201:
                 description: Successful operation
@@ -1128,14 +1210,19 @@ types:
               properties:
                 next?:
                   type: string
+                  (extras.Readonly): true
                 previous?:
                   type: string
+                  (extras.Readonly): true
                 size?:
                   type: integer
+                  (extras.Readonly): true
                 count?:
                   type: integer
+                  (extras.Readonly): true
                 page?:
                   type: integer
+                  (extras.Readonly): true
                 results?:
                   type: array
                   items:

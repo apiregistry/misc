@@ -157,6 +157,8 @@ types:
           "The value of page corresponds to a set of 10 results (it does not indicate the starting number of the result set). For example, page=0 corresponds to records 0-9. To return records 10-19, set page to 1, not 10."
         displayName: page
         default: 0
+        minimum: 0
+        maximum: 10
       facet_field?:
         type: string
         description: |

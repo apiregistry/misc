@@ -46,6 +46,7 @@ types:
         type: integer
         description: API ID of specific API you have configured on your merchant account
         format: int64
+        minimum: 0
       callbackUrl?:
         type: string
         description: Url of merchant endpoint callback about order status to be returned
@@ -67,6 +68,7 @@ types:
         type: integer
         description: Merchant ID assigned to your account
         format: int64
+        minimum: 0
       orderId?:
         type: string
         description: Custom order ID. Must be unique per API. If not provided it will be generated.

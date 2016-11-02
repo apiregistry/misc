@@ -44,6 +44,8 @@ types:
         type: integer
         description: A delay in milliseconds applied to requests at a 'normal' level.
         format: int32
+        maximum: 30000
+        minimum: 0
       errorOverrideType:
         type: string
         description: The type of error override applied to this route.
@@ -55,10 +57,14 @@ types:
         type: integer
         description: A delay in milliseconds applied to requests at a 'high' level.
         format: int32
+        maximum: 30000
+        minimum: 0
       loadThreshold?:
         type: integer
         description: The threshold in transactions/second to signify 'high' load
         format: int32
+        maximum: 100
+        minimum: 0
       method?:
         type: string
       path?:
@@ -79,6 +85,8 @@ types:
       description?:
         type: string
         description: Text describing this Sandbox.
+        maxLength: 255
+        minLength: 0
         pattern: ^[A-Za-z-_ 0-9]*$
       name?:
         type: string
@@ -87,6 +95,8 @@ types:
       ownerOrganisationName?:
         type: string
         description: Name of the team this Sandbox should be created under.
+        maxLength: 36
+        minLength: 2
         pattern: ^[a-zA-Z-_0-9]*$
       parentSandboxName?:
         type: string
@@ -215,6 +225,8 @@ types:
           type: ConfiguredRouteDetails
       description?:
         type: string
+        maxLength: 255
+        minLength: 0
         pattern: ^[A-Za-z0-9 _\-]*$
       gitAccessToken?:
         type: string

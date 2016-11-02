@@ -437,12 +437,16 @@ types:
         description: The phone number, SIP address or Client identifier that made this call. Phone numbers are in E.164 format (e.g. +16175551212).
       parent_call_sid?:
         type: string
+        maxLength: 34
+        minLength: 34
       phone_number_sid?:
         type: string
       price?:
         type: string
       sid?:
         type: string
+        maxLength: 34
+        minLength: 34
       start_time?:
         type: string
         description: Given as GMT in RFC 2822 format.
@@ -513,6 +517,8 @@ types:
         description: The phone number, SIP address or Client identifier that made this call. Phone numbers are in E.164 format (e.g. +16175551212).
       parent_call_sid?:
         type: string
+        maxLength: 34
+        minLength: 34
       phone_number_sid?:
         type: string
         description: If the call was inbound, this is the Sid of the IncomingPhoneNumber that received the call. If the call was outbound, it is the Sid of the OutgoingCallerId from which the call was placed.
@@ -524,6 +530,8 @@ types:
         description: The currency in which Price is measured, in ISO 4127 format.
       sid?:
         type: string
+        maxLength: 34
+        minLength: 34
       start_time?:
         type: string
         description: Given as GMT in RFC 2822 format.
@@ -1925,6 +1933,8 @@ types:
             region?:
               type: string
               description: The two-letter state or province abbreviation of this phone number.
+              maxLength: 2
+              minLength: 2
             longitude?:
               type: string
               description: The longitude coordinate of this phone number.
@@ -1970,8 +1980,11 @@ types:
         type: string
       max_size?:
         type: integer
+        maximum: 1000
       sid?:
         type: string
+        maxLength: 34
+        minLength: 34
       uri?:
         type: string
   queues:
@@ -2012,8 +2025,11 @@ types:
               type: integer
             max_size?:
               type: integer
+              maximum: 1000
             sid?:
               type: string
+              maxLength: 34
+              minLength: 34
       start?:
         type: integer
       total?:
@@ -2711,6 +2727,8 @@ types:
             type: string
             description: ISO 3166-1 alpha-2.
             displayName: IsoCountryCode
+            maxLength: 2
+            minLength: 2
         /Local{mediaTypeExtension}:
           uriParameters:
             mediaTypeExtension:
@@ -6329,6 +6347,8 @@ types:
         type: string
         description: A 34 character string that uniquely identifies this account.
         displayName: AccountSid
+        maxLength: 34
+        minLength: 34
     get:
       description: Returns a representation of an account.
       responses:
