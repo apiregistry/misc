@@ -3,12 +3,17 @@ title: Sandbox
 version: v1
 baseUri: getsandbox.com/api
 description: Sandbox API
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      headers:
+        API_Key: string
 types:
   ActivityMessage:
     type: object

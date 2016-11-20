@@ -12,8 +12,14 @@ uses:
 securitySchemes:
   X-User-Access-Key:
     type: Pass Through
+    describedBy:
+      headers:
+        X-User-Access-Key: string
   X-User-Access-Token:
     type: Pass Through
+    describedBy:
+      headers:
+        X-User-Access-Token: string
 types:
   connection:
     type: object

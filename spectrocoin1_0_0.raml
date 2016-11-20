@@ -3,6 +3,8 @@ title: SpectroCoin Merchant
 version: 1.0.0
 baseUri: spectrocoin.com/api/merchant/1
 description: This is an API designed for merchants who are using SpectroCoin services and wishes to integrate them locally.
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
@@ -106,7 +108,7 @@ types:
       description: ''
       displayName: Create merchant order
       body:
-        application/x-www-form-urlencoded: Order_request_class_used_to_provide_order_specific_information
+        application/json: Order_request_class_used_to_provide_order_specific_information
       responses:
         200:
           description: successful operation

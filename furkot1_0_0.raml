@@ -6,6 +6,8 @@ description: |
   Furkot provides Rest API to access user trip data.
   Using Furkot API an application can list user trips and display stops for a specific trip.
   Furkot API uses OAuth2 protocol to authorize applications to access data on behalf of users.
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
@@ -19,6 +21,8 @@ securitySchemes:
       accessTokenUri: https://trips.furkot.com/pub/api/access_token
       scopes:
       - read:trips
+    (commons.OathScopeDescriptions):
+    - list trips and stops info
   furkot_auth_implicit:
     type: OAuth 2.0
     settings:
@@ -28,6 +32,8 @@ securitySchemes:
       accessTokenUri: https://trips.furkot.com/oauth/authorize
       scopes:
       - read:trips
+    (commons.OathScopeDescriptions):
+    - list users trips info
 types:
   Step:
     type: object

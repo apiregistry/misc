@@ -11,6 +11,9 @@ uses:
 securitySchemes:
   api-key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api-key: string
 types:
   GeoFacet:
     type: string

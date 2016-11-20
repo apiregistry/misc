@@ -14,6 +14,9 @@ uses:
 securitySchemes:
   mediawiki_auth:
     type: Pass Through
+    describedBy:
+      headers:
+        cookie: string
 types:
   data-parsoid:
     type: object

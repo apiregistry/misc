@@ -3,6 +3,8 @@ title: Yunbi
 version: v2
 baseUri: yunbi.com/api
 description: Professional Cloud Trading Platform for Digital Assets
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
@@ -60,7 +62,7 @@ uses:
           type: string
           description: 'The account to which you want to deposit. Available values:
             cny, btc, eth, pls, note, bts, bitcny, bitusd, bitbtc, yun, nxt, ltc,
-            doge, sc, dgd, dcs, dao, etc, amp, 1st'
+            doge, sc, dgd, dcs, dao, etc, amp, 1st, rep, ans, zec, zmc'
           displayName: currency
       responses:
         200:
@@ -83,7 +85,7 @@ uses:
           displayName: signature
         currency?:
           type: string
-          description: Currency value contains  cny,btc,eth,pls,note,bts,bitcny,bitusd,bitbtc,yun,nxt,ltc,doge,sc,dgd,dcs,dao,etc,amp,1st
+          description: Currency value contains  cny,btc,eth,pls,note,bts,bitcny,bitusd,bitbtc,yun,nxt,ltc,doge,sc,dgd,dcs,dao,etc,amp,1st,rep,ans,zec,zmc
           displayName: currency
         limit?:
           type: integer

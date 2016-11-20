@@ -649,10 +649,10 @@ types:
       queryParameters:
         limit?:
           type: integer
-          description: limit results to specified number of bundles. Default is 10. Max 20.
+          description: limit results to specified number of bundles. Default is 10. Max 100.
           displayName: limit
           minimum: 1
-          maximum: 20
+          maximum: 100
         embed?:
           type: string
           description: 'list of link relations to embed in the result collection.
@@ -796,7 +796,7 @@ types:
           displayName: query_fields
         filter?:
           type: string
-          description: filter expression, typically programmatically generated based on input controls and data segregation rules etc. Up to 400 characters.
+          description: filter expression, typically programmatically generated based on input controls and data segregation rules etc. Up to 500 characters.
           displayName: filter
         language?:
           type: string
@@ -810,10 +810,10 @@ types:
           - fr
         limit?:
           type: integer
-          description: limit results to specified number of bundles. Default is 10. Max 20.
+          description: limit results to specified number of bundles. Default is 10. Max 100.
           displayName: limit
           minimum: 1
-          maximum: 20
+          maximum: 100
         embed?:
           type: string
           description: 'list of link relations to embed in the result collection.

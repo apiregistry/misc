@@ -9,6 +9,9 @@ uses:
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api_key: string
 types:
   Category:
     type: object

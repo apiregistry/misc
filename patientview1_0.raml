@@ -931,8 +931,6 @@ types:
     post:
       description: Authenticate using username and password, returns token, which must be added to X-Auth-Token in header of all future requests
       displayName: Log In
-      body:
-        application/json: Credentials
       responses:
         200:
           description: Description was not specified
@@ -1055,8 +1053,6 @@ types:
     post:
       description: validatePatientManagement
       displayName: validatePatientManagement
-      body:
-        application/json: PatientManagement
       responses:
         200:
           description: Description was not specified
@@ -1095,8 +1091,6 @@ types:
               post:
                 description: savePatientManagementSurgeries
                 displayName: savePatientManagementSurgeries
-                body:
-                  application/json: PatientManagement
                 responses:
                   200:
                     description: Description was not specified
@@ -1126,8 +1120,6 @@ types:
             post:
               description: savePatientManagement
               displayName: savePatientManagement
-              body:
-                application/json: PatientManagement
               responses:
                 200:
                   description: Description was not specified

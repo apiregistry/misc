@@ -12,6 +12,9 @@ uses:
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      headers:
+        api_key: string
   trello_auth:
     type: OAuth 2.0
     settings:
@@ -22,6 +25,9 @@ securitySchemes:
       scopes:
       - read:boards
       - write:boards
+    (commons.OathScopeDescriptions):
+    - read any of the boards in your account
+    - modify any of the boards in your account
 types:
   actions:
     type: object

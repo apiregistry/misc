@@ -7,12 +7,17 @@ description: 'The Buildings Database is a shared resource for the building indus
   Energy Laboratory (NREL), is a unique central repository of in-depth information
   and data on high-performance, green building projects across the United States and
   abroad.  '
+mediaType:
+- text/xml
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api_key: string
 /project.{output_format}:
   uriParameters:
     output_format:

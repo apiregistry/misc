@@ -3,12 +3,17 @@ title: Community
 version: 3.0.0
 baseUri: api.nytimes.com/svc/community/v3
 description: Get access to comments from registered users on New York Times articles.
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   api-key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api-key: string
 /user-content:
   /by-date.json:
     get:

@@ -9,6 +9,9 @@ uses:
 securitySchemes:
   user_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        user_key: string
 /atalk:
   /{app_id}:
     uriParameters:

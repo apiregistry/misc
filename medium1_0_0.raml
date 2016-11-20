@@ -28,8 +28,21 @@ securitySchemes:
       - listPublications
       - publishPost
       - uploadImage
+    (commons.OathScopeDescriptions):
+    - Grants basic access to a userâs profile (not including their email).
+    - Grants the ability to list publications related to the user.
+    - Grants the ability to publish a post to the userâs profile.
+    - "Grants the ability to upload an image for use within a Medium post. \n\nNOTE\
+      \ - This is an **extended permission**.\n\nIntegrations are not permitted to\
+      \ request extended scope from users without explicit prior permission from Medium.\
+      \ Attempting to request these permissions through the standard user authentication\
+      \ flow will result in an error if extended scope has not been authorized for\
+      \ an integration.\n"
   BearerToken:
     type: Pass Through
+    describedBy:
+      headers:
+        Authorization: string
 types:
   Contibutor:
     type: object

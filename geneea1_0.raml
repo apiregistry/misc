@@ -78,12 +78,17 @@ description: |
           </a>
       </p>
   </div>
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   user_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        user_key: string
 types:
   EntitiesResponse:
     type: object

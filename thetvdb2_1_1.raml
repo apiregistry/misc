@@ -50,6 +50,9 @@ uses:
 securitySchemes:
   jwtToken:
     type: Pass Through
+    describedBy:
+      headers:
+        Authorization: string
 types:
   Auth:
     type: object

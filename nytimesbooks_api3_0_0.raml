@@ -3,12 +3,17 @@ title: Books
 version: 3.0.0
 baseUri: api.nytimes.com/svc/books/v3
 description: The Books API provides information about book reviews and The New York Times bestsellers lists.
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   api-key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api-key: string
 /lists.{format}:
   uriParameters:
     format:

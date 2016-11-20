@@ -3,12 +3,17 @@ title: Congress
 version: v3
 baseUri: api.nytimes.com/svc/politics/v3/us/legislative/congress
 description: Deprecated. Now provided by ProPublica (https://propublica.github.io/congress-api-docs/).
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   api-key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api-key: string
 /members:
   /house:
     /{state}:

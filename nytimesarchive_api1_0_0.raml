@@ -1,0 +1,43 @@
+#%RAML 1.0
+title: Archive API V1
+version: 1.0.0
+baseUri: api.nytimes.com/svc/archive/v1
+description: Alpha.  The Archive API provides JSON lists of NYT articles by month.
+mediaType:
+- application/json
+uses:
+  commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
+  extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  apikey:
+    type: Pass Through
+    describedBy:
+      queryParameters:
+        api-key: string
+/{year}:
+  uriParameters:
+    year:
+      type: number
+      description: The year (e.g. 2016).
+      displayName: year
+  /{month}.json:
+    uriParameters:
+      month:
+        type: number
+        description: The month number (e.g. 1 for January).
+        displayName: month
+    get:
+      description: |
+        The Archive API provides JSON lists of articles by month.
+      displayName: Archive API
+      responses:
+        200:
+          description: An array of articles
+          body:
+            application/json:
+              type: object
+              properties:
+                results?:
+                  type: array
+                  items:
+                    type: object

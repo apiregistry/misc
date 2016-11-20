@@ -30,6 +30,22 @@ securitySchemes:
       - merchant:view_payments
       - merchant:view_recurring_payments
       - read
+    (commons.OathScopeDescriptions):
+    - Create anticipated payments for any merchant
+    - List anticipated payment for a merchant
+    - List merchants that you are an administrator for
+    - Manage webhooks for a merchant
+    - Download files From our storage
+    - Make ACH Payment
+    - Make Card Payment
+    - Make Cash Payment
+    - Manage members in a merchant's community
+    - Manage Recurring Payment (Pause, Resume, Cancel)
+    - Upload arbitrary files to our storage
+    - List payers in a merchant's community
+    - View/search payments for in-scope merchants
+    - View/search recurring payments for in-scope merchants
+    - Read-only access to resources owned by the subject claim of the token
   oauth2_implicit:
     type: OAuth 2.0
     settings:
@@ -53,6 +69,22 @@ securitySchemes:
       - merchant:view_payments
       - merchant:view_recurring_payments
       - read
+    (commons.OathScopeDescriptions):
+    - Create anticipated payments for any merchant
+    - List anticipated payment for a merchant
+    - List merchants that you are an administrator for
+    - Manage webhooks for a merchant
+    - Download files From our storage
+    - Make ACH Payment
+    - Make Card Payment
+    - Make Cash Payment
+    - Manage members in a merchant's community
+    - Manage Recurring Payment (Pause, Resume, Cancel)
+    - Upload arbitrary files to our storage
+    - List payers in a merchant's community
+    - View/search payments for in-scope merchants
+    - View/search recurring payments for in-scope merchants
+    - Read-only access to resources owned by the subject claim of the token
 types:
   AccountPaymentMethod:
     type: object

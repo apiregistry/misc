@@ -7,7 +7,7 @@
     "org" : "18f",
     "version" : "0.1",
     "description" : "<p>This API drives the <a href=\"https://discovery.gsa.gov\">Discovery Market Research Tool</a>.\nIt contains information on the vendors that are part of the OASIS and OASIS Small Business contracting vehicles, such as their contracting history, their elligibility for contract awards, and their small business designations.\nTo learn more about the tool, please visit <a href=\"https://discovery.gsa.gov\">Discovery</a> or see the README on our <a href=\"https://github.com/18F/mirage\">GitHub repository</a>.</p>\n<p><strong>Please note that the base path for this API is <code>https://api.data.gov/gsa/discovery/</code></strong></p>\n<p>It requires an API key, obtainable at <a href=\"http://api.data.gov/\">api.data.gov</a>.\nIt must be passed in the <code>api_key</code> parameter with each request.</p>",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/www.18f.gov",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/18f0_1.raml",
     "kind" : null
   }, {
@@ -23,7 +23,7 @@
     "org" : "Apitransformer",
     "version" : "1.0",
     "description" : "Transform API Descriptions from/to various formats",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/apitransformer.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/apitransformer1_0.raml",
     "kind" : null
   }, {
@@ -31,7 +31,7 @@
     "org" : "Audiosear",
     "version" : "1.0.0",
     "description" : "The Audiosear.ch API requires OAuth, which you can manage at <a href='/oauth/applications'>OAuth Applications</a>.<br/>API SDK clients available in <a href='https://github.com/popuparchive/audiosearch-client-python' target='_blank'>Python</a>, <a href='https://github.com/popuparchive/audiosearch-client-ruby' target='_blank'>Ruby</a>, <a href='https://github.com/popuparchive/audiosearch-client-php' target='_blank'>PHP</a>, <a href='https://github.com/popuparchive/audiosearch-client-node' target='_blank'>Node</a>, <a href='https://github.com/aljazeerair/AudiosearchClientJava' target='_blank'>Java</a>, and <a href='https://github.com/popuparchive/AudiosearchClientSwift' target='_blank'>Swift</a>.<br/>Read the <a href='https://github.com/popuparchive/audiosearch-cookbook/wiki'>API Cookbook</a> for easy copy-and-paste recipes.",
-    "icon" : "http://favicon.yandex.net/favicon/www.audiosear.ch",
+    "icon" : "http://favicon.yandex.net/favicon/audiosear.ch",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/audiosear1_0_0.raml",
     "kind" : null
   }, {
@@ -39,7 +39,7 @@
     "org" : "Backupify",
     "version" : "1.0.0",
     "description" : "The Backupify API allows you to integrate the leading SaaS backup solution into your software, making it easy to give your customers the data protection they need. ",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/backupify.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/backupify1_0_0.raml",
     "kind" : null
   }, {
@@ -63,7 +63,7 @@
     "org" : "Beanstream",
     "version" : "1.0.1",
     "description" : "https://www.beanstream.com/api/v1",
-    "icon" : "http://favicon.yandex.net/favicon/www.beanstream.com",
+    "icon" : "http://favicon.yandex.net/favicon/beanstream.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/beanstream1_0_1.raml",
     "kind" : null
   }, {
@@ -71,7 +71,7 @@
     "org" : "Bigoven",
     "version" : "partner",
     "description" : "#Documentation\r\n\r\nThis is the documentation for the partner endpoint of the BigOven Recipe and Grocery List API.\r\n\r\nThe update brings with it Swagger-based documentation. [Swagger](http://swagger.io) is an emerging standard for describing REST-based APIs, and with this Swagger-compliant endpoint (above), you can make ready-to-go interface libraries for your code via [swagger-codegen](https://github.com/swagger-api/swagger-codegen). For instance, it's easy to generate libraries for Node.js, Java, Ruby, ASP.NET MVC, jQuery, php and more!\r\n\r\nYou can also try out the endpoint calls with your own api_key right here on this page. Be sure to enter your api_key above to use the \"Try it out!\" buttons on this page.\r\n\r\n##Start Here\r\n\r\nDevelopers new to the BigOven API should start with this version, not with the legacy API. We'll be making improvements to this API over time, and doing only bug fixes on the v1 API.\r\n\r\n\r\n\r\nTo pretend you're a BigOven user (for instance, to get your recently viewed recipes or your grocery list), you need to pass in Basic Authentication information in the header, just as with the v1 API. We do now require that you make all calls via https. You need to pass your api_key in with every call, though this can now be done on the header (send a request header \"X-BigOven-API-Key\" set to your api_key value, e.g., Request[\"X-BigOven-API-Key\"]=\"your-key-here\".)\r\n\r\n##Migration Notes\r\n\r\nFor existing partners, we encourage you to [migrate](http://api2.bigoven.com), and while at this writing we have no hard-and-fast termination date for the v1 API, we strongly prefer that you migrate by January 1, 2017. While the changes aren't overly complex, there are several breaking changes, including refactoring of recipe search and results and removal of support for XML. This is not a simply plug-and-play replacement to the v1 API. With respect to an exclusive focus on JSON, the world has spoken, and it prefers JSON for REST-based API's. We've taken numerous steps to refactor the API to make it more REST-compliant. Note that this v2 API will be the preferred API from this point onward, so we encourage developers to migrate to this new format. We have put together some [migration notes](/web/documentation/migration-to-v2) that we encourage you to read carefully.\r\n\r\n##Photos\r\n\r\nSee our [photos documentation](http://api2.bigoven.com/web/documentation/recipe-images). \r\n\r\nFor more information on usage of this API, including features, pricing, rate limits, terms and conditions, please visit the [BigOven API website](http://api2.bigoven.com).",
-    "icon" : "http://favicon.yandex.net/favicon/www.bigoven.com",
+    "icon" : "http://favicon.yandex.net/favicon/bigoven.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/bigovenpartner.raml",
     "kind" : null
   }, {
@@ -95,7 +95,7 @@
     "org" : "Botify",
     "version" : "1.0.0",
     "description" : "Botify Saas API",
-    "icon" : "http://favicon.yandex.net/favicon/www.botify.com",
+    "icon" : "http://favicon.yandex.net/favicon/botify.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/botify1_0_0.raml",
     "kind" : null
   }, {
@@ -111,7 +111,7 @@
     "org" : "Bufferapp",
     "version" : "1",
     "description" : "Social media management for marketers and agencies",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/bufferapp.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/bufferapp1.raml",
     "kind" : null
   }, {
@@ -135,7 +135,7 @@
     "org" : "Channel4",
     "version" : "1.0.0",
     "description" : "This is the place to come for all the technical details you need to power your applications with Channel 4's deep programmes data.",
-    "icon" : "http://favicon.yandex.net/favicon/www.channel4.com",
+    "icon" : "http://favicon.yandex.net/favicon/channel4.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/channel41_0_0.raml",
     "kind" : null
   }, {
@@ -151,7 +151,7 @@
     "org" : "Citrixonline",
     "version" : "0.9.0",
     "description" : "<p>Allows you to integrate GoToAssist Seeit into your own solutions.</p><p>General notes:<ul><li>GoToAssist Seeit sessions are identified by their uuid. The more readable 9 digit support key (e.g. 123-456-789) may be reused later for another session and thus cannot be used to unambiguously identify a session.</li><li>If not explicitly stated otherwise all timestamps represent the number of milliseconds since 1970-01-01 in UTC (similar to a Unix Timestamp but with millisecond resolution)</li></ul></p>",
-    "icon" : "http://favicon.yandex.net/favicon/www.citrix.com",
+    "icon" : "http://favicon.yandex.net/favicon/citrix.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/citrixonlinegotoassistseeit0_9_0.raml",
     "kind" : null
   }, {
@@ -159,7 +159,7 @@
     "org" : "Citrixonline",
     "version" : "1.0.0",
     "description" : "<br>The Citrix GoToMeeting API provides seamless integration of GoToMeeting provisioning and meeting management into your existing infrastructure or third party applications.<br><br>For customers, the ability to add, suspend or delete an organizer in your GoToMeeting Corporate account from within your primary management systems simplifies and streamlines the entire process of account management. The ability to monitor meeting schedules, history and active meeting status allows managers to leverage GoToMeeting activities through your primary applications.<br><br>For third parties, the ability to create, update or delete a meeting from within your application makes real-time collaboration possible for your customers. The ability to update meeting schedules, view history and scheduled meetings, and view attendees from past meetings allows you to enhance your users' experience and the value of your applications.",
-    "icon" : "http://favicon.yandex.net/favicon/www.citrix.com",
+    "icon" : "http://favicon.yandex.net/favicon/citrix.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/citrixonlinegotomeeting1_0_0.raml",
     "kind" : null
   }, {
@@ -167,7 +167,7 @@
     "org" : "Citrixonline",
     "version" : "1.0.0",
     "description" : "The Citrix GoToTraining API enables developers to use the stable and robust GoToTraining functionality as the basis for online trainings in a proprietary learning management system. The GoToTraining APIs provide the ability to access the scheduling, registration, management, and reporting functions of GoToTraining from external applications. With the ability to tightly integrate GoToTraining into your learning infrastructure, you can offer your learners a seamless user experience and provide them with a market leading virtual classroom environment.",
-    "icon" : "http://favicon.yandex.net/favicon/www.citrix.com",
+    "icon" : "http://favicon.yandex.net/favicon/citrix.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/citrixonlinegototraining1_0_0.raml",
     "kind" : null
   }, {
@@ -175,7 +175,7 @@
     "org" : "Citrixonline",
     "version" : "1.0.0",
     "description" : "The Citrix GoToWebinar API provides seamless integration of webinar registrant and attendee data into your existing infrastructure or third-party applications. The ability to register participants, as well as pull lists of registrants and attendees for a webinar, allows organizers to manage the flow of information between their primary applications without manual intervention.",
-    "icon" : "http://favicon.yandex.net/favicon/www.citrix.com",
+    "icon" : "http://favicon.yandex.net/favicon/citrix.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/citrixonlinegotowebinar1_0_0.raml",
     "kind" : null
   }, {
@@ -183,7 +183,7 @@
     "org" : "Citrixonline",
     "version" : "N/A",
     "description" : "The SCIM API lets you manage users in your Citrix organization. You can then automate the provisioning of product licenses for these users, and they can use your company's Single Sign-On solution through an Identity Provider.",
-    "icon" : "http://favicon.yandex.net/favicon/www.citrix.com",
+    "icon" : "http://favicon.yandex.net/favicon/citrix.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/citrixonlinescimN.A.raml",
     "kind" : null
   }, {
@@ -207,14 +207,14 @@
     "org" : "Consumerfinance",
     "version" : "1.0",
     "description" : "Learn more about home mortgage data, download the data yourself, or build new tools using our API.",
-    "icon" : "http://favicon.yandex.net/favicon/www.consumerfinance.gov",
+    "icon" : "http://favicon.yandex.net/favicon/consumerfinance.gov",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/consumerfinance1_0.raml",
     "kind" : null
   }, {
     "name" : "CORE API v2",
     "org" : "Core",
     "version" : "2.0",
-    "description" : "<p style=\"text-align: justify;\">This is a documentation for CORE API v2.0. You can use the API to access the \n    resources harvested and enriched by CORE. If you encounter any problems with the API, please report them to us.</p>\n\n<h2>Overview</h2>\n<p style=\"text-align: justify;\">The API is organised by resource type. The resources are <b>articles</b>, \n    <b>journals</b> and <b>repositories</b> and are represented using JSON data format. Furthermore, \n    each resource has a list of methods. The API also provides two global methods for accessing all resources at once.</p>\n\n<h2>Response format</h2>\n<p style=\"text-align: justify;\">Response for each query contains two fields: <b>status</b> and <b>data</b>.\n    In case of an error status, the data field is empty. The data field contains a single object\n    in case the request is for a specific identifier (e.g. CORE ID, CORE repository ID, etc.), or  \n    contains a list of objects, for example for search queries. In case of batch requests, the response\n    is an array of objects, each of which contains its own <b>status</b> and <b>data</b> fields.\n    For search queries the response contains an additional field <b>totalHits</b>, which is the \n    total number of items which match the search criteria.</p>\n\n<h2>Search query syntax</h2>\n\n<p style=\"text-align: justify\">All of the API search methods allow using complex search queries.\n    The query can be a simple string or it can be built using terms and operators described in Elasticsearch\n    <a href=\"http://www.elastic.co/guide/en/elasticsearch/reference/1.4/query-dsl-query-string-query.html#query-string-syntax\">documentation</a>.\n    The usable field names are <strong>title</strong>, <strong>description</strong>, <strong>fullText</strong>, \n    <strong>authorsString</strong>, <strong>publisher</strong>, <strong>repositories.id</strong>, <strong>repositories.name</strong>, \n    <strong>doi</strong>, <strong>oai</strong>, <strong>identifiers</strong> (which is a list of article identifiers including OAI, URL, etc.), <strong>language.name</strong> \n    and <strong>year</strong>. Some example queries:\n</p>\n\n<ul style=\"margin-left: 30px;\">\n    <li><p>title:psychology and language.name:English</p></li>\n    <li><p>repositories.id:86 AND year:2014</p></li>\n    <li><p>identifiers:\"oai:aura.abdn.ac.uk:2164/3837\" OR identifiers:\"oai:aura.abdn.ac.uk:2164/3843\"</p></li>\n    <li><p>doi:\"10.1186/1471-2458-6-309\"</p></li>\n</ul>\n\n<h2>Sort order</h2>\n\n<p style=\"text-align: justify;\">For search queries, the results are ordered by relevance score. For batch \n    requests, the results are retrieved in the order of the requests.</p>\n\n<h2>Parameters</h2>\n<p style=\"text-align: justify;\">The API methods allow different parameters to be passed. Additionally, there is an API key parameter which is common to all API methods. For all API methods \n    the API key can be provided either as a query parameter or in the request header. If the API key \n    is not provided, the API will return HTTP 401 error. You can register for an API key <a href=\"/services#api\">here</a>.</p>\n\n<h2>API methods</h2>",
+    "description" : "<p style=\"text-align: justify;\">You can use the CORE API to access the \n    resources harvested and enriched by CORE. If you encounter any problems with the API, please <a href=\"/contact\">report them to us</a>.</p>\n\n<h2>Overview</h2>\n<p style=\"text-align: justify;\">The API is organised by resource type. The resources are <b>articles</b>, \n    <b>journals</b> and <b>repositories</b> and are represented using JSON data format. Furthermore, \n    each resource has a list of methods. The API also provides two global methods for accessing all resources at once.</p>\n\n<h2>Response format</h2>\n<p style=\"text-align: justify;\">Response for each query contains two fields: <b>status</b> and <b>data</b>.\n    In case of an error status, the data field is empty. The data field contains a single object\n    in case the request is for a specific identifier (e.g. CORE ID, CORE repository ID, etc.), or  \n    contains a list of objects, for example for search queries. In case of batch requests, the response\n    is an array of objects, each of which contains its own <b>status</b> and <b>data</b> fields.\n    For search queries the response contains an additional field <b>totalHits</b>, which is the \n    total number of items which match the search criteria.</p>\n\n<h2>Search query syntax</h2>\n\n<p style=\"text-align: justify\">Complex search queries can be used in all of the API search methods.\n    The query can be a simple string or it can be built using terms and operators described in Elasticsearch\n    <a href=\"http://www.elastic.co/guide/en/elasticsearch/reference/1.4/query-dsl-query-string-query.html#query-string-syntax\">documentation</a>.\n    The usable field names are <strong>title</strong>, <strong>description</strong>, <strong>fullText</strong>, \n    <strong>authorsString</strong>, <strong>publisher</strong>, <strong>repositories.id</strong>, <strong>repositories.name</strong>, \n    <strong>doi</strong>, <strong>oai</strong>, <strong>identifiers</strong> (which is a list of article identifiers including OAI, URL, etc.), <strong>language.name</strong> \n    and <strong>year</strong>. Some example queries:\n</p>\n\n<ul style=\"margin-left: 30px;\">\n    <li><p>title:psychology and language.name:English</p></li>\n    <li><p>repositories.id:86 AND year:2014</p></li>\n    <li><p>identifiers:\"oai:aura.abdn.ac.uk:2164/3837\" OR identifiers:\"oai:aura.abdn.ac.uk:2164/3843\"</p></li>\n    <li><p>doi:\"10.1186/1471-2458-6-309\"</p></li>\n</ul>\n\n<h2>Sort order</h2>\n\n<p style=\"text-align: justify;\">For search queries, the results are ordered by relevance score. For batch \n    requests, the results are retrieved in the order of the requests.</p>\n\n<h2>Parameters</h2>\n<p style=\"text-align: justify;\">The API methods allow different parameters to be passed. Additionally, there is an API key parameter which is common to all API methods. For all API methods \n    the API key can be provided either as a query parameter or in the request header. If the API key \n    is not provided, the API will return HTTP 401 error. You can register for an API key <a href=\"/services#api\">here</a>.</p>\n\n<h2>API methods</h2>",
     "icon" : "http://favicon.yandex.net/favicon/core.ac.uk",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/core2_0.raml",
     "kind" : null
@@ -231,7 +231,7 @@
     "org" : "Data",
     "version" : "3.0",
     "description" : "Provides public users access to federal regulatory content.",
-    "icon" : "http://favicon.yandex.net/favicon/www.data.gov",
+    "icon" : "http://favicon.yandex.net/favicon/data.gov",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/data3_0.raml",
     "kind" : null
   }, {
@@ -239,7 +239,7 @@
     "org" : "Datumbox",
     "version" : "1.0",
     "description" : "Datumbox offers a Machine Learning platform composed of 14 classifiers and Natural Language processing functions. Functions include sentiment analysis, topic classification, readability assessment, language detection, and much more.",
-    "icon" : "http://favicon.yandex.net/favicon/www.datumbox.com",
+    "icon" : "http://favicon.yandex.net/favicon/datumbox.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/datumbox1_0.raml",
     "kind" : null
   }, {
@@ -263,7 +263,7 @@
     "org" : "Europeana",
     "version" : "2.3.0",
     "description" : "This Swagger API console provides an overview of and interface to the Europeana REST API. You can build and test anything from the simplest search to a complex query using facetList such as dates, geotags and permissions. For more help and information, head to our comprehensive <a href=\"http://labs.europeana.api/api/\">online documentation</a>.",
-    "icon" : "http://favicon.yandex.net/favicon/www.europeana.eu",
+    "icon" : "http://favicon.yandex.net/favicon/europeana.eu",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/europeana2_3_0.raml",
     "kind" : null
   }, {
@@ -271,7 +271,7 @@
     "org" : "Exavault",
     "version" : "1.0.0",
     "description" : "ExaVault's API allows you to incorporate ExaVault's suite of file transfer and user management tools into your own application.\n\nExaVault supports both POST (recommended when requesting large data sets) and GET operations, and requires an API key in order to use.\n",
-    "icon" : "http://favicon.yandex.net/favicon/www.exavault.com",
+    "icon" : "http://favicon.yandex.net/favicon/exavault.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/exavault1_0_0.raml",
     "kind" : null
   }, {
@@ -287,7 +287,7 @@
     "org" : "Furkot",
     "version" : "1.0.0",
     "description" : "Furkot provides Rest API to access user trip data.\nUsing Furkot API an application can list user trips and display stops for a specific trip.\nFurkot API uses OAuth2 protocol to authorize applications to access data on behalf of users.\n",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/furkot.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/furkot1_0_0.raml",
     "kind" : null
   }, {
@@ -295,7 +295,7 @@
     "org" : "Gavagai",
     "version" : "1.0.0",
     "description" : "Let us do the job and read your documents for you. We will bring you executive summaries and tonality scoring.",
-    "icon" : "http://favicon.yandex.net/favicon/www.gavagai.se",
+    "icon" : "http://favicon.yandex.net/favicon/gavagai.se",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/gavagai1_0_0.raml",
     "kind" : null
   }, {
@@ -351,7 +351,7 @@
     "org" : "Healthcare",
     "version" : "1.0.0",
     "description" : null,
-    "icon" : "http://favicon.yandex.net/favicon/www.healthcare.gov",
+    "icon" : "http://favicon.yandex.net/favicon/healthcare.gov",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/healthcare1_0_0.raml",
     "kind" : null
   }, {
@@ -367,7 +367,7 @@
     "org" : "Hhs",
     "version" : "2",
     "description" : "\n<div class=\"swagger-ui-wrap extraFooter\"><h3>Common Features / Behaviors</h3>\n    <div class=\"features\">\n        <ul>\n            <li><strong>* \"sort\" param:</strong> supports multi column sorting through the use of commas as delimiters, and a hyphen to denote descending order.\n                <br/>\n                <strong><span>Examples:</span></strong>\n                <ul>\n                    <li><span class=\"example\">name</span><span class=\"description\">sort results by name ascending</span></li>\n                    <li><span class=\"example\">-name</span><span class=\"description\">sort results by name descending</span></li>\n                    <li><span class=\"example\">-name,id</span><span class=\"description\">sort results by name descending and then by id ascending</span></li>\n                    <li><span class=\"example\">id,-dateContentAuthored</span><span class=\"description\">sort results by id ascending and then date descending</span></li>\n                </ul>\n            </li>\n            <li><strong>Date formats:</strong> Date input format is expected to be based on <a href=\"http://www.ietf.org/rfc/rfc3339.txt\">RFC 3339</a>. <br/>\n                <span><strong>Example:</strong></span>\n                <ul><li>2013-11-18T18:43:01Z</li></ul>\n            </li>\n        </ul>\n    </div>\n</div>\n",
-    "icon" : "http://favicon.yandex.net/favicon/www.hhs.gov",
+    "icon" : "http://favicon.yandex.net/favicon/hhs.gov",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/hhs2.raml",
     "kind" : null
   }, {
@@ -375,7 +375,7 @@
     "org" : "Iamreal",
     "version" : "1.0.0",
     "description" : "Use I Am Real's patented technology to perform social, video, and SMS validation on your users.",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/iamreal.me",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/iamreal1_0_0.raml",
     "kind" : null
   }, {
@@ -383,7 +383,7 @@
     "org" : "Idtbeyond",
     "version" : "1.1.7",
     "description" : "Our active docs provide the ability to test out your account and to see the responses to your queries. The services are RESTful, and are accessed using standard HTTP methods over a secure HTTPS channel. Requests and responses are currently sent in JSON format, and have a base URL of /v1.",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/idtbeyond.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/idtbeyond1_1_7.raml",
     "kind" : null
   }, {
@@ -407,7 +407,7 @@
     "org" : "Indix",
     "version" : "2.0.0",
     "description" : null,
-    "icon" : "http://favicon.yandex.net/favicon/www.indix.com",
+    "icon" : "http://favicon.yandex.net/favicon/indix.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/indix2_0_0.raml",
     "kind" : null
   }, {
@@ -415,7 +415,7 @@
     "org" : "Infermedica",
     "version" : "v1",
     "description" : "Empower your healthcare services with intelligent diagnostic insights of Infermedica API.",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/infermedica.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/infermedicav1.raml",
     "kind" : null
   }, {
@@ -463,7 +463,7 @@
     "org" : "Magick",
     "version" : "1.0",
     "description" : "Authentication is required to access all methods of the API. Enter username and password.\n                Credentials are automatically set as you type.",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/magick.nu",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/magick1_0.raml",
     "kind" : null
   }, {
@@ -487,7 +487,7 @@
     "org" : "Mondiamedia",
     "version" : "2.15.1",
     "description" : "<p>This is the API for building Mondia-Media-Products, like Tops.</p><p>Every call need a valid client or user-token.</p><p><ol><li>Client-Token can be get at our Police-API</li><li>User-Token can be get through a login on a customer specific Life-Cycle-Service</li><li>UseCases regarding Login, Register, Subscribe (incl. Payment) will be done by the Life-Cycle-Service</li></ol></p>",
-    "icon" : "http://favicon.yandex.net/favicon/www.mondiamedia.com",
+    "icon" : "http://favicon.yandex.net/favicon/mondiamedia.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/mondiamedia2_15_1.raml",
     "kind" : null
   }, {
@@ -503,7 +503,7 @@
     "org" : "Motaword",
     "version" : "alpha-0.1.0",
     "description" : "Use MotaWord API to post and track your translation projects.",
-    "icon" : "http://favicon.yandex.net/favicon/www.motaword.com",
+    "icon" : "http://favicon.yandex.net/favicon/motaword.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/motawordalpha-0_1_0.raml",
     "kind" : null
   }, {
@@ -525,10 +525,10 @@
   }, {
     "name" : "Netatmo",
     "org" : "Netatmo",
-    "version" : "1.0.0",
+    "version" : "1.1.0",
     "description" : "<h3>Welcome to the Netatmo swagger on-line documentation !</h3>This site is a complement to the official <a href=\"https://dev.netatmo.com/\">Netatmo developper documentation</a> using swagger to bring interactivity and easy testing of requests with the \"try it\" button (authenticate with the authorization code 0Auth2 flow by clicking the authenticate button in the methods). You can find the source code for this site can be found in the project <a href=\"https://github.com/cbornet/netatmo-swagger-ui\">netatmo-swagger-ui</a>. You can also use the online <a href=\"./swagger.json\">swagger declaration</a> file to generate code or static documentation (see <a href=\"https://github.com/cbornet/netatmo-swagger-api\">netatmo-swagger-api</a>).",
     "icon" : "http://favicon.yandex.net/favicon/raml.org",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/netatmo1_0_0.raml",
+    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/netatmo1_1_0.raml",
     "kind" : null
   }, {
     "name" : "Labs64 NetLicensing RESTful API Test Center",
@@ -543,7 +543,7 @@
     "org" : "Netlify",
     "version" : "0.1.0",
     "description" : null,
-    "icon" : "http://favicon.yandex.net/favicon/www.netlify.com",
+    "icon" : "http://favicon.yandex.net/favicon/netlify.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/netlify0_1_0.raml",
     "kind" : null
   }, {
@@ -551,7 +551,7 @@
     "org" : "Nrel",
     "version" : "1.0",
     "description" : "The Buildings Database is a shared resource for the building industry. The Database, developed by the U.S. Department of Energy and the National Renewable Energy Laboratory (NREL), is a unique central repository of in-depth information and data on high-performance, green building projects across the United States and abroad.  ",
-    "icon" : "http://favicon.yandex.net/favicon/www.nrel.gov",
+    "icon" : "http://favicon.yandex.net/favicon/nrel.gov",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/nrelbuilding-case-studies1_0.raml",
     "kind" : null
   }, {
@@ -559,7 +559,7 @@
     "org" : "Nrel",
     "version" : "0.1.0",
     "description" : "Query our database of State and Federal Laws and Incentives for Alternative Fuels",
-    "icon" : "http://favicon.yandex.net/favicon/www.nrel.gov",
+    "icon" : "http://favicon.yandex.net/favicon/nrel.gov",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/nreltransportation-incentives-laws0_1_0.raml",
     "kind" : null
   }, {
@@ -569,6 +569,14 @@
     "description" : "This API allows programmers to build National Snow and Ice Data Center data and metadata services into their applications.",
     "icon" : "http://favicon.yandex.net/favicon/nsidc.org",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/nsidc1_0_0.raml",
+    "kind" : null
+  }, {
+    "name" : "Archive API V1",
+    "org" : "Nytimes",
+    "version" : "1.0.0",
+    "description" : "Alpha.  The Archive API provides JSON lists of NYT articles by month.",
+    "icon" : "http://favicon.yandex.net/favicon/nytimes.com",
+    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/nytimesarchive_api1_0_0.raml",
     "kind" : null
   }, {
     "name" : "Article Search",
@@ -679,7 +687,7 @@
     "org" : "Oceandrivers",
     "version" : "1.0",
     "description" : "This is the api to access the ODWeather API information",
-    "icon" : "http://favicon.yandex.net/favicon/www.oceandrivers.com",
+    "icon" : "http://favicon.yandex.net/favicon/oceandrivers.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/oceandrivers1_0.raml",
     "kind" : null
   }, {
@@ -687,7 +695,7 @@
     "org" : "Omdbapi",
     "version" : "1",
     "description" : "The Open Movie Database. The OMDb API is a free web service to obtain movie information, all content and images on the site are contributed and maintained by our users.",
-    "icon" : "http://favicon.yandex.net/favicon/www.omdbapi.com",
+    "icon" : "http://favicon.yandex.net/favicon/omdbapi.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/omdbapi1.raml",
     "kind" : null
   }, {
@@ -703,7 +711,7 @@
     "org" : "Opencagedata",
     "version" : "1",
     "description" : "Worldwide forward and reverse geocoding",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/opencagedata.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/opencagedata1.raml",
     "kind" : null
   }, {
@@ -717,17 +725,17 @@
   }, {
     "name" : "Oxford Dictionaries",
     "org" : "Oxforddictionaries",
-    "version" : "1.3.0",
+    "version" : "1.4.0",
     "description" : null,
-    "icon" : "http://favicon.yandex.net/favicon/www.oxforddictionaries.com",
-    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/oxforddictionaries1_3_0.raml",
+    "icon" : "http://favicon.yandex.net/favicon/oxforddictionaries.com",
+    "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/oxforddictionaries1_4_0.raml",
     "kind" : null
   }, {
     "name" : "Pandorabots AIaaS",
     "org" : "Pandorabots",
     "version" : "1.0.0",
     "description" : "AIaaS provides API access to our bot hosting platform and SDKs, allowing developers to easily integrate conversational interfaces into applications.",
-    "icon" : "http://favicon.yandex.net/favicon/www.pandorabots.com",
+    "icon" : "http://favicon.yandex.net/favicon/pandorabots.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/pandorabots1_0_0.raml",
     "kind" : null
   }, {
@@ -743,7 +751,7 @@
     "org" : "Patientview",
     "version" : "1.0",
     "description" : "The recommended REST API endpoints to be used when integrating with PatientView",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/patientview.org",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/patientview1_0.raml",
     "kind" : null
   }, {
@@ -799,7 +807,7 @@
     "org" : "Reactome",
     "version" : "1.0",
     "description" : "Provides an API for pathway over-representation and expression analysis as well as species comparison tool",
-    "icon" : "http://favicon.yandex.net/favicon/www.reactome.org",
+    "icon" : "http://favicon.yandex.net/favicon/reactome.org",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/reactome1_0.raml",
     "kind" : null
   }, {
@@ -807,7 +815,7 @@
     "org" : "Refugerestrooms",
     "version" : "v1",
     "description" : "REFUGE is a web application that seeks to provide safe restroom access for transgender, intersex, and gender nonconforming individuals.",
-    "icon" : "http://favicon.yandex.net/favicon/www.refugerestrooms.org",
+    "icon" : "http://favicon.yandex.net/favicon/refugerestrooms.org",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/refugerestroomsv1.raml",
     "kind" : null
   }, {
@@ -831,7 +839,7 @@
     "org" : "Rummblelabs",
     "version" : "1.0.0",
     "description" : "Seldon is an Open Predictive Platform that currently allows item recommendations and general predictive models to be deployed based on structured historical data.",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/rummblelabs.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/rummblelabs1_0_0.raml",
     "kind" : null
   }, {
@@ -855,7 +863,7 @@
     "org" : "Slideroom",
     "version" : "v2",
     "description" : "SlideRoom provides a RESTful API for exporting data out of your organization's SlideRoom account.",
-    "icon" : "http://favicon.yandex.net/favicon/www.slideroom.com",
+    "icon" : "http://favicon.yandex.net/favicon/slideroom.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/slideroomv2.raml",
     "kind" : null
   }, {
@@ -871,7 +879,7 @@
     "org" : "Solarvps",
     "version" : "1.0.0",
     "description" : "This is the Solar VPS Public API. You can find more at http://www.solarvps.com",
-    "icon" : "http://favicon.yandex.net/favicon/www.solarvps.com",
+    "icon" : "http://favicon.yandex.net/favicon/solarvps.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/solarvps1_0_0.raml",
     "kind" : null
   }, {
@@ -887,7 +895,7 @@
     "org" : "Spotify",
     "version" : "v1",
     "description" : null,
-    "icon" : "http://favicon.yandex.net/favicon/www.spotify.com",
+    "icon" : "http://favicon.yandex.net/favicon/spotify.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/spotifyv1.raml",
     "kind" : null
   }, {
@@ -919,7 +927,7 @@
     "org" : "Taxamo",
     "version" : "1",
     "description" : "Taxamoâs elegant suite of APIs and comprehensive reporting dashboard enables digital merchants to easily comply with EU regulatory requirements on tax calculation, evidence collection, tax return creation and data storage.",
-    "icon" : "http://favicon.yandex.net/favicon/www.taxamo.com",
+    "icon" : "http://favicon.yandex.net/favicon/taxamo.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/taxamo1.raml",
     "kind" : null
   }, {
@@ -951,7 +959,7 @@
     "org" : "Twilio",
     "version" : "2010-04-01",
     "description" : "Enabling phones, VoIP, and messaging to be embedded into web, desktop, and mobile software.\n",
-    "icon" : "http://favicon.yandex.net/favicon/www.twilio.com",
+    "icon" : "http://favicon.yandex.net/favicon/twilio.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/twilio2010-04-01.raml",
     "kind" : null
   }, {
@@ -959,7 +967,7 @@
     "org" : "Uploady",
     "version" : "v1-beta",
     "description" : "The Uploady API allows you to connect to the Uploady free online storage platform.",
-    "icon" : "http://favicon.yandex.net/favicon/www.uploady.com",
+    "icon" : "http://favicon.yandex.net/favicon/uploady.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/uploadyv1-beta.raml",
     "kind" : null
   }, {
@@ -975,7 +983,7 @@
     "org" : "Versioneye",
     "version" : "v2",
     "description" : "VersionEye is a cross-platform search engine for free/libre/open source software libraries.",
-    "icon" : "http://favicon.yandex.net/favicon/www.versioneye.com",
+    "icon" : "http://favicon.yandex.net/favicon/versioneye.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/versioneyev2.raml",
     "kind" : null
   }, {
@@ -983,7 +991,7 @@
     "org" : "Vestorly",
     "version" : "1.0.0",
     "description" : "Vestorly Developers API",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/vestorly.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/vestorly1_0_0.raml",
     "kind" : null
   }, {
@@ -1007,7 +1015,7 @@
     "org" : "Wikimedia",
     "version" : "1.0.0-beta",
     "description" : "This API aims to provide coherent and low-latency access to Wikimedia content and services. It is currently in beta testing, so things aren't completely locked down yet. Each entry point has explicit stability markers to inform you about development status and change policy, according to [our API version policy](https://www.mediawiki.org/wiki/API_versioning).\n### High-volume access\n  - Don't perform more than 200 requests/s to this API.\n  - Set a unique `User-Agent` header that allows us to contact you\n    quickly. Email addresses or URLs of contact pages work well.\n",
-    "icon" : "http://favicon.yandex.net/favicon/www.wikimedia.org",
+    "icon" : "http://favicon.yandex.net/favicon/wikimedia.org",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/wikimedia1_0_0-beta.raml",
     "kind" : null
   }, {
@@ -1047,7 +1055,7 @@
     "org" : "Zoomconnect",
     "version" : "1",
     "description" : "The world's greatest SMS API",
-    "icon" : "http://favicon.yandex.net/favicon/raml.org",
+    "icon" : "http://favicon.yandex.net/favicon/zoomconnect.com",
     "location" : "https://raw.githubusercontent.com/apiregistry/misc/master/zoomconnect1.raml",
     "kind" : null
   } ],

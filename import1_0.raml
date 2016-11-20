@@ -30,6 +30,9 @@ uses:
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        _apikey: string
 /query:
   /runtime:
     /{runtimeConfigurationId}:

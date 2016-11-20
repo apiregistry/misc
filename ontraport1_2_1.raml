@@ -3,6 +3,8 @@ title: ONTRAPORT
 version: 1.2.1
 baseUri: api.ontraport.com/1
 description: <p>Enter your App ID and API Key above. If you do not have an App ID or API Key login to your ONTRAPORT account and navigate <a href="https://app.ontraport.com/#!/api_settings/listAll">here</a>. Authentication parameters must be sent in the request header as <strong>Api-Appid</strong> and <strong>Api-Key</strong>. Each ONTRAPORT account is allowed up to 180 requests per minute.</p>
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
@@ -56,9 +58,6 @@ types:
       objectID:
         type: integer
         format: int32
-      performAll?:
-        type: boolean
-        description: Perform request on all Objects that match criteria.
       range?:
         type: integer
         description: Number of results to return (maximum=50)
@@ -640,11 +639,6 @@ types:
         items:
           type: integer
           format: int32
-      performAll?:
-        type: boolean
-        description: Perform request on all Objects that match criteria.
-        displayName: performAll
-        default: false
       start?:
         type: integer
         description: Return results starting at this offset
@@ -727,11 +721,6 @@ types:
         items:
           type: integer
           format: int32
-      performAll?:
-        type: boolean
-        description: Perform request on all Objects that match criteria.
-        displayName: performAll
-        default: false
       start?:
         type: integer
         description: Return results starting at this offset
@@ -825,6 +814,8 @@ types:
     post:
       description: To affect a single Task or list of specific Tasks, use the <strong>ids</strong> array in the <strong>criteria</strong> parameter. Otherwise, you should use <strong>performAll</strong> and other criteria to select a Group of Tasks to cancel.
       displayName: Cancel a set of Tasks
+      body:
+        application/json: Criteria
       responses:
         200:
           description: Successfully canceled tasks
@@ -835,6 +826,8 @@ types:
     post:
       description: This will mark one or many Tasks as complete. As an option, you can assign a new Task for further follow-up. To affect a single Task or list of specific Tasks, use the <strong>ids</strong> array in the <strong>criteria</strong> parameter. Otherwise, you should use <strong>performAll</strong> and other criteria to select a Group of Tasks to complete.
       displayName: Complete a set of Tasks
+      body:
+        application/json: TaskCompleteParams
       responses:
         200:
           description: Successfully canceled tasks
@@ -918,6 +911,8 @@ types:
     post:
       description: This will create a Transaction for a Contact. Please note that this request requires valid parameters for all associated members of the Transaction or the request will fail. If you have doubled-checked all parameters and the request is still failing, check that the payload JSON format is correct by using <a href="http://jsonlint.com/">JSONLint</a>. If credit card and billing information already exist for this contact, you may omit <b>billing_address</b> and <b>payer</b> from the request. Note that <b>trans_date</b> is given in milliseconds elapsed since midnight on 1/1/1970.
       displayName: This will create a new Transaction
+      body:
+        application/json: Transaction
       responses:
         200:
           description: Successfully created transaction
@@ -930,6 +925,8 @@ types:
     put:
       description: ''
       displayName: Refund one or more Transactions
+      body:
+        application/json: Criteria
       responses:
         200:
           description: Successfully refunded transaction
@@ -942,6 +939,8 @@ types:
     post:
       description: Re-run a single Transaction or a Group of Transactions that are currently in Collections.
       displayName: Re-run a Transaction
+      body:
+        application/json: Criteria
       responses:
         200:
           description: Successfully reran transaction
@@ -954,6 +953,8 @@ types:
     put:
       description: ''
       displayName: Re-run a Partner commission
+      body:
+        application/json: Criteria
       responses:
         200:
           description: Successfully reran commission
@@ -966,6 +967,8 @@ types:
     post:
       description: ''
       displayName: Re-send a Transaction invoice
+      body:
+        application/json: Criteria
       responses:
         200:
           description: Successfully created transaction
@@ -978,6 +981,8 @@ types:
     put:
       description: ''
       displayName: Void a Transaction
+      body:
+        application/json: Criteria
       responses:
         200:
           description: Successfully voided transaction

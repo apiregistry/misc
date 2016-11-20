@@ -3,12 +3,17 @@ title: Solar VPS
 version: 1.0.0
 baseUri: api.ss.solarvps.com/
 description: This is the Solar VPS Public API. You can find more at http://www.solarvps.com
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   apiKey:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api_key: string
 /contacts:
   get:
     description: Shows all contacts under the client account.

@@ -10,6 +10,9 @@ uses:
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        _apikey: string
 types:
   ApiTokenStatus:
     type: object

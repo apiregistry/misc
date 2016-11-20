@@ -12,6 +12,9 @@ uses:
 securitySchemes:
   apikey:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api-key: string
 types:
   Event:
     type: object

@@ -3,9 +3,23 @@ title: Zoom Connect
 version: '1'
 baseUri: www.zoomconnect.com/app
 description: The world's greatest SMS API
+mediaType:
+- application/json
+- application/xml
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
+securitySchemes:
+  email:
+    type: Pass Through
+    describedBy:
+      headers:
+        email: string
+  token:
+    type: Pass Through
+    describedBy:
+      headers:
+        token: string
 types:
   Link:
     type: object

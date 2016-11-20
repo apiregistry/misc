@@ -11,6 +11,9 @@ uses:
 securitySchemes:
   mqApiKey:
     type: Pass Through
+    describedBy:
+      headers:
+        Authorization: string
 types:
   Contact:
     type: object

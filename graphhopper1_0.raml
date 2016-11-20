@@ -11,6 +11,9 @@ uses:
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        key: string
 types:
   Activity:
     type: object

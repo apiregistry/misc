@@ -9,6 +9,9 @@ uses:
 securitySchemes:
   Apikey:
     type: Pass Through
+    describedBy:
+      headers:
+        Apikey: string
 types:
   Convert_Price:
     type: object

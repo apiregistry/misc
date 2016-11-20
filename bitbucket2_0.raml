@@ -11,6 +11,9 @@ uses:
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      headers:
+        Authorization: string
   basic:
     type: Basic Authentication
     description: Basic HTTP Authentication as per [RFC-2617](https://tools.ietf.org/html/rfc2617) (Digest not supported). Note that Basic Auth with username and password as credentials is only available on accounts that have 2-factor-auth / 2-step-verification disabled. If you use 2fa, you should authenticate using OAuth2 instead.
@@ -45,6 +48,29 @@ securitySchemes:
       - team:write
       - webhook
       - wiki
+    (commons.OathScopeDescriptions):
+    - Read your account information
+    - Read and modify your account information
+    - Read your account's primary email address
+    - Read your repositories' issues
+    - Read and modify your repositories' issues
+    - Access your repositories' build pipelines
+    - Access your repositories' build pipelines and configure their variables
+    - Access and rerun your repositories' build pipelines
+    - Read your team's project settings and read repositories contained within your team's projects
+    - Read and modify your team's project settings, and read and transfer repositories within your team's projects
+    - Read your repositories and their pull requests
+    - Read and modify your repositories and their pull requests
+    - Read your repositories
+    - Administer your repositories
+    - Delete your repositories
+    - Read and modify your repositories
+    - Read your snippets
+    - Read and modify your snippets
+    - Read your team membership information
+    - Read and modify your team membership information
+    - Read and modify your repositories' webhooks
+    - Read and modify your repositories' wikis
 types:
   Anonimous0:
     type: object
@@ -1581,7 +1607,7 @@ types:
         type: string
       website?:
         type: string
-    description: The repository that is to be created. Note that most object elements are optional. Elements "owner" and "full_name" are ignored as the URL implies them.
+    description: An account object.
   Anonimous38:
     type: object
     properties:
@@ -1629,11 +1655,7 @@ types:
         type: string
       website?:
         type: string
-    description: |
-      The repository that is to be updated.
-
-      Note that the elements "owner" and "full_name" are ignored since the
-      URL implies them.
+    description: The repository that is to be created. Note that most object elements are optional. Elements "owner" and "full_name" are ignored as the URL implies them.
   Anonimous39:
     type: object
     properties:
@@ -1781,7 +1803,11 @@ types:
         type: string
       website?:
         type: string
-    description: The new rule
+    description: |
+      The repository that is to be updated.
+
+      Note that the elements "owner" and "full_name" are ignored since the
+      URL implies them.
   Anonimous41:
     type: object
     properties:
@@ -1877,7 +1903,7 @@ types:
         type: string
       website?:
         type: string
-    description: The new version of the existing rule
+    description: The new rule
   Anonimous43:
     type: object
     properties:
@@ -1973,7 +1999,7 @@ types:
         type: string
       website?:
         type: string
-    description: The new commit status object.
+    description: The new version of the existing rule
   Anonimous45:
     type: object
     properties:
@@ -2069,7 +2095,7 @@ types:
         type: string
       website?:
         type: string
-    description: The updated build status object
+    description: The new commit status object.
   Anonimous47:
     type: object
     properties:
@@ -2405,7 +2431,7 @@ types:
         type: string
       website?:
         type: string
-    description: The new issue. Note that the only required element is `title`. All other elements can be omitted from the body.
+    description: The updated build status object
   Anonimous53:
     type: object
     properties:
@@ -2597,12 +2623,7 @@ types:
         type: string
       website?:
         type: string
-    description: |-
-      The new pull request.
-
-      The request URL you POST to becomes the destination repository URL. For this reason, you must specify an explicit source repository in the request object if you want to pull from a different repository (fork).
-
-      Since not all elements are required or even mutable, you only need to include the elements you want to initialize, such as the source branch and the title.
+    description: The new issue. Note that the only required element is `title`. All other elements can be omitted from the body.
   Anonimous57:
     type: object
     properties:
@@ -2910,7 +2931,12 @@ types:
         type: string
       website?:
         type: string
-    description: The new snippet object.
+    description: |-
+      The new pull request.
+
+      The request URL you POST to becomes the destination repository URL. For this reason, you must specify an explicit source repository in the request object if you want to pull from a different repository (fork).
+
+      Since not all elements are required or even mutable, you only need to include the elements you want to initialize, such as the source branch and the title.
   Anonimous62:
     type: object
     properties:
@@ -3294,7 +3320,7 @@ types:
         type: string
       website?:
         type: string
-    description: The contents of the new comment.
+    description: The new snippet object.
   Anonimous7:
     type: object
     properties:
@@ -4495,6 +4521,54 @@ types:
       website?:
         type: string
     description: The contents of the new comment.
+  Anonimous92:
+    type: object
+    properties:
+      created_on?:
+        type: datetime
+      display_name?:
+        type: string
+      links?:
+        type: object
+        properties:
+          followers?:
+            type: object
+            properties:
+              href?:
+                type: string
+          repositories?:
+            type: object
+            properties:
+              href?:
+                type: string
+          following?:
+            type: object
+            properties:
+              href?:
+                type: string
+          self?:
+            type: object
+            properties:
+              href?:
+                type: string
+          html?:
+            type: object
+            properties:
+              href?:
+                type: string
+          avatar?:
+            type: object
+            properties:
+              href?:
+                type: string
+      username?:
+        type: string
+        pattern: ^[a-zA-Z0-9_\-]+$
+      uuid?:
+        type: string
+      website?:
+        type: string
+    description: The contents of the new comment.
   Object:
     type: object
     properties:
@@ -5045,22 +5119,38 @@ types:
     type:
     - object
     - Anonimous27
+  pullrequest_endpoint:
+    type: object
+    properties:
+      branch?:
+        type: object
+        properties:
+          name?:
+            type: string
+      commit?:
+        type: object
+        properties:
+          hash?:
+            type: string
+            pattern: '[0-9a-f]{7,}?'
+      repository?:
+        type: repository
   repository:
     type:
     - object
-    - Anonimous28
+    - Anonimous29
   snippet:
     type:
     - object
-    - Anonimous29
+    - Anonimous30
   snippet_comment:
     type:
     - object
-    - Anonimous30
+    - Anonimous31
   snippet_commit:
     type:
     - object
-    - Anonimous31
+    - Anonimous32
   subject_types:
     type: object
     properties:
@@ -5092,19 +5182,19 @@ types:
   team:
     type:
     - object
-    - Anonimous32
+    - Anonimous33
   user:
     type:
     - object
-    - Anonimous33
+    - Anonimous34
   version:
     type:
     - object
-    - Anonimous34
+    - Anonimous35
   webhook_subscription:
     type:
     - object
-    - Anonimous35
+    - Anonimous36
 /account:
   /{username}:
     uriParameters:

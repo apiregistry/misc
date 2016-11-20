@@ -9,6 +9,9 @@ uses:
 securitySchemes:
   apiKey:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        apiKey: string
 types:
   Synonymlist:
     type: array
@@ -316,8 +319,6 @@ types:
       If you have texts in more than one language you should make separate calls for
       each language.</p> <p>Max upload size, per request: 5&nbsp;MB.</p>'
     displayName: Extract 'keywords' from a set of texts.
-    body:
-      application/json: keywordsRequest
     responses:
       200:
         description: Successful response, returns json body.
@@ -360,8 +361,6 @@ types:
       than one language you should make separate calls for each language.</p> <p>Max
       upload size, per request: 5&nbsp;MB.</p>'
     displayName: Extract stories from a set of texts.
-    body:
-      application/json: StoriesRequest
     responses:
       200:
         description: Successful response, returns json body.
@@ -383,8 +382,6 @@ types:
       than one language you should make separate calls for each language.</p> <p>Max
       upload size, per request: 1&nbsp;MB.</p>'
     displayName: Given a set of texts, return their tonality.
-    body:
-      application/json: TonalityRequest
     responses:
       200:
         description: Successful response, returns json body.
@@ -408,8 +405,6 @@ types:
       than one language you should make separate calls for each language.</p> <p>Max
       upload size, per request: 5&nbsp;MB.</p>'
     displayName: Extract topics from a set of texts.
-    body:
-      application/json: TopicsRequest
     responses:
       200:
         description: Successful response, returns json body.

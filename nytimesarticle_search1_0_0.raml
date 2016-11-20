@@ -16,6 +16,9 @@ uses:
 securitySchemes:
   apikey:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        api-key: string
 types:
   Doc:
     type: object

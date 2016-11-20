@@ -11,6 +11,9 @@ uses:
 securitySchemes:
   internalApiKey:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        key: string
 types:
   ErrorModel:
     type: object

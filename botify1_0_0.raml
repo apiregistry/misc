@@ -9,6 +9,9 @@ uses:
 securitySchemes:
   DjangoRestToken:
     type: Pass Through
+    describedBy:
+      headers:
+        Authorization: string
 types:
   UrlsAggsQueries:
     type: array

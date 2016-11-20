@@ -33,12 +33,20 @@ description: "#Documentation\r\n\r\nThis is the documentation for the partner en
   \ documentation](http://api2.bigoven.com/web/documentation/recipe-images). \r\n\r\
   \nFor more information on usage of this API, including features, pricing, rate limits,\
   \ terms and conditions, please visit the [BigOven API website](http://api2.bigoven.com)."
+mediaType:
+- application/json
+- text/json
+- application/xml
+- text/xml
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      headers:
+        X-BigOven-API-Key: string
   basic:
     type: Basic Authentication
     description: Basic HTTP Authentication is used for those endpoint calls where you want to act as a BigOven user -- e.g., to get the list of favorites of a signed-in user, or add items to their grocery list.
@@ -914,6 +922,12 @@ types:
     properties:
       Category?:
         type: string
+      DefaultActiveMinutes?:
+        type: integer
+        format: int32
+      DefaultTotalMinutes?:
+        type: integer
+        format: int32
       ID?:
         type: integer
         format: int32
@@ -1662,11 +1676,6 @@ types:
                   type: BigOven_Model_API_Review
         delete:
           displayName: Delete a review
-          queryParameters:
-            ucId:
-              type: integer
-              displayName: ucId
-              format: int64
           responses:
             200:
               description: OK

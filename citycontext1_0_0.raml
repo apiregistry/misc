@@ -4,12 +4,17 @@ version: 1.0.0
 baseUri: api.citycontext.com/v1
 description: 'City Context provides a straightforward API to access UK Open Data:
   crime statistics, schools, demographics and more.'
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
 securitySchemes:
   user_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        user_key: string
 types:
   Location:
     type: object

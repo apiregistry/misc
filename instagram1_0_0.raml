@@ -25,6 +25,9 @@ uses:
 securitySchemes:
   api_key:
     type: Pass Through
+    describedBy:
+      queryParameters:
+        access_token: string
   instagram_auth:
     type: OAuth 2.0
     settings:
@@ -39,6 +42,13 @@ securitySchemes:
       - likes
       - public_content
       - relationships
+    (commons.OathScopeDescriptions):
+    - to read a user's profile info and media (granted by default)
+    - to post and delete comments on a user's behalf
+    - to read the list of followers and followed-by users
+    - to like and unlike media on a user's behalf
+    - to read any public profile info and media on a userâs behalf
+    - to follow and unfollow accounts on a user's behalf
 types:
   CaptionData:
     type: object

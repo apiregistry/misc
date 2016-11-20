@@ -3,6 +3,8 @@ title: Jirafe Events
 version: 2.0.0
 baseUri: event.jirafe.com/v2
 description: API endpoins for sending Jirafe events
+mediaType:
+- application/json
 uses:
   commons: https://raw.githubusercontent.com/apiregistry/commons/master/commons.raml
   extras: https://raw.githubusercontent.com/apiregistry/typesExtras/master/typeExtras.raml
@@ -16,6 +18,8 @@ securitySchemes:
       accessTokenUri: https://account.jirafe.com/oauth2/code
       scopes:
       - write
+    (commons.OathScopeDescriptions):
+    - Send events
   oauth2_implicit:
     type: OAuth 2.0
     settings:
@@ -25,6 +29,8 @@ securitySchemes:
       accessTokenUri: https://account.jirafe.com/oauth2/authorize
       scopes:
       - write
+    (commons.OathScopeDescriptions):
+    - Send events
 types:
   Attribute:
     type: object
@@ -353,6 +359,8 @@ types:
   /batch:
     post:
       displayName: Send a batch for the given site
+      body:
+        application/json: Batch
       responses:
         200:
           description: No response was specified
@@ -365,6 +373,8 @@ types:
   /cart:
     post:
       displayName: Send a cart for the given site
+      body:
+        application/json: Cart
       responses:
         200:
           description: No response was specified
@@ -377,6 +387,8 @@ types:
   /category:
     post:
       displayName: Send a category for the given site
+      body:
+        application/json: Category
       responses:
         200:
           description: No response was specified
@@ -389,6 +401,8 @@ types:
   /customer:
     post:
       displayName: Send a customer for the given site
+      body:
+        application/json: Customer
       responses:
         200:
           description: No response was specified
@@ -401,6 +415,8 @@ types:
   /order:
     post:
       displayName: Send a order for the given site
+      body:
+        application/json: OrderCancelled
       responses:
         200:
           description: No response was specified
@@ -413,6 +429,8 @@ types:
   /product:
     post:
       displayName: Send a product for the given site
+      body:
+        application/json: Product
       responses:
         200:
           description: No response was specified
